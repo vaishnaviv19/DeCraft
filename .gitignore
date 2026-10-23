@@ -1,0 +1,26 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# IDEs and Editors
+.vscode/
+.idea/
+
+# Environment variables / Secrets
+.env
+.env.*
+
+# Local data / Generated PDFs (Optional)
+*.pdf
+*.png
+*.jpg
+*.jpeg
+outputs/
