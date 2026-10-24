@@ -1,1 +1,9 @@
-pymupdf>=2.0
+pymupdf>=1.24.0
+pypdf>=4.0.0
+jsonschema>=4.22.0
+scikit-learn>=1.4.0
+Pillow>=10.0.0
+numpy>=1.26.0
+pandas>=2.2.0
+docling
+rich

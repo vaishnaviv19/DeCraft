@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "blueprint_id",
+    "source",
+    "validation",
+    "text_blocks",
+    "headings",
+    "tables",
+    "figures_charts",
+    "color_palette",
+    "page_structure",
+    "entity"
+  ],
+  "properties": {
+    "blueprint_id": {"type": "string"},
+    "source": {"type": "object"},
+    "validation": {"type": "object"},
+    "text_blocks": {"type": "array"},
+    "headings": {"type": "array"},
+    "tables": {"type": "array"},
+    "figures_charts": {"type": "array"},
+    "color_palette": {"type": "object"},
+    "page_structure": {"type": "array"},
+    "entity": {"type": "object"}
+  },
+  "additionalProperties": true
+}
