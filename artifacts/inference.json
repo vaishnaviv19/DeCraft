@@ -1,0 +1,508 @@
+{
+  "source_pdf": "D:\\Acalvio\\DeCraft\\data\\input\\sample_input_1.pdf",
+  "source_hash": "",
+  "blueprint_version": "1.0",
+  "seed": 12345,
+  "domain": {
+    "label": "energy",
+    "confidence": 0.8,
+    "evidence": [
+      {
+        "source": "header",
+        "detail": "energy keywords",
+        "weight": 0.7
+      }
+    ]
+  },
+  "fields": [],
+  "relationships": [],
+  "constraints": [],
+  "patterns": [],
+  "privacy": [
+    {
+      "field": "BSE CODE: 500400",
+      "table": "table_001",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "NSE CODE: TATAPOWER",
+      "table": "table_001",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Company Data",
+      "table": "table_002",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Unnamed: 1",
+      "table": "table_002",
+      "risk": "direct_id",
+      "method": "fresh_id",
+      "rationale": "direct identifier regenerated",
+      "preserve": false
+    },
+    {
+      "field": "Unnamed: 2",
+      "table": "table_002",
+      "risk": "direct_id",
+      "method": "fresh_id",
+      "rationale": "direct identifier regenerated",
+      "preserve": false
+    },
+    {
+      "field": "Unnamed: 3",
+      "table": "table_002",
+      "risk": "direct_id",
+      "method": "fresh_id",
+      "rationale": "direct identifier regenerated",
+      "preserve": false
+    },
+    {
+      "field": "Consolidated (cr)",
+      "table": "table_003",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY23A",
+      "table": "table_003",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY24E",
+      "table": "table_003",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY25E",
+      "table": "table_003",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Unnamed: 0",
+      "table": "table_004",
+      "risk": "direct_id",
+      "method": "fresh_id",
+      "rationale": "direct identifier regenerated",
+      "preserve": false
+    },
+    {
+      "field": "Q1FY24",
+      "table": "table_004",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Q1FY23",
+      "table": "table_004",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "YoY Growth %",
+      "table": "table_004",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Q4FY23",
+      "table": "table_004",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "QoQ Growth %",
+      "table": "table_004",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Unnamed: 0",
+      "table": "table_005",
+      "risk": "direct_id",
+      "method": "fresh_id",
+      "rationale": "direct identifier regenerated",
+      "preserve": false
+    },
+    {
+      "field": "Old estimates",
+      "table": "table_005",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Unnamed: 2",
+      "table": "table_005",
+      "risk": "direct_id",
+      "method": "fresh_id",
+      "rationale": "direct identifier regenerated",
+      "preserve": false
+    },
+    {
+      "field": "New estimates",
+      "table": "table_005",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Unnamed: 4",
+      "table": "table_005",
+      "risk": "direct_id",
+      "method": "fresh_id",
+      "rationale": "direct identifier regenerated",
+      "preserve": false
+    },
+    {
+      "field": "Change %",
+      "table": "table_005",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Unnamed: 6",
+      "table": "table_005",
+      "risk": "direct_id",
+      "method": "fresh_id",
+      "rationale": "direct identifier regenerated",
+      "preserve": false
+    },
+    {
+      "field": "Particulars",
+      "table": "table_006",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Methodology",
+      "table": "table_006",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Multiple",
+      "table": "table_006",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "% Holding",
+      "table": "table_006",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Value (Rs. cr.)",
+      "table": "table_006",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Value Per Share (Rs.)",
+      "table": "table_006",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Y.E March (Rs. cr)",
+      "table": "table_007",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY21A",
+      "table": "table_007",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY22A",
+      "table": "table_007",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY23A",
+      "table": "table_007",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY24E",
+      "table": "table_007",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY25E",
+      "table": "table_007",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Y.E March (Rs. cr)",
+      "table": "table_008",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY21A",
+      "table": "table_008",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY22A",
+      "table": "table_008",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY23A",
+      "table": "table_008",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY24E",
+      "table": "table_008",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY25E",
+      "table": "table_008",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Y.E March (Rs. cr)",
+      "table": "table_009",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY21A",
+      "table": "table_009",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY22A",
+      "table": "table_009",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY23A",
+      "table": "table_009",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY24E",
+      "table": "table_009",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY25E",
+      "table": "table_009",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Y.E March",
+      "table": "table_010",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY21A",
+      "table": "table_010",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY22A",
+      "table": "table_010",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY23A",
+      "table": "table_010",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY24E",
+      "table": "table_010",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "FY25E",
+      "table": "table_010",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Dates",
+      "table": "table_011",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Rating",
+      "table": "table_011",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Target",
+      "table": "table_011",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Ratings",
+      "table": "table_012",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Large caps",
+      "table": "table_012",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Midcaps",
+      "table": "table_012",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    },
+    {
+      "field": "Small Caps",
+      "table": "table_012",
+      "risk": "low",
+      "method": "numeric_distribution",
+      "rationale": "default",
+      "preserve": false
+    }
+  ],
+  "dependency_order": [],
+  "lineage": {
+    "methods": []
+  },
+  "metadata": {}
+}
