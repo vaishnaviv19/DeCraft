@@ -24,3 +24,6 @@ ENV/
 *.jpg
 *.jpeg
 outputs/
+
+vendor/
+

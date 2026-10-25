@@ -1,0 +1,13 @@
+{
+  "run_id": "7799d9f6e42f-b1098e25",
+  "status": "failed",
+  "pdf_path": "artifacts\\runs\\7799d9f6e42f-b1098e25\\render\\output.pdf",
+  "gates": {
+    "validation": true,
+    "rendered_pdf_qa": false,
+    "word_count": true,
+    "no_placeholders": true,
+    "chart_table": true,
+    "privacy_audit": true
+  }
+}

@@ -9,7 +9,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
-SCHEMA_VERSION = "2.2"                         # 2.2: Annotator labels on InferenceReport, ChartSpec (additive)
+SCHEMA_VERSION = "2.6"                         # 2.6: RunResult (additive)
 
 
 class Strict(BaseModel):
@@ -41,6 +41,7 @@ class Enforcement(str, Enum):
 
 class RuleKind(str, Enum):
     FORMULA = "formula"
+    ROW_FORMULA = "row_formula"       # between rows of one table: [Gross profit] = [Revenue] - [Cost of sales]
     DATE_DERIVATION = "date_derivation"
     DETERMINES = "determines"
     ORDERING = "ordering"
@@ -159,6 +160,7 @@ class SourceDocument(Strict):
     document_sha256: str
     title: str | None = None
     entity_name: str | None = None               # preserved, never regenerated (decision D-07)
+    entity_address: str | None = None            # preserved like the entity name (D-07)
     tables: list[SourceTable]
     text_blocks: list[str] = []                  # narrative text, in reading order
 
@@ -280,6 +282,10 @@ class PatternSpec(Strict):
     kind: PatternKind
     fields: list[ColumnRef] = Field(min_length=1)
     time_field: ColumnRef | None = None
+    # a series ALONG A ROW of a statement (years across the header): fields[0] is the label column,
+    # row_label names the line item and period_columns lists its columns in time order
+    row_label: str | None = None
+    period_columns: list[str] = []
     segment_field: ColumnRef | None = None
     direction: Direction
     n: int = Field(ge=0)
@@ -322,6 +328,11 @@ class InferenceReport(Strict):
     # 'table.column' -> Sensitivity Class / importance proposed by the Annotator (M4 stricter-of merge).
     sensitivity_labels: dict[str, str] = {}
     column_importance: dict[str, str] = {}
+    column_meanings: dict[str, str] = {}         # 'table.column' -> the Annotator's plain description
+    column_roles: dict[str, str] = {}            # 'table.column' -> Annotator role (e.g. 'row_label')
+    sensitivity_reasons: dict[str, str] = {}     # 'table.column' -> why the Annotator chose its label
+    sensitivity_confidence: dict[str, float] = {}  # 'table.column' -> the Annotator's confidence
+    key_columns: dict[str, list[str]] = {}       # Primary Keys per table (M3.1, recorded for generation)
 
 
 # ---------------------------------------------------------------- privacy, validation
@@ -331,6 +342,11 @@ class PrivacyDecision(Strict):
     risk: SensitivityClass
     rule_label: SensitivityClass
     llm_label: SensitivityClass | None = None
+    rule_strength: Literal["hard", "weak", "none"] = "none"   # hard = measured on the values
+    relabel: bool = False                        # text values are replaced through the Label Map
+    method_source: Literal["policy", "llm"] = "policy"   # who chose the method and noise
+    keep_correlation: bool = True                # sample jointly with related columns
+    criticality: int | None = Field(default=None, ge=0, le=10)   # LLM: how revealing (0-10)
     method: str
     noise: float | None = None
     importance: Literal["low", "medium", "high", "very_high"] = "medium"
@@ -341,6 +357,10 @@ class PrivacyDecision(Strict):
 class PrivacyPlan(Strict):
     decisions: list[PrivacyDecision]
     tiny_tables: list[str] = []                  # tables handled by the jitter policy (decision D-11)
+    preserved_values: list[str] = []             # entity name and address: never replaced anywhere
+    label_pools: dict[str, list[str]] = {}       # 'table.column' -> fresh labels (LLM, checked in Python)
+    locale: str | None = None                    # where the entity is (style hint for fake values only)
+    warnings: list[str] = []                     # e.g. a column that will need numbered fallback labels
 
 
 class Violation(Strict):
@@ -404,6 +424,34 @@ class ChartSpec(Strict):
     label_column: str
     series_columns: list[str] = Field(min_length=1)
     title: str | None = None
+
+
+class NarrativeSection(Strict):
+    section_id: str
+    title: str
+    text: str
+
+
+class NarrativeDoc(Strict):
+    sections: list[NarrativeSection]
+    word_count: int
+    llm_used: bool = False
+
+
+class RenderResult(Strict):
+    html_path: str
+    chart_paths: dict[str, str] = {}
+    pdf_path: str | None = None
+    pages: int = 0
+    qa: dict[str, Any] = {}
+
+
+class RunResult(Strict):
+    run_id: str
+    run_dir: str
+    status: Literal["ok", "failed", "partial"]
+    manifest_path: str
+    pdf_path: str | None = None
 
 
 class RunManifest(Strict):

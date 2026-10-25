@@ -39,3 +39,4 @@ budgets:
   llm_max_output_tokens: 4000
   llm_max_concurrency: 2
   stage_token_budget: 200000
+  stage_timeout_seconds: 600

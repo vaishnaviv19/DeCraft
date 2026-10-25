@@ -31,4 +31,4 @@ def test_prompt_injection_cannot_close_data_block():
 
 def test_prompt_is_versioned():
     from src.inference._annotator import ANNOTATOR_PROMPT
-    assert (ANNOTATOR_PROMPT.name, ANNOTATOR_PROMPT.version) == ("annotator", "v2")
+    assert (ANNOTATOR_PROMPT.name, ANNOTATOR_PROMPT.version) == ("annotator", "v5")

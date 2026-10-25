@@ -111,3 +111,21 @@ def verify_yoy(levels, pct, lag: int, tol_pp: float = 0.1, min_rows: int = 3):
     if len(pairs) < min_rows:
         return None, len(pairs)
     return float(np.mean([abs(c - p) <= tol_pp for c, p in pairs])), len(pairs)
+
+
+def time_order(values) -> list[int]:
+    """Row positions in TIME order for a period or date column (FY25, FY24 ... -> oldest first).
+    Unreadable or missing labels keep their row order at the end. The one ordering used by pattern
+    detection, generation, validation and repair, so they always read a series the same way."""
+    import pandas as pd
+    from src.core.dates import to_calendar_dates
+    values = list(values)
+    keys = []
+    periods = [parse_period(v) if isinstance(v, str) else None for v in values]
+    if any(p is not None for p in periods):
+        keys = [p.ordinal if p is not None else None for p in periods]
+    else:
+        stamps = to_calendar_dates(pd.Series(values, dtype=object))[0]
+        keys = [None if pd.isna(t) else t.value for t in stamps]
+    known = sorted((k, i) for i, k in enumerate(keys) if k is not None)
+    return [i for _, i in known] + [i for i, k in enumerate(keys) if k is None]

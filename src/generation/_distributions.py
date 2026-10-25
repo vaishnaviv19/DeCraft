@@ -43,6 +43,8 @@ def sample_numeric(values: list[float | None], n: int, rng: np.random.Generator,
     if noise:
         draws = draws * (1 + rng.uniform(-noise, noise, n))
     lo, hi = _widen(present, widen)
+    if present.min() >= 0:
+        lo = max(lo, 0.0)
     draws = np.clip(draws, lo, hi)
 
     out: list[float | None] = []

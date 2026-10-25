@@ -22,6 +22,7 @@ import pandas as pd
 
 from src.contracts import DecisionStatus, Enforcement, ExtractionGrade, RuleTier
 from src.errors import FormulaSyntaxError
+from src.core.rows import LABEL_RE, label_positions, norm_label, number_columns, sideways
 from src.inference._formula import check_formula, parse_formula, positional_frame, to_float
 from src.inference._refdate import DEFAULT_TZ, calendar_date, completed_years, to_calendar_dates
 
@@ -156,16 +157,67 @@ def proposal_formula_text(p) -> str:
     return expr
 
 
+def row_formula_spec(df, label_column: str, text: str):
+    """Match the proposal's row labels to the table's own labels (case and spacing do not matter) and
+    parse it with the ordinary allowlist parser. -> (spec, {label: row position}). Raises FormulaSyntaxError."""
+    if not isinstance(text, str) or not isinstance(label_column, str) or label_column not in df.columns:
+        raise FormulaSyntaxError("row formula needs 'label_column' (a column of the table) and an expression")
+    if pd.api.types.is_numeric_dtype(df[label_column]):
+        raise FormulaSyntaxError("the label column must hold row labels, not numbers")
+    positions = label_positions(df[label_column])
+    real = {norm_label(v): str(v).strip() for v in df[label_column].dropna()}
+
+    def canonical(m):
+        key = norm_label(m.group(1))
+        if key not in real:
+            raise FormulaSyntaxError(f"unknown row: {m.group(1)!r}")
+        if len(positions[key]) > 1:
+            raise FormulaSyntaxError(f"row label {m.group(1)!r} appears more than once")
+        return f"[{real[key]}]"
+
+    text = LABEL_RE.sub(canonical, text)
+    used = {norm_label(x) for x in LABEL_RE.findall(text)}
+    spec = parse_formula(text, [real[k] for k in used])
+    return spec, {real[k]: positions[k][0] for k in used}
+
+
+def verify_row_formula(df, label_column: str, text: str, decimals: dict, th) -> VerifyResult:
+    """The rule must hold in EVERY number column (FY24, FY25 ...). Few columns cannot confirm a rule but
+    can contradict it (tier_from_result)."""
+    try:
+        spec, positions = row_formula_spec(df, label_column, text)
+    except FormulaSyntaxError as e:
+        return _rejected(f"formula: {e}")
+    columns = number_columns(df, label_column)
+    if not columns:
+        return VerifyResult(None, 0, "row formula: no number columns: untestable")
+    wide = sideways(df.reset_index(drop=True), positions, columns)
+    places = max([decimals.get(c, 0) for c in columns] or [0])
+    r = check_formula(wide, spec, {label: places for label in positions}, th.rel_tol_default, min_rows=1)
+    return VerifyResult(r.match_rate, r.n_rows,
+                        _summary(f"row formula {spec.text}", r.n_rows, r.n_matched, r.n_undefined,
+                                 r.n_unreadable, r.n_missing),
+                        r.n_invalid, n_missing=r.n_missing)
+
+
 # ---------------------------------------------------------------- tier and the single policy
 def tier_from_result(res: VerifyResult, th) -> RuleTier:
     """Bands: >= strong strongly_inferred | >= hypothesis hypothesized | >= contradicted unknown | else
     contradicted. Rejected proposals -> contradicted. Untestable (None or fewer than min_rows_rule rows)
-    -> semantic (D-03), EXCEPT when rows had to be thrown away as invalid: then the rule is not known to
-    be plausible, so it is 'unknown' and can never become a HARD rule by accident."""
+    -> semantic (D-03), EXCEPT when rows had to be thrown away as invalid (-> unknown: not known to be
+    plausible) or when the few rows there are disagree (below contradicted_match -> contradicted, below
+    formula_hypothesis_match -> unknown). Neither can become a HARD rule by accident."""
     if res.rejected or res.detail.startswith("rejected formula"):
         return RuleTier.CONTRADICTED
     if res.match_rate is None or res.n_rows < th.min_rows_rule:
-        return RuleTier.UNKNOWN if res.n_invalid > 0 else RuleTier.SEMANTIC
+        if res.n_invalid > 0:
+            return RuleTier.UNKNOWN
+        # Too few rows to CONFIRM, but D-03 enforces 'semantic' only "unless the data contradicts it".
+        if res.match_rate is not None and res.match_rate < th.contradicted_match:
+            return RuleTier.CONTRADICTED
+        if res.match_rate is not None and res.match_rate < th.formula_hypothesis_match:
+            return RuleTier.UNKNOWN
+        return RuleTier.SEMANTIC
     if res.match_rate >= th.formula_strong_match:
         return RuleTier.STRONGLY_INFERRED
     if res.match_rate >= th.formula_hypothesis_match:
@@ -270,6 +322,9 @@ def verify_proposal(df, p, ref_date, decimals, th, *, run_date=None, tz: str = D
         return verify_formula_text(df, text, decimals, th)
     if p.kind == "derived_from":
         return _verify_date_derivation(df, p, ref_date, th, run_date, tz, date_formats)
+    if p.kind == "row_formula":
+        return verify_row_formula(df, p.params.get("label_column") or (p.columns[0] if p.columns else None),
+                                  p.params.get("expression", ""), decimals, th)
     c = list(p.columns)
     if p.kind not in ("determines", "hierarchy", "ordering", "conditional"):
         return _rejected("proposal: unsupported kind")

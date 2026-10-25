@@ -37,6 +37,9 @@ class Thresholds(BaseModel):
     # LLM, repair and generation
     llm_retries: int = Field(3, ge=0)
     llm_confidence_escalate: float = Field(0.70, ge=0, le=1)
+    # an LLM label/method that is LESS protective than what Python measured or the policy chose is
+    # used only at or above this confidence (with a reason); 0.70 above is enough to add protection
+    llm_override_confidence: float = Field(0.90, ge=0, le=1)
     max_repairs: int = Field(3, ge=0)
     max_generation_tries: int = Field(50, ge=1)
     ngram_overlap_max: int = Field(8, ge=1)
@@ -68,6 +71,7 @@ class Budgets(BaseModel):
     llm_max_output_tokens: int = Field(4000, gt=0)
     llm_max_concurrency: int = Field(2, ge=1)
     stage_token_budget: int = Field(200_000, gt=0)
+    stage_timeout_seconds: float = Field(600, gt=0)
 
 
 class Config(BaseModel):

@@ -14,6 +14,11 @@ def test_unique_text_column_without_identifier_shape_is_not_a_key():
     assert candidate_keys(df) == []
 
 
+def test_a_period_column_is_a_time_axis_not_a_key():
+    df = pd.DataFrame({"Period": ["FY21A", "FY22A", "FY23A"], "Revenue": [1.0, 2.0, 3.0]})
+    assert candidate_keys(df) == []
+
+
 def test_duplicate_values_disqualify_a_key():
     df = pd.DataFrame({"Code": ["A-1", "A-2", "A-1"]})
     assert candidate_keys(df) == []

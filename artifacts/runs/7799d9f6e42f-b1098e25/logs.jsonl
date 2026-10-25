@@ -1,0 +1,24 @@
+{"at": "2026-10-25T13:56:54.680889+00:00", "event": "run_start", "run_id": "7799d9f6e42f-b1098e25", "llm": false, "resumed": false}
+{"at": "2026-10-25T13:56:56.200342+00:00", "event": "stage_done", "stage": "extract", "seconds": 1.52}
+{"at": "2026-10-25T13:56:56.334817+00:00", "event": "fallback", "stage": "narrative", "reason": "llm disabled"}
+{"at": "2026-10-25T13:56:58.101494+00:00", "event": "stage_done", "stage": "infer", "seconds": 1.77}
+{"at": "2026-10-25T13:56:58.479654+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.36}
+{"at": "2026-10-25T13:56:59.134413+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.66}
+{"at": "2026-10-25T13:56:59.532789+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.31}
+{"at": "2026-10-25T13:56:59.548775+00:00", "event": "stage_done", "stage": "write", "seconds": 0.0}
+{"at": "2026-10-25T13:57:08.031738+00:00", "event": "stage_done", "stage": "render", "seconds": 8.48}
+{"at": "2026-10-25T13:57:08.243267+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "rendered_pdf_qa": false, "word_count": true, "no_placeholders": true, "chart_table": true, "privacy_audit": false}}
+{"at": "2026-10-25T13:58:06.411180+00:00", "event": "run_start", "run_id": "7799d9f6e42f-b1098e25", "llm": false, "resumed": true}
+{"at": "2026-10-25T13:58:06.558647+00:00", "event": "fallback", "stage": "narrative", "reason": "llm disabled"}
+{"at": "2026-10-25T13:58:07.182049+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.62}
+{"at": "2026-10-25T13:58:07.397357+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.16}
+{"at": "2026-10-25T13:58:07.408929+00:00", "event": "stage_done", "stage": "write", "seconds": 0.0}
+{"at": "2026-10-25T13:58:14.400283+00:00", "event": "stage_done", "stage": "render", "seconds": 7.0}
+{"at": "2026-10-25T13:58:14.624893+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "rendered_pdf_qa": false, "word_count": true, "no_placeholders": true, "chart_table": true, "privacy_audit": false}}
+{"at": "2026-10-25T13:58:44.022250+00:00", "event": "run_start", "run_id": "7799d9f6e42f-b1098e25", "llm": false, "resumed": true}
+{"at": "2026-10-25T13:58:44.185975+00:00", "event": "fallback", "stage": "narrative", "reason": "llm disabled"}
+{"at": "2026-10-25T13:58:44.774635+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.59}
+{"at": "2026-10-25T13:58:44.987857+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.14}
+{"at": "2026-10-25T13:58:44.996267+00:00", "event": "stage_done", "stage": "write", "seconds": 0.0}
+{"at": "2026-10-25T13:58:52.384910+00:00", "event": "stage_done", "stage": "render", "seconds": 7.39}
+{"at": "2026-10-25T13:58:52.620910+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "rendered_pdf_qa": false, "word_count": true, "no_placeholders": true, "chart_table": true, "privacy_audit": true}}

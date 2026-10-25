@@ -5,6 +5,8 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
+import pandas as pd
+
 TOTAL_RE = re.compile(r"(^|[ ])(sub)?total([ ]|$)", re.I)
 
 
@@ -47,3 +49,32 @@ def verify_links(values: list[float | None], links: dict[int, list[int]], rel_to
         n += 1
         ok += abs(sum(values[k] for k in kids) - values[t]) <= rel_tol * max(abs(values[t]), 1e-9)
     return (ok / n if n else None), n
+
+
+TOTAL_EXACT_RE = re.compile(r"^(sub[ -]?)?total$", re.I)
+
+
+def total_row_links(df, label_col: str | None) -> dict[int, list[int]]:
+    """Total Row index -> indexes of the leaf rows above it at its level or deeper.
+
+    Only a row labelled exactly 'Total'/'Subtotal' counts. Without indent levels an aggregate such as
+    'Total Assets' or 'Total asset T.O' cannot be linked safely, so it is left alone.
+    """
+    if not label_col or label_col not in df.columns:
+        return {}
+    numeric = df.select_dtypes("number")
+    rows = [RowMeta(label=str(label), level=0,
+                    has_values=bool(numeric.iloc[i].notna().any()),
+                    is_total=bool(TOTAL_EXACT_RE.match(str(label).strip().strip(":* "))))
+            for i, label in enumerate(df[label_col])]
+    return link_totals(rows)
+
+
+def additive_columns(df, links: dict[int, list[int]], strong: float = 0.95) -> dict[str, bool | None]:
+    """Additive = the column's source Total Rows equal the sum of their children (rate >= strong)."""
+    out: dict[str, bool | None] = {}
+    for col in df.select_dtypes("number").columns:
+        values = [None if pd.isna(v) else float(v) for v in df[col]]
+        rate, _ = verify_links(values, links)
+        out[str(col)] = True if rate is not None and rate >= strong else (False if rate is not None else None)
+    return out

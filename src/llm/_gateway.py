@@ -78,6 +78,9 @@ class LLMGateway:
             except TimeoutError:
                 last_err = "timeout"
                 self.log.append(CallRecord(prompt.name, False, attempt, False, last_err))
+            except OSError as e:                          # model server down: same as a failed try
+                last_err = f"unavailable: {e}"[:300]
+                self.log.append(CallRecord(prompt.name, False, attempt, False, last_err))
         return None
 
     # ---- internals -------------------------------------------------------

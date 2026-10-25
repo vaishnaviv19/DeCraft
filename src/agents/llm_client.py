@@ -1,43 +1,26 @@
-# src/agents/llm_client.py
+# src/agents/llm_client.py  -- legacy agents API, now backed by the new pipeline's model client
+"""The old agents (domain, schema, relationship, privacy) keep this interface, but every call now goes
+through src.llm.OllamaClient - the same client the new pipeline's LLMGateway uses - so there is one
+model connection and one set of settings (OLLAMA_HOST, DECRAFT_LLM_MODEL)."""
 from __future__ import annotations
 
-import json
-import os
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Optional
+
+from src.llm import LLMUnavailable, OllamaClient
 
 
 class LLMClient:
-    def __init__(self, cache_dir: str = "D:/DeCraft_cache"):
+    def __init__(self, cache_dir: str = "D:/DeCraft_cache", client: OllamaClient | None = None):
         self.cache_dir = Path(cache_dir)
-        self.cache_dir.mkdir(parents=True, exist_ok=True)
-        self.ollama_url = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
-        self.model = os.environ.get("DECRAFT_LLM_MODEL", "llama3.1")
+        self.client = client or OllamaClient(json_mode=False)   # old prompts may return arrays
+        self.ollama_url, self.model = self.client.host, self.client.model_name
 
     def available(self) -> bool:
-        try:
-            import requests
-
-            r = requests.get(f"{self.ollama_url}/api/tags", timeout=2)
-            return r.status_code == 200
-        except Exception:
-            return False
+        return self.client.available()
 
     def complete(self, prompt: str, system: str = "", temperature: float = 0.1) -> Optional[str]:
         try:
-            import requests
-
-            payload = {
-                "model": self.model,
-                "prompt": prompt,
-                "system": system,
-                "stream": False,
-                "options": {"temperature": temperature},
-            }
-            r = requests.post(f"{self.ollama_url}/api/generate", json=payload, timeout=120)
-            if r.status_code == 200:
-                data = r.json()
-                return data.get("response")
-        except Exception:
+            return self.client.complete(system, prompt, temperature)
+        except LLMUnavailable:
             return None
-        return None

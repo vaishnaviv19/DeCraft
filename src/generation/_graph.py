@@ -115,6 +115,6 @@ def build_plan(columns: dict[str, list[str]], rules: list[Rule], rels: list[Rela
             steps.append(Step("fresh_key", node))
         else:
             steps.append(Step("sample", node))
-        if node in rollup_columns and "aggregate" not in kinds:
+        if node in rollup_columns:              # also after an aggregate: its Total row is a roll-up
             steps.append(Step("rollup", node))
     return steps

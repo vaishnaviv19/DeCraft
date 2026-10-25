@@ -1,0 +1,20 @@
+{
+  "ok": false,
+  "pages": 9,
+  "checks": {
+    "pages_rendered": true,
+    "page_count": false,
+    "no_unresolved_placeholders": true,
+    "word_count": true,
+    "no_overflow": true,
+    "chart_sidecars": true,
+    "charts_captioned": true
+  },
+  "notes": [
+    "9 pages rendered",
+    "2385 words"
+  ],
+  "manual_review_required": [
+    "visual similarity to the source layout needs a multimodal model or a human"
+  ]
+}

@@ -1,0 +1,1052 @@
+{
+  "table_001.first_label": {
+    "key": "table_001.first_label",
+    "value": "BSE CODE: 500400 1",
+    "kind": "text",
+    "unit": null,
+    "source": "table_001.BSE CODE: 500400:first"
+  },
+  "table_001.last_label": {
+    "key": "table_001.last_label",
+    "value": "BSE CODE: 500400 1",
+    "kind": "text",
+    "unit": null,
+    "source": "table_001.BSE CODE: 500400:last"
+  },
+  "table_002.first_label": {
+    "key": "table_002.first_label",
+    "value": "Market Cap (cr)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_002.Company Data:first"
+  },
+  "table_002.last_label": {
+    "key": "table_002.last_label",
+    "value": "Relative Return*",
+    "kind": "text",
+    "unit": null,
+    "source": "table_002.Company Data:last"
+  },
+  "table_003.FY23A.total": {
+    "key": "table_003.FY23A.total",
+    "value": 957344551608.9001,
+    "kind": "number",
+    "unit": null,
+    "source": "table_003.FY23A:sum"
+  },
+  "table_003.FY23A.largest": {
+    "key": "table_003.FY23A.largest",
+    "value": 779542260739.7,
+    "kind": "number",
+    "unit": null,
+    "source": "table_003.FY23A:max"
+  },
+  "table_003.FY23A.largest_label": {
+    "key": "table_003.FY23A.largest_label",
+    "value": "Adj. EPS",
+    "kind": "text",
+    "unit": null,
+    "source": "table_003.FY23A:argmax"
+  },
+  "table_003.FY23A.largest_share": {
+    "key": "table_003.FY23A.largest_share",
+    "value": 81.42755494138572,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_003.FY23A:argmax/share"
+  },
+  "table_003.FY24E.total": {
+    "key": "table_003.FY24E.total",
+    "value": 1022310566736.9001,
+    "kind": "number",
+    "unit": null,
+    "source": "table_003.FY24E:sum"
+  },
+  "table_003.FY24E.largest": {
+    "key": "table_003.FY24E.largest",
+    "value": 839183428638.3,
+    "kind": "number",
+    "unit": null,
+    "source": "table_003.FY24E:max"
+  },
+  "table_003.FY24E.largest_label": {
+    "key": "table_003.FY24E.largest_label",
+    "value": "Adj. EPS",
+    "kind": "text",
+    "unit": null,
+    "source": "table_003.FY24E:argmax"
+  },
+  "table_003.FY24E.largest_share": {
+    "key": "table_003.FY24E.largest_share",
+    "value": 82.08693678251598,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_003.FY24E:argmax/share"
+  },
+  "table_003.FY25E.total": {
+    "key": "table_003.FY25E.total",
+    "value": 1077095939247.1998,
+    "kind": "number",
+    "unit": null,
+    "source": "table_003.FY25E:sum"
+  },
+  "table_003.FY25E.largest": {
+    "key": "table_003.FY25E.largest",
+    "value": 868302275963.2,
+    "kind": "number",
+    "unit": null,
+    "source": "table_003.FY25E:max"
+  },
+  "table_003.FY25E.largest_label": {
+    "key": "table_003.FY25E.largest_label",
+    "value": "Adj. EPS",
+    "kind": "text",
+    "unit": null,
+    "source": "table_003.FY25E:argmax"
+  },
+  "table_003.FY25E.largest_share": {
+    "key": "table_003.FY25E.largest_share",
+    "value": 80.615128543709,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_003.FY25E:argmax/share"
+  },
+  "table_003.first_label": {
+    "key": "table_003.first_label",
+    "value": "Adj. EPS",
+    "kind": "text",
+    "unit": null,
+    "source": "table_003.Consolidated (cr):first"
+  },
+  "table_003.last_label": {
+    "key": "table_003.last_label",
+    "value": "Adj. PAT",
+    "kind": "text",
+    "unit": null,
+    "source": "table_003.Consolidated (cr):last"
+  },
+  "table_004.Q1FY23.total": {
+    "key": "table_004.Q1FY23.total",
+    "value": 34989.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.Q1FY23:sum"
+  },
+  "table_004.Q1FY23.largest": {
+    "key": "table_004.Q1FY23.largest",
+    "value": 20674.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.Q1FY23:max"
+  },
+  "table_004.Q1FY23.largest_label": {
+    "key": "table_004.Q1FY23.largest_label",
+    "value": "Revenue",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Q1FY23:argmax"
+  },
+  "table_004.Q1FY23.largest_share": {
+    "key": "table_004.Q1FY23.largest_share",
+    "value": 59.08714167309726,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_004.Q1FY23:argmax/share"
+  },
+  "table_004.Q1FY24.total": {
+    "key": "table_004.Q1FY24.total",
+    "value": 42192.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.Q1FY24:sum"
+  },
+  "table_004.Q1FY24.largest": {
+    "key": "table_004.Q1FY24.largest",
+    "value": 22810.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.Q1FY24:max"
+  },
+  "table_004.Q1FY24.largest_label": {
+    "key": "table_004.Q1FY24.largest_label",
+    "value": "Revenue",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Q1FY24:argmax"
+  },
+  "table_004.Q1FY24.largest_share": {
+    "key": "table_004.Q1FY24.largest_share",
+    "value": 54.06238149412211,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_004.Q1FY24:argmax/share"
+  },
+  "table_004.Q4FY23.total": {
+    "key": "table_004.Q4FY23.total",
+    "value": 35290.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.Q4FY23:sum"
+  },
+  "table_004.Q4FY23.largest": {
+    "key": "table_004.Q4FY23.largest",
+    "value": 18331.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.Q4FY23:max"
+  },
+  "table_004.Q4FY23.largest_label": {
+    "key": "table_004.Q4FY23.largest_label",
+    "value": "Revenue",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Q4FY23:argmax"
+  },
+  "table_004.Q4FY23.largest_share": {
+    "key": "table_004.Q4FY23.largest_share",
+    "value": 51.943893454236324,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_004.Q4FY23:argmax/share"
+  },
+  "table_004.QoQ Growth %.total": {
+    "key": "table_004.QoQ Growth %.total",
+    "value": 73.39999999999999,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.QoQ Growth %:sum"
+  },
+  "table_004.QoQ Growth %.largest": {
+    "key": "table_004.QoQ Growth %.largest",
+    "value": 140.5,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.QoQ Growth %:max"
+  },
+  "table_004.QoQ Growth %.largest_label": {
+    "key": "table_004.QoQ Growth %.largest_label",
+    "value": "Share of profit from Associate",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.QoQ Growth %:argmax"
+  },
+  "table_004.QoQ Growth %.largest_share": {
+    "key": "table_004.QoQ Growth %.largest_share",
+    "value": 191.41689373297004,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_004.QoQ Growth %:argmax/share"
+  },
+  "table_004.YoY Growth %.total": {
+    "key": "table_004.YoY Growth %.total",
+    "value": 1724.0000000000002,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.YoY Growth %:sum"
+  },
+  "table_004.YoY Growth %.largest": {
+    "key": "table_004.YoY Growth %.largest",
+    "value": 1221.2,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.YoY Growth %:max"
+  },
+  "table_004.YoY Growth %.largest_label": {
+    "key": "table_004.YoY Growth %.largest_label",
+    "value": "EBITDA margins",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.YoY Growth %:argmax"
+  },
+  "table_004.YoY Growth %.largest_share": {
+    "key": "table_004.YoY Growth %.largest_share",
+    "value": 70.8352668213457,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_004.YoY Growth %:argmax/share"
+  },
+  "table_004.first_label": {
+    "key": "table_004.first_label",
+    "value": "Revenue",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Unnamed: 0:first"
+  },
+  "table_004.last_label": {
+    "key": "table_004.last_label",
+    "value": "Adj. EPS (Rs.)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Unnamed: 0:last"
+  },
+  "table_005.first_label": {
+    "key": "table_005.first_label",
+    "value": "FY24E",
+    "kind": "text",
+    "unit": null,
+    "source": "table_005.Change %:first"
+  },
+  "table_005.last_label": {
+    "key": "table_005.last_label",
+    "value": "(6.5)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_005.Change %:last"
+  },
+  "table_006.Multiple.total": {
+    "key": "table_006.Multiple.total",
+    "value": 52.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_006.Multiple:sum"
+  },
+  "table_006.Multiple.largest": {
+    "key": "table_006.Multiple.largest",
+    "value": 7.2,
+    "kind": "number",
+    "unit": null,
+    "source": "table_006.Multiple:max"
+  },
+  "table_006.Multiple.largest_label": {
+    "key": "table_006.Multiple.largest_label",
+    "value": "None",
+    "kind": "text",
+    "unit": null,
+    "source": "table_006.Multiple:argmax"
+  },
+  "table_006.Multiple.largest_share": {
+    "key": "table_006.Multiple.largest_share",
+    "value": 13.846153846153847,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_006.Multiple:argmax/share"
+  },
+  "table_006.Value (Rs. cr.).total": {
+    "key": "table_006.Value (Rs. cr.).total",
+    "value": 1203387213215.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_006.Value (Rs. cr.):sum"
+  },
+  "table_006.Value (Rs. cr.).largest": {
+    "key": "table_006.Value (Rs. cr.).largest",
+    "value": 248139853204.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_006.Value (Rs. cr.):max"
+  },
+  "table_006.Value (Rs. cr.).largest_label": {
+    "key": "table_006.Value (Rs. cr.).largest_label",
+    "value": "None",
+    "kind": "text",
+    "unit": null,
+    "source": "table_006.Value (Rs. cr.):argmax"
+  },
+  "table_006.Value (Rs. cr.).largest_share": {
+    "key": "table_006.Value (Rs. cr.).largest_share",
+    "value": 20.620117155895585,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_006.Value (Rs. cr.):argmax/share"
+  },
+  "table_006.Value Per Share (Rs.).total": {
+    "key": "table_006.Value Per Share (Rs.).total",
+    "value": 4975868507.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_006.Value Per Share (Rs.):sum"
+  },
+  "table_006.Value Per Share (Rs.).largest": {
+    "key": "table_006.Value Per Share (Rs.).largest",
+    "value": 849642761.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_006.Value Per Share (Rs.):max"
+  },
+  "table_006.Value Per Share (Rs.).largest_label": {
+    "key": "table_006.Value Per Share (Rs.).largest_label",
+    "value": "None",
+    "kind": "text",
+    "unit": null,
+    "source": "table_006.Value Per Share (Rs.):argmax"
+  },
+  "table_006.Value Per Share (Rs.).largest_share": {
+    "key": "table_006.Value Per Share (Rs.).largest_share",
+    "value": 17.075265550219655,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_006.Value Per Share (Rs.):argmax/share"
+  },
+  "table_006.first_label": {
+    "key": "table_006.first_label",
+    "value": "10% holding discount to investments",
+    "kind": "text",
+    "unit": null,
+    "source": "table_006.% Holding:first"
+  },
+  "table_006.last_label": {
+    "key": "table_006.last_label",
+    "value": "100.0%",
+    "kind": "text",
+    "unit": null,
+    "source": "table_006.% Holding:last"
+  },
+  "table_007.FY21A.total": {
+    "key": "table_007.FY21A.total",
+    "value": 771150861983.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_007.FY21A:sum"
+  },
+  "table_007.FY21A.largest": {
+    "key": "table_007.FY21A.largest",
+    "value": 421209820265.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_007.FY21A:max"
+  },
+  "table_007.FY21A.largest_label": {
+    "key": "table_007.FY21A.largest_label",
+    "value": "Revenue",
+    "kind": "text",
+    "unit": null,
+    "source": "table_007.FY21A:argmax"
+  },
+  "table_007.FY21A.largest_share": {
+    "key": "table_007.FY21A.largest_share",
+    "value": 54.62093619163789,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_007.FY21A:argmax/share"
+  },
+  "table_007.FY22A.total": {
+    "key": "table_007.FY22A.total",
+    "value": 985880617769.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_007.FY22A:sum"
+  },
+  "table_007.FY22A.largest": {
+    "key": "table_007.FY22A.largest",
+    "value": 563003941187.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_007.FY22A:max"
+  },
+  "table_007.FY22A.largest_label": {
+    "key": "table_007.FY22A.largest_label",
+    "value": "Revenue",
+    "kind": "text",
+    "unit": null,
+    "source": "table_007.FY22A:argmax"
+  },
+  "table_007.FY22A.largest_share": {
+    "key": "table_007.FY22A.largest_share",
+    "value": 57.10670552191711,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_007.FY22A:argmax/share"
+  },
+  "table_007.FY23A.total": {
+    "key": "table_007.FY23A.total",
+    "value": 1299553925325.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_007.FY23A:sum"
+  },
+  "table_007.FY23A.largest": {
+    "key": "table_007.FY23A.largest",
+    "value": 714629935832.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_007.FY23A:max"
+  },
+  "table_007.FY23A.largest_label": {
+    "key": "table_007.FY23A.largest_label",
+    "value": "Revenue",
+    "kind": "text",
+    "unit": null,
+    "source": "table_007.FY23A:argmax"
+  },
+  "table_007.FY23A.largest_share": {
+    "key": "table_007.FY23A.largest_share",
+    "value": 54.990402622444556,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_007.FY23A:argmax/share"
+  },
+  "table_007.FY24E.total": {
+    "key": "table_007.FY24E.total",
+    "value": 1347139643067.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_007.FY24E:sum"
+  },
+  "table_007.FY24E.largest": {
+    "key": "table_007.FY24E.largest",
+    "value": 766761705066.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_007.FY24E:max"
+  },
+  "table_007.FY24E.largest_label": {
+    "key": "table_007.FY24E.largest_label",
+    "value": "Revenue",
+    "kind": "text",
+    "unit": null,
+    "source": "table_007.FY24E:argmax"
+  },
+  "table_007.FY24E.largest_share": {
+    "key": "table_007.FY24E.largest_share",
+    "value": 56.91775971497152,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_007.FY24E:argmax/share"
+  },
+  "table_007.FY25E.total": {
+    "key": "table_007.FY25E.total",
+    "value": 1472272812187.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_007.FY25E:sum"
+  },
+  "table_007.FY25E.largest": {
+    "key": "table_007.FY25E.largest",
+    "value": 835717643739.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_007.FY25E:max"
+  },
+  "table_007.FY25E.largest_label": {
+    "key": "table_007.FY25E.largest_label",
+    "value": "Revenue",
+    "kind": "text",
+    "unit": null,
+    "source": "table_007.FY25E:argmax"
+  },
+  "table_007.FY25E.largest_share": {
+    "key": "table_007.FY25E.largest_share",
+    "value": 56.76377617118231,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_007.FY25E:argmax/share"
+  },
+  "table_007.first_label": {
+    "key": "table_007.first_label",
+    "value": "Revenue",
+    "kind": "text",
+    "unit": null,
+    "source": "table_007.Y.E March (Rs. cr):first"
+  },
+  "table_007.last_label": {
+    "key": "table_007.last_label",
+    "value": "Adj*",
+    "kind": "text",
+    "unit": null,
+    "source": "table_007.Y.E March (Rs. cr):last"
+  },
+  "table_008.FY21A.total": {
+    "key": "table_008.FY21A.total",
+    "value": 72241746093.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.FY21A:sum"
+  },
+  "table_008.FY21A.largest": {
+    "key": "table_008.FY21A.largest",
+    "value": 58744582999.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.FY21A:max"
+  },
+  "table_008.FY21A.largest_label": {
+    "key": "table_008.FY21A.largest_label",
+    "value": "C.F. Operation",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.FY21A:argmax"
+  },
+  "table_008.FY21A.largest_share": {
+    "key": "table_008.FY21A.largest_share",
+    "value": 81.31667100539832,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_008.FY21A:argmax/share"
+  },
+  "table_008.FY22A.total": {
+    "key": "table_008.FY22A.total",
+    "value": 27155133173.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.FY22A:sum"
+  },
+  "table_008.FY22A.largest": {
+    "key": "table_008.FY22A.largest",
+    "value": 46345770334.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.FY22A:max"
+  },
+  "table_008.FY22A.largest_label": {
+    "key": "table_008.FY22A.largest_label",
+    "value": "C.F. Operation",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.FY22A:argmax"
+  },
+  "table_008.FY22A.largest_share": {
+    "key": "table_008.FY22A.largest_share",
+    "value": 170.67038500139267,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_008.FY22A:argmax/share"
+  },
+  "table_008.FY23A.total": {
+    "key": "table_008.FY23A.total",
+    "value": 100941336056.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.FY23A:sum"
+  },
+  "table_008.FY23A.largest": {
+    "key": "table_008.FY23A.largest",
+    "value": 76942441263.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.FY23A:max"
+  },
+  "table_008.FY23A.largest_label": {
+    "key": "table_008.FY23A.largest_label",
+    "value": "Closing cash",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.FY23A:argmax"
+  },
+  "table_008.FY23A.largest_share": {
+    "key": "table_008.FY23A.largest_share",
+    "value": 76.22490871362555,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_008.FY23A:argmax/share"
+  },
+  "table_008.FY24E.total": {
+    "key": "table_008.FY24E.total",
+    "value": 24540172650.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.FY24E:sum"
+  },
+  "table_008.FY24E.largest": {
+    "key": "table_008.FY24E.largest",
+    "value": 96185554440.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.FY24E:max"
+  },
+  "table_008.FY24E.largest_label": {
+    "key": "table_008.FY24E.largest_label",
+    "value": "C.F. Operation",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.FY24E:argmax"
+  },
+  "table_008.FY24E.largest_share": {
+    "key": "table_008.FY24E.largest_share",
+    "value": 391.95141701661987,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_008.FY24E:argmax/share"
+  },
+  "table_008.FY25E.total": {
+    "key": "table_008.FY25E.total",
+    "value": -45191251221.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.FY25E:sum"
+  },
+  "table_008.FY25E.largest": {
+    "key": "table_008.FY25E.largest",
+    "value": 53287003207.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.FY25E:max"
+  },
+  "table_008.FY25E.largest_label": {
+    "key": "table_008.FY25E.largest_label",
+    "value": "Net inc. + Depn.",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.FY25E:argmax"
+  },
+  "table_008.FY25E.largest_share": {
+    "key": "table_008.FY25E.largest_share",
+    "value": -117.9144231842777,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_008.FY25E:argmax/share"
+  },
+  "table_008.first_label": {
+    "key": "table_008.first_label",
+    "value": "Net inc. + Depn.",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.Y.E March (Rs. cr):first"
+  },
+  "table_008.last_label": {
+    "key": "table_008.last_label",
+    "value": "Closing cash",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.Y.E March (Rs. cr):last"
+  },
+  "table_009.FY21A.total": {
+    "key": "table_009.FY21A.total",
+    "value": 7692295529854.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.FY21A:sum"
+  },
+  "table_009.FY21A.largest": {
+    "key": "table_009.FY21A.largest",
+    "value": 1566751879910.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.FY21A:max"
+  },
+  "table_009.FY21A.largest_label": {
+    "key": "table_009.FY21A.largest_label",
+    "value": "Total Assets",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.FY21A:argmax"
+  },
+  "table_009.FY21A.largest_share": {
+    "key": "table_009.FY21A.largest_share",
+    "value": 20.367806642755664,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.FY21A:argmax/share"
+  },
+  "table_009.FY22A.total": {
+    "key": "table_009.FY22A.total",
+    "value": 8680645992052.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.FY22A:sum"
+  },
+  "table_009.FY22A.largest": {
+    "key": "table_009.FY22A.largest",
+    "value": 1773118142288.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.FY22A:max"
+  },
+  "table_009.FY22A.largest_label": {
+    "key": "table_009.FY22A.largest_label",
+    "value": "Total Assets",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.FY22A:argmax"
+  },
+  "table_009.FY22A.largest_share": {
+    "key": "table_009.FY22A.largest_share",
+    "value": 20.426108194153603,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.FY22A:argmax/share"
+  },
+  "table_009.FY23A.total": {
+    "key": "table_009.FY23A.total",
+    "value": 9897742228544.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.FY23A:sum"
+  },
+  "table_009.FY23A.largest": {
+    "key": "table_009.FY23A.largest",
+    "value": 2071989672479.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.FY23A:max"
+  },
+  "table_009.FY23A.largest_label": {
+    "key": "table_009.FY23A.largest_label",
+    "value": "Total Liabilities",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.FY23A:argmax"
+  },
+  "table_009.FY23A.largest_share": {
+    "key": "table_009.FY23A.largest_share",
+    "value": 20.933962762776442,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.FY23A:argmax/share"
+  },
+  "table_009.FY24E.total": {
+    "key": "table_009.FY24E.total",
+    "value": 10601592075539.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.FY24E:sum"
+  },
+  "table_009.FY24E.largest": {
+    "key": "table_009.FY24E.largest",
+    "value": 2196362477361.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.FY24E:max"
+  },
+  "table_009.FY24E.largest_label": {
+    "key": "table_009.FY24E.largest_label",
+    "value": "Total Liabilities",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.FY24E:argmax"
+  },
+  "table_009.FY24E.largest_share": {
+    "key": "table_009.FY24E.largest_share",
+    "value": 20.717289079898254,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.FY24E:argmax/share"
+  },
+  "table_009.FY25E.total": {
+    "key": "table_009.FY25E.total",
+    "value": 10930820015738.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.FY25E:sum"
+  },
+  "table_009.FY25E.largest": {
+    "key": "table_009.FY25E.largest",
+    "value": 2187555026769.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.FY25E:max"
+  },
+  "table_009.FY25E.largest_label": {
+    "key": "table_009.FY25E.largest_label",
+    "value": "Total Liabilities",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.FY25E:argmax"
+  },
+  "table_009.FY25E.largest_share": {
+    "key": "table_009.FY25E.largest_share",
+    "value": 20.01272570236631,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.FY25E:argmax/share"
+  },
+  "table_009.first_label": {
+    "key": "table_009.first_label",
+    "value": "Cash",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):first"
+  },
+  "table_009.last_label": {
+    "key": "table_009.last_label",
+    "value": "BVPS (Rs.)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):last"
+  },
+  "table_010.FY21A.total": {
+    "key": "table_010.FY21A.total",
+    "value": 441.09999999999997,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.FY21A:sum"
+  },
+  "table_010.FY21A.largest": {
+    "key": "table_010.FY21A.largest",
+    "value": 180.2,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.FY21A:max"
+  },
+  "table_010.FY21A.largest_label": {
+    "key": "table_010.FY21A.largest_label",
+    "value": "Payables (days)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.FY21A:argmax"
+  },
+  "table_010.FY21A.largest_share": {
+    "key": "table_010.FY21A.largest_share",
+    "value": 40.85241441849921,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.FY21A:argmax/share"
+  },
+  "table_010.FY22A.total": {
+    "key": "table_010.FY22A.total",
+    "value": 506.70000000000005,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.FY22A:sum"
+  },
+  "table_010.FY22A.largest": {
+    "key": "table_010.FY22A.largest",
+    "value": 195.4,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.FY22A:max"
+  },
+  "table_010.FY22A.largest_label": {
+    "key": "table_010.FY22A.largest_label",
+    "value": "Payables (days)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.FY22A:argmax"
+  },
+  "table_010.FY22A.largest_share": {
+    "key": "table_010.FY22A.largest_share",
+    "value": 38.563252417604104,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.FY22A:argmax/share"
+  },
+  "table_010.FY23A.total": {
+    "key": "table_010.FY23A.total",
+    "value": 340.6000000000001,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.FY23A:sum"
+  },
+  "table_010.FY23A.largest": {
+    "key": "table_010.FY23A.largest",
+    "value": 101.4,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.FY23A:max"
+  },
+  "table_010.FY23A.largest_label": {
+    "key": "table_010.FY23A.largest_label",
+    "value": "Payables (days)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.FY23A:argmax"
+  },
+  "table_010.FY23A.largest_share": {
+    "key": "table_010.FY23A.largest_share",
+    "value": 29.770992366412205,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.FY23A:argmax/share"
+  },
+  "table_010.FY24E.total": {
+    "key": "table_010.FY24E.total",
+    "value": 432.1,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.FY24E:sum"
+  },
+  "table_010.FY24E.largest": {
+    "key": "table_010.FY24E.largest",
+    "value": 173.5,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.FY24E:max"
+  },
+  "table_010.FY24E.largest_label": {
+    "key": "table_010.FY24E.largest_label",
+    "value": "Payables (days)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.FY24E:argmax"
+  },
+  "table_010.FY24E.largest_share": {
+    "key": "table_010.FY24E.largest_share",
+    "value": 40.15274242073594,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.FY24E:argmax/share"
+  },
+  "table_010.FY25E.total": {
+    "key": "table_010.FY25E.total",
+    "value": 421.00000000000006,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.FY25E:sum"
+  },
+  "table_010.FY25E.largest": {
+    "key": "table_010.FY25E.largest",
+    "value": 147.5,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.FY25E:max"
+  },
+  "table_010.FY25E.largest_label": {
+    "key": "table_010.FY25E.largest_label",
+    "value": "Payables (days)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.FY25E:argmax"
+  },
+  "table_010.FY25E.largest_share": {
+    "key": "table_010.FY25E.largest_share",
+    "value": 35.03562945368171,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.FY25E:argmax/share"
+  },
+  "table_010.first_label": {
+    "key": "table_010.first_label",
+    "value": "Profitab. & Return",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.Y.E March:first"
+  },
+  "table_010.last_label": {
+    "key": "table_010.last_label",
+    "value": "P/BV (x)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.Y.E March:last"
+  },
+  "table_011.Target.total": {
+    "key": "table_011.Target.total",
+    "value": 1447.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_011.Target:sum"
+  },
+  "table_011.Target.largest": {
+    "key": "table_011.Target.largest",
+    "value": 279.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_011.Target:max"
+  },
+  "table_011.Target.largest_label": {
+    "key": "table_011.Target.largest_label",
+    "value": "None",
+    "kind": "text",
+    "unit": null,
+    "source": "table_011.Target:argmax"
+  },
+  "table_011.Target.largest_share": {
+    "key": "table_011.Target.largest_share",
+    "value": 19.28127159640636,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_011.Target:argmax/share"
+  },
+  "table_012.first_label": {
+    "key": "table_012.first_label",
+    "value": "Upside is above 10%",
+    "kind": "text",
+    "unit": null,
+    "source": "table_012.Large caps:first"
+  },
+  "table_012.last_label": {
+    "key": "table_012.last_label",
+    "value": "Downside is more than 0%",
+    "kind": "text",
+    "unit": null,
+    "source": "table_012.Large caps:last"
+  }
+}

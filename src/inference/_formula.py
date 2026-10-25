@@ -24,7 +24,8 @@ import pandas as pd
 
 from src.contracts import Expr, FormulaSpec
 from src.errors import FormulaSyntaxError
-from src.inference._refdate import DEFAULT_TZ, completed_years, to_calendar_dates
+from src.core.expr import evaluate  # noqa: F401  (the one shared interpreter)
+from src.inference._refdate import DEFAULT_TZ, to_calendar_dates
 
 COL_RE = re.compile(r"\[([^\[\]]+)\]")
 PLACEHOLDER_RE = re.compile(r"__c\d+")          # internal names; never allowed in the model's text
@@ -131,44 +132,6 @@ def split_inputs(e: Expr) -> tuple[set[str], set[str]]:
         else:
             stack.extend(x.args)
     return dates, numbers
-
-
-def evaluate(e: Expr, df: pd.DataFrame) -> pd.Series:
-    """Row-wise interpreter over trusted pandas operations only. Division (/, //, %) by zero -> NaN
-    (reported as invalid arithmetic, never a match)."""
-    idx = df.index
-    if e.op == "col":
-        return df[e.col]
-    if e.op == "const":
-        return pd.Series(e.value, index=idx, dtype=float)
-    a = [evaluate(x, df) for x in e.args]
-    if e.op in ("add", "sub", "mul", "div", "floordiv", "mod"):
-        x, y = a[0].astype(float), a[1].astype(float)
-        if e.op in ("div", "floordiv", "mod"):
-            y = y.where(y != 0)
-            return {"div": x / y, "floordiv": x // y, "mod": x % y}[e.op]
-        return {"add": x + y, "sub": x - y, "mul": x * y}[e.op]
-    if e.op == "neg":
-        return -a[0].astype(float)
-    if e.op in ("sum", "min", "max"):
-        frame = pd.concat([s.astype(float) for s in a], axis=1)
-        return getattr(frame, e.op)(axis=1, skipna=False)
-    if e.op == "abs":
-        return a[0].astype(float).abs()
-    if e.op == "round":
-        return a[0].astype(float).round(int(e.args[1].value))
-    if e.op in ("years_between", "days_between"):
-        later, earlier = to_calendar_dates(a[0])[0], to_calendar_dates(a[1])[0]
-        if e.op == "years_between":
-            return completed_years(earlier, later)        # calendar arithmetic, not days / 365.25
-        return (later - earlier).dt.days.astype(float)
-    if e.op == "pct_change":
-        new, old = a[0].astype(float), a[1].astype(float)
-        return 100.0 * (new / old.where(old != 0) - 1)
-    if e.op == "ratio_pct":
-        num, den = a[0].astype(float), a[1].astype(float)
-        return 100.0 * num / den.where(den != 0)
-    raise FormulaSyntaxError(f"unsupported op {e.op}")
 
 
 def rounding_tolerance(spec: FormulaSpec, df: pd.DataFrame, decimals: dict[str, int]) -> pd.Series:

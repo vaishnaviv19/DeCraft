@@ -9,6 +9,7 @@ from __future__ import annotations
 import pandas as pd
 
 from src.contracts import FieldProfile, SourceTable
+from src.core.dates import to_calendar_dates
 from src.core.missingness import token_kind
 from src.core.values import parse_number
 
@@ -26,9 +27,10 @@ def table_frame(table: SourceTable, profiles: list[FieldProfile]) -> tuple[pd.Da
             if profile.decimals is not None:
                 decimals[profile.column] = profile.decimals
         elif profile.physical_type == "date":
-            cols[profile.column] = pd.to_datetime(
-                pd.Series([None if token_kind(x) else str(x) for x in raw]),
-                format="mixed", errors="coerce")
+            # Day/month order is never guessed: ambiguous 03/04/2025 needs the column's own evidence
+            # (see core.dates); unreadable dates become missing here, never a silent wrong date.
+            cols[profile.column] = to_calendar_dates(
+                pd.Series([None if token_kind(x) else str(x) for x in raw], dtype=object))[0]
         else:
             cols[profile.column] = pd.Series(
                 [None if token_kind(x) else str(x).strip() for x in raw], dtype=object)
