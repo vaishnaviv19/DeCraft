@@ -9,7 +9,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
-SCHEMA_VERSION = "2.0"
+SCHEMA_VERSION = "2.2"                         # 2.2: Annotator labels on InferenceReport, ChartSpec (additive)
 
 
 class Strict(BaseModel):
@@ -211,8 +211,8 @@ class FieldProfile(Strict):
 
 class Expr(Strict):
     """Formula expression tree. Built ONLY by inference._formula.parse_formula (never by eval)."""
-    op: Literal["col", "const", "add", "sub", "mul", "div", "neg", "sum", "min", "max", "abs", "round",
-                "years_between", "days_between", "pct_change", "ratio_pct"]
+    op: Literal["col", "const", "add", "sub", "mul", "div", "floordiv", "mod", "neg", "sum", "min", "max",
+                "abs", "round", "years_between", "days_between", "pct_change", "ratio_pct"]
     col: str | None = None
     value: float | None = None
     args: list["Expr"] = []
@@ -231,7 +231,7 @@ class FormulaSpec(Strict):
             e = stack.pop()
             if e.op == "col" and e.col not in out:
                 out.append(e.col)
-            stack.extend(e.args)
+            stack.extend(reversed(e.args))
         return out
 
 
@@ -319,6 +319,9 @@ class InferenceReport(Strict):
     text_facts: list[TextFact] = []
     warnings: list[str] = []
     llm_used: bool = False
+    # 'table.column' -> Sensitivity Class / importance proposed by the Annotator (M4 stricter-of merge).
+    sensitivity_labels: dict[str, str] = {}
+    column_importance: dict[str, str] = {}
 
 
 # ---------------------------------------------------------------- privacy, validation
@@ -392,6 +395,15 @@ class Fact(Strict):
     kind: Literal["number", "text", "word"]
     unit: str | None = None
     source: str                                  # 'orders.revenue:sum' or 'pattern:p3'
+
+
+class ChartSpec(Strict):
+    """A registered chart. Its data is read from the Display Table, never from anywhere else."""
+    chart_id: str
+    table_id: str
+    label_column: str
+    series_columns: list[str] = Field(min_length=1)
+    title: str | None = None
 
 
 class RunManifest(Strict):

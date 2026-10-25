@@ -23,15 +23,15 @@ Source of these terms: the two DeCraft specification documents (the existing rep
 | Term | Context | Definition | Allowed States/Actions |
 | --- | --- | --- | --- |
 | Source PDF | input | The PDF the user supplies. Its content is untrusted data. | Read only. Its text is never followed as instructions. |
-| Blueprint | existing `src/blueprint` | The existing structured description of the Source PDF (blocks, tables, layout, style). | Existing behaviour is frozen by the Golden Baseline; M1 may only add the `to_source_document` adapter and optional provenance. |
-| Document Plan | existing `src/planner` | The existing plan of sections, word targets and elements for the output document. | Read only for all new modules. |
-| Source Document | `SourceDocument` | The adapter view of the Blueprint used by new modules: document hash, Entity Name, Source Tables, text blocks. | Built once per Run by `to_source_document`; immutable afterwards. |
-| Source Table | `SourceTable` | One extracted table: header, Raw Cells, page, caption, context text, provenance, Table Quality. | Raw Cells are never overwritten; normalisation produces new values beside them. |
+| Blueprint | existing `src/blueprint` | The existing structured description of the Source PDF (blocks, tables, layout, style). | Existing behaviour is frozen by the Golden Baseline; M1 may only add the `to_source_document` adapter and optional provenance. existing code: `src/blueprint/build_blueprint.py`, `blueprint.json`. |
+| Document Plan | existing `src/planner` | The existing plan of sections, word targets and elements for the output document. | Read only for all new modules. existing code: `src/planner/build_plan.py`, `document_plan.json`. |
+| Source Document | `SourceDocument` | The adapter view of the Blueprint used by new modules: document hash, Entity Name, Source Tables, text blocks. | Built once per Run by `to_source_document`; immutable afterwards. existing code: `blueprint.json`. |
+| Source Table | `SourceTable` | One extracted table: header, Raw Cells, page, caption, context text, provenance, Table Quality. | Raw Cells are never overwritten; normalisation produces new values beside them. existing code: `blueprint.tables[]` (a Table Schema without cells); the cells are in the Source CSV. |
 | Raw Cell | `SourceTable.raw_cells` | The original extracted string of a cell (for example `"$1,250.40"` or `"—"`). | Kept for the whole Run alongside the normalised value. |
 | Provenance | `SourceRef` | Where a value came from: document hash, page, table, row, column, bbox, extraction method. | Attached to Evidence; never invented. |
 | Extraction Grade | `ExtractionGrade` | The three-level reliability of one Source Table. | `good` (normal inference), `doubtful` (rules capped at `hypothesized`), `bad` (table skipped and logged). Can only be lowered after grading (for example by a Total Mismatch), never raised. |
 | Table Quality | `TableQuality` | Extraction Grade plus the list of issues found. | Set by `grade_table`; issues are reported verbatim. |
-| Entity Name | `SourceDocument.entity_name` | The name of the company or organisation the Source PDF is about, plus its branding. | Always preserved and exempt from regeneration (D-07). |
+| Entity Name | `SourceDocument.entity_name` | The name of the company or organisation the Source PDF is about, plus its branding. | Always preserved and exempt from regeneration (D-07). existing code: `entity.entity_name`. |
 
 ## 3. Inference
 
@@ -40,7 +40,7 @@ Source of these terms: the two DeCraft specification documents (the existing rep
 | Inference Report | `InferenceReport` | Everything inferred from the Source Document: Field Profiles, Rules, Relationships, Patterns, Text Facts, Table Quality, Reference Date, warnings. | Produced only by `inference.infer`; JSON round-trip safe; carries `schema_version`, `source_sha256` and `config_hash`. |
 | Field Profile | `FieldProfile` | The description of one column: physical type, semantic type, unit, Scale, Decimals, Additive flag, counts, Missing Kinds, statistics, Extraction Grade. | Counts must be consistent (`n_missing ≤ n`, `n_unique ≤ n − n_missing`). |
 | Physical Type | `FieldProfile.physical_type` | The storage type of a column. | One of `integer`, `float`, `text`, `date`, `period`, `boolean`, `empty`. |
-| Semantic Type | `FieldProfile.semantic_type` | What a column means in the domain (currency, percentage, identifier, count ...). | Proposed by rules and the Annotator; uncertain values stay `unknown`. |
+| Semantic Type | `FieldProfile.semantic_type` | What a column means in the domain (currency, percentage, identifier, count ...). | Proposed by rules and the Annotator; uncertain values stay `unknown`. Values used so far: `currency`, `percentage`, `count`, `identifier`, `numeric`, `category`, `date`, `period`, `text`, `unknown`. |
 | Base Units | `core/units.py` | Values stored without display scale (dollars, not millions). | All stored numbers are in Base Units; Scale is used only to parse and format. |
 | Scale | `ScaleInfo`, `FieldProfile.scale` | The multiplier between displayed and Base Units (1e6 for "$ millions"). | Never applied to percentages or counts. |
 | Decimals | `FieldProfile.decimals` | The most common number of displayed decimals in a column. | Sets Display Rounding and Formula tolerance. |
@@ -159,7 +159,7 @@ Source of these terms: the two DeCraft specification documents (the existing rep
 | Stray Number | `stray_numbers` | A digit written in a narrative template outside a Placeholder. | Not allowed: the draft is rejected and retried, then the fallback template is used. |
 | Direction Word | word Fact | The wording of a Trend or segment ("increased", "declined", ...). | Chosen from the PatternSpec, never by the LLM. |
 | Section Writer | `narrative/_writer.py` | The LLM agent that writes one section as a placeholder template. | Receives Fact keys and labels, never values; falls back to deterministic templates. |
-| Chart Spec | `CanonicalDataset.charts` | A registered chart: table, label column and series columns. | A chart can only be drawn from a registered Chart Spec; its data is read from the Display Table. |
+| Chart Spec | `CanonicalDataset.charts` | A registered chart: table, label column and series columns. | A chart can only be drawn from a registered Chart Spec; its data is read from the Display Table. existing code: `paired_chart_spec` (Document Plan), `figures_charts[]` (Blueprint). |
 | Chart/Table Mismatch | `assert_chart_matches_table` | A chart series value that differs from its Display Table cell. | Must be zero (Gate). |
 | Rendered-PDF QA | `rendering/_qa.py` | Checks on the final PDF: pages rendered, page count, overflow, placeholders, word count, captions and units, chart sidecars. | Anything needing human judgement → Manual Review Required. |
 | Manual Review Required | `QAResult.manual_review_required` | A check the system cannot pass automatically (for example visual similarity without a multimodal model). | Reported; never silently passed. |
@@ -193,3 +193,39 @@ Source of these terms: the two DeCraft specification documents (the existing rep
 | Fixture | `tests/fixtures/<domain>/` | A small source dataset with a hand-written expected inference. | At least 3 domains plus an unknown-domain fixture. |
 | Hard-gate Test | tests | A test protecting a Gate (false-break rate, mismatches, privacy leaks, repair bound). | Fixed only by changing code or Config, never the assertion. |
 | Decision Label | spec section 3 | An identifier D-xx, B-xx or G-xx for a binding decision, fixed bug or closed gap. | Cited in code comments where implemented. |
+
+## 12. Existing pipeline terms (added in M0 step 2.1)
+
+Terms used by `src/blueprint/`, `src/planner/` and `scripts/` that the sections above did not yet cover. They describe the frozen extraction and planning stages; new modules read them and never change them.
+
+| Term | Context | Definition | Allowed States/Actions |
+| --- | --- | --- | --- |
+| Text Block | `blueprint.text_blocks` | One styled span of extracted text: page, `block_id`, text, font name, font size, font weight, colour, Bounding Box and origin. | Content is untrusted data. existing code: `extract_text_blocks`. |
+| Bounding Box | `text_blocks[].bbox` | The rectangle of a Text Block or Figure on its page, in PDF points (`x0`, `y0`, `x1`, `y1`). | Read only; used as Provenance. |
+| Heading | `blueprint.headings` | A Text Block promoted to a Heading Level from font-size and weight clustering only (no keyword lists). | Level is `H1`, `H2` or `H3`; carries a `confidence`. existing code: `detect_headings`. |
+| Heading Level | `blueprint.headings[].level` | The rank of a Heading. | `H1`, `H2`, `H3`. |
+| Page Structure | `blueprint.page_structure` | One record per page: page size, margins, Running Header/Footer, page-number format and Column Layout. | Read only. existing code: `extract_page_structure`. |
+| Page Margin | `page_structure[].margins` | The smallest text offset from each page edge, in points (`left`, `top`, `right`, `bottom`). | Used to place blocks and to detect overflow in Rendered-PDF QA. |
+| Running Header | `page_structure[].header` | The repeated top-of-page text of one page, with its Bounding Box when known. | `null` when absent. |
+| Running Footer | `page_structure[].footer` | The repeated bottom-of-page text of one page, with its Bounding Box when known. | `null` when absent. |
+| Column Layout | `page_structure[].column_layout` | The number of text columns on a page. | `single`, `multi`, `unknown`. |
+| Colour Palette | `blueprint.color_palette` | The dominant and accent colours of the Source PDF plus the raw colour counts. | Read only for rendering style. existing code: `extract_palette`. |
+| Dominant Colour | `color_palette.dominant` | Up to four colours that cover most non-black text and raster pixels. | Hex strings. |
+| Accent Colour | `color_palette.accent` | Up to four further colours used for emphasis. | Hex strings. |
+| Figure | `blueprint.figures_charts` | An image extracted from the Source PDF: `figure_id`, image path, page location, Bounding Box, Chart Type and the classification method. | Read only. existing code: `extract_charts`. |
+| Chart Type | `figures_charts[].chart_type` | The shape of a Figure, from a heuristic or a vision model. | `bar`, `line`, `pie`, `other`. |
+| Table Schema | `blueprint.tables[]` | The header and per-column description of one Source Table (no cell values): table id, Source CSV path, Column Headers, counts, Inferred Column Types. | Read only; the cells come from the Source CSV. existing code: `extract_table_schemas`. |
+| Column Header | `tables[].column_headers` | The header labels of one Source Table, in column order. | Any string, including empty. |
+| Inferred Column Type | `tables[].columns[].inferred_type` | The cell type the Blueprint observed in a column, before inference. | `integer`, `float`, `string`, `currency`, `percentage`, `numeric_with_units`, `empty/null`. |
+| Source CSV | `tables[].source_csv` | The CSV holding the Raw Cells of one Source Table, written by the extraction stage. | Read only; original strings kept verbatim. |
+| Reconstructed Table | `outputs/structured/reconstructed_tables/` | The merged-cell-aware table CSVs the Blueprint prefers over the plain `tables/` ones, with a manifest of page, row, column and merged-cell data. | The manifest supplies the page number of a Source Table. existing code: `manifest.json`. |
+| Blueprint Validation | `blueprint.validation` | The FR-A1 check of the Source PDF (exists, readable, unencrypted, at least one page) with its metadata. | Read only. existing code: `validate_pdf`. |
+| Section | `document_plan.sections` | One planned part of the output document: id, title, purpose, Target Word Count, Required Components, tables, charts and source page. | Read only for all new modules. existing code: `build_document_plan`. |
+| Section Purpose | `sections[].purpose` | The one-sentence job of a Section. | Non-empty text. |
+| Target Word Count | `sections[].target_word_count` | The number of words the Section Writer must aim for. | Integer; the Document Plan total is at least 1,000 (safety margin 1,500). |
+| Required Component | `sections[].required_components` | The element types a Section must contain. | `narrative`, `table`, `chart`. |
+| Words per Page Target | `document_plan.words_per_page_target` | The source word count per page that the plan reproduces. | Read only. |
+| Paired Chart Requirement | `sections[].paired_chart_requirements` | The binding rule that every planned table declares its Chart Spec. | Enforced by `enforce_rules`; one per planned table. |
+| Plan Constraint | `document_plan.constraints` | The rules the plan guarantees (no verbatim copy, same table count, one chart per table, same words per page). | Read only. existing code: `enforce_rules`, `validate_plan`. |
+| Run Script | `scripts/run_blueprint_and_plan.py` | The existing entry point that builds the Blueprint and the Document Plan for one Source PDF. | Behaviour frozen by the Golden Baseline; `scripts/run_decraft.py` is added in M9. |
+

@@ -29,31 +29,32 @@ class FakeLLM:
 
 @pytest.fixture
 def cfg():
-    return load_config()
+    """The deterministic path is the default in tests (LLM-off Mode)."""
+    return load_config(llm_enabled=False)
 
 
 @pytest.fixture
-def rng():
-    return np.random.default_rng(123)
+def rng(cfg):
+    return np.random.default_rng(cfg.seed)
 
 
 @pytest.fixture
 def gateway_for(tmp_path):
+    '''gateway_for(FakeLLM([...]), **kw) -> LLMGateway with a private cache directory.'''
     def _make(llm=None, **kw):
         llm = llm or FakeLLM(['{}'])
-        d = tmp_path / "cache"
-        d.mkdir(exist_ok=True)
-        return LLMGateway(client=llm, cache_dir=d, **kw)
+        return LLMGateway(client=llm, cache_dir=tmp_path / 'llm_cache', **kw)
     return _make
 
 
 @pytest.fixture
 def sales_df():
+    units = [120, 80, 150, 95, 110, 70]
+    price = [45.0, 50.0, 42.0, 48.0, 46.0, 52.0]
+    revenue = [u * p for u, p in zip(units, price)]
+    cost = [3900, 2800, 4700, 3300, 3700, 2600]
     return pd.DataFrame({
-        'Ref': ['R1', 'R2', 'R3', 'R4', 'R5', 'R6'],
-        'Region': ['North', 'South', 'North', 'East', 'West', 'North'],
-        'Units': [10, 20, 15, 5, 8, 12],
-        'Unit Price': [100.0, 50.0, 80.0, 200.0, 125.0, 90.0],
-        'Revenue': [1000.0, 1000.0, 1200.0, 1000.0, 1000.0, 1080.0],
-        'Cost': [700.0, 800.0, 900.0, 800.0, 750.0, 810.0],
-    })
+        'Ref': ['A-101', 'A-102', 'A-103', 'A-104', 'A-105', 'A-106'],
+        'Region': ['North', 'South', 'North', 'East', 'South', 'West'],
+        'Units': units, 'Unit Price': price, 'Revenue': revenue, 'Cost': cost,
+        'Profit': [r - c for r, c in zip(revenue, cost)]})
