@@ -52,8 +52,13 @@ def _contact_sheet(images: list[Path], target: Path, columns: int = 3) -> None:
     sheet.save(target)
 
 
+DASHES = str.maketrans({c: "-" for c in "‐‑‒–—−­"})
+
+
 def _squash(text: str) -> str:
-    return "".join(str(text).split()).lower()
+    """Text compared without spaces, case or dash variants: the PDF renderer may print '-' as a
+    non-breaking hyphen (U+2011) at a line break (live run 2026-10-26)."""
+    return "".join(str(text).translate(DASHES).split()).lower()
 
 
 def run_qa(pdf_path: Path, data: CanonicalDataset, out_dir: Path, planned_pages: int | None = None,

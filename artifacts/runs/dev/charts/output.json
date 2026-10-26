@@ -1,0 +1,16 @@
+{
+  "charts": 8,
+  "kinds": {
+    "bar": 2,
+    "line": 6
+  },
+  "sidecars_match": true,
+  "every_displayed_table": true,
+  "unchartable": [
+    "table_001",
+    "table_002",
+    "table_005",
+    "table_012"
+  ],
+  "contact_sheet": "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\charts\\contact_charts.png"
+}

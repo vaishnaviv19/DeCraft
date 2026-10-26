@@ -53,6 +53,7 @@ class Block(Strict):
     block_id: str                      # 'p3b07'
     kind: BlockKind
     bbox: BBox
+    text: str | None = None            # the block's text (headings, paragraphs, captions)
     style_id: str | None = None        # TextStyle for text-like blocks
     source_words: int = 0              # words in the SOURCE block (word budget = +/-15%)
     section_id: str | None = None      # which section owns this block

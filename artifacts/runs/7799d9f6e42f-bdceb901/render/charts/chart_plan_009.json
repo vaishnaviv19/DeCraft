@@ -1,0 +1,37 @@
+{
+  "chart_id": "chart_plan_009",
+  "table_id": "table_009",
+  "label_column": "Y.E March (Rs. cr)",
+  "kind": "line",
+  "orientation": "rows",
+  "labels": [
+    "FY21A",
+    "FY22A",
+    "FY23A",
+    "FY24E",
+    "FY25E"
+  ],
+  "series": {
+    "Y.E March (Rs. cr) AN": [
+      158477.0,
+      179756.0,
+      197823.0,
+      210072.0,
+      218888.0
+    ],
+    "Y.E March (Rs. cr) AF": [
+      154299.0,
+      181764.0,
+      206920.0,
+      212867.0,
+      215969.0
+    ],
+    "Y.E March (Rs. cr) Z": [
+      111930.0,
+      122477.0,
+      134168.0,
+      154598.0,
+      164830.0
+    ]
+  }
+}

@@ -1,0 +1,315 @@
+{
+  "words": 3970,
+  "llm_used": false,
+  "flags": [],
+  "sections": [
+    {
+      "sid": "S0",
+      "title": "Year in Review",
+      "words": 114,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S1",
+      "title": "Performance in Focus",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S2",
+      "title": "Operating Highlights",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S3",
+      "title": "Building for the Future",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S4",
+      "title": "The Year at a Glance",
+      "words": 99,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S5",
+      "title": "Looking Ahead",
+      "words": 315,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S6",
+      "title": "Year in Review 2",
+      "words": 236,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S7",
+      "title": "Performance in Focus 2",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S8",
+      "title": "Operating Highlights 2",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S9",
+      "title": "Building for the Future 2",
+      "words": 133,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S10",
+      "title": "The Year at a Glance 2",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S11",
+      "title": "Looking Ahead 2",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S12",
+      "title": "Year in Review 3",
+      "words": 114,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S13",
+      "title": "Performance in Focus 3",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S14",
+      "title": "Operating Highlights 3",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S15",
+      "title": "Building for the Future 3",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S16",
+      "title": "The Year at a Glance 3",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S17",
+      "title": "Looking Ahead 3",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S18",
+      "title": "Year in Review 4",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S19",
+      "title": "Performance in Focus 4",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S20",
+      "title": "Operating Highlights 4",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S21",
+      "title": "Building for the Future 4",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S22",
+      "title": "The Year at a Glance 4",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S23",
+      "title": "Looking Ahead 4",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S24",
+      "title": "Year in Review 5",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S25",
+      "title": "Performance in Focus 5",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S26",
+      "title": "Operating Highlights 5",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S27",
+      "title": "Building for the Future 5",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S28",
+      "title": "The Year at a Glance 5",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S29",
+      "title": "Looking Ahead 5",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S30",
+      "title": "Year in Review 6",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S31",
+      "title": "Performance in Focus 6",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S32",
+      "title": "Operating Highlights 6",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S33",
+      "title": "Building for the Future 6",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S34",
+      "title": "The Year at a Glance 6",
+      "words": 63,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S35",
+      "title": "Looking Ahead 6",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S36",
+      "title": "Year in Review 7",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S37",
+      "title": "Performance in Focus 7",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S38",
+      "title": "Operating Highlights 7",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S39",
+      "title": "Building for the Future 7",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S40",
+      "title": "The Year at a Glance 7",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S41",
+      "title": "Looking Ahead 7",
+      "words": 199,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S42",
+      "title": "Year in Review 8",
+      "words": 60,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S43",
+      "title": "Performance in Focus 8",
+      "words": 597,
+      "ok": true,
+      "flags": []
+    }
+  ]
+}

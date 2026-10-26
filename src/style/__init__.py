@@ -14,12 +14,7 @@ from src.contracts import SourceDocument
 from src.contracts.report import FigureInfo, PageTemplate, RecoveredChart, StyleProfile
 from src.llm import LLMGateway
 from src.style._extract import extract_style
-from src.style._templates import build_templates
+from src.style._figures import analyse_figures
+from src.style._templates import build_templates, numeric_share
 
-__all__ = ["extract_style", "build_templates", "analyse_figures"]
-
-
-def analyse_figures(pdf_path: Path, templates: list[PageTemplate], cfg: Config,
-                    gateway: LLMGateway | None) -> tuple[list[FigureInfo], list[RecoveredChart]]:
-    """Figure Analyst labels, and data recovered from charts that have no table."""
-    raise NotImplementedError("M8.3: style.analyse_figures")
+__all__ = ["extract_style", "build_templates", "analyse_figures", "numeric_share"]

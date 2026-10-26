@@ -97,7 +97,23 @@ class LLMGateway:
                 last_err = "timeout"
                 self.log.append(CallRecord(prompt.name, False, attempt, False, last_err))
             except Exception as error:                 # the model server is down: deterministic path
+                import httpx
+
                 from src.llm._clients import LLMUnavailable   # imported here to avoid a cycle
+                if isinstance(error, httpx.HTTPStatusError):
+                    # live run 2026-10-26: a 401 from Cloudflare stopped the whole run
+                    status = error.response.status_code
+                    last_err = f"provider refused the request: HTTP {status}"
+                    self.log.append(CallRecord(prompt.name, False, attempt, False, last_err))
+                    self._write_log(prompt, attempt, False, last_err, False)
+                    if status in (401, 403):           # the key is not accepted: stop asking this provider
+                        self.enabled = False
+                        return None
+                    if status == 429 or status >= 500:
+                        continue                       # busy or broken right now: try again
+                    return None                        # the request itself is wrong: no point repeating it
+                if isinstance(error, httpx.TransportError):
+                    error = LLMUnavailable(str(error))
                 if not isinstance(error, LLMUnavailable):
                     raise
                 last_err = f"unavailable: {error}"[:300]

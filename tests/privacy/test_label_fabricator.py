@@ -91,3 +91,55 @@ def test_a_fabricated_column_swaps_only_its_pairs():
     assert r.wants("t", "c")
     assert r.get("t", "c", "- Mundra UMPP") == "- Coastal Thermal"
     assert r.get("t", "c", "46.9") == "46.9" and r.get("t", "c", "Revenue") == "Revenue"
+
+
+# ---------------------------------------------------------------- E-41: real tickers stay (branding)
+def test_listing_codes_are_kept_like_the_company_name():
+    import numpy as np
+    from src.config import load_config
+    from src.contracts import SourceDocument, SourceTable
+    from src.generation import generate
+    from src.inference import infer
+    from src.privacy import listing_codes, plan_privacy
+    cfg = load_config(llm_enabled=False)
+    table = SourceTable(table_id="t1", page=1, header=["BSE CODE: 500400", "NSE CODE: TATAPOWER"],
+                        raw_cells=[["Bloomberg CODE: TPWR:IN", "SENSEX: 67,127"]])
+    doc = SourceDocument(document_sha256="tick1234", entity_name="Tata Power Company Limited", tables=[table],
+                         text_blocks=["Tata Power Company Limited results update for the quarter."])
+    assert listing_codes(doc) == ["BSE CODE: 500400", "NSE CODE: TATAPOWER", "Bloomberg CODE: TPWR:IN"]
+    report = infer(doc, cfg)
+    plan = plan_privacy(doc, report, cfg)
+    assert "Bloomberg CODE: TPWR:IN" in plan.preserved_values
+    assert not any("Bloomberg CODE: TPWR:IN" in m for m in plan.label_maps.values())
+    frame = generate(doc, report, plan, cfg, np.random.default_rng(1)).tables["t1"]
+    assert frame.iloc[0, 0] == "Bloomberg CODE: TPWR:IN"
+    assert frame.iloc[0, 1] != "SENSEX: 67,127" and frame.iloc[0, 1].startswith("SENSEX: ")  # an index level is data
+
+
+def test_numbers_inside_a_replacement_label_must_move_like_data(gateway_for):
+    llm = FakeLLM([reply(("idx.Index", "SENSEX: 67,127", "SENSEX: 67,207")),
+                   reply(("idx.Index", "SENSEX: 67,127", "SENSEX: 58,940"))])
+    made = fabricate_labels([LabelColumn("idx.Index", "Index", "market index level", ["SENSEX: 67,127"])],
+                            gateway_for(llm), set(), set(), set())
+    assert made.maps["idx.Index"] == {"SENSEX: 67,127": "SENSEX: 58,940"}
+    errors = json.loads(llm.calls[1][1].split("<data>")[1].split("</data>")[0])["errors"]
+    assert "67,207" in errors[0] and "5%" in errors[0]
+
+
+def test_a_key_cell_keeps_the_fabricated_replacement():
+    import numpy as np
+    from src.config import load_config
+    from src.contracts import SourceDocument, SourceTable
+    from src.generation import generate
+    from src.inference import infer
+    from src.privacy import plan_privacy
+    cfg = load_config(llm_enabled=False)
+    table = SourceTable(table_id="t1", page=1, header=["BSE CODE: 500400", "NSE CODE: TATAPOWER"],
+                        raw_cells=[["Bloomberg CODE: TPWR:IN", "SENSEX: 67,127"]])
+    doc = SourceDocument(document_sha256="tick5678", entity_name="Tata Power Company Limited", tables=[table],
+                         text_blocks=["Tata Power Company Limited results update for the quarter."])
+    report = infer(doc, cfg)
+    plan = plan_privacy(doc, report, cfg)
+    plan = plan.model_copy(update={"label_maps": {"t1.NSE CODE: TATAPOWER": {"SENSEX: 67,127": "SENSEX: 73,842"}}})
+    frame = generate(doc, report, plan, cfg, np.random.default_rng(1)).tables["t1"]
+    assert frame.iloc[0, 1] == "SENSEX: 73,842"

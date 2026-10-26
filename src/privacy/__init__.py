@@ -9,6 +9,7 @@ quasi-identifier row matches and rare combinations, and always states the standa
 """
 from __future__ import annotations
 
+import re
 from collections import defaultdict
 from types import SimpleNamespace
 
@@ -23,7 +24,7 @@ from src.core.facts import compute_facts
 from src.core.frames import table_frame
 from src.core.rows import label_positions, norm_label, statement_label_column
 from src.core.values import parse_number
-from src.core.originality import name_words, source_proper_nouns
+from src.core.originality import drop_shown, name_words, source_proper_nouns
 from src.core.periods import parse_period
 from src.privacy._agents import advise_methods, apply_advice, find_entity
 from src.privacy._labels import LabelColumn, fabricate_labels
@@ -32,7 +33,8 @@ from src.privacy._analysis import (Relabeler, exempt_columns, leaked_values, nor
 from src.privacy._distance import (headline_violations, quasi_row_matches,
                                    rare_combination_violations, value_distance_violations)
 
-__all__ = ["plan_privacy", "audit_privacy", "Relabeler", "document_values", "is_word_label"]
+__all__ = ["plan_privacy", "audit_privacy", "Relabeler", "document_values", "is_word_label",
+           "fabricate_labels", "LabelColumn", "normalise_text", "listing_codes", "LISTING_RE"]
 
 STRUCTURAL_LABELS = ("total", "subtotal", "sub total", "grand total")   # kept by generation
 STRUCTURAL_NUMBERS = {"100", "100.0", "100.00", "100%", "100.0%"}        # a share total is not data
@@ -121,6 +123,22 @@ def document_values(doc: SourceDocument) -> set[str]:
             if v is not None and (n := normalise_text(v))}
 
 
+LISTING_RE = re.compile(r"\b(?:BSE|NSE|NYSE|NASDAQ|LSE|TSX|ASX|HKEX|SGX|Bloomberg|Reuters|RIC|ISIN|"
+                        r"Ticker|Symbol)\b[^:]{0,20}:\s*[A-Z0-9][A-Z0-9.:\-]{1,20}\s*$", re.I)
+
+
+def listing_codes(doc: SourceDocument) -> list[str]:
+    """E-41: the organisation's stock-listing codes ('Bloomberg CODE: TPWR:IN', 'NSE CODE: TATAPOWER') are
+    part of its identity and branding, like the name: they stay real and are never fabricated."""
+    found = []
+    for table in doc.tables:
+        for value in list(table.header) + [v for row in table.raw_cells for v in row]:
+            text = str(value or "").strip()
+            if text and LISTING_RE.search(text) and text not in found:
+                found.append(text)
+    return found
+
+
 def entity_context(doc: SourceDocument, gateway=None, llm_enabled: bool = False
                    ) -> tuple[list[str], str | None]:
     """-> (protected values, locale). The entity name and address are never regenerated anywhere
@@ -147,6 +165,7 @@ def plan_privacy(doc: SourceDocument, report, cfg: Config, gateway=None) -> Priv
     derived = {f"{rule.table_id}.{rule.formula.output}" for rule in report.rules
                if rule.kind is RuleKind.FORMULA and rule.enforcement is Enforcement.HARD and rule.formula}
     preserved, locale = entity_context(doc, gateway, llm_on)
+    preserved += [code for code in listing_codes(doc) if code not in preserved]     # E-41: real tickers stay
     forbidden = document_values(doc) | {normalise_text(v) for v in preserved}
     profiles = _profiles_by_table(report)
     decisions, tiny, pools, warnings = [], [], {}, []
@@ -211,7 +230,9 @@ def plan_privacy(doc: SourceDocument, report, cfg: Config, gateway=None) -> Priv
             warnings.append(f"{node}: no fabricated labels, replacement labels will be numbered")
     return PrivacyPlan(decisions=decisions, tiny_tables=tiny, preserved_values=preserved,
                        label_pools=pools, label_maps={k: v for k, v in made.maps.items() if v},
-                       kept_labels={k: v for k, v in made.kept.items() if v}, avoid=sorted(avoid),
+                       kept_labels={k: v for k, v in made.kept.items() if v},
+                       avoid=sorted(drop_shown(avoid, [x for v in made.kept.values() for x in v]
+                                               + [x for m in made.maps.values() for x in m.values()])),
                        locale=locale, warnings=warnings)
 
 

@@ -134,7 +134,7 @@ def _page_text_spans(page):
                     yield block_no, line_no, span
 
 
-def extract_style(pdf_path: Path, cfg: Config) -> StyleProfile:
+def extract_style(pdf_path: Path, cfg: Config, out_dir: Path | None = None) -> StyleProfile:
     """Measure the source's look: fonts, Text Styles, palette, page size, margins, header/footer."""
     with pymupdf.open(str(pdf_path)) as doc:
         if len(doc) == 0:
@@ -152,7 +152,8 @@ def extract_style(pdf_path: Path, cfg: Config) -> StyleProfile:
         text_boxes: list[tuple[float, float, float, float]] = []
         widths: list[float] = []
 
-        fonts_dir = Path(cfg.artifacts_dir) / "runs" / "dev" / "style" / "fonts"
+        fonts_dir = (Path(out_dir) if out_dir is not None
+                     else Path(cfg.artifacts_dir) / "runs" / "dev" / "style") / "fonts"
         embedded: dict[tuple[str, bool, bool], bytes] = {}
         for page_no, page in enumerate(doc, start=1):
             height = float(page.rect.height)
@@ -218,7 +219,10 @@ def extract_style(pdf_path: Path, cfg: Config) -> StyleProfile:
                 suffix = "otf" if spec.family.lower() in {"cff"} else "ttf"
                 target = fonts_dir / f"{spec.font_id}-{re.sub(r'[^A-Za-z0-9]', '_', spec.family)}.{suffix}"
                 target.write_bytes(embedded[key])
-                spec.file = target.relative_to(Path(cfg.artifacts_dir)).as_posix()
+                try:                                   # relative when under artifacts, else the full path
+                    spec.file = target.resolve().relative_to(Path(cfg.artifacts_dir).resolve()).as_posix()
+                except ValueError:
+                    spec.file = target.resolve().as_posix()
 
         # Text Styles, most used first.
         ordered = sorted(style_stats.items(), key=lambda item: -item[1]["chars"])

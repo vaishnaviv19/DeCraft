@@ -1,0 +1,11 @@
+{
+  "stages": {
+    "extract": "done",
+    "infer": "done",
+    "privacy_plan": "done",
+    "generate": "done",
+    "privacy_audit": "done",
+    "write": "done",
+    "render": "done"
+  }
+}

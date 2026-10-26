@@ -134,3 +134,35 @@ def completed_years(birth: pd.Series, ref: pd.Series, leap_policy: str = "mar1")
         years = years.where(~backwards, -completed_years(ref.where(backwards), birth.where(backwards),
                                                           leap_policy))
     return years.where(birth.notna() & ref.notna())
+
+
+# ---------------------------------------------------------------- printing dates like the source
+_STYLES = ("%d-%b-%y", "%d-%b-%Y", "%d %b %Y", "%d %b %y", "%d %B %Y", "%b %d, %Y", "%d/%m/%Y",
+           "%m/%d/%Y", "%Y-%m-%d", "%d.%m.%Y", "%d-%m-%Y")
+
+
+def _strftime(ts: pd.Timestamp, style: str, pad_day: bool) -> str:
+    text = ts.strftime(style)
+    if not pad_day and "%d" in style:                          # '2-Aug-22', not '02-Aug-22'
+        text = text.replace(ts.strftime("%d"), str(ts.day), 1)
+    return text
+
+
+def date_style(raw_values) -> tuple[str, bool] | None:
+    """(strftime style, zero-padded day) that writes every readable source cell exactly as it is
+    printed, e.g. ('%d-%b-%y', False) for '2-Aug-22'. None when no style reproduces them all."""
+    cells = [str(v).strip() for v in raw_values if isinstance(v, str) and v.strip()]
+    parsed, _ = to_calendar_dates(pd.Series(cells, dtype=object)) if cells else (pd.Series([], dtype=object), None)
+    pairs = [(c, ts) for c, ts in zip(cells, parsed) if not pd.isna(ts)]
+    if not pairs:
+        return None
+    for style in _STYLES:
+        for pad in (True, False):
+            if all(_strftime(ts, style, pad).lower() == c.lower() for c, ts in pairs):
+                return style, pad
+    return None
+
+
+def format_date_like(value, style: tuple[str, bool] | None) -> str:
+    ts = pd.Timestamp(value)
+    return _strftime(ts, *style) if style else ts.strftime("%Y-%m-%d")

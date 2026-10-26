@@ -28,6 +28,7 @@ import numpy as np
 
 from src.contracts.report import LabelsOut
 from src.core.originality import is_generic_label, names_in, reused_names
+from src.core.values import NUMBER_IN_TEXT
 from src.llm import LLMGateway, PromptSpec
 from src.privacy._agents import _safe, expand_pattern
 from src.privacy._analysis import normalise_text
@@ -105,7 +106,33 @@ class _Checker:
             return f"replacement {new!r} for {src!r} uses a name from 'avoid'"
         if names_in(new, self.names):
             return f"replacement {new!r} for {src!r} uses a name from the source"
+        if (close := _close_numbers(src, new)) is not None:
+            return (f"replacement {new!r} for {src!r} keeps the number {close} almost unchanged: numbers "
+                    f"inside a label are data, change them by at least {int(LABEL_NUMBER_DISTANCE * 100)}%")
         return None
+
+
+LABEL_NUMBER_DISTANCE = 0.05          # the same Value Distance as every other generated number
+
+
+def _numbers(text: str) -> list[tuple[str, float]]:
+    """Data-like numbers in a label: with a decimal point or at least 100 ('67,127', '9.8'), not small
+    counts that are part of a name ('Phase 2', 'Unit 3')."""
+    out = []
+    for token in NUMBER_IN_TEXT.findall(str(text)):
+        value = float(token.replace(",", ""))
+        if "." in token or abs(value) >= 100:
+            out.append((token, value))
+    return out
+
+
+def _close_numbers(src: str, new: str) -> str | None:
+    """Live run 2026-10-26: 'SENSEX: 67,127' came back as 'SENSEX: 67,207' (0.1% apart)."""
+    for token, value in _numbers(new):
+        for _, old in _numbers(src):
+            if (old == 0 and value == 0) or (old != 0 and abs(value - old) / abs(old) < LABEL_NUMBER_DISTANCE):
+                return token
+    return None
 
 
 def _letters(i: int) -> str:

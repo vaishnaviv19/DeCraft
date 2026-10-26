@@ -9,10 +9,11 @@ from src.contracts import NarrativeDoc, NarrativeSection
 from src.contracts.dataset import CanonicalDataset
 from src.llm import LLMGateway
 from src.narrative._placeholders import StrayNumber, UnknownPlaceholder, resolve
+from src.narrative._plan import plan
 from src.narrative._templates import section_template
 from src.narrative._writer import write_section
 
-__all__ = ["write"]
+__all__ = ["write", "plan"]
 
 
 def write(data: CanonicalDataset, plan, cfg: Config,

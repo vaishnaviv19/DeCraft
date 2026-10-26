@@ -98,6 +98,17 @@ def write_sidecar(data: CanonicalDataset, chart_id: str, path: Path) -> Path:
 
 def draw_svg(data: CanonicalDataset, chart_id: str, path: Path, colors: list[str] | None = None,
              font: str | None = None, font_pt: float = 10.0, width_pt: float = 302.0) -> Path:
+    return _draw_chart(data, chart_id, path, "svg", colors, font, font_pt, width_pt)
+
+
+def draw_png(data: CanonicalDataset, chart_id: str, path: Path, colors: list[str] | None = None,
+             font: str | None = None, font_pt: float = 10.0, width_pt: float = 302.0) -> Path:
+    """A raster copy for the contact sheet; the SVG stays the rendered artefact."""
+    return _draw_chart(data, chart_id, path, "png", colors, font, font_pt, width_pt)
+
+
+def _draw_chart(data: CanonicalDataset, chart_id: str, path: Path, fmt: str,
+                colors: list[str] | None, font: str | None, font_pt: float, width_pt: float) -> Path:
     """E-38 Font Lock: the chart is drawn at its displayed width (`width_pt`) and every text uses
     `font_pt` (the source body size), so nothing is scaled when the page shows it. Text stays text."""
     import matplotlib
@@ -113,16 +124,34 @@ def draw_svg(data: CanonicalDataset, chart_id: str, path: Path, colors: list[str
     with plt.rc_context({"font.family": [font, "DejaVu Sans"] if font else ["DejaVu Sans"],
                          "svg.fonttype": "none", **sizes}):
         figure, axes = plt.subplots(figsize=(width_pt / 72.0, width_pt * 0.62 / 72.0))
-        if spec.kind == "pie":
+        if spec.kind in {"pie", "donut"}:
             values = [v or 0.0 for v in next(iter(series.values()))]
-            axes.pie(values, labels=labels, colors=palette, startangle=90, counterclock=False)
+            axes.pie(values, labels=labels, colors=palette, startangle=90, counterclock=False,
+                     wedgeprops={"width": 0.45} if spec.kind == "donut" else None)
             axes.axis("equal")
+        elif spec.kind == "horizontal_bar":
+            height = 0.8 / max(len(series), 1)
+            for k, (name, values) in enumerate(series.items()):
+                points = [float("nan") if v is None else v for v in values]
+                axes.barh([i + k * height for i in range(len(points))], points, height=height,
+                          label=name, color=(palette[k % len(palette)] if palette else None))
+                if spec.has_data_labels:
+                    for i, point in enumerate(points):
+                        if point == point:
+                            axes.text(point, i + k * height, f"{point:g}", va="center", fontsize=font_pt * 0.8)
+            axes.set_yticks([i + height * (len(series) - 1) / 2 for i in range(len(labels))])
+            axes.set_yticklabels(labels)
         elif spec.kind == "bar":
             width = 0.8 / max(len(series), 1)
             for k, (name, values) in enumerate(series.items()):
                 points = [float("nan") if v is None else v for v in values]
                 axes.bar([i + k * width for i in range(len(points))], points, width=width, label=name,
                          color=(palette[k % len(palette)] if palette else None))
+                if spec.has_data_labels:
+                    for i, point in enumerate(points):
+                        if point == point:
+                            axes.text(i + k * width, point, f"{point:g}", ha="center",
+                                      va="bottom", fontsize=font_pt * 0.8)
             axes.set_xticks([i + width * (len(series) - 1) / 2 for i in range(len(labels))])
             axes.set_xticklabels(labels, rotation=30, ha="right")
         else:
@@ -130,14 +159,42 @@ def draw_svg(data: CanonicalDataset, chart_id: str, path: Path, colors: list[str
                 points = [float("nan") if v is None else v for v in values]
                 axes.plot(range(len(points)), points, marker="o", label=name,
                           color=(palette[k % len(palette)] if palette else None))
+                if spec.has_data_labels:
+                    for i, point in enumerate(points):
+                        if point == point:
+                            axes.annotate(f"{point:g}", (i, point), textcoords="offset points",
+                                          xytext=(0, 4), ha="center", fontsize=font_pt * 0.8)
             axes.set_xticks(range(len(labels)))
             axes.set_xticklabels(labels, rotation=30, ha="right")
-        if spec.kind != "pie":
+        axes.set_title(spec.title or chart_id)
+        if spec.unit:
+            axes.set_ylabel(spec.unit)
+        if spec.kind not in {"pie", "donut"}:
             axes.spines[["top", "right"]].set_visible(False)
-            if len(series) > 1:
+            if len(series) > 1 and spec.has_legend:
                 axes.legend(frameon=False)
         figure.tight_layout()
         path.parent.mkdir(parents=True, exist_ok=True)
-        figure.savefig(path, format="svg")
+        figure.savefig(path, format=fmt, dpi=110)
         plt.close(figure)
     return path
+
+
+def contact_sheet(paths: list[Path], target: Path, columns: int = 3) -> Path | None:
+    """Tile the raster copies into one sheet for the M8.5 check; skipped when Pillow is missing."""
+    if not paths:
+        return None
+    try:
+        from PIL import Image
+    except ImportError:
+        return None
+    images = [Image.open(path).convert("RGB") for path in paths]
+    width = max(image.width for image in images)
+    height = max(image.height for image in images)
+    rows = (len(images) + columns - 1) // columns
+    sheet = Image.new("RGB", (columns * width, rows * height), "white")
+    for index, image in enumerate(images):
+        sheet.paste(image, ((index % columns) * width, (index // columns) * height))
+    target.parent.mkdir(parents=True, exist_ok=True)
+    sheet.save(target)
+    return target

@@ -1,0 +1,29 @@
+{
+  "chart_id": "chart_plan_004",
+  "table_id": "table_004",
+  "label_column": "Unnamed: 0",
+  "kind": "line",
+  "orientation": "rows",
+  "labels": [
+    "Q1FY23",
+    "Q4FY23",
+    "Q1FY24"
+  ],
+  "series": {
+    "Revenue": [
+      20694.0,
+      18540.0,
+      21947.0
+    ],
+    "EBITDA": [
+      2717.0,
+      4181.0,
+      4691.0
+    ],
+    "EBIT": [
+      1503.0,
+      2778.0,
+      3294.0
+    ]
+  }
+}

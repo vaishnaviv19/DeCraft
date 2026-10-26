@@ -1,0 +1,13 @@
+{
+  "run_id": "7799d9f6e42f-348f891a",
+  "status": "ok",
+  "pdf_path": "C:\\Users\\vaish\\AppData\\Local\\Temp\\claude\\D--Acalvio\\e07cf2f6-8c09-497f-8d18-6ad1bba399b5\\scratchpad\\llm_real\\runs\\7799d9f6e42f-348f891a\\render\\output.pdf",
+  "gates": {
+    "validation": true,
+    "rendered_pdf_qa": true,
+    "word_count": true,
+    "no_placeholders": true,
+    "chart_table": true,
+    "privacy_audit": true
+  }
+}

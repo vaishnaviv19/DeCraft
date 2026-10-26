@@ -107,3 +107,16 @@ def name_words(text: str, organisation: str | None = None) -> set[str]:
 def names_in(label: str, names: set[str]) -> list[str]:
     """The name words a label contains (case-insensitive, whole words)."""
     return sorted({w.lower() for w in _WORD.findall(str(label))} & names)
+
+
+def drop_shown(avoid, shown_labels) -> set[str]:
+    """Avoid-list names that the output's own tables already show (kept standard terms such as
+    'Depreciation', or fabricated labels) may be written about; every other source name stays banned.
+    Live run 2026-10-26: 90 of 261 avoid names were kept table vocabulary."""
+    hay = [" " + re.sub(r"[^a-z0-9]+", " ", str(label).lower()).strip() + " " for label in shown_labels if label]
+    out = set()
+    for name in avoid:
+        needle = " " + re.sub(r"[^a-z0-9]+", " ", str(name).lower()).strip() + " "
+        if needle.strip() and not any(needle in h for h in hay):
+            out.add(name)
+    return out

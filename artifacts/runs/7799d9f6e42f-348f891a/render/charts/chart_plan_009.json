@@ -1,0 +1,37 @@
+{
+  "chart_id": "chart_plan_009",
+  "table_id": "table_009",
+  "label_column": "Y.E March (Rs. cr)",
+  "kind": "line",
+  "orientation": "rows",
+  "labels": [
+    "FY21A",
+    "FY22A",
+    "FY23A",
+    "FY24E",
+    "FY25E"
+  ],
+  "series": {
+    "Gross Fixed Assets": [
+      112249.0,
+      120129.0,
+      131428.0,
+      152698.0,
+      170344.0
+    ],
+    "Net Fixed Assets": [
+      77953.0,
+      84220.0,
+      90576.0,
+      106697.0,
+      113093.0
+    ],
+    "Debt Funds": [
+      70235.0,
+      76218.0,
+      81723.0,
+      76429.0,
+      71416.0
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "ok": true,
+  "pages": 6,
+  "checks": {
+    "pages_rendered": true,
+    "page_count": true,
+    "no_unresolved_placeholders": true,
+    "word_count": true,
+    "no_overflow": true,
+    "charts_present": true,
+    "chart_sidecars": true,
+    "charts_captioned": true
+  },
+  "notes": [
+    "6 pages rendered",
+    "2857 words",
+    "chart_plan_001: table table_001 has no number column",
+    "chart_plan_002: table table_002 has no number column",
+    "chart_plan_012: table table_012 has no number column",
+    "chart_plan_005: table table_005 has no number column"
+  ],
+  "manual_review_required": [
+    "visual similarity to the source layout needs a multimodal model or a human"
+  ]
+}

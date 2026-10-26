@@ -188,7 +188,8 @@ def contradicts(template: str, facts: dict) -> bool:
     return False
 
 
-def build_prompt(section: dict, fact_keys: list[str], facts: dict | None = None) -> str:
+def build_prompt(section: dict, fact_keys: list[str], facts: dict | None = None,
+                 errors: list[str] | None = None) -> str:
 
     payload = {"title": section.get("title"), "purpose": section.get("purpose"),
 
@@ -199,6 +200,8 @@ def build_prompt(section: dict, fact_keys: list[str], facts: dict | None = None)
                "example": "Revenue reached {{ orders.Revenue.total }} in the period, while costs "
 
                           "fell by {{ orders.Cost.growth|%:1|abs }}."}
+    if errors:
+        payload["errors"] = errors[:10]          # the previous draft's problems, to fix in this one
 
     return json.dumps(payload)
 
@@ -213,41 +216,308 @@ def section_first(section: dict, fact_keys: list[str]) -> list[str]:
     return mine + [k for k in fact_keys if k not in set(mine)]
 
 
-def fitted_prompt(section: dict, fact_keys: list[str], facts: dict | None = None) -> str:
+def fitted_prompt(section: dict, fact_keys: list[str], facts: dict | None = None,
+                  errors: list[str] | None = None) -> str:
     """The section payload cut to the prompt's input cap: the least relevant facts are dropped first.
     Before this, every section sent up to 120 facts, went over the cap and fell back to the template."""
     keys = section_first(section, fact_keys)[:MAX_KEYS]
     budget = SECTION_PROMPT.max_input_tokens - estimate_tokens(SECTION_PROMPT.system)
     while True:
-        user = build_prompt(section, keys, facts)
+        user = build_prompt(section, keys, facts, errors)
         if estimate_tokens(user) <= budget or len(keys) <= 1:
             return user
         keys = keys[:max(1, int(len(keys) * 0.8))]
 
 
 def write_section(section: dict, fact_keys: list[str], cfg: Config, gateway: LLMGateway,
-
                   facts: dict | None = None) -> str | None:
+    """A validated placeholder template, or None so the caller falls back to the deterministic text.
+    A draft that fails a check is sent back with the list of errors (report.writer_retries times)."""
+    errors: list[str] = []
+    for _attempt in range(1 + max(0, cfg.report.writer_retries)):
+        draft = gateway.ask_json(SECTION_PROMPT, fitted_prompt(section, fact_keys, facts, errors), SectionDraft)
+        if draft is None:
+            return None                              # no valid JSON after the gateway's own retries
+        text = unescape_keys(draft.text)
+        errors = draft_errors(text, fact_keys, facts)
+        if not errors:
+            return text
+    return None
 
-    """A validated placeholder template, or None so the caller falls back to the deterministic text."""
 
-    draft = gateway.ask_json(SECTION_PROMPT, fitted_prompt(section, fact_keys, facts), SectionDraft)
+def unescape_keys(text: str) -> str:
+    """Live run 2026-10-26: the model put a backslash before spaces inside placeholders ('EBITDA, backslash,
+    space, Margin'). Dropping a backslash before a space or punctuation is safe: the key must still
+    match a real fact exactly."""
+    return PLACEHOLDER_RE.sub(lambda m: re.sub(r"\\([ ()%.,&/-])", r"\1", m.group(0)), text)
 
-    if draft is None or not draft.text.strip() or len(draft.text) > MAX_DRAFT_CHARS:
 
-        return None
+def draft_errors(text: str, fact_keys: list[str], facts: dict | None) -> list[str]:
+    """Every reason a draft cannot be used; empty when it passes."""
+    if not text.strip():
+        return ["the text is empty"]
+    if len(text) > MAX_DRAFT_CHARS:
+        return [f"the text is longer than {MAX_DRAFT_CHARS} characters"]
+    errors = []
+    if stray := stray_numbers(text):
+        errors.append(f"numbers written as digits instead of placeholders: {[str(x) for x in stray[:5]]}")
+    known = set(fact_keys)
+    if unknown := [k for k in placeholder_keys(text) if k not in known]:
+        errors.append(f"placeholder keys that are not in 'facts' (use the keys exactly as given): {unknown[:5]}")
+    if facts and contradicts(text, facts):
+        errors.append("a sentence says a figure rose when it fell, or fell when it rose (see 'moved')")
+    return errors
 
-    if stray_numbers(draft.text):
 
-        return None
+# ---------------------------------------------------------------- v3.2 block-level writing (M8.7)
+from pydantic import Field  # noqa: E402
 
-    if any(key not in fact_keys for key in placeholder_keys(draft.text)):
 
-        return None
+class WriterBlockOut(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    id: str
+    text: str
 
-    if facts and contradicts(draft.text, facts):
 
-        return None
+class ClaimOut(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    e: str
+    a: str = ""
+    v: str = ""
+    p: int = 0
+    b: str = ""
 
-    return draft.text
 
+class NewEntityOut(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    id: str
+    kind: str = "initiative"
+    name: str = ""
+    attrs: dict[str, str] = Field(default_factory=dict)
+
+
+class WriterOut(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    blocks: list[WriterBlockOut]
+    claims: list[ClaimOut] = Field(default_factory=list)
+    new: list[NewEntityOut] = Field(default_factory=list)
+
+
+def _word_range(source_words: int) -> tuple[int, int]:
+    words = max(1, int(source_words))
+    return max(1, round(words * 0.85)), max(1, round(words * 1.15))
+
+
+def _label_for(key: str) -> str:
+    return key.split(".")[-1].replace("_", " ").strip().title()
+
+
+MAX_AVOID = 60
+
+
+def section_avoid(section, blocks: dict, avoid: list[str] | set[str] | None) -> list[str]:
+    """The 60 avoid-list names most related to the section: names in its own source blocks first."""
+    names = sorted(avoid or [])
+    own = " ".join((blocks[b].text or "") for b in section.block_ids if b in blocks).lower()
+    near = [n for n in names if n.lower() in own]
+    return (near + [n for n in names if n not in near])[:MAX_AVOID]
+
+
+def build_writer_payload(section, outline, bible, facts: dict, periods: list[str], cap: int,
+                         blocks: dict, tone: dict | None = None, avoid=None, dt: str = "",
+                         dom: str = "") -> tuple[str, list[str]]:
+    """Writer payload (E-12/E-05): required dt/dom/tone/sid/t/g/bl/f/per/avoid (spec M8.7.1; E-26 tone,
+    E-28 avoid); optional bi, ol, else in that priority."""
+    from src.llm import fit_payload
+
+    block_items = []
+    for block_id in section.block_ids:
+        block = blocks.get(block_id)
+        if block is None:
+            continue
+        low, high = _word_range(block.source_words)
+        block_items.append({"id": block_id, "k": block.kind, "w": [low, high]})
+    fact_items = [{"k": key, "l": _label_for(key), "u": facts[key].unit, "band": facts[key].band}
+                  for key in section.fact_keys if key in facts]
+    required = {"dt": dt, "dom": dom, "tone": tone or {}, "sid": section.section_id, "t": section.title,
+                "g": section.goal, "bl": block_items, "f": fact_items, "per": list(periods),
+                "avoid": section_avoid(section, blocks, avoid)}
+    entities = [{"id": entity.id, "kind": entity.kind, "name": entity.name, "attrs": entity.attrs}
+                for entity in bible.entities]
+    others = [other for other in outline.sections if other.section_id != section.section_id]
+    optional = [
+        ("bi", entities),
+        ("ol", [{"sid": other.section_id, "t": other.title, "g": other.goal} for other in others]),
+        ("else", [key for other in others for key in other.fact_keys][:10]),
+    ]
+    return fit_payload(required, optional, cap)
+
+
+def _longest_run(text: str, source: str) -> int:
+    def words(value: str) -> list[str]:
+        return re.findall(r"[a-z0-9]+", value.lower())
+
+    target, origin = words(text), words(source)
+    if not target or not origin:
+        return 0
+    best = 0
+    for i in range(len(target)):
+        for j in range(len(origin)):
+            size = 0
+            while i + size < len(target) and j + size < len(origin) \
+                    and target[i + size] == origin[j + size]:
+                size += 1
+            best = max(best, size)
+    return best
+
+
+def check_section(reply: WriterOut, section, facts: dict, bible, periods: list[str],
+                  source_text: str, blocks: dict, cfg: Config, avoid=None) -> list[str]:
+    """Every check from M8.7.3; an empty list means the reply may be used."""
+    from src.core.originality import reused_names
+    from src.narrative._tokens import illegal_digits
+
+    errors: list[str] = []
+    names = set(avoid or [])
+    if names:                                  # E-28: no source name in the text or in new entities
+        if hit := reused_names(" ".join(block.text for block in reply.blocks), names):
+            errors.append(f"uses names from 'avoid': {hit[:5]}")
+        if hit := reused_names([entity.name for entity in reply.new], names):
+            errors.append(f"new entities reuse names from 'avoid': {hit[:5]}")
+    expected = [block_id for block_id in section.block_ids if block_id in blocks]
+    got = [block.id for block in reply.blocks]
+    if expected and sorted(got) != sorted(expected):
+        missing = sorted(set(expected) - set(got))
+        extra = sorted(set(got) - set(expected))
+        if missing:
+            errors.append(f"missing block ids: {missing[:5]}")
+        if extra:
+            errors.append(f"unknown block ids: {extra[:5]}")
+    allowed = set(periods)
+    for block in reply.blocks:
+        low, high = _word_range(blocks[block.id].source_words) if block.id in blocks else (1, 10 ** 6)
+        words = len(block.text.split())
+        if words < low * 0.8 or words > high * 1.2:
+            errors.append(f"{block.id}: {words} words outside the allowed range {low}-{high}")
+        bad = illegal_digits(block.text, allowed)
+        if bad:
+            errors.append(f"{block.id}: digits not allowed outside placeholders/period tokens: {bad[:5]}")
+        for key in placeholder_keys(block.text):
+            if key not in facts:
+                errors.append(f"{block.id}: unknown placeholder key {key!r}")
+        if block.text.count("{{") != block.text.count("}}"):
+            errors.append(f"{block.id}: unclosed placeholder")
+    known_entities = {entity.id for entity in bible.entities} | {entity.id for entity in reply.new}
+    for claim in reply.claims:
+        if claim.e not in known_entities:
+            errors.append(f"claim references an unknown entity {claim.e!r}")
+    limit = cfg.thresholds.ngram_overlap_max
+    if source_text and _longest_run(" ".join(block.text for block in reply.blocks),
+                                    source_text) >= limit:
+        errors.append(f"copies {limit}+ consecutive words from the source text")
+    return errors
+
+
+def _fallback_section(section, facts: dict, max_words: int = 180, index: int = 0) -> str:
+    """Template text from the SECTION's own tables. Before, an empty table list made every section
+    describe the whole document with the same sentences."""
+    from src.narrative._placeholders import resolve
+    from src.narrative._templates import section_template
+    tables = list(dict.fromkeys(key.split(".", 1)[0] for key in section.fact_keys))
+    own = {key: fact for key, fact in facts.items() if key.split(".", 1)[0] in tables} or facts
+    if not tables:
+        words = max(30, min(max_words, 60))
+        return " ".join(f"This part of the document covers {section.title.lower() or 'the period'}."
+                        .split()[:words])
+    try:
+        text = resolve(section_template({"title": section.title,
+                                         "tables": [{"table_id": t} for t in tables],
+                                         "target_word_count": max_words}, own, index), own)
+    except Exception:
+        return f"This section covers {section.title or section.section_id}."
+    words = text.split()
+    if len(words) > max_words:
+        text = " ".join(words[:max_words])
+        if "." in text:
+            text = text[: text.rfind(".") + 1]
+    return text
+
+
+def write_blocks(data, outline, bible, templates, style, cfg: Config,
+                 gateway: LLMGateway | None, avoid=None, dt: str = "", dom: str = ""):
+    """Parallel block-level writers (E-12): validate, retry with the errors, then fall back.
+    Every payload carries the source tone (E-26) and the avoid list (E-28); `avoid` defaults to the
+    proper nouns of the source text, minus the organisation's name."""
+    from concurrent.futures import ThreadPoolExecutor
+
+    from src.contracts import NarrativeDoc, NarrativeSection
+    import pandas as pd
+
+    from src.core.originality import drop_shown, source_proper_nouns, tone_profile
+    from src.llm import estimate_tokens
+    from src.narrative._placeholders import resolve
+    from src.narrative._prompts import WRITER
+
+    blocks = {block.block_id: block for page in templates for block in page.blocks}
+    periods = list(getattr(data, "allowed_periods", []))
+    cap = max(200, WRITER.max_input_tokens - estimate_tokens(WRITER.system))
+    source_text = " ".join(block.text or "" for block in blocks.values() if block.text)
+    tone = tone_profile([block.text for block in blocks.values() if block.kind == "text" and block.text])
+    if avoid is None:
+        avoid = source_proper_nouns(source_text, keep={outline.report_title} if outline.report_title else set())
+    shown = [str(v) for frame in list(data.display.values()) + list(data.tables.values())
+             for column in frame.columns
+             if not (pd.api.types.is_numeric_dtype(frame[column]) or pd.api.types.is_datetime64_any_dtype(frame[column]))
+             for v in frame[column].dropna().unique()]
+    avoid = drop_shown(avoid, shown + [str(c) for frame in data.display.values() for c in frame.columns])
+    order = {section.section_id: i for i, section in enumerate(outline.sections)}
+
+    def one(section):
+        limit = max(60, min(600, sum(blocks[block_id].source_words
+                                     for block_id in section.block_ids if block_id in blocks) or 120))
+        index = order.get(section.section_id, 0)       # varies the template sentences per section
+
+        def fallback():
+            return _fallback_section(section, data.facts, limit, index)
+        try:
+            payload, dropped = build_writer_payload(section, outline, bible, data.facts, periods,
+                                                    cap, blocks, tone=tone, avoid=avoid, dt=dt, dom=dom)
+        except ValueError:                     # required payload over the cap: the caller splits it
+            return section, fallback(), 0, False, ["payload exceeds cap"]
+        if gateway is None or not gateway.enabled:
+            return section, fallback(), 0, False, dropped
+        errors: list[str] = []
+        for attempt in range(1, 1 + max(0, cfg.report.writer_retries) + 1):
+            user = payload if not errors else json.dumps(
+                {"payload": json.loads(payload), "err": errors})
+            reply = gateway.ask_json(WRITER, user, WriterOut)
+            if reply is None:
+                return section, fallback(), attempt, False, dropped
+            for block in reply.blocks:                 # 'EBITDA\ Margin' inside placeholders (live run)
+                block.text = unescape_keys(block.text)
+            errors = check_section(reply, section, data.facts, bible, periods, source_text,
+                                   blocks, cfg, avoid=avoid)
+            if not errors:
+                text = "\n\n".join(resolve(block.text, data.facts) for block in reply.blocks)
+                return section, text, attempt, True, dropped
+        return section, fallback(), cfg.report.writer_retries + 1, False, dropped
+
+    concurrency = max(1, cfg.providers.text.max_concurrency)
+    with ThreadPoolExecutor(max_workers=concurrency) as pool:
+        results = list(pool.map(one, outline.sections))
+    sections, flags, used = [], [], False
+    for section, text, attempts, ok, dropped in results:
+        sections.append(NarrativeSection(section_id=section.section_id, title=section.title,
+                                         text=text))
+        used = used or ok
+        llm_on = gateway is not None and gateway.enabled
+        if not ok and llm_on:
+            flags.append(f"{section.section_id}: fallback after {attempts} attempt(s)")
+        if llm_on:
+            for name in dropped:
+                flags.append(f"{section.section_id}: dropped optional field {name}")
+    doc = NarrativeDoc(sections=sections,
+                       word_count=sum(len(section.text.split()) for section in sections),
+                       llm_used=used)
+    doc.flags = flags
+    return doc

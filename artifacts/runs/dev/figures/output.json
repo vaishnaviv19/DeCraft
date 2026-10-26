@@ -1,0 +1,99 @@
+{
+  "charts": {},
+  "photos": 3,
+  "logos": 8,
+  "figures": 11,
+  "items": [
+    {
+      "figure_id": "p1b03",
+      "kind": "logo",
+      "chart_kind": null,
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p1b26",
+      "kind": "logo",
+      "chart_kind": null,
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p2b02",
+      "kind": "photo",
+      "chart_kind": null,
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p2b13",
+      "kind": "logo",
+      "chart_kind": null,
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p3b02",
+      "kind": "photo",
+      "chart_kind": null,
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p3b90",
+      "kind": "logo",
+      "chart_kind": null,
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p4b02",
+      "kind": "logo",
+      "chart_kind": null,
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p4b35",
+      "kind": "logo",
+      "chart_kind": null,
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p5b02",
+      "kind": "logo",
+      "chart_kind": null,
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p5b06",
+      "kind": "photo",
+      "chart_kind": null,
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p5b07",
+      "kind": "logo",
+      "chart_kind": null,
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    }
+  ],
+  "recovered": [],
+  "recovered_items": [],
+  "llm_calls": 0
+}

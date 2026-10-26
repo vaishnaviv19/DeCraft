@@ -30,3 +30,33 @@ def test_a_column_close_on_both_headlines_is_moved_on_both():
     source = [100.0, 200.0, 300.0]
     out = headline_push([104.0, 196.0, 305.0], source, [0, 1, 2], 0.10, 0.05)
     assert abs(max(out) - 300) / 300 >= 0.10 and abs(sum(out) - 600) / 600 >= 0.10
+
+
+def test_dates_print_in_the_source_style():
+    from src.core.dates import date_style, format_date_like
+    style = date_style(["14-May-21", "2-Aug-22", "11-Sep-23"])
+    assert format_date_like(pd.Timestamp("2022-03-05"), style) == "5-Mar-22"
+    assert format_date_like(pd.Timestamp("2022-03-05"), date_style(["2024-03-31"])) == "2022-03-05"
+
+
+def test_generated_dates_keep_the_source_time_direction():
+    import numpy as np
+    from src.config import load_config
+    from src.contracts import SourceDocument, SourceTable
+    from src.generation import generate
+    from src.inference import infer
+    from src.privacy import plan_privacy
+    cfg = load_config(llm_enabled=False)
+    rows = [[d, str(v)] for d, v in zip(["14-May-21", "10-Aug-21", "17-Feb-22", "18-May-22", "2-Aug-22",
+                                         "20-Feb-23", "15-May-23", "11-Sep-23"], [120, 161, 263, 255, 246, 223, 224, 301])]
+    doc = SourceDocument(document_sha256="dates123", tables=[SourceTable(table_id="h", page=1, header=["Dates", "Target"],
+                                                                          raw_cells=rows)], text_blocks=["x"])
+    report = infer(doc, cfg)
+    frame = generate(doc, report, plan_privacy(doc, report, cfg), cfg, np.random.default_rng(2)).tables["h"]
+    dates = list(frame["Dates"])
+    assert all(d is not None and not pd.isna(d) for d in dates) and dates == sorted(dates)
+
+
+def test_caption_check_ignores_dash_variants_from_the_pdf_renderer():
+    from src.rendering._qa import _squash
+    assert _squash("Net inc. + Depn., C.F ‑ Finance") == _squash("Net inc. + Depn., C.F - Finance")

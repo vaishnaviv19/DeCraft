@@ -1,0 +1,2782 @@
+{
+  "table_001.first_label": {
+    "key": "table_001.first_label",
+    "value": "Item A",
+    "kind": "text",
+    "unit": null,
+    "source": "table_001.BSE CODE: 500400:first",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_001.last_label": {
+    "key": "table_001.last_label",
+    "value": "Item A",
+    "kind": "text",
+    "unit": null,
+    "source": "table_001.BSE CODE: 500400:last",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_002.first_label": {
+    "key": "table_002.first_label",
+    "value": "Company Data A (cr)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_002.Company Data:first",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_002.last_label": {
+    "key": "table_002.last_label",
+    "value": "Company Data T",
+    "kind": "text",
+    "unit": null,
+    "source": "table_002.Company Data:last",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_003.first_period": {
+    "key": "table_003.first_period",
+    "value": "FY23A",
+    "kind": "text",
+    "unit": null,
+    "source": "table_003:header",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_003.last_period": {
+    "key": "table_003.last_period",
+    "value": "FY25E",
+    "kind": "text",
+    "unit": null,
+    "source": "table_003:header",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_003.row:Consolidated (cr) A.label": {
+    "key": "table_003.row:Consolidated (cr) A.label",
+    "value": "Consolidated (cr) A",
+    "kind": "text",
+    "unit": null,
+    "source": "table_003.Consolidated (cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_003.row:Consolidated (cr) A.latest": {
+    "key": "table_003.row:Consolidated (cr) A.latest",
+    "value": 14.8,
+    "kind": "number",
+    "unit": null,
+    "source": "table_003.row:Consolidated (cr) A:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_003.row:Consolidated (cr) A.growth": {
+    "key": "table_003.row:Consolidated (cr) A.growth",
+    "value": -85.49019607843137,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_003.row:Consolidated (cr) A:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_003.row:Consolidated (cr) H.label": {
+    "key": "table_003.row:Consolidated (cr) H.label",
+    "value": "Consolidated (cr) H",
+    "kind": "text",
+    "unit": null,
+    "source": "table_003.Consolidated (cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_003.row:Consolidated (cr) H.latest": {
+    "key": "table_003.row:Consolidated (cr) H.latest",
+    "value": 15.7,
+    "kind": "number",
+    "unit": null,
+    "source": "table_003.row:Consolidated (cr) H:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_003.row:Consolidated (cr) H.growth": {
+    "key": "table_003.row:Consolidated (cr) H.growth",
+    "value": 9.790209790209769,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_003.row:Consolidated (cr) H:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_003.row:Consolidated (cr) J.label": {
+    "key": "table_003.row:Consolidated (cr) J.label",
+    "value": "Consolidated (cr) J",
+    "kind": "text",
+    "unit": null,
+    "source": "table_003.Consolidated (cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_003.row:Consolidated (cr) J.latest": {
+    "key": "table_003.row:Consolidated (cr) J.latest",
+    "value": 17.4,
+    "kind": "number",
+    "unit": null,
+    "source": "table_003.row:Consolidated (cr) J:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_003.row:Consolidated (cr) J.growth": {
+    "key": "table_003.row:Consolidated (cr) J.growth",
+    "value": -6.451612903225823,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_003.row:Consolidated (cr) J:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_003.row:Consolidated (cr) C (%).label": {
+    "key": "table_003.row:Consolidated (cr) C (%).label",
+    "value": "Consolidated (cr) C (%)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_003.Consolidated (cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_003.row:Consolidated (cr) C (%).latest": {
+    "key": "table_003.row:Consolidated (cr) C (%).latest",
+    "value": 1.5,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_003.row:Consolidated (cr) C (%):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_004.first_period": {
+    "key": "table_004.first_period",
+    "value": "Q1FY23",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004:header",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_004.last_period": {
+    "key": "table_004.last_period",
+    "value": "Q1FY24",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004:header",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_004.row:Revenue.label": {
+    "key": "table_004.row:Revenue.label",
+    "value": "Revenue",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Unnamed: 0:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_004.row:Revenue.latest": {
+    "key": "table_004.row:Revenue.latest",
+    "value": 21947.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.row:Revenue:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_004.row:Revenue.growth": {
+    "key": "table_004.row:Revenue.growth",
+    "value": 6.054895138687533,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_004.row:Revenue:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_004.row:EBITDA.label": {
+    "key": "table_004.row:EBITDA.label",
+    "value": "EBITDA",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Unnamed: 0:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_004.row:EBITDA.latest": {
+    "key": "table_004.row:EBITDA.latest",
+    "value": 4691.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.row:EBITDA:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_004.row:EBITDA.growth": {
+    "key": "table_004.row:EBITDA.growth",
+    "value": 72.65366212734634,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_004.row:EBITDA:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_004.row:Item E.label": {
+    "key": "table_004.row:Item E.label",
+    "value": "Item E",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Unnamed: 0:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_004.row:Item E.latest": {
+    "key": "table_004.row:Item E.latest",
+    "value": 31.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.row:Item E:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_004.row:Item E.growth": {
+    "key": "table_004.row:Item E.growth",
+    "value": 72.22222222222223,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_004.row:Item E:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_004.row:Item F.label": {
+    "key": "table_004.row:Item F.label",
+    "value": "Item F",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Unnamed: 0:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_004.row:Item F.latest": {
+    "key": "table_004.row:Item F.latest",
+    "value": 1330.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.row:Item F:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_004.row:Item F.growth": {
+    "key": "table_004.row:Item F.growth",
+    "value": 13.384484228474003,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_004.row:Item F:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_004.row:EBIT.label": {
+    "key": "table_004.row:EBIT.label",
+    "value": "EBIT",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Unnamed: 0:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_004.row:EBIT.latest": {
+    "key": "table_004.row:EBIT.latest",
+    "value": 3294.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.row:EBIT:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_004.row:EBIT.growth": {
+    "key": "table_004.row:EBIT.growth",
+    "value": 119.16167664670661,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_004.row:EBIT:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_004.row:Item G.label": {
+    "key": "table_004.row:Item G.label",
+    "value": "Item G",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Unnamed: 0:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_004.row:Item G.latest": {
+    "key": "table_004.row:Item G.latest",
+    "value": 1747.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.row:Item G:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_004.row:Item G.growth": {
+    "key": "table_004.row:Item G.growth",
+    "value": 19.167803547066843,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_004.row:Item G:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_004.row:Other Income.label": {
+    "key": "table_004.row:Other Income.label",
+    "value": "Other Income",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Unnamed: 0:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_004.row:Other Income.latest": {
+    "key": "table_004.row:Other Income.latest",
+    "value": 36.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.row:Other Income:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_004.row:Other Income.growth": {
+    "key": "table_004.row:Other Income.growth",
+    "value": -91.06699751861042,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_004.row:Other Income:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_004.row:Item H.label": {
+    "key": "table_004.row:Item H.label",
+    "value": "Item H",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Unnamed: 0:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_004.row:Item H.latest": {
+    "key": "table_004.row:Item H.latest",
+    "value": 338.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.row:Item H:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_004.row:Item I.label": {
+    "key": "table_004.row:Item I.label",
+    "value": "Item I",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Unnamed: 0:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_004.row:Item I.latest": {
+    "key": "table_004.row:Item I.latest",
+    "value": 514.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.row:Item I:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_004.row:Item I.growth": {
+    "key": "table_004.row:Item I.growth",
+    "value": -55.18744551002616,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_004.row:Item I:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_004.row:Item J.label": {
+    "key": "table_004.row:Item J.label",
+    "value": "Item J",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Unnamed: 0:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_004.row:Item J.latest": {
+    "key": "table_004.row:Item J.latest",
+    "value": 2142.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.row:Item J:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_004.row:Item J.growth": {
+    "key": "table_004.row:Item J.growth",
+    "value": 41.57303370786516,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_004.row:Item J:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_004.row:Tax.label": {
+    "key": "table_004.row:Tax.label",
+    "value": "Tax",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Unnamed: 0:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_004.row:Tax.latest": {
+    "key": "table_004.row:Tax.latest",
+    "value": 475.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.row:Tax:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_004.row:Tax.growth": {
+    "key": "table_004.row:Tax.growth",
+    "value": 87.00787401574803,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_004.row:Tax:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_004.row:Item K.label": {
+    "key": "table_004.row:Item K.label",
+    "value": "Item K",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Unnamed: 0:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_004.row:Item K.latest": {
+    "key": "table_004.row:Item K.latest",
+    "value": 1652.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.row:Item K:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_004.row:Item K.growth": {
+    "key": "table_004.row:Item K.growth",
+    "value": 31.633466135458164,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_004.row:Item K:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_004.row:Item L.label": {
+    "key": "table_004.row:Item L.label",
+    "value": "Item L",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Unnamed: 0:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_004.row:Item L.latest": {
+    "key": "table_004.row:Item L.latest",
+    "value": 245.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.row:Item L:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_004.row:Item L.growth": {
+    "key": "table_004.row:Item L.growth",
+    "value": 92.91338582677164,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_004.row:Item L:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_004.row:Item M.label": {
+    "key": "table_004.row:Item M.label",
+    "value": "Item M",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Unnamed: 0:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_004.row:Item M.latest": {
+    "key": "table_004.row:Item M.latest",
+    "value": 1384.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.row:Item M:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_004.row:Item M.growth": {
+    "key": "table_004.row:Item M.growth",
+    "value": 22.586359610274577,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_004.row:Item M:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_004.row:Item N.label": {
+    "key": "table_004.row:Item N.label",
+    "value": "Item N",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Unnamed: 0:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_004.row:Item N.latest": {
+    "key": "table_004.row:Item N.latest",
+    "value": -350.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.row:Item N:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_004.row:Consolidated (cr) D.label": {
+    "key": "table_004.row:Consolidated (cr) D.label",
+    "value": "Consolidated (cr) D",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Unnamed: 0:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_004.row:Consolidated (cr) D.latest": {
+    "key": "table_004.row:Consolidated (cr) D.latest",
+    "value": 1046.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.row:Consolidated (cr) D:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_004.row:Consolidated (cr) D.growth": {
+    "key": "table_004.row:Consolidated (cr) D.growth",
+    "value": -10.291595197255576,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_004.row:Consolidated (cr) D:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_004.row:Item O.label": {
+    "key": "table_004.row:Item O.label",
+    "value": "Item O",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Unnamed: 0:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_004.row:Item O.latest": {
+    "key": "table_004.row:Item O.latest",
+    "value": 478.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.row:Item O:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_004.row:Item O.growth": {
+    "key": "table_004.row:Item O.growth",
+    "value": 1.4861995753715496,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_004.row:Item O:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_004.row:Item P (Rs.).label": {
+    "key": "table_004.row:Item P (Rs.).label",
+    "value": "Item P (Rs.)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_004.Unnamed: 0:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_004.row:Item P (Rs.).latest": {
+    "key": "table_004.row:Item P (Rs.).latest",
+    "value": 3.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_004.row:Item P (Rs.):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_004.row:Item P (Rs.).growth": {
+    "key": "table_004.row:Item P (Rs.).growth",
+    "value": -25.0,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_004.row:Item P (Rs.):growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_005.first_label": {
+    "key": "table_005.first_label",
+    "value": "Item Q",
+    "kind": "text",
+    "unit": null,
+    "source": "table_005.Unnamed: 0:first",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_005.last_label": {
+    "key": "table_005.last_label",
+    "value": "Consolidated (cr) E",
+    "kind": "text",
+    "unit": null,
+    "source": "table_005.Unnamed: 0:last",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_006.Multiple.name": {
+    "key": "table_006.Multiple.name",
+    "value": "Multiple",
+    "kind": "text",
+    "unit": null,
+    "source": "table_006:header",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_006.Multiple.average": {
+    "key": "table_006.Multiple.average",
+    "value": 4.333333333333333,
+    "kind": "number",
+    "unit": null,
+    "source": "table_006.Multiple:mean",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_006.Multiple.largest": {
+    "key": "table_006.Multiple.largest",
+    "value": 7.2,
+    "kind": "number",
+    "unit": null,
+    "source": "table_006.Multiple:max",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_006.Multiple.largest_label": {
+    "key": "table_006.Multiple.largest_label",
+    "value": "- Particulars L",
+    "kind": "text",
+    "unit": null,
+    "source": "table_006.Multiple:argmax",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_006.Value (Rs. cr.).name": {
+    "key": "table_006.Value (Rs. cr.).name",
+    "value": "Value (Rs. cr.)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_006:header",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_006.Value (Rs. cr.).total": {
+    "key": "table_006.Value (Rs. cr.).total",
+    "value": 120338.0,
+    "kind": "number",
+    "unit": "\u20b9",
+    "source": "table_006.Value (Rs. cr.):sum",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_006.Value (Rs. cr.).largest": {
+    "key": "table_006.Value (Rs. cr.).largest",
+    "value": 24814.0,
+    "kind": "number",
+    "unit": "\u20b9",
+    "source": "table_006.Value (Rs. cr.):max",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_006.Value (Rs. cr.).largest_label": {
+    "key": "table_006.Value (Rs. cr.).largest_label",
+    "value": "- Particulars L",
+    "kind": "text",
+    "unit": null,
+    "source": "table_006.Value (Rs. cr.):argmax",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_006.Value (Rs. cr.).largest_share": {
+    "key": "table_006.Value (Rs. cr.).largest_share",
+    "value": 20.620252954179062,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_006.Value (Rs. cr.):argmax/share",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_006.Value Per Share (Rs.).name": {
+    "key": "table_006.Value Per Share (Rs.).name",
+    "value": "Value Per Share (Rs.)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_006:header",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_006.Value Per Share (Rs.).average": {
+    "key": "table_006.Value Per Share (Rs.).average",
+    "value": 33.13333333333333,
+    "kind": "number",
+    "unit": "\u20b9",
+    "source": "table_006.Value Per Share (Rs.):mean",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_006.Value Per Share (Rs.).largest": {
+    "key": "table_006.Value Per Share (Rs.).largest",
+    "value": 85.0,
+    "kind": "number",
+    "unit": "\u20b9",
+    "source": "table_006.Value Per Share (Rs.):max",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_006.Value Per Share (Rs.).largest_label": {
+    "key": "table_006.Value Per Share (Rs.).largest_label",
+    "value": "- Particulars L",
+    "kind": "text",
+    "unit": null,
+    "source": "table_006.Value Per Share (Rs.):argmax",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_006.first_label": {
+    "key": "table_006.first_label",
+    "value": "Particulars A",
+    "kind": "text",
+    "unit": null,
+    "source": "table_006.Particulars:first",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_006.last_label": {
+    "key": "table_006.last_label",
+    "value": "Particulars O",
+    "kind": "text",
+    "unit": null,
+    "source": "table_006.Particulars:last",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_007.first_period": {
+    "key": "table_007.first_period",
+    "value": "FY21A",
+    "kind": "text",
+    "unit": null,
+    "source": "table_007:header",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_007.last_period": {
+    "key": "table_007.last_period",
+    "value": "FY25E",
+    "kind": "text",
+    "unit": null,
+    "source": "table_007:header",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_007.row:Revenue.label": {
+    "key": "table_007.row:Revenue.label",
+    "value": "Revenue",
+    "kind": "text",
+    "unit": null,
+    "source": "table_007.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_007.row:Revenue.latest": {
+    "key": "table_007.row:Revenue.latest",
+    "value": 10158.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_007.row:Revenue:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_007.row:Revenue.growth": {
+    "key": "table_007.row:Revenue.growth",
+    "value": 62.81455361436128,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_007.row:Revenue:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_007.row:Revenue.direction": {
+    "key": "table_007.row:Revenue.direction",
+    "value": "up",
+    "kind": "word",
+    "unit": null,
+    "source": "pattern:table_007.row:Revenue.trend",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_007.row:Y.E March (Rs. cr) E (cr).label": {
+    "key": "table_007.row:Y.E March (Rs. cr) E (cr).label",
+    "value": "Y.E March (Rs. cr) E (cr)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_007.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_007.row:Y.E March (Rs. cr) E (cr).latest": {
+    "key": "table_007.row:Y.E March (Rs. cr) E (cr).latest",
+    "value": 1980.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_007.row:Y.E March (Rs. cr) E (cr):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_007.row:Y.E March (Rs. cr) E (cr).growth": {
+    "key": "table_007.row:Y.E March (Rs. cr) E (cr).growth",
+    "value": 209.85915492957744,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_007.row:Y.E March (Rs. cr) E (cr):growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_007.row:Item G.label": {
+    "key": "table_007.row:Item G.label",
+    "value": "Item G",
+    "kind": "text",
+    "unit": null,
+    "source": "table_007.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_007.row:Item G.latest": {
+    "key": "table_007.row:Item G.latest",
+    "value": 33.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_007.row:Item G:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_007.row:Item G.growth": {
+    "key": "table_007.row:Item G.growth",
+    "value": -2.941176470588236,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_007.row:Item G:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_007.row:Y.E March (Rs. cr) B (%).label": {
+    "key": "table_007.row:Y.E March (Rs. cr) B (%).label",
+    "value": "Y.E March (Rs. cr) B (%)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_007.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_007.row:Y.E March (Rs. cr) B (%).latest": {
+    "key": "table_007.row:Y.E March (Rs. cr) B (%).latest",
+    "value": 4810.0,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_007.row:Y.E March (Rs. cr) B (%):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_007.row:Y.E March (Rs. cr) C.label": {
+    "key": "table_007.row:Y.E March (Rs. cr) C.label",
+    "value": "Y.E March (Rs. cr) C",
+    "kind": "text",
+    "unit": null,
+    "source": "table_007.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_007.row:Y.E March (Rs. cr) C.latest": {
+    "key": "table_007.row:Y.E March (Rs. cr) C.latest",
+    "value": 3.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_007.row:Y.E March (Rs. cr) C:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_007.row:Y.E March (Rs. cr) C.growth": {
+    "key": "table_007.row:Y.E March (Rs. cr) C.growth",
+    "value": 0.0,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_007.row:Y.E March (Rs. cr) C:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_008.first_period": {
+    "key": "table_008.first_period",
+    "value": "FY21A",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008:header",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_008.last_period": {
+    "key": "table_008.last_period",
+    "value": "FY25E",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008:header",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_008.row:Y.E March (Rs. cr) G.label": {
+    "key": "table_008.row:Y.E March (Rs. cr) G.label",
+    "value": "Y.E March (Rs. cr) G",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_008.row:Y.E March (Rs. cr) G.latest": {
+    "key": "table_008.row:Y.E March (Rs. cr) G.latest",
+    "value": 5357.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.row:Y.E March (Rs. cr) G:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_008.row:Y.E March (Rs. cr) G.growth": {
+    "key": "table_008.row:Y.E March (Rs. cr) G.growth",
+    "value": 92.62855088097805,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_008.row:Y.E March (Rs. cr) G:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_008.row:Y.E March (Rs. cr) H.label": {
+    "key": "table_008.row:Y.E March (Rs. cr) H.label",
+    "value": "Y.E March (Rs. cr) H",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_008.row:Y.E March (Rs. cr) H.latest": {
+    "key": "table_008.row:Y.E March (Rs. cr) H.latest",
+    "value": 1708.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.row:Y.E March (Rs. cr) H:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_008.row:Y.E March (Rs. cr) H.growth": {
+    "key": "table_008.row:Y.E March (Rs. cr) H.growth",
+    "value": -35.78947368421053,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_008.row:Y.E March (Rs. cr) H:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_008.row:Y.E March (Rs. cr) I.label": {
+    "key": "table_008.row:Y.E March (Rs. cr) I.label",
+    "value": "Y.E March (Rs. cr) I",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_008.row:Y.E March (Rs. cr) I.latest": {
+    "key": "table_008.row:Y.E March (Rs. cr) I.latest",
+    "value": -2319.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.row:Y.E March (Rs. cr) I:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_008.row:Y.E March (Rs. cr) J.label": {
+    "key": "table_008.row:Y.E March (Rs. cr) J.label",
+    "value": "Y.E March (Rs. cr) J",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_008.row:Y.E March (Rs. cr) J.latest": {
+    "key": "table_008.row:Y.E March (Rs. cr) J.latest",
+    "value": 4654.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.row:Y.E March (Rs. cr) J:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_008.row:Y.E March (Rs. cr) J.growth": {
+    "key": "table_008.row:Y.E March (Rs. cr) J.growth",
+    "value": -18.236120871398455,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_008.row:Y.E March (Rs. cr) J:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_008.row:Y.E March (Rs. cr) K.label": {
+    "key": "table_008.row:Y.E March (Rs. cr) K.label",
+    "value": "Y.E March (Rs. cr) K",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_008.row:Y.E March (Rs. cr) K.latest": {
+    "key": "table_008.row:Y.E March (Rs. cr) K.latest",
+    "value": -5308.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.row:Y.E March (Rs. cr) K:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_008.row:Y.E March (Rs. cr) K.growth": {
+    "key": "table_008.row:Y.E March (Rs. cr) K.growth",
+    "value": 327.3752012882448,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_008.row:Y.E March (Rs. cr) K:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_008.row:Y.E March (Rs. cr) L.label": {
+    "key": "table_008.row:Y.E March (Rs. cr) L.label",
+    "value": "Y.E March (Rs. cr) L",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_008.row:Y.E March (Rs. cr) L.latest": {
+    "key": "table_008.row:Y.E March (Rs. cr) L.latest",
+    "value": -42.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.row:Y.E March (Rs. cr) L:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_008.row:Y.E March (Rs. cr) M.label": {
+    "key": "table_008.row:Y.E March (Rs. cr) M.label",
+    "value": "Y.E March (Rs. cr) M",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_008.row:Y.E March (Rs. cr) M.latest": {
+    "key": "table_008.row:Y.E March (Rs. cr) M.latest",
+    "value": 3046.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.row:Y.E March (Rs. cr) M:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_008.row:Y.E March (Rs. cr) M.growth": {
+    "key": "table_008.row:Y.E March (Rs. cr) M.growth",
+    "value": 152.1523178807947,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_008.row:Y.E March (Rs. cr) M:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_008.row:Y.E March (Rs. cr) N.label": {
+    "key": "table_008.row:Y.E March (Rs. cr) N.label",
+    "value": "Y.E March (Rs. cr) N",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_008.row:Y.E March (Rs. cr) N.latest": {
+    "key": "table_008.row:Y.E March (Rs. cr) N.latest",
+    "value": -2469.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.row:Y.E March (Rs. cr) N:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_008.row:Y.E March (Rs. cr) O.label": {
+    "key": "table_008.row:Y.E March (Rs. cr) O.label",
+    "value": "Y.E March (Rs. cr) O",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_008.row:Y.E March (Rs. cr) O.latest": {
+    "key": "table_008.row:Y.E March (Rs. cr) O.latest",
+    "value": 3754.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.row:Y.E March (Rs. cr) O:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_008.row:Y.E March (Rs. cr) O.growth": {
+    "key": "table_008.row:Y.E March (Rs. cr) O.growth",
+    "value": 66.69626998223801,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_008.row:Y.E March (Rs. cr) O:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_008.row:Y.E March (Rs. cr) P.label": {
+    "key": "table_008.row:Y.E March (Rs. cr) P.label",
+    "value": "Y.E March (Rs. cr) P",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_008.row:Y.E March (Rs. cr) P.latest": {
+    "key": "table_008.row:Y.E March (Rs. cr) P.latest",
+    "value": -1572.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.row:Y.E March (Rs. cr) P:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_008.row:Y.E March (Rs. cr) P.growth": {
+    "key": "table_008.row:Y.E March (Rs. cr) P.growth",
+    "value": -62.21153846153846,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_008.row:Y.E March (Rs. cr) P:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_008.row:Y.E March (Rs. cr) Q.label": {
+    "key": "table_008.row:Y.E March (Rs. cr) Q.label",
+    "value": "Y.E March (Rs. cr) Q",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_008.row:Y.E March (Rs. cr) Q.latest": {
+    "key": "table_008.row:Y.E March (Rs. cr) Q.latest",
+    "value": -514.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.row:Y.E March (Rs. cr) Q:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_008.row:Y.E March (Rs. cr) Q.growth": {
+    "key": "table_008.row:Y.E March (Rs. cr) Q.growth",
+    "value": 37.80160857908847,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_008.row:Y.E March (Rs. cr) Q:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_008.row:Y.E March (Rs. cr) R.label": {
+    "key": "table_008.row:Y.E March (Rs. cr) R.label",
+    "value": "Y.E March (Rs. cr) R",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_008.row:Y.E March (Rs. cr) R.latest": {
+    "key": "table_008.row:Y.E March (Rs. cr) R.latest",
+    "value": -3170.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.row:Y.E March (Rs. cr) R:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_008.row:Y.E March (Rs. cr) R.growth": {
+    "key": "table_008.row:Y.E March (Rs. cr) R.growth",
+    "value": 4.276315789473695,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_008.row:Y.E March (Rs. cr) R:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_008.row:Y.E March (Rs. cr) S.label": {
+    "key": "table_008.row:Y.E March (Rs. cr) S.label",
+    "value": "Y.E March (Rs. cr) S",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_008.row:Y.E March (Rs. cr) S.latest": {
+    "key": "table_008.row:Y.E March (Rs. cr) S.latest",
+    "value": -5322.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.row:Y.E March (Rs. cr) S:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_008.row:Y.E March (Rs. cr) S.growth": {
+    "key": "table_008.row:Y.E March (Rs. cr) S.growth",
+    "value": 3.059643687064284,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_008.row:Y.E March (Rs. cr) S:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_008.row:Y.E March (Rs. cr) T.label": {
+    "key": "table_008.row:Y.E March (Rs. cr) T.label",
+    "value": "Y.E March (Rs. cr) T",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_008.row:Y.E March (Rs. cr) T.latest": {
+    "key": "table_008.row:Y.E March (Rs. cr) T.latest",
+    "value": -2837.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.row:Y.E March (Rs. cr) T:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_008.row:Y.E March (Rs. cr) U.label": {
+    "key": "table_008.row:Y.E March (Rs. cr) U.label",
+    "value": "Y.E March (Rs. cr) U",
+    "kind": "text",
+    "unit": null,
+    "source": "table_008.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_008.row:Y.E March (Rs. cr) U.latest": {
+    "key": "table_008.row:Y.E March (Rs. cr) U.latest",
+    "value": 3849.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_008.row:Y.E March (Rs. cr) U:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_008.row:Y.E March (Rs. cr) U.growth": {
+    "key": "table_008.row:Y.E March (Rs. cr) U.growth",
+    "value": -4.939491232403059,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_008.row:Y.E March (Rs. cr) U:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.first_period": {
+    "key": "table_009.first_period",
+    "value": "FY21A",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009:header",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.last_period": {
+    "key": "table_009.last_period",
+    "value": "FY25E",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009:header",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Cash.label": {
+    "key": "table_009.row:Cash.label",
+    "value": "Cash",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Cash.latest": {
+    "key": "table_009.row:Cash.latest",
+    "value": 8709.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Cash:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Cash.growth": {
+    "key": "table_009.row:Cash.growth",
+    "value": -7.880262322826315,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Cash:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.row:Y.E March (Rs. cr) V.label": {
+    "key": "table_009.row:Y.E March (Rs. cr) V.label",
+    "value": "Y.E March (Rs. cr) V",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Y.E March (Rs. cr) V.latest": {
+    "key": "table_009.row:Y.E March (Rs. cr) V.latest",
+    "value": 13761.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Y.E March (Rs. cr) V:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Y.E March (Rs. cr) V.growth": {
+    "key": "table_009.row:Y.E March (Rs. cr) V.growth",
+    "value": 71.92653673163419,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Y.E March (Rs. cr) V:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.row:Y.E March (Rs. cr) W.label": {
+    "key": "table_009.row:Y.E March (Rs. cr) W.label",
+    "value": "Y.E March (Rs. cr) W",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Y.E March (Rs. cr) W.latest": {
+    "key": "table_009.row:Y.E March (Rs. cr) W.latest",
+    "value": 8888.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Y.E March (Rs. cr) W:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Y.E March (Rs. cr) W.growth": {
+    "key": "table_009.row:Y.E March (Rs. cr) W.growth",
+    "value": 194.98838367076004,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Y.E March (Rs. cr) W:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.row:Y.E March (Rs. cr) X.label": {
+    "key": "table_009.row:Y.E March (Rs. cr) X.label",
+    "value": "Y.E March (Rs. cr) X",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Y.E March (Rs. cr) X.latest": {
+    "key": "table_009.row:Y.E March (Rs. cr) X.latest",
+    "value": 27465.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Y.E March (Rs. cr) X:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Y.E March (Rs. cr) X.growth": {
+    "key": "table_009.row:Y.E March (Rs. cr) X.growth",
+    "value": 38.25824314120312,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Y.E March (Rs. cr) X:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.row:Y.E March (Rs. cr) Y.label": {
+    "key": "table_009.row:Y.E March (Rs. cr) Y.label",
+    "value": "Y.E March (Rs. cr) Y",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Y.E March (Rs. cr) Y.latest": {
+    "key": "table_009.row:Y.E March (Rs. cr) Y.latest",
+    "value": 20519.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Y.E March (Rs. cr) Y:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Y.E March (Rs. cr) Y.growth": {
+    "key": "table_009.row:Y.E March (Rs. cr) Y.growth",
+    "value": 2.6206551637909525,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Y.E March (Rs. cr) Y:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.row:Y.E March (Rs. cr) Z.label": {
+    "key": "table_009.row:Y.E March (Rs. cr) Z.label",
+    "value": "Y.E March (Rs. cr) Z",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Y.E March (Rs. cr) Z.latest": {
+    "key": "table_009.row:Y.E March (Rs. cr) Z.latest",
+    "value": 164830.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Y.E March (Rs. cr) Z:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Y.E March (Rs. cr) Z.growth": {
+    "key": "table_009.row:Y.E March (Rs. cr) Z.growth",
+    "value": 47.26168140802287,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Y.E March (Rs. cr) Z:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.row:Y.E March (Rs. cr) AA.label": {
+    "key": "table_009.row:Y.E March (Rs. cr) AA.label",
+    "value": "Y.E March (Rs. cr) AA",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Y.E March (Rs. cr) AA.latest": {
+    "key": "table_009.row:Y.E March (Rs. cr) AA.latest",
+    "value": 112413.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Y.E March (Rs. cr) AA:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Y.E March (Rs. cr) AA.growth": {
+    "key": "table_009.row:Y.E March (Rs. cr) AA.growth",
+    "value": 41.49789162313551,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Y.E March (Rs. cr) AA:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.row:Y.E March (Rs. cr) AB.label": {
+    "key": "table_009.row:Y.E March (Rs. cr) AB.label",
+    "value": "Y.E March (Rs. cr) AB",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Y.E March (Rs. cr) AB.latest": {
+    "key": "table_009.row:Y.E March (Rs. cr) AB.latest",
+    "value": 7563.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Y.E March (Rs. cr) AB:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Y.E March (Rs. cr) AB.growth": {
+    "key": "table_009.row:Y.E March (Rs. cr) AB.growth",
+    "value": 42.64428517540551,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Y.E March (Rs. cr) AB:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.row:Y.E March (Rs. cr) AC.label": {
+    "key": "table_009.row:Y.E March (Rs. cr) AC.label",
+    "value": "Y.E March (Rs. cr) AC",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Y.E March (Rs. cr) AC.latest": {
+    "key": "table_009.row:Y.E March (Rs. cr) AC.latest",
+    "value": 5046.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Y.E March (Rs. cr) AC:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Y.E March (Rs. cr) AC.growth": {
+    "key": "table_009.row:Y.E March (Rs. cr) AC.growth",
+    "value": 3.2958034800409486,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Y.E March (Rs. cr) AC:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.row:Y.E March (Rs. cr) AD.label": {
+    "key": "table_009.row:Y.E March (Rs. cr) AD.label",
+    "value": "Y.E March (Rs. cr) AD",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Y.E March (Rs. cr) AD.latest": {
+    "key": "table_009.row:Y.E March (Rs. cr) AD.latest",
+    "value": 372.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Y.E March (Rs. cr) AD:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Y.E March (Rs. cr) AD.growth": {
+    "key": "table_009.row:Y.E March (Rs. cr) AD.growth",
+    "value": 26.530612244897966,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Y.E March (Rs. cr) AD:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.row:Y.E March (Rs. cr) AE.label": {
+    "key": "table_009.row:Y.E March (Rs. cr) AE.label",
+    "value": "Y.E March (Rs. cr) AE",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Y.E March (Rs. cr) AE.latest": {
+    "key": "table_009.row:Y.E March (Rs. cr) AE.latest",
+    "value": 9063.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Y.E March (Rs. cr) AE:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Y.E March (Rs. cr) AE.growth": {
+    "key": "table_009.row:Y.E March (Rs. cr) AE.growth",
+    "value": 14.576485461441212,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Y.E March (Rs. cr) AE:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.row:Y.E March (Rs. cr) AF.label": {
+    "key": "table_009.row:Y.E March (Rs. cr) AF.label",
+    "value": "Y.E March (Rs. cr) AF",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Y.E March (Rs. cr) AF.latest": {
+    "key": "table_009.row:Y.E March (Rs. cr) AF.latest",
+    "value": 215969.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Y.E March (Rs. cr) AF:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Y.E March (Rs. cr) AF.growth": {
+    "key": "table_009.row:Y.E March (Rs. cr) AF.growth",
+    "value": 39.96785461992624,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Y.E March (Rs. cr) AF:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.row:Y.E March (Rs. cr) AG.label": {
+    "key": "table_009.row:Y.E March (Rs. cr) AG.label",
+    "value": "Y.E March (Rs. cr) AG",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Y.E March (Rs. cr) AG.latest": {
+    "key": "table_009.row:Y.E March (Rs. cr) AG.latest",
+    "value": 52964.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Y.E March (Rs. cr) AG:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Y.E March (Rs. cr) AG.growth": {
+    "key": "table_009.row:Y.E March (Rs. cr) AG.growth",
+    "value": 88.23613036215659,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Y.E March (Rs. cr) AG:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.row:Y.E March (Rs. cr) AH.label": {
+    "key": "table_009.row:Y.E March (Rs. cr) AH.label",
+    "value": "Y.E March (Rs. cr) AH",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Y.E March (Rs. cr) AH.latest": {
+    "key": "table_009.row:Y.E March (Rs. cr) AH.latest",
+    "value": 2367.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Y.E March (Rs. cr) AH:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Y.E March (Rs. cr) AH.growth": {
+    "key": "table_009.row:Y.E March (Rs. cr) AH.growth",
+    "value": 131.6046966731898,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Y.E March (Rs. cr) AH:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.row:Y.E March (Rs. cr) AI.label": {
+    "key": "table_009.row:Y.E March (Rs. cr) AI.label",
+    "value": "Y.E March (Rs. cr) AI",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Y.E March (Rs. cr) AI.latest": {
+    "key": "table_009.row:Y.E March (Rs. cr) AI.latest",
+    "value": 71846.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Y.E March (Rs. cr) AI:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Y.E March (Rs. cr) AI.growth": {
+    "key": "table_009.row:Y.E March (Rs. cr) AI.growth",
+    "value": 0.6965759856480069,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Y.E March (Rs. cr) AI:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.row:Y.E March (Rs. cr) AJ.label": {
+    "key": "table_009.row:Y.E March (Rs. cr) AJ.label",
+    "value": "Y.E March (Rs. cr) AJ",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Y.E March (Rs. cr) AJ.latest": {
+    "key": "table_009.row:Y.E March (Rs. cr) AJ.latest",
+    "value": 23918.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Y.E March (Rs. cr) AJ:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Y.E March (Rs. cr) AJ.growth": {
+    "key": "table_009.row:Y.E March (Rs. cr) AJ.growth",
+    "value": 50.238693467336695,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Y.E March (Rs. cr) AJ:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.row:Y.E March (Rs. cr) AK.label": {
+    "key": "table_009.row:Y.E March (Rs. cr) AK.label",
+    "value": "Y.E March (Rs. cr) AK",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Y.E March (Rs. cr) AK.latest": {
+    "key": "table_009.row:Y.E March (Rs. cr) AK.latest",
+    "value": 519.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Y.E March (Rs. cr) AK:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Y.E March (Rs. cr) AK.growth": {
+    "key": "table_009.row:Y.E March (Rs. cr) AK.growth",
+    "value": 0.0,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Y.E March (Rs. cr) AK:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.row:Y.E March (Rs. cr) AL.label": {
+    "key": "table_009.row:Y.E March (Rs. cr) AL.label",
+    "value": "Y.E March (Rs. cr) AL",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Y.E March (Rs. cr) AL.latest": {
+    "key": "table_009.row:Y.E March (Rs. cr) AL.latest",
+    "value": 54306.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Y.E March (Rs. cr) AL:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Y.E March (Rs. cr) AL.growth": {
+    "key": "table_009.row:Y.E March (Rs. cr) AL.growth",
+    "value": 56.97190426638918,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Y.E March (Rs. cr) AL:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.row:Y.E March (Rs. cr) AM.label": {
+    "key": "table_009.row:Y.E March (Rs. cr) AM.label",
+    "value": "Y.E March (Rs. cr) AM",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Y.E March (Rs. cr) AM.latest": {
+    "key": "table_009.row:Y.E March (Rs. cr) AM.latest",
+    "value": 55271.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Y.E March (Rs. cr) AM:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Y.E March (Rs. cr) AM.growth": {
+    "key": "table_009.row:Y.E March (Rs. cr) AM.growth",
+    "value": 52.76672194582643,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Y.E March (Rs. cr) AM:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.row:Item L.label": {
+    "key": "table_009.row:Item L.label",
+    "value": "Item L",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Item L.latest": {
+    "key": "table_009.row:Item L.latest",
+    "value": 10737.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Item L:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Item L.growth": {
+    "key": "table_009.row:Item L.growth",
+    "value": 134.0745585349902,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Item L:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.row:Y.E March (Rs. cr) AN.label": {
+    "key": "table_009.row:Y.E March (Rs. cr) AN.label",
+    "value": "Y.E March (Rs. cr) AN",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Y.E March (Rs. cr) AN.latest": {
+    "key": "table_009.row:Y.E March (Rs. cr) AN.latest",
+    "value": 218888.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Y.E March (Rs. cr) AN:latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Y.E March (Rs. cr) AN.growth": {
+    "key": "table_009.row:Y.E March (Rs. cr) AN.growth",
+    "value": 38.11972715283607,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Y.E March (Rs. cr) AN:growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_009.row:Y.E March (Rs. cr) AO (Rs.).label": {
+    "key": "table_009.row:Y.E March (Rs. cr) AO (Rs.).label",
+    "value": "Y.E March (Rs. cr) AO (Rs.)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_009.Y.E March (Rs. cr):row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_009.row:Y.E March (Rs. cr) AO (Rs.).latest": {
+    "key": "table_009.row:Y.E March (Rs. cr) AO (Rs.).latest",
+    "value": 167.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_009.row:Y.E March (Rs. cr) AO (Rs.):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_009.row:Y.E March (Rs. cr) AO (Rs.).growth": {
+    "key": "table_009.row:Y.E March (Rs. cr) AO (Rs.).growth",
+    "value": 54.629629629629626,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_009.row:Y.E March (Rs. cr) AO (Rs.):growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.first_period": {
+    "key": "table_010.first_period",
+    "value": "FY21A",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010:header",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_010.last_period": {
+    "key": "table_010.last_period",
+    "value": "FY25E",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010:header",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_010.row:Consolidated (cr) C (%).label": {
+    "key": "table_010.row:Consolidated (cr) C (%).label",
+    "value": "Consolidated (cr) C (%)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.Y.E March:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_010.row:Consolidated (cr) C (%).latest": {
+    "key": "table_010.row:Consolidated (cr) C (%).latest",
+    "value": 24.4,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.row:Consolidated (cr) C (%):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March B (%).label": {
+    "key": "table_010.row:Y.E March B (%).label",
+    "value": "Y.E March B (%)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.Y.E March:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_010.row:Y.E March B (%).latest": {
+    "key": "table_010.row:Y.E March B (%).latest",
+    "value": 16.2,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.row:Y.E March B (%):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March C (%).label": {
+    "key": "table_010.row:Y.E March C (%).label",
+    "value": "Y.E March C (%)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.Y.E March:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_010.row:Y.E March C (%).latest": {
+    "key": "table_010.row:Y.E March C (%).latest",
+    "value": 7.7,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.row:Y.E March C (%):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Consolidated (cr) I (%).label": {
+    "key": "table_010.row:Consolidated (cr) I (%).label",
+    "value": "Consolidated (cr) I (%)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.Y.E March:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_010.row:Consolidated (cr) I (%).latest": {
+    "key": "table_010.row:Consolidated (cr) I (%).latest",
+    "value": 17.5,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.row:Consolidated (cr) I (%):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March D (%).label": {
+    "key": "table_010.row:Y.E March D (%).label",
+    "value": "Y.E March D (%)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.Y.E March:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_010.row:Y.E March D (%).latest": {
+    "key": "table_010.row:Y.E March D (%).latest",
+    "value": 11.9,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.row:Y.E March D (%):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March F (days).label": {
+    "key": "table_010.row:Y.E March F (days).label",
+    "value": "Y.E March F (days)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.Y.E March:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_010.row:Y.E March F (days).latest": {
+    "key": "table_010.row:Y.E March F (days).latest",
+    "value": 65.2,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.row:Y.E March F (days):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March F (days).growth": {
+    "key": "table_010.row:Y.E March F (days).growth",
+    "value": -14.993481095176008,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.row:Y.E March F (days):growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March G (days).label": {
+    "key": "table_010.row:Y.E March G (days).label",
+    "value": "Y.E March G (days)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.Y.E March:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_010.row:Y.E March G (days).latest": {
+    "key": "table_010.row:Y.E March G (days).latest",
+    "value": 66.5,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.row:Y.E March G (days):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March G (days).growth": {
+    "key": "table_010.row:Y.E March G (days).growth",
+    "value": 38.54166666666667,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.row:Y.E March G (days):growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March H (days).label": {
+    "key": "table_010.row:Y.E March H (days).label",
+    "value": "Y.E March H (days)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.Y.E March:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_010.row:Y.E March H (days).latest": {
+    "key": "table_010.row:Y.E March H (days).latest",
+    "value": 144.7,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.row:Y.E March H (days):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March H (days).growth": {
+    "key": "table_010.row:Y.E March H (days).growth",
+    "value": -16.21308627678054,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.row:Y.E March H (days):growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March I (x).label": {
+    "key": "table_010.row:Y.E March I (x).label",
+    "value": "Y.E March I (x)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.Y.E March:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_010.row:Y.E March I (x).latest": {
+    "key": "table_010.row:Y.E March I (x).latest",
+    "value": 0.9,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.row:Y.E March I (x):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March I (x).growth": {
+    "key": "table_010.row:Y.E March I (x).growth",
+    "value": -18.181818181818187,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.row:Y.E March I (x):growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March J (x).label": {
+    "key": "table_010.row:Y.E March J (x).label",
+    "value": "Y.E March J (x)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.Y.E March:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_010.row:Y.E March J (x).latest": {
+    "key": "table_010.row:Y.E March J (x).latest",
+    "value": 0.4,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.row:Y.E March J (x):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March J (x).growth": {
+    "key": "table_010.row:Y.E March J (x).growth",
+    "value": -19.999999999999996,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.row:Y.E March J (x):growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March L (x).label": {
+    "key": "table_010.row:Y.E March L (x).label",
+    "value": "Y.E March L (x)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.Y.E March:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_010.row:Y.E March L (x).latest": {
+    "key": "table_010.row:Y.E March L (x).latest",
+    "value": 0.8,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.row:Y.E March L (x):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March L (x).growth": {
+    "key": "table_010.row:Y.E March L (x).growth",
+    "value": 14.285714285714302,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.row:Y.E March L (x):growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March M (x).label": {
+    "key": "table_010.row:Y.E March M (x).label",
+    "value": "Y.E March M (x)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.Y.E March:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_010.row:Y.E March M (x).latest": {
+    "key": "table_010.row:Y.E March M (x).latest",
+    "value": 0.7,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.row:Y.E March M (x):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March M (x).growth": {
+    "key": "table_010.row:Y.E March M (x).growth",
+    "value": 74.99999999999997,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.row:Y.E March M (x):growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March N (x).label": {
+    "key": "table_010.row:Y.E March N (x).label",
+    "value": "Y.E March N (x)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.Y.E March:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_010.row:Y.E March N (x).latest": {
+    "key": "table_010.row:Y.E March N (x).latest",
+    "value": 2.6,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.row:Y.E March N (x):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March N (x).growth": {
+    "key": "table_010.row:Y.E March N (x).growth",
+    "value": 62.5,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.row:Y.E March N (x):growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March O (x).label": {
+    "key": "table_010.row:Y.E March O (x).label",
+    "value": "Y.E March O (x)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.Y.E March:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_010.row:Y.E March O (x).latest": {
+    "key": "table_010.row:Y.E March O (x).latest",
+    "value": 1.5,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.row:Y.E March O (x):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March O (x).growth": {
+    "key": "table_010.row:Y.E March O (x).growth",
+    "value": -37.5,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.row:Y.E March O (x):growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March Q (x).label": {
+    "key": "table_010.row:Y.E March Q (x).label",
+    "value": "Y.E March Q (x)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.Y.E March:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_010.row:Y.E March Q (x).latest": {
+    "key": "table_010.row:Y.E March Q (x).latest",
+    "value": 2.9,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.row:Y.E March Q (x):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March Q (x).growth": {
+    "key": "table_010.row:Y.E March Q (x).growth",
+    "value": -3.3333333333333326,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.row:Y.E March Q (x):growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March R (x).label": {
+    "key": "table_010.row:Y.E March R (x).label",
+    "value": "Y.E March R (x)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.Y.E March:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_010.row:Y.E March R (x).latest": {
+    "key": "table_010.row:Y.E March R (x).latest",
+    "value": 15.4,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.row:Y.E March R (x):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March R (x).growth": {
+    "key": "table_010.row:Y.E March R (x).growth",
+    "value": 15.789473684210531,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.row:Y.E March R (x):growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March S (x).label": {
+    "key": "table_010.row:Y.E March S (x).label",
+    "value": "Y.E March S (x)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.Y.E March:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_010.row:Y.E March S (x).latest": {
+    "key": "table_010.row:Y.E March S (x).latest",
+    "value": 31.2,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.row:Y.E March S (x):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March S (x).growth": {
+    "key": "table_010.row:Y.E March S (x).growth",
+    "value": -13.573407202216071,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.row:Y.E March S (x):growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March T (x).label": {
+    "key": "table_010.row:Y.E March T (x).label",
+    "value": "Y.E March T (x)",
+    "kind": "text",
+    "unit": null,
+    "source": "table_010.Y.E March:row",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_010.row:Y.E March T (x).latest": {
+    "key": "table_010.row:Y.E March T (x).latest",
+    "value": 3.4,
+    "kind": "number",
+    "unit": null,
+    "source": "table_010.row:Y.E March T (x):latest",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_010.row:Y.E March T (x).growth": {
+    "key": "table_010.row:Y.E March T (x).growth",
+    "value": 70.0,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_010.row:Y.E March T (x):growth",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_011.Target.name": {
+    "key": "table_011.Target.name",
+    "value": "Target",
+    "kind": "text",
+    "unit": null,
+    "source": "table_011:header",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_011.Target.total": {
+    "key": "table_011.Target.total",
+    "value": 2123.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_011.Target:sum",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_011.Target.largest": {
+    "key": "table_011.Target.largest",
+    "value": 337.0,
+    "kind": "number",
+    "unit": null,
+    "source": "table_011.Target:max",
+    "band": null,
+    "owner": null,
+    "decimals": 0
+  },
+  "table_011.Target.largest_label": {
+    "key": "table_011.Target.largest_label",
+    "value": "Rating A",
+    "kind": "text",
+    "unit": null,
+    "source": "table_011.Target:argmax",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_011.Target.largest_share": {
+    "key": "table_011.Target.largest_share",
+    "value": 15.873763542157324,
+    "kind": "number",
+    "unit": "%",
+    "source": "table_011.Target:argmax/share",
+    "band": null,
+    "owner": null,
+    "decimals": 1
+  },
+  "table_011.first_period": {
+    "key": "table_011.first_period",
+    "value": "2021-05-17 00:00:00",
+    "kind": "text",
+    "unit": null,
+    "source": "table_011.Dates:first",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_011.last_period": {
+    "key": "table_011.last_period",
+    "value": "2023-09-05 00:00:00",
+    "kind": "text",
+    "unit": null,
+    "source": "table_011.Dates:last",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_011.first_label": {
+    "key": "table_011.first_label",
+    "value": "Rating B",
+    "kind": "text",
+    "unit": null,
+    "source": "table_011.Rating:first",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_011.last_label": {
+    "key": "table_011.last_label",
+    "value": "Rating B",
+    "kind": "text",
+    "unit": null,
+    "source": "table_011.Rating:last",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_012.first_label": {
+    "key": "table_012.first_label",
+    "value": "Rating A",
+    "kind": "text",
+    "unit": null,
+    "source": "table_012.Ratings:first",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  },
+  "table_012.last_label": {
+    "key": "table_012.last_label",
+    "value": "Ratings C",
+    "kind": "text",
+    "unit": null,
+    "source": "table_012.Ratings:last",
+    "band": null,
+    "owner": null,
+    "decimals": null
+  }
+}

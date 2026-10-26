@@ -418,6 +418,8 @@ class Fact(Strict):
     kind: Literal["number", "text", "word"]
     unit: str | None = None
     source: str                                  # 'orders.revenue:sum' or 'pattern:p3'
+    band: str | None = None                      # qualitative label shown to writers (E-10)
+    owner: str | None = None                     # the one section allowed to cite it first
     decimals: int | None = None                  # displayed decimals of the column it comes from
 
 
@@ -428,7 +430,11 @@ class ChartSpec(Strict):
     label_column: str
     series_columns: list[str] = Field(min_length=1)
     title: str | None = None
-    kind: Literal["line", "bar", "pie"] = "line"
+    display: bool = True                 # a hidden table feeds a chart but is not printed (E-19)
+    kind: Literal["line", "bar", "pie", "horizontal_bar", "donut"] = "line"
+    unit: str | None = None              # shown on the axis/title, taken from the Field Profile
+    has_data_labels: bool = False        # the source chart printed its values
+    has_legend: bool = True
     # 'columns': one series per column, x = the label column's values.
     # 'rows' (statements): one series per line item in series_rows, x = series_columns (periods)
     orientation: Literal["columns", "rows"] = "columns"
@@ -445,6 +451,8 @@ class NarrativeDoc(Strict):
     sections: list[NarrativeSection]
     word_count: int
     llm_used: bool = False
+    blocks: dict[str, str] = {}          # block_id -> resolved text (M8.7)
+    flags: list[str] = []                # fallbacks and dropped optional payload fields
 
 
 class RenderResult(Strict):

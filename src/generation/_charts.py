@@ -22,6 +22,8 @@ MAX_SERIES, MAX_PIE_SLICES = 3, 8
 
 def _label_column(display: pd.DataFrame, profiles: list, keys: set[str]) -> str | None:
     texts = [p.column for p in profiles if p.physical_type == "text" and p.column in display.columns]
+    if not texts:                       # no profiles (or none text): first non-numeric column
+        texts = [str(c) for c in display.columns if not pd.api.types.is_numeric_dtype(display[c])]
     preferred = [c for c in texts if c not in keys]
     return (preferred or texts or [None])[0]
 
@@ -62,6 +64,65 @@ def _column_chart(chart_id: str, table_id: str, display: pd.DataFrame, label: st
     title = f"{' and '.join(series)} by {label}"
     return ChartSpec(chart_id=chart_id, table_id=table_id, label_column=label, series_columns=series,
                      kind=kind, title=title)
+
+
+def register_all_charts(data, document_plan: dict | None = None) -> dict[str, ChartSpec]:
+    """Every displayed table gets exactly one chart (E-19): the plan's pair when it has one, otherwise
+    a spec whose kind follows `choose_chart_kind`."""
+    charts = register_charts(data, document_plan)
+    hidden = {spec.table_id for spec in charts.values() if not spec.display}
+    charted = {spec.table_id for spec in charts.values()}
+    for table_id, display in data.display.items():
+        if table_id in hidden or table_id in charted:
+            continue
+        profiles = [p for p in data.source_profiles if p.table_id == table_id]
+        keys = set(data.key_columns.get(table_id, []))
+        label = _label_column(display, profiles, keys)
+        numbers = [str(c) for c in display.columns if c != label
+                   and pd.api.types.is_numeric_dtype(display[c])
+                   and pd.to_numeric(display[c], errors="coerce").notna().any()]
+        if label is None or not numbers:
+            continue
+        series = numbers[:3]
+        unit = next((p.unit for p in profiles if p.column == series[0] and p.unit), None)
+        kind = choose_chart_kind(data, table_id, None)
+        charts[f"chart_{table_id}"] = ChartSpec(
+            chart_id=f"chart_{table_id}", table_id=table_id, label_column=label,
+            series_columns=series, kind=kind, orientation="columns",
+            title=f"{' and '.join(series)} by {label}", unit=unit,
+            has_data_labels=len(display) <= 12)
+    return charts
+
+
+KIND_ALIASES = {"bar": "bar", "horizontal_bar": "horizontal_bar", "stacked_bar": "bar",
+                "line": "line", "area": "line", "pie": "pie", "donut": "donut",
+                "scatter": "bar", "other": "bar"}
+
+
+def choose_chart_kind(data, table_id: str, figure_info=None) -> str:
+    """The source's own chart kind when known (E-19), otherwise the rules."""
+    if figure_info is not None and getattr(figure_info, "kind", None) == "chart" \
+            and getattr(figure_info, "chart_kind", None):
+        return KIND_ALIASES.get(str(figure_info.chart_kind), "bar")
+    display = data.display.get(table_id)
+    if display is None:
+        display = data.tables.get(table_id)
+    if display is None:
+        return "bar"
+    profiles = [p for p in data.source_profiles if p.table_id == table_id]
+    label = _label_column(display, profiles, set(data.key_columns.get(table_id, [])))
+    numbers = [c for c in display.columns if c != label
+               and pd.api.types.is_numeric_dtype(display[c])]
+    periods = [c for c in display.columns if parse_period(str(c)) is not None]
+    if label is not None and len(numbers) == 1 and len(display) <= 8:
+        total = float(pd.to_numeric(display[numbers[0]], errors="coerce").sum())
+        if abs(total - 100.0) <= 0.5:
+            return "donut"
+    if len(periods) > 3:
+        return "line" if len(periods) > 6 else "bar"
+    if label is not None and numbers:
+        return "horizontal_bar" if len(numbers) <= 3 else "bar"
+    return "bar"
 
 
 def register_charts(data, document_plan: dict | None) -> dict[str, ChartSpec]:

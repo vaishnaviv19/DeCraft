@@ -22,12 +22,13 @@ from src.generation._apply import GenerationContext, apply_steps
 from src.generation._facts import compute_facts
 from src.core.periods import time_order
 from src.core.rows import statement_label_column
-from src.generation._charts import register_charts
+from src.generation._charts import register_all_charts, register_charts
+from src.generation._prepare import prepare_for_report
 from src.generation._graph import build_plan
 from src.privacy import Relabeler, document_values
 from src.validation import repair_dataset, run_bounded_repair, validate
 
-__all__ = ["generate", "register_charts"]
+__all__ = ["generate", "prepare_for_report", "register_all_charts", "register_charts"]
 
 
 def _links(table_id: str, frame: pd.DataFrame, profiles: list) -> dict[int, list[int]]:

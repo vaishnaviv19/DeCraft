@@ -48,7 +48,7 @@ def check_numbers(data: CanonicalDataset, frames: dict[str, pd.DataFrame] | None
             bad = np.isinf(values).to_numpy()
             empty = values.isna().to_numpy()
             if source is not None and column in source.columns:
-                missing_in_source = _numeric(source[column]).iloc[:len(frame)].isna().to_numpy()
+                missing_in_source = source[column].iloc[:len(frame)].isna().to_numpy()
                 empty = empty & ~missing_in_source
             bad = bad | empty
             if bad.any():
@@ -315,6 +315,8 @@ def check_source_distance(data: CanonicalDataset, report, cfg,
         synthetic = data.tables.get(table_id)
         if synthetic is None:
             continue
+        if len(source) != len(synthetic):
+            continue                     # the row-count rule changed the rows: no row identity
         profiles = _profiles(report, table_id)
         label = next((p.column for p in profiles if p.physical_type == "text"), None)
         total_rows = set(total_row_links(synthetic, label)) | row_rule_outputs(report, table_id, source)

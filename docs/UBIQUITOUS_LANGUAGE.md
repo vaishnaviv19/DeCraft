@@ -302,3 +302,5 @@ Terms introduced by the project decisions in `docs/project_decisions.md`.
 | Break Cause | `break_causes` prompt | The named cause of a statistically confirmed structural break. | Kept only when its quote is in the source text. |
 | Section Template | `section_template` prompt | The pre-v3.2 placeholder-based section writer. | Retired when the v3.2 Section Writer (M8.7) is in place. |
 | Synthetic Record | `RunManifest.synthetic` | The only place that says the output is fabricated. | Never written into the PDF, its metadata or the HTML (E-32). |
+| Listing Code | `privacy.listing_codes`, `LISTING_RE` | A stock-exchange or market-data code of the organisation (`NSE CODE: TATAPOWER`). | Protected like the Entity Name (E-41). |
+| Stage Folder | `scripts/stage.py --dir` | The folder where the stage runner keeps every stage's `output.json`, `done.json` and files. | Default `artifacts/runs/dev`; nothing is written outside it (E-42). |

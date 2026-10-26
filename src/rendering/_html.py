@@ -13,10 +13,13 @@ import html as html_lib
 import re
 from collections import Counter
 
+from datetime import date, datetime
+
 import pandas as pd
 from jinja2 import Template
 
 from src.contracts.dataset import CanonicalDataset
+from src.core.dates import date_style, format_date_like
 from src.core.missingness import TOKEN_TEXT, token_kind
 from src.rendering._charts import chart_caption
 
@@ -139,12 +142,15 @@ def table_html(display: pd.DataFrame, profiles: list, source_table=None) -> str:
         j = header.index(c) if c in header else None
         raw = [row[j] if j is not None and j < len(row) else None for row in (source_table.raw_cells if j is not None else [])]
         styles[c] = column_style(raw)
+        styles[c]["date"] = date_style(raw)                    # '14-May-21' style, from the source cells
     out = ["<table><thead><tr>" + "".join(f"<th>{html_lib.escape(str(c))}</th>" for c in columns) + "</tr></thead><tbody>"]
     for i in range(len(display)):
         cells = []
         for c in columns:
             v = display[c].iloc[i]
-            if pd.api.types.is_numeric_dtype(display[c]):
+            if isinstance(v, (pd.Timestamp, datetime, date)) and not pd.isna(v):
+                cells.append(format_date_like(v, styles[c]["date"]))
+            elif pd.api.types.is_numeric_dtype(display[c]):
                 cells.append(format_number(v, decimals.get(c), styles[c]))
             else:
                 cells.append(styles[c]["blank"] if v is None or (isinstance(v, float) and pd.isna(v)) else str(v))

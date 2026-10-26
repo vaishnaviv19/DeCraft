@@ -1,0 +1,29 @@
+{
+  "chart_id": "chart_plan_003",
+  "table_id": "table_003",
+  "label_column": "Consolidated (cr)",
+  "kind": "line",
+  "orientation": "rows",
+  "labels": [
+    "FY23A",
+    "FY24E",
+    "FY25E"
+  ],
+  "series": {
+    "Sales": [
+      74354.0,
+      83075.3,
+      87627.1
+    ],
+    "EBITDA": [
+      12779.7,
+      14048.4,
+      15882.1
+    ],
+    "Adj. PAT": [
+      4639.9,
+      4541.8,
+      5143.5
+    ]
+  }
+}

@@ -84,3 +84,29 @@ def test_prompt_log_written(gateway_for, tmp_path):
     g.ask_json(P, 'u', Out)
     recs = [_j.loads(l) for l in (tmp_path / 'log.jsonl').read_text().splitlines()]
     assert [r['ok'] for r in recs] == [False, True] and recs[0]['version'] == 'v1'
+
+
+# ---------------------------------------------------------------- live run 2026-10-26: a 401 stopped the run
+@pytest.mark.parametrize("status,enabled_after,calls", [(401, False, 1), (403, False, 1), (400, True, 1),
+                                                         (503, True, 3), (429, True, 3)])
+def test_provider_http_errors_fall_back_instead_of_crashing(tmp_path, status, enabled_after, calls):
+    import httpx
+    from pydantic import BaseModel
+    from src.llm import LLMGateway, PromptSpec
+
+    class Ok(BaseModel):
+        ok: int
+
+    class Refusing:
+        model_name = "m"
+        n = 0
+
+        def complete(self, *args, **kwargs):
+            self.n += 1
+            request = httpx.Request("POST", "https://example.invalid")
+            raise httpx.HTTPStatusError("x", request=request, response=httpx.Response(status, request=request))
+
+    client = Refusing()
+    gateway = LLMGateway(client=client, cache_dir=tmp_path, enabled=True, retries=3, timeout_s=5)
+    assert gateway.ask_json(PromptSpec("p", "v1", "Return JSON"), "u", Ok) is None
+    assert gateway.enabled is enabled_after and client.n == calls

@@ -18,6 +18,39 @@ from src.contracts import SourceDocument
 from src.contracts.report import Block, PageTemplate, StyleProfile, TextStyle
 
 PAGE_NUMBER_RE = re.compile(r"^[\s\-–—(]*\d{1,4}[\s\-–—).]*$")
+ROW_GAP_EM = 1.5          # a gap wider than this many font sizes between spans on one line = a table cell break
+
+
+def numeric_share(text: str) -> float:
+    """Share of the words that are numbers or period labels ('32,703', '(6,277)', 'FY21A', 'Q1FY24')."""
+    from src.core.periods import parse_period
+    from src.core.values import parse_number
+    words = text.split()
+    if not words:
+        return 0.0
+    return sum(parse_number(w) is not None or parse_period(w) is not None for w in words) / len(words)
+
+
+def row_like(block) -> bool:
+    """A table row or header row laid out as cells: three or more spans on one line with wide gaps
+    ('Particulars   Methodology   Multiple   %'). Borderless tables have no drawn box to hide them."""
+    spans = [s for line in block.get("lines", []) for s in line.get("spans", []) if s.get("text", "").strip()]
+    rows: dict[int, list] = {}
+    for span in spans:
+        rows.setdefault(round(float(span["bbox"][1]) / 2), []).append(span)
+    for cells in rows.values():
+        cells.sort(key=lambda s: float(s["bbox"][0]))
+        gaps = sum(1 for a, b in zip(cells, cells[1:])
+                   if float(b["bbox"][0]) - float(a["bbox"][2]) > ROW_GAP_EM * float(a.get("size", 10.0)))
+        if gaps >= 2:
+            return True
+    return False
+
+
+def can_be_heading(block, text: str) -> bool:
+    """Live run 2026-10-26: bold table rows ('Revenue 32,703 42,816 ...') opened 44 sections on 5 pages.
+    A heading is mostly words and is not laid out as table cells."""
+    return numeric_share(text) <= 0.3 and not row_like(block)
 
 
 def _norm(text: str) -> str:
@@ -135,6 +168,7 @@ def build_templates(pdf_path: Path, doc: SourceDocument, style: StyleProfile,
     seen_xrefs: Counter = Counter()
     section_number = 0
     current_section = "S0"
+    section_has_only_headings = False
 
     with pymupdf.open(str(pdf_path)) as pdf:
         for page_no, page in enumerate(pdf, start=1):
@@ -163,8 +197,8 @@ def build_templates(pdf_path: Path, doc: SourceDocument, style: StyleProfile,
                     kind = "header"
                 elif compact and (compact == footer or (footer and compact in footer)):
                     kind = "footer"
-                elif text_style.size_pt >= 1.2 * body_size or (
-                        bold and text_style.size_pt >= body_size and words <= 12):
+                elif (text_style.size_pt >= 1.2 * body_size or (
+                        bold and text_style.size_pt >= body_size and words <= 12)) and can_be_heading(block, text):
                     kind = "heading"
                 elif text_style.size_pt < body_size and any(
                         (f.bbox[3] - 4 <= bbox[1] <= f.bbox[3] + 24)
@@ -172,18 +206,23 @@ def build_templates(pdf_path: Path, doc: SourceDocument, style: StyleProfile,
                     kind = "caption"
                 else:
                     kind = "text"
-                blocks.append(Block(block_id="", kind=kind, bbox=bbox, style_id=text_style.style_id,
-                                    source_words=words))
+                blocks.append(Block(block_id="", kind=kind, bbox=bbox, text=text,
+                                    style_id=text_style.style_id, source_words=words))
 
             blocks.extend(drawings)
             blocks.extend(images)
             blocks.sort(key=lambda b: (round(b.bbox[1], 1), round(b.bbox[0], 1)))
 
-            # Section ownership: a heading opens a section; front matter is S0.
+            # Section ownership: a heading opens a section; front matter is S0. A heading that follows
+            # another heading with nothing in between ('BUY', 'Electric Utilities') joins that section
+            # instead of opening an empty one.
             for block in blocks:
-                if block.kind == "heading":
+                if block.kind == "heading" and not (current_section != "S0" and section_has_only_headings):
                     section_number += 1
                     current_section = f"S{section_number}"
+                    section_has_only_headings = True
+                elif block.kind not in {"heading", "header", "footer", "page_number", "logo"}:
+                    section_has_only_headings = False
                 block.section_id = current_section
             for index, block in enumerate(blocks, start=1):
                 block.block_id = f"p{page_no}b{index:02d}"

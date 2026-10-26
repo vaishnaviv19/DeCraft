@@ -1,0 +1,37 @@
+{
+  "chart_id": "chart_plan_008",
+  "table_id": "table_008",
+  "label_column": "Y.E March (Rs. cr)",
+  "kind": "line",
+  "orientation": "rows",
+  "labels": [
+    "FY21A",
+    "FY22A",
+    "FY23A",
+    "FY24E",
+    "FY25E"
+  ],
+  "series": {
+    "Net inc. + Depn.": [
+      2825.0,
+      3428.0,
+      4687.0,
+      5019.0,
+      5343.0
+    ],
+    "NovaCap Expenditures": [
+      -1221.0,
+      -5150.0,
+      -5346.0,
+      -8506.0,
+      -5308.0
+    ],
+    "C.F - Finance": [
+      -5136.0,
+      -833.0,
+      913.0,
+      -5400.0,
+      -5109.0
+    ]
+  }
+}

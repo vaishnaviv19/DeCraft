@@ -2,7 +2,7 @@
 """M8.0.4: a small stage machine for development.
 
 Every stage reads the outputs of earlier stages, writes `output.json` and `done.json` (a hash of its
-inputs) under `artifacts/runs/dev/<stage>/`, and is skipped on a later run when that hash still
+inputs) under `<root>/<stage>/` (CLI `--dir`, default `artifacts/runs/dev`), and is skipped when that hash still
 matches. `--fresh` ignores the saved state. The CLI is `scripts/stage.py`.
 """
 from __future__ import annotations
@@ -35,7 +35,7 @@ def _dump(value: Any) -> str:
 
 
 def run_stages(stages: list[Stage], until: str, root: Path, fresh: bool = False,
-               out: Callable[[str], None] = print) -> dict[str, Any]:
+               out: Callable[[str], None] = print, salt: str = "") -> dict[str, Any]:
     """Run stages in order up to `until`; return the JSON summary that is also printed."""
     names = [stage.name for stage in stages]
     if until not in names:
@@ -50,7 +50,7 @@ def run_stages(stages: list[Stage], until: str, root: Path, fresh: bool = False,
         directory = root / stage.name
         output_path = directory / "output.json"
         done_path = directory / "done.json"
-        input_hash = _hash_inputs(cache)
+        input_hash = _hash_inputs({"cache": cache, "mode": salt})
         if not fresh and done_path.exists() and output_path.exists():
             try:
                 if json.loads(done_path.read_text(encoding="utf-8")).get("input_hash") == input_hash:

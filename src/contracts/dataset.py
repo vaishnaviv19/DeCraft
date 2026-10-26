@@ -26,6 +26,8 @@ class CanonicalDataset:
     unmet_targets: list[UnmetTarget] = field(default_factory=list)
     # Traceability: the Field Profiles this dataset was generated from (additive, optional).
     source_profiles: list[FieldProfile] = field(default_factory=list)
+    # Period Tokens allowed in prose after the shift (E-10/E-16); additive, optional.
+    allowed_periods: list[str] = field(default_factory=list)
 
 
 def empty_dataset(dataset_id: str = "manual", seed: int = 42,

@@ -206,6 +206,12 @@ def _sample_column(ctx: GenerationContext, table: str, column: str, tiny: bool, 
         return
     if profile.physical_type == "date":
         dates = _dates(raw, n, rng)
+        # keep the source's time direction (a dated history stays oldest -> newest, or the reverse)
+        known = [pd.Timestamp(v) for v in raw if v is not None and not pd.isna(v)]
+        made = [d for d in dates if d is not None]
+        if len(known) >= 2 and made and (known == sorted(known) or known == sorted(known, reverse=True)):
+            ordered = iter(sorted(made, reverse=known != sorted(known)))
+            dates = [next(ordered) if d is not None else None for d in dates]
         frame[column] = pd.Series([None if _blank(cleaned[i]) else dates[i] for i in range(n)],
                                   index=frame.index)
         return
@@ -420,6 +426,24 @@ def apply_steps(ctx: GenerationContext, steps: list[Step], rules: list[Rule],
                 frame[column] = [ctx.relabeler.get(table, column, v) for v in src_keys]
             else:
                 frame[column] = fresh_key_values(src_keys, len(frame), rng)
+            # a key cell the Label Fabricator already replaced keeps that replacement (E-35):
+            # fresh digits alone turned 'SENSEX: 67,127' into 'SENSEX: 67,207' (live run 2026-10-26)
+            seeds = getattr(ctx.relabeler, "seeds", {}).get(f"{table}.{column}") if ctx.relabeler else None
+            if seeds:
+                lookup = {str(k).strip().lower(): v for k, v in seeds.items()}
+                values = list(frame[column])
+                for i, original in enumerate(src_keys):
+                    if i < len(values) and str(original).strip().lower() in lookup:
+                        values[i] = lookup[str(original).strip().lower()]
+                frame[column] = pd.Series(values, index=frame.index, dtype=object)
+            # protected values (organisation name, address, listing codes - E-41) stay even in a key
+            protected = {str(v).strip().lower() for v in getattr(ctx.relabeler, "preserved", [])}
+            if protected:
+                values = list(frame[column])
+                for i, original in enumerate(src_keys):
+                    if i < len(values) and str(original).strip().lower() in protected:
+                        values[i] = original
+                frame[column] = pd.Series(values, index=frame.index, dtype=object)
             ctx.key_columns.setdefault(table, []).append(column)
             ctx.lineage[step.node] = "fresh_key"
         elif step.action == "sample":

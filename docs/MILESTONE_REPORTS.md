@@ -593,3 +593,120 @@ plan's 3,565 (0.7% difference).
 Not done yet: the debug overlay PNGs (`overlay_p<N>.png`) named in the M8.2.1 check.
 
 Next: M8.3 figure analysis (`analyse_figures`, Figure Analyst and recovered chart data).
+
+## v3.2 addendum - M8.3 figure analysis (task 6)
+
+Done:
+
+| Item | File | Notes |
+| --- | --- | --- |
+| Figure Analyst (E-03) | `src/style/_figures.py` | One vision call per page with figure blocks: the page as a JPEG (<= 1024 px, quality 80) plus `[{"id","bbox"}]`. The reply is validated strictly (known kinds, every id at most once); missing ids fall back to the rules (logo, photo, or chart with `chart_kind="bar"`) and log a warning. Without a gateway every figure gets a rule label and no call is made. |
+| Lone charts and recovery (E-19) | same | A chart is lone when its section holds no table block. Its bbox is cropped at 150 dpi and sent to `chart_data_recovery`; the reply is accepted only when the figure id matches, categories are non-empty, every series has one value per category, and confidence is at least 0.4. Accepted data becomes a `RecoveredChart`; rejected charts are logged for QA. `recovered_to_source_table` builds the hidden `rc_<figure_id>` Source Table with the categories as the first column (marking `display=False` belongs to M8.4). |
+| Public interface | `src/style/__init__.py` | `analyse_figures` is exported. |
+| Stage runner | `scripts/stage.py` | The `figures` stage is wired and `--llm` enables the provider gateways. Its summary has `charts` (kind counts), `photos`, `logos`, `figures`, `recovered` and `llm_calls`. |
+| Tests | `tests/style/test_figures.py` | 6 tests: a valid reply labels a chart and a valid recovery converts to a Source Table; a missing id falls back with a warning; no gateway gives rule labels; series lengths must match; a confidence below 0.4 is rejected; the real sample gets rule labels without calls. |
+
+Checks: `pytest tests/style -q` -> 16 passed; `python scripts/stage.py --until figures` prints
+`{"figures": 11, "photos": 3, "logos": 8, "charts": {}, "llm_calls": 0}` on the sample without keys
+(the rule path); `pytest -q` is green (exit 0).
+
+Note: page templates do not emit a `chart` block kind yet (vector charts are drawings), so charts can
+only come from the vision labels; recovered tables are generated in M8.4.
+
+Next: M8.4 `prepare_for_report` - fabricated labels and the avoid list (E-27, E-28), period shift,
+row counts, recovered tables and facts with bands.
+
+## v3.2 addendum - M8.4 data preparation (task 7)
+
+Done:
+
+| Item | File | Notes |
+| --- | --- | --- |
+| `prepare_for_report` | `src/generation/_prepare.py`, `src/generation/__init__.py` | The new public function (generate is unchanged): shifts periods, fabricates labels, enforces row counts, adds recovered-chart tables, rebuilds Display Tables, computes facts with bands/owners, re-runs validation and raises `HardConstraintError` on failure. |
+| Period shift (E-16) | same | Period column headers and period-column values move forward by `period_shift_years` (FY24 -> FY25); the matching Rule columns, formula trees, params, lineage keys and key columns are renamed with them, and the Source Document is shifted too so validation still aligns. `allowed_periods` carries both spellings (FY25 and FY2025). |
+| Fabricated labels (E-27/E-28) | same, `src/generation/_prompts.py` | Category labels that still occur in the source text are replaced consistently across every table; generic vocabulary (months, regions, standard line items) stays. `label_fabricator` (v1) is used when a gateway is enabled and its reply passes `check_label_map` + `reused_names`; otherwise a seeded deterministic mapping is used. `avoid.json` and `labels.json` are written under `artifacts/runs/dev/prepare/`. |
+| Row counts (E-17) | same | Leaf rows outside the source +/-20% band are resampled to a target in the band, Hard formulas are recomputed and additive columns rolled up. Value Distance is skipped for tables whose row count changed (row identity is no longer meaningful). |
+| Recovered tables (E-19) | same | Each Recovered Chart becomes a hidden `rc_*` Source Table, which goes through inference, privacy and generation; its Chart Spec is registered with `display=False`. |
+| Display and facts | same | Display Tables are rebuilt from the prepared data; every Fact gets a band (`strong increase` ... `sharp decline`; `dominant`/`major`/`minor`) and exactly one owner. |
+| Contracts | `src/contracts/__init__.py`, `dataset.py` | Additive: `ChartSpec.display`, `Fact.band`, `Fact.owner`, `CanonicalDataset.allowed_periods`. |
+| Shared helpers | `src/core/recovered.py` | `recovered_to_source_table` moved to the Shared Kernel (the guard test rejects cross-module private imports); originality helpers stay in `src/core/originality.py` (the user's implementation, with `name_words`/`names_in`). |
+| Stage runner | `scripts/stage.py` | The `prepare` stage loads the latest pipeline Run (inference, CSVs, facts, charts, lineage, validation), applies preparation and saves the prepared dataset, display and facts under `artifacts/runs/dev/prepare/`. |
+| Tests | `tests/generation/test_prepare.py` | 6 tests: period shift + allowed forms, source-label replacement and generic retention + avoid file, row-count band + totals, hidden recovered table + `display=False`, fact bands/owners + validation ok, band thresholds. |
+
+Checks: `pytest tests/generation/test_prepare.py -q` -> 6 passed; full suite green (exit 0).
+`python scripts/stage.py --until prepare` on the sample prints: shift 1, 25 labels (all replaced),
+avoid list 262 names, 277 facts, bands `{sharp decline: 14, decline: 5, flat: 4, increase: 6,
+strong increase: 40, minor: 2}`, and all 12 tables within +/-20% of their source row counts.
+
+Note: run a fresh `scripts/run_decraft.py` before the prepare stage; an older Run directory can hold
+stale CSVs (one had an all-empty date column) and the stage validates its input.
+
+Next: M8.5 charts for every table (`choose_chart_kind` + sized SVG charts and sidecars).
+
+## v3.2 addendum - M8.5 charts for every table (task 8)
+
+Done:
+
+| Item | File | Notes |
+| --- | --- | --- |
+| Chart kind (E-19) | `src/generation/_charts.py` | `choose_chart_kind`: the source chart kind wins when the Figure Analyst supplied one; otherwise a single share-like column summing to 100 with at most 8 rows is a donut, more than 6 period columns is a line (2-6 periods a bar), categories with one to three measures are a horizontal bar. |
+| One chart per table | `src/generation/_charts.py` | `register_all_charts` keeps the Document Plan's pairs and adds a spec for every remaining displayed table (label column, up to three measures, unit from the Field Profile, a readable title, data labels for small tables). Hidden tables (`display=False`) are never charted twice. |
+| SVG rendering | `src/rendering/_charts.py` | Horizontal bars, donuts, bar, line and pie; data labels when the source printed values; the unit goes on the axis; title, legend toggle, palette order and the Font Lock size are respected. `draw_png` writes a raster copy for the contact sheet, `contact_sheet` tiles them. |
+| Contracts | `src/contracts/__init__.py` | `ChartSpec.kind` widened with `horizontal_bar`/`donut`; added `unit`, `has_data_labels`, `has_legend` (all additive). |
+| Stage runner | `scripts/stage.py` | The `charts` stage loads the prepared dataset, registers every chart, writes SVG + PNG + sidecar for each, builds `contact_charts.png` and reports `{charts, kinds, sidecars_match, every_displayed_table, unchartable, contact_sheet}`. |
+| Tests | `tests/generation/test_chart_kind.py`, `tests/rendering/test_charts_all.py` | 8 tests: period-count rule, share-donut, category horizontal bar, source kind wins, one chart per table, SVG text contains the labels, sidecar equals the display, PNG and contact sheet, donut/horizontal-bar rendering. |
+
+Checks: `pytest tests/generation/test_chart_kind.py tests/rendering/test_charts_all.py -q` -> 8 passed;
+full suite green (exit 0). `python scripts/stage.py --until charts` on the sample prints
+`{"charts": 8, "kinds": {"bar": 2, "line": 6}, "sidecars_match": true,
+"every_displayed_table": true}` and writes `artifacts/runs/dev/charts/contact_charts.png`. Four tables
+(`table_001`, `table_002`, `table_005`, `table_012`) hold no numeric measure (codes, labels) and are
+listed as `unchartable` instead of being given an invented chart.
+
+Next: M8.6 planning (`narrative.plan`: outline skeleton, Titles call, Story Bible call).
+
+## v3.2 addendum - M8.6 planning (task 9)
+
+Done:
+
+| Item | File | Notes |
+| --- | --- | --- |
+| Outline skeleton (M8.6.1) | `src/narrative/_plan.py` | Sections come from the Page Templates in reading order; a section's source title is its heading text; writable block ids and fact keys are assigned so every text block and every fact belongs to exactly one SectionPlan (front matter is S0, unowned facts go to the first content section). |
+| Titles call (M8.6.2) | same | `outline_titles` v2 payload: company, `secs` (id, source title, role, word budget) and the top 30 fact keys. Validation: same ids in the same order, title at most 12 words, and no shared run of 3 non-generic words with the source title. A rejected reply falls back to a deterministic title list ("Year in Review", ...) and a goal sentence, flagged by being the fallback. |
+| Story Bible (M8.6.3) | same | `story_bible` v2 payload: company, outline titles/goals, allowed periods, avoid list. Validation: 8-20 entities, unique ids and names, known kinds, digits only as allowed Period Tokens, no reused source names. One retry carries the error list in the payload; otherwise a deterministic 9-entity bible (role, 3 initiatives, 2 products, place, org unit, partner) with an allowed period year. |
+| Block text | `src/contracts/report.py`, `src/style/_templates.py` | `Block.text` added (additive) and filled from the source text, so planning (and later writers) can use the paragraph and heading wording. |
+| Public interface | `src/narrative/__init__.py` | `plan(data, templates, doc, cfg, gateway) -> (Outline, StoryBible)` exported next to `write`. |
+| Stage runner | `scripts/stage.py` | The `plan` stage loads the prepared dataset, facts, templates and Source Document, calls `plan`, and prints report title, sections (source title, new title, goal, block/fact counts) and the bible summary (entity count by kind, dates). `--llm` enables the text gateway. |
+| Tests | `tests/narrative/test_plan.py` | 7 tests: skeleton ownership round-trip; titles applied in order; reordered ids and copied titles rejected; title rules; bible retry carries the FY27 error then accepts a valid reply; 21 entities fall back; validation reports duplicates and bad years. |
+
+Checks: `pytest tests/narrative/test_plan.py -q` -> 7 passed; full suite green (exit 0).
+`python scripts/stage.py --until plan` on the sample gives 44 sections (the report is dense with
+headings), real source titles, fallback titles, and a 9-entity bible with `Q4FY24` as its only date
+(allowed). Run `--fresh` after the Block text change: the old cached templates carried no text.
+
+Next: M8.7 writing (`narrative.write`: writer payloads, parallel calls, section checks).
+
+## v3.2 addendum - M8.7 writing (task 10)
+
+Done:
+
+| Item | File | Notes |
+| --- | --- | --- |
+| Writer payload (M8.7.1) | `src/narrative/_writer.py` | `build_writer_payload` sends the required `sid,t,g,bl,f,per` and adds `bi`, `ol`, `else` through `fit_payload` in that priority order, so a tight cap drops `else` first and `bi` last. Block word ranges come from the source block's word count (+/-15%). |
+| Section checks (M8.7.3) | same | `check_section` verifies block ids, word ranges (with 5% slack), digits outside placeholders/Period Tokens, unknown placeholder keys, unclosed placeholders, claims that reference an unknown entity, and a run of `ngram_overlap_max` (8) words shared with the source text. |
+| Parallel writers (M8.7.2) | same | `write_blocks` runs one writer per section under a `ThreadPoolExecutor` sized by `providers.text.max_concurrency` (the gateway's limiter still throttles), retries with the error list up to `report.writer_retries`, and otherwise uses deterministic template text, truncated to the section's source word budget. Fallback flags are recorded only when a model was used. |
+| Contracts | `src/contracts/__init__.py` | `NarrativeDoc.blocks` and `NarrativeDoc.flags` added (additive). |
+| Stage runner | `scripts/stage.py`, `src/stage_runner.py` | The `write` stage runs the block-level path; `--dry-run` prints each section's payload token estimate against the cap. The cache key now includes the mode, so a dry-run does not mask a real write. |
+| Tests | `tests/narrative/test_write_blocks.py` | 5 tests: payload fits the cap and drops `else` first; clean reply passes and each error type is reported; retry with the error list then success; three failures fall back and flag; the LLM-off path writes deterministic text. |
+
+Checks: `pytest tests/narrative/test_write_blocks.py -q` -> 5 passed; full suite green (exit 0).
+`python scripts/stage.py --until write --dry-run` on the sample: 44 sections, cap **2,768** tokens,
+**43** sections below the cap, **1** above it (8,803 tokens) and therefore needing a block split;
+`--until write` (LLM off) writes **3,970 words** with **44/44** sections on the deterministic path
+and no flags.
+
+Known gaps: the block-level path is not yet called by `pipeline.run` (it still uses the section-level
+`narrative.write`, which the M8.11 renderer will replace); claims merge and the Reconciler are M8.8;
+one very large section must be split into several writer calls.
+
+Next: M8.8 consistency (claims merge and the Reconciler with its four guards).

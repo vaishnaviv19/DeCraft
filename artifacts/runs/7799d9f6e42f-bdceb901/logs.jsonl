@@ -1,0 +1,12 @@
+{"at": "2026-10-26T02:34:05.514273+00:00", "event": "run_start", "run_id": "7799d9f6e42f-bdceb901", "llm": false, "resumed": false}
+{"at": "2026-10-26T02:34:05.580984+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T02:34:06.361836+00:00", "event": "stage_done", "stage": "extract", "seconds": 0.86}
+{"at": "2026-10-26T02:34:06.431361+00:00", "event": "fallback", "stage": "narrative", "reason": "llm disabled"}
+{"at": "2026-10-26T02:34:07.071765+00:00", "event": "stage_done", "stage": "infer", "seconds": 0.64}
+{"at": "2026-10-26T02:34:07.233310+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.14}
+{"at": "2026-10-26T02:34:07.242684+00:00", "event": "labels", "columns": 20, "replaced": 158, "kept": 17, "avoid_size": 261}
+{"at": "2026-10-26T02:34:07.556217+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.31}
+{"at": "2026-10-26T02:34:07.712981+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.11}
+{"at": "2026-10-26T02:34:07.723445+00:00", "event": "stage_done", "stage": "write", "seconds": 0.02}
+{"at": "2026-10-26T02:34:14.400463+00:00", "event": "stage_done", "stage": "render", "seconds": 6.67}
+{"at": "2026-10-26T02:34:14.790819+00:00", "event": "run_end", "status": "ok", "gates": {"validation": true, "rendered_pdf_qa": true, "word_count": true, "no_placeholders": true, "chart_table": true, "privacy_audit": true}}

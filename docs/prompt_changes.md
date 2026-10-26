@@ -62,6 +62,10 @@ One note per prompt version change (E-24). The full text of each saved version i
 | v1 | Spec text (Appendix S.6). | — |
 | v2 | Merged with `fake_values`: every text label of the document (each distinct label once), column meanings (`cols`), locale (`loc`), a pattern-and-parts mode (`pat`) for columns with more than 120 labels, and `errors` on the retry. "Generic vocabulary" widened to the standard vocabulary of the label's field; every name (segment, plant, place, person, organisation) is replaced; prefixes and unit suffixes are kept. Lives in `src/privacy/_labels.py`. | E-35: one agent for labels; E-39: the fixed generic list would have replaced 151 of the sample's 159 labels, standard terms included. |
 
+A second `label_fabricator` v1 (different text) was added in `src/generation/_prompts.py` for M8.4 and
+removed on 2026-10-26: one name and version must mean one text (E-24a), and M8.4 now reuses the
+privacy plan's Label Fabricator decisions (E-35, E-39).
+
 ## v3.2 prompts (Appendix S.6)
 
 `outline_titles` v2, `story_bible` v2, `section_writer` v2, `shorten` v1, `reconciler` v1,
