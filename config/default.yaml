@@ -40,3 +40,37 @@ budgets:
   llm_max_concurrency: 2
   stage_token_budget: 200000
   stage_timeout_seconds: 600
+
+# v3.1: providers (free tiers; verify the real model ids and limits in M8.0)
+providers:
+  text:
+    kind: groq
+    model: openai/gpt-oss-120b
+    max_concurrency: 2
+    limits: {rpm: 30, tpm: 8000, rpd: 1000, tpd: 200000}
+  vision:
+    kind: cloudflare
+    model: "@cf/meta/llama-3.2-11b-vision-instruct"
+    max_concurrency: 1
+    limits: {rpm: 10, tpm: 100000, rpd: 80, tpd: 400000}
+  image:
+    kind: cloudflare
+    model: "@cf/black-forest-labs/flux-1-schnell"
+    images_per_day: 20
+    steps: 4
+
+# v3.1: report settings
+report:
+  period_shift_years: 1
+  word_tolerance: 0.15
+  min_total_words: 1000
+  row_tolerance: 0.20
+  row_padding_compress_max: 0.15
+  critic_rounds: 2
+  critic_param_range: 0.20
+  image_retries: 2
+  shorten_retries: 2
+  reconcile_rounds: 2
+  writer_retries: 2
+  render_dpi: 110
+  image_max_px: 1024

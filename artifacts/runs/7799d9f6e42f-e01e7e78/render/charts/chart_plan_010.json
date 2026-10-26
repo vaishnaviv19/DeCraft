@@ -1,0 +1,37 @@
+{
+  "chart_id": "chart_plan_010",
+  "table_id": "table_010",
+  "label_column": "Y.E March",
+  "kind": "line",
+  "orientation": "rows",
+  "labels": [
+    "FY21A",
+    "FY22A",
+    "FY23A",
+    "FY24E",
+    "FY25E"
+  ],
+  "series": {
+    "Payables (days)": [
+      180.2,
+      195.4,
+      101.4,
+      173.5,
+      147.5
+    ],
+    "Receivables (days)": [
+      77.0,
+      70.9,
+      61.1,
+      58.6,
+      66.3
+    ],
+    "Inventory (days)": [
+      46.8,
+      76.6,
+      52.7,
+      60.3,
+      66.1
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+Read the chart image. Return the category labels and each series' values as numbers in the chart's own unit, plus the unit and your confidence 0-1. If values are not readable, estimate from the axis and lower the confidence. Return ONLY JSON: {"figure_id":str,"categories":[str],"series":[{"name":str,"values":[number]}],"unit":str|null,"confidence":number}

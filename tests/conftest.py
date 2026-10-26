@@ -17,7 +17,7 @@ class FakeLLM:
         self.model_name = model_name
         self.calls = []
 
-    def complete(self, system, user, temperature=0.0, max_tokens=4000):
+    def complete(self, system, user, temperature=0.0, max_tokens=4000, images=(), reasoning_effort=None):
         self.calls.append((system, user))
         if self.delay_s:
             import time

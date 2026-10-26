@@ -10,6 +10,8 @@ from __future__ import annotations
 import numpy as np
 
 from src.core.distance import ensure_distance
+from src.core.periods import parse_period
+from src.core.values import displayed_decimals, format_number_like, parse_number
 
 
 def safe_level_factor(rng: np.random.Generator, low: float = 0.60, high: float = 1.60,
@@ -59,3 +61,23 @@ def scale_cells(values: list[float | None], factor: float, rng: np.random.Genera
             float(rng.uniform(min_distance, 2 * min_distance))
         out.append(ensure_distance(float(candidate), value, min_distance, decimals))
     return out
+
+
+def perturb_text_numbers(values: list, rng: np.random.Generator, low: float = 0.60, high: float = 1.60,
+                         min_distance: float = 0.05, wobble: float = 0.03) -> list:
+    """Numbers kept as text in a label column (stacked tables: 'Rs. 86,856', '53.0%') are data, so they are
+    fabricated like a tiny table: one Safe Factor for the column plus a wobble, the distance kept after
+    rounding to the cell's own decimals, and the cell's own format kept. Word labels pass through."""
+    factor = safe_level_factor(rng, low, high, min_distance)
+    out = []
+    for value in values:
+        number = None if value is None else parse_number(value)
+        if number is None or parse_period(str(value)) is not None:
+            out.append(value)
+            continue
+        decimals = displayed_decimals(value) or 0
+        candidate = (number * factor * (1 + rng.uniform(-wobble, wobble)) if number
+                     else float(rng.uniform(min_distance, 2 * min_distance)))
+        out.append(format_number_like(str(value), ensure_distance(float(candidate), number, min_distance, decimals)))
+    return out
+

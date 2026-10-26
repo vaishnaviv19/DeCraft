@@ -1,0 +1,1 @@
+Does the image match the caption in <data></data>? List caption elements that are clearly missing or contradicted. Ignore style. Return ONLY JSON: {"matches":bool,"missing":[str]}

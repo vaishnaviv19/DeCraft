@@ -113,6 +113,21 @@ def verify_yoy(levels, pct, lag: int, tol_pp: float = 0.1, min_rows: int = 3):
     return float(np.mean([abs(c - p) <= tol_pp for c, p in pairs])), len(pairs)
 
 
+# ---------------------------------------------------------------- v3.1: period shift (decision E-16)
+def shift_period(p: Period, years: int) -> Period:
+    """Move a period forward by whole years. Kind, quarter/month and fiscal flag are kept."""
+    return Period(p.kind, p.year + years, p.sub, p.fiscal)
+
+
+def format_like(label: str, p: Period) -> str:
+    """Write a shifted period in the SAME style as the source label (FY24 -> FY25, Q3 2023 -> Q3 2024)."""
+    match = re.search(r"(?<!\d)(\d{4}|\d{2})(?!\d)", label)
+    if not match:
+        return label
+    new = str(p.year) if len(match.group(1)) == 4 else f"{p.year % 100:02d}"
+    return label[:match.start()] + new + label[match.end():]
+
+
 def time_order(values) -> list[int]:
     """Row positions in TIME order for a period or date column (FY25, FY24 ... -> oldest first).
     Unreadable or missing labels keep their row order at the end. The one ordering used by pattern

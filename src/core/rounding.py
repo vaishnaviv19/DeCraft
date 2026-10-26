@@ -34,9 +34,14 @@ def detect_total_mode(groups: list[tuple[list[float], float]], d: int) -> str:
 
 
 def build_display_df(full: pd.DataFrame, decimals: dict[str, int],
-                     links: dict[int, list[int]], mode: str) -> pd.DataFrame:
-    """The rounded, reader-facing copy. In `sum_of_displayed` mode totals are re-added after rounding."""
+                     links: dict[int, list[int]], mode: str,
+                     scales: dict[str, float] | None = None) -> pd.DataFrame:
+    """The rounded, reader-facing copy, in the SOURCE's units: a column shown as 'Rs cr' is divided back
+    by its Scale, then rounded once. In `sum_of_displayed` mode totals are re-added after rounding."""
     disp = full.copy()
+    for col, scale in (scales or {}).items():
+        if col in disp.columns and scale not in (None, 0, 1) and pd.api.types.is_numeric_dtype(disp[col]):
+            disp[col] = disp[col] / scale
     for col, d in decimals.items():
         disp[col] = disp[col].map(lambda v: display_round(v, d))
     if mode == "sum_of_displayed":

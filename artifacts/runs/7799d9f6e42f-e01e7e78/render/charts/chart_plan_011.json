@@ -1,0 +1,29 @@
+{
+  "chart_id": "chart_plan_011",
+  "table_id": "table_011",
+  "label_column": "Rating",
+  "kind": "bar",
+  "orientation": "columns",
+  "labels": [
+    "HOLD",
+    "HOLD",
+    "HOLD",
+    "BUY",
+    "HOLD",
+    "BUY",
+    "HOLD",
+    "HOLD"
+  ],
+  "series": {
+    "Target": [
+      240.0,
+      211.0,
+      337.0,
+      97.0,
+      172.0,
+      179.0,
+      94.0,
+      175.0
+    ]
+  }
+}

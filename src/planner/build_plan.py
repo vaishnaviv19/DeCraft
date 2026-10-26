@@ -44,7 +44,7 @@ def _get_original_words_per_page(blueprint: Dict[str, Any]) -> Dict[int, int]:
     return dict(sorted(page_words.items()))
 
 
-def build_document_plan(blueprint: Dict[str, Any]) -> Dict[str, Any]:
+def build_document_plan(blueprint: Dict[str, Any], out_dir: Path | str | None = None) -> Dict[str, Any]:
     entity = blueprint.get("entity", {}) or {}
     domain = entity.get("domain_industry") or "general"
     entity_name = entity.get("entity_name") or "the entity"
@@ -115,7 +115,7 @@ def build_document_plan(blueprint: Dict[str, Any]) -> Dict[str, Any]:
 
     enforce_rules(plan, blueprint)
 
-    out_dir = Path("outputs") / "plan"
+    out_dir = Path(out_dir) if out_dir is not None else Path("outputs") / "plan"
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / "document_plan.json"
     out_path.write_text(json.dumps(plan, indent=2, ensure_ascii=False), encoding="utf-8")

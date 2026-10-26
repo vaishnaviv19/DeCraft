@@ -1,0 +1,17 @@
+{"at": "2026-10-25T14:59:24.763284+00:00", "event": "run_start", "run_id": "7799d9f6e42f-e01e7e78", "llm": false, "resumed": false}
+{"at": "2026-10-25T14:59:25.703457+00:00", "event": "stage_done", "stage": "extract", "seconds": 0.94}
+{"at": "2026-10-25T14:59:25.789914+00:00", "event": "fallback", "stage": "narrative", "reason": "llm disabled"}
+{"at": "2026-10-25T14:59:26.479091+00:00", "event": "stage_done", "stage": "infer", "seconds": 0.69}
+{"at": "2026-10-25T14:59:26.594067+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.11}
+{"at": "2026-10-25T14:59:26.969894+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.38}
+{"at": "2026-10-25T14:59:27.127078+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.09}
+{"at": "2026-10-25T14:59:27.133722+00:00", "event": "stage_done", "stage": "write", "seconds": 0.02}
+{"at": "2026-10-25T14:59:34.893440+00:00", "event": "stage_done", "stage": "render", "seconds": 7.75}
+{"at": "2026-10-25T14:59:35.047088+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "rendered_pdf_qa": false, "word_count": true, "no_placeholders": true, "chart_table": true, "privacy_audit": true}}
+{"at": "2026-10-25T15:12:37.954151+00:00", "event": "run_start", "run_id": "7799d9f6e42f-e01e7e78", "llm": false, "resumed": true}
+{"at": "2026-10-25T15:12:38.048756+00:00", "event": "fallback", "stage": "narrative", "reason": "llm disabled"}
+{"at": "2026-10-25T15:12:38.595857+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.53}
+{"at": "2026-10-25T15:12:38.735115+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.09}
+{"at": "2026-10-25T15:12:38.752241+00:00", "event": "stage_done", "stage": "write", "seconds": 0.02}
+{"at": "2026-10-25T15:12:47.923704+00:00", "event": "stage_done", "stage": "render", "seconds": 9.17}
+{"at": "2026-10-25T15:12:48.114016+00:00", "event": "run_end", "status": "ok", "gates": {"validation": true, "rendered_pdf_qa": true, "word_count": true, "no_placeholders": true, "chart_table": true, "privacy_audit": true}}

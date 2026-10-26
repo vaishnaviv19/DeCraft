@@ -203,14 +203,31 @@ class Relabeler:
         self.forbidden = set(forbidden) | set(self.preserved)
         self.columns = {f"{d.table_id}.{d.column}" for d in plan.decisions if d.relabel}
         self.pools = dict(plan.label_pools)
+        self.seeds = dict(getattr(plan, "label_maps", {}) or {})          # E-35: fabricated pairs
+        self.kept = dict(getattr(plan, "kept_labels", {}) or {})          # E-39: standard vocabulary
+        self._seed_norm: dict[str, dict[str, str]] = {}
         self.maps: dict[str, LabelMap] = {}
         self.shared: dict[str, str] = {}
         self._used: set[str] = set()       # one set for every column: two real values never share a fake
 
     def wants(self, table_id: str, column: str) -> bool:
-        return f"{table_id}.{column}" in self.columns
+        node = f"{table_id}.{column}"
+        return node in self.columns or node in self.seeds
 
     def get(self, table_id: str, column: str, value):
+        node = f"{table_id}.{column}"
+        if node not in self.columns:                   # E-35 pairs only: every other cell stays as it is
+            if value is None or (isinstance(value, float) and np.isnan(value)):
+                return value
+            return self._seeded(node).get(normalise_text(value), value)
+        return self._identifying(table_id, column, value)
+
+    def _seeded(self, node: str) -> dict[str, str]:
+        if node not in self._seed_norm:
+            self._seed_norm[node] = {normalise_text(k): v for k, v in self.seeds.get(node, {}).items()}
+        return self._seed_norm[node]
+
+    def _identifying(self, table_id: str, column: str, value):
         if value is None or (isinstance(value, float) and np.isnan(value)) or str(value).strip() == "":
             return value
         node = f"{table_id}.{column}"
@@ -218,8 +235,11 @@ class Relabeler:
         if key in self.shared:
             return self.shared[key]
         if node not in self.maps:
-            self.maps[node] = LabelMap(exempt=self.preserved, forbidden=self.forbidden,
-                                       pool=self.pools.get(node, []), fallback_prefix=str(column))
+            self.maps[node] = LabelMap(exempt=self.preserved + list(self.kept.get(node, [])),
+                                       forbidden=self.forbidden, seed=self.seeds.get(node),
+                                       pool=self.pools.get(node, []),
+                                       fallback_prefix=(str(column) if len(str(column)) <= 24 and not any(
+                                           ch.isdigit() or ch in ":/" for ch in str(column)) else "Item"))
             self.maps[node]._used = self._used
         new = self.maps[node].get(str(value))
         if new != value:
@@ -236,7 +256,8 @@ class LabelMap:
     and address) are returned unchanged."""
 
     def __init__(self, factory=None, rng: np.random.Generator | None = None, exempt=frozenset(),
-                 forbidden=frozenset(), pool=(), fallback_prefix: str = "Item", max_tries: int = 200):
+                 forbidden=frozenset(), pool=(), fallback_prefix: str = "Item", max_tries: int = 200,
+                 seed: dict[str, str] | None = None):
         self.factory, self.rng = factory, rng
         self.exempt = {normalise_text(v) for v in exempt}
         self.forbidden = {normalise_text(v) for v in forbidden}
@@ -244,6 +265,7 @@ class LabelMap:
         self.map: dict[str, str] = {}
         self._used: set[str] = set()
         self._counter = 0
+        self.seed = {normalise_text(k): v for k, v in (seed or {}).items()}   # checked pairs, used first
 
     def _free(self, candidate: str, source_label: str) -> bool:
         n = normalise_text(candidate)
@@ -269,7 +291,8 @@ class LabelMap:
         if normalise_text(source_label) in self.exempt:
             return source_label
         if source_label not in self.map:
-            new = self._fresh(source_label)
+            seeded = self.seed.get(normalise_text(source_label))
+            new = seeded if seeded is not None and normalise_text(seeded) not in self._used                 else self._fresh(source_label)
             self._used.add(normalise_text(new))
             self.map[source_label] = new
         return self.map[source_label]

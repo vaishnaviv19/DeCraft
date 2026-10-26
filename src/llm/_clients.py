@@ -32,7 +32,8 @@ class OllamaClient:
         except Exception:                                  # any failure simply means "not available"
             return False
 
-    def complete(self, system: str, user: str, temperature: float = 0.0, max_tokens: int = 4000) -> str:
+    def complete(self, system: str, user: str, temperature: float = 0.0, max_tokens: int = 4000,
+                 images=(), reasoning_effort: str | None = None) -> str:
         import requests
         payload = {"model": self.model_name, "prompt": user, "system": system, "stream": False,
                    "options": {"temperature": temperature, "num_predict": max_tokens}}

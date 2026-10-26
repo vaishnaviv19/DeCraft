@@ -40,7 +40,7 @@ Source of these terms: the two DeCraft specification documents (the existing rep
 | Inference Report | `InferenceReport` | Everything inferred from the Source Document: Field Profiles, Rules, Relationships, Patterns, Text Facts, Table Quality, Reference Date, warnings. | Produced only by `inference.infer`; JSON round-trip safe; carries `schema_version`, `source_sha256` and `config_hash`. |
 | Field Profile | `FieldProfile` | The description of one column: physical type, semantic type, unit, Scale, Decimals, Additive flag, counts, Missing Kinds, statistics, Extraction Grade. | Counts must be consistent (`n_missing ≤ n`, `n_unique ≤ n − n_missing`). |
 | Physical Type | `FieldProfile.physical_type` | The storage type of a column. | One of `integer`, `float`, `text`, `date`, `period`, `boolean`, `empty`. |
-| Semantic Type | `FieldProfile.semantic_type` | What a column means in the domain (currency, percentage, identifier, count ...). | Proposed by rules and the Annotator; uncertain values stay `unknown`. Values used so far: `currency`, `percentage`, `count`, `identifier`, `numeric`, `category`, `date`, `period`, `text`, `unknown`. |
+| Semantic Type | `FieldProfile.semantic_type` | What a column means in the domain (currency, percentage, identifier, count ...). | Proposed by rules and the Annotator; uncertain values stay `unknown`. |
 | Base Units | `core/units.py` | Values stored without display scale (dollars, not millions). | All stored numbers are in Base Units; Scale is used only to parse and format. |
 | Scale | `ScaleInfo`, `FieldProfile.scale` | The multiplier between displayed and Base Units (1e6 for "$ millions"). | Never applied to percentages or counts. |
 | Decimals | `FieldProfile.decimals` | The most common number of displayed decimals in a column. | Sets Display Rounding and Formula tolerance. |
@@ -194,7 +194,57 @@ Source of these terms: the two DeCraft specification documents (the existing rep
 | Hard-gate Test | tests | A test protecting a Gate (false-break rate, mismatches, privacy leaks, repair bound). | Fixed only by changing code or Config, never the assertion. |
 | Decision Label | spec section 3 | An identifier D-xx, B-xx or G-xx for a binding decision, fixed bug or closed gap. | Cited in code comments where implemented. |
 
-## 12. Existing pipeline terms (added in M0 step 2.1)
+## 12. Report generation (v3.1 additions)
+
+| Term | Context | Definition | Allowed States/Actions |
+| --- | --- | --- | --- |
+| Style Profile | `StyleProfile` (`src/style`) | The source's look: page size, margins, fonts, Text Styles, palette, table borders, running header/footer. | Extracted once per Run; read only afterwards. |
+| Text Style | `TextStyle` | A cluster of spans with the same font, size, colour and weight, plus line height and alignment. | Text blocks reference one by `style_id`; its size is locked (Font Lock). |
+| Font Fallback | `FontSpec.fallback` | The open font used when an embedded font file is a subset or unusable. | From the fixed mapping table (Calibri→Carlito, …); recorded in `PROMPT_LOG.md`. |
+| Palette | `StyleProfile.palette` | The 3–8 dominant colours of the source. | Charts and the Critic may only use these colours. |
+| Page Template | `PageTemplate` | One source page as positioned Blocks plus a mode. | Mode `mirror` or `flow` (E-15); the reason is logged for `flow`. |
+| Block | `Block` | A positioned region of a page with a kind, bbox, style, source word count and owner section. | Kinds: heading, text, table, chart, photo, logo, caption, header, footer, page_number, decoration. |
+| Mirror Mode | `PageTemplate.mode = mirror` | Rendering each block at its source position and size. | Default for safe pages. |
+| Flow Mode | `PageTemplate.mode = flow` | Rendering the page's blocks in reading order with the same styles. | Used for rotated, multi-column (> 3), overlapping or unclassifiable pages. |
+| Source Words | `Block.source_words` | Word count of a block in the source. | Word Budget = Source Words ±15%. |
+| Word Budget | `word_budget` | The allowed word range for a generated block. | Writers must stay inside it (±5% slack); total ≥ 1,000 words. |
+| Box Fit | `rendering/_fit.fits` | Whether text, wrapped with real font metrics, fits its block's lines. | Not fitting → Shorten (≤ 2) → cut at a sentence and flag. |
+| Figure Info | `FigureInfo` | The Figure Analyst's label for a source figure: chart (with chart kind), photo, logo, icon. | Rule fallback when the model fails. |
+| Lone Chart | M8.3.2 | A source chart with no table showing its data. | Its data is recovered (confidence ≥ 0.4) into a hidden table, or the chart is flagged. |
+| Recovered Chart | `RecoveredChart` | Series read from a Lone Chart image by the vision model. | Seeds generation only; never displayed as a table. |
+| Hidden Table | `ChartSpec.display = false` | A canonical table that feeds a chart but is not shown. | Still validated and charted from the dataset. |
+| Period Shift | `shift_period`, `format_like` | Moving every period label forward by `period_shift_years`. | Keeps the label style (FY24 → FY25). |
+| Period Token | `narrative/_tokens.py` | A year or period label allowed as plain digits in prose. | Allowed only if in the shifted period set or a Story Bible date (E-10). |
+| Band | `Fact.band` | A qualitative label for a number fact (`strong increase`, `dominant`, …). | Writers see Bands, never raw values. |
+| Fact Owner | M8.4.4 | The one section allowed to cite a fact first. | Other sections receive it in `else` and avoid repeating it. |
+| Outline | `Outline` | All sections with new titles, goals, owned blocks, facts and tables. | Built by Python plus the Titles call; shared read-only with every writer. |
+| Story Bible | `StoryBible` | The invented entities (products, events, initiatives, places, roles, awards, partners) and their attributes. | Created before writing; frozen while writers run; updated only by Claims merge and the Reconciler. |
+| Bible Entity | `BibleEntity` | One invented thing with id, kind, name and attributes. | Dates must be Period Tokens; no real people from the source. |
+| Claim | `Claim`, `ClaimOut` | A writer's statement that a paragraph asserts an entity attribute value. | Every sentence that states an entity attribute must have one. |
+| Conflict | `Conflict` | Two or more different values for the same entity attribute (bible vs writer, or writer vs writer). | Resolved by the Reconciler (≤ 2 rounds) or the sentences are dropped. |
+| Blackboard Protocol | section 5 | How agents share state: frozen Outline and Story Bible in, Claims out, Python merge, Reconciler on conflicts. | Agents never message each other. |
+| Reconciler | `reconciler` prompt | The agent that chooses among conflicting values and rewrites only the flagged paragraphs. | Guards: choose-don't-invent, flagged paragraphs only, writer checks, no new entities (E-09). |
+| Shorten | `shorten` prompt | The agent call that reduces a block's text to a word limit. | Placeholders and entity names may only be removed, never added. |
+| Photo Slot | M8.10 | A source photo position that gets a generated image. | Exists only if the source has photos; logos are never slots. |
+| Image Check | `image_check` prompt | The vision check that a generated photo matches its caption. | ≤ 2 regenerations, then the caption is simplified. |
+| Visual Critic | `visual_critic` prompt | The vision agent comparing each source page with its output page. | May change only spacing (line height ±10%, paragraph spacing) and chart/table sizing (±20%); never a font size (Font Lock); ≤ 2 fix rounds; the best round is kept. |
+| Style Adjustments | `StyleAdjustments` | The clamped parameter changes proposed by the Critic. | Applied by re-rendering; never change data or text. |
+| Rate Limiter | `src/llm/_limiter.py` | The client-side guard for requests/minute, tokens/minute, requests/day and tokens/day per provider. | Waits instead of erroring; daily exhaustion → `LLMBudgetExceeded` → run `partial`. |
+| Payload Cap | `PromptSpec.max_input_tokens` | The maximum estimated input tokens of one call (system + payload + images). | Enforced before sending; optional fields dropped by priority (`fit_payload`). |
+| Cache-only Mode | `DECRAFT_CACHE_ONLY=1` | A run that uses only cached replies (no keys needed). | A cache miss raises `CacheMiss` naming the prompt. |
+| Prompt Log | `artifacts/prompt_log.jsonl`, `PROMPT_LOG.md` | The automatic record of every call plus the rendered challenge deliverable. | Built by `scripts/build_prompt_log.py`; never hand-edited except `docs/prompt_changes.md`. |
+| Stage Runner | `scripts/stage.py` | The CLI that runs the pipeline up to a named stage and prints its check summary. | Used by every subtask Check. |
+| Gate | section 9 | A pass/fail condition required for submission. | All must be true, or the failure is explained in the M11 report. |
+| Challenge Override | spec v3.2 section 1.1 | A decision changed to follow the exact challenge text (tasks 4–9). | The challenge text wins over every earlier decision. |
+| Document Type | payload field `dt` | What kind of document the source is (annual report, statistical bulletin, …), as returned by the Titles call. | Never hardcoded in prompts or templates (E-25). |
+| Tone Profile | `ToneProfile`, `tone_profile` | Source writing style measured by Python: sentence length, grammatical person, contractions, bullet share. | Sent to writers as `tone`; replaces any fixed tone (E-26). |
+| Avoid List | `avoid.json`, payload `avoid` | Proper nouns found in the source text, except the organisation name and brand terms. | None may appear in labels, the bible, new entities or output text (E-28). |
+| Generic Label | `is_generic_label` | A category label that is common vocabulary (month, continent or broad region, standard line item, period). | May stay unchanged; every other label must be fabricated. |
+| Label Fabricator | `label_fabricator` prompt, `privacy/_labels.py` | The one agent that replaces every name in the tables' text labels with a believable fictional one and keeps standard vocabulary (E-35, E-39). | Runs once in the privacy plan; Python checks every pair; fallback `<column> A`. |
+| Font Lock | gate `font_sizes_locked` | The rule that every output font size equals its source Text Style size. | Only padding, spacing and box sizes may change (E-29). |
+| Prompt Archive | `docs/prompts/<name>_<version>.txt` | Saved text of every prompt version. | Written automatically on a version bump; used for "failed version and fix" in `PROMPT_LOG.md`. |
+
+## 13. Existing pipeline terms (added in M0 step 2.1)
 
 Terms used by `src/blueprint/`, `src/planner/` and `scripts/` that the sections above did not yet cover. They describe the frozen extraction and planning stages; new modules read them and never change them.
 
@@ -218,7 +268,7 @@ Terms used by `src/blueprint/`, `src/planner/` and `scripts/` that the sections 
 | Column Header | `tables[].column_headers` | The header labels of one Source Table, in column order. | Any string, including empty. |
 | Inferred Column Type | `tables[].columns[].inferred_type` | The cell type the Blueprint observed in a column, before inference. | `integer`, `float`, `string`, `currency`, `percentage`, `numeric_with_units`, `empty/null`. |
 | Source CSV | `tables[].source_csv` | The CSV holding the Raw Cells of one Source Table, written by the extraction stage. | Read only; original strings kept verbatim. |
-| Reconstructed Table | `outputs/structured/reconstructed_tables/` | The merged-cell-aware table CSVs the Blueprint prefers over the plain `tables/` ones, with a manifest of page, row, column and merged-cell data. | The manifest supplies the page number of a Source Table. existing code: `manifest.json`. |
+| Reconstructed Table | `<run>/structured/reconstructed_tables/` | The merged-cell-aware table CSVs the Blueprint prefers over the plain `tables/` ones, with a manifest of page, row, column and merged-cell data. | The manifest supplies the page number of a Source Table. Written per Run from the input PDF (E-37); the repo's `outputs/structured/` is only the Golden Baseline input. existing code: `manifest.json`. |
 | Blueprint Validation | `blueprint.validation` | The FR-A1 check of the Source PDF (exists, readable, unencrypted, at least one page) with its metadata. | Read only. existing code: `validate_pdf`. |
 | Section | `document_plan.sections` | One planned part of the output document: id, title, purpose, Target Word Count, Required Components, tables, charts and source page. | Read only for all new modules. existing code: `build_document_plan`. |
 | Section Purpose | `sections[].purpose` | The one-sentence job of a Section. | Non-empty text. |
@@ -229,3 +279,26 @@ Terms used by `src/blueprint/`, `src/planner/` and `scripts/` that the sections 
 | Plan Constraint | `document_plan.constraints` | The rules the plan guarantees (no verbatim copy, same table count, one chart per table, same words per page). | Read only. existing code: `enforce_rules`, `validate_plan`. |
 | Run Script | `scripts/run_blueprint_and_plan.py` | The existing entry point that builds the Blueprint and the Document Plan for one Source PDF. | Behaviour frozen by the Golden Baseline; `scripts/run_decraft.py` is added in M9. |
 
+## 14. Project additions (E-31 – E-38)
+
+Terms introduced by the project decisions in `docs/project_decisions.md`.
+
+| Term | Context | Definition | Allowed States/Actions |
+| --- | --- | --- | --- |
+| Cross-table Linker | `inference/_linker.py`, `cross_table_linker` prompt | One LLM call per document that proposes Links and Aggregate totals between tables. | Proposals only; every pair is tested on all rows and decided by `classify_rule` (E-31). |
+| Statement Table | `core.rows.statement_label_column` | A table whose rows are named line items and whose columns are periods. | Row labels kept in order; values scaled with one factor per table. |
+| Row Label | annotator role `row_label` | The column that names each row of a Statement Table. | Kept (generic) or relabelled; never re-drawn at random. |
+| Row Formula | `RuleKind.ROW_FORMULA` | An arithmetic relation between rows of one Statement Table (`[Gross profit] = [Revenue] - [Cost of sales]`). | Proposed by the annotator; accepted only when it holds in every period column; re-applied after generation and repair. |
+| Override Confidence | `Config.llm_override_confidence` (0.90) | The LLM confidence at which its column meaning or sensitivity replaces what Python measured. | Below it, Python's measurement wins; the reason is recorded. |
+| Sensitivity Reason | `InferenceReport.sensitivity_reasons` | The annotator's one-line reason for a column's sensitivity class. | Recorded with the decision; never shown in the PDF. |
+| Relabeler | `privacy._analysis.Relabeler` | Replaces identifying text values with values from a Label Map, sharing one used set per run. | Falls back to `Item N` style values only when no fabricated value is left. |
+| Fake-value Pool | `PrivacyPlan.label_pools` | Pattern-made replacement values for a column with more than 120 distinct labels. | Made by the Label Fabricator's pattern mode; no source value, no avoid-list noun. |
+| Label Map Pair | `PrivacyPlan.label_maps` | One source label and its fabricated replacement, the same in every table. | Checked by Python before use; applied by the Relabeler. |
+| Kept Label | `PrivacyPlan.kept_labels` | A label left unchanged as standard vocabulary of its field. | Never in an identifying column; never containing a Name Word (E-39). |
+| Name Word | `core.originality.name_words` | A word capitalised inside source prose and never written in lowercase there, or a distinctive word of the organisation's name. | A kept label may not contain one; nor may a replacement. |
+| Extraction Cache | `artifacts/extraction_cache/<sha256>/` | Saved extraction of one PDF, keyed by its sha256. | Reused only for the identical file (E-37). |
+| Locale | `PrivacyPlan.locale` | Where the organisation is based, from the `entity_identity` call. | A style hint for fabricated names and places only. |
+| Method Advice | `privacy_methods` prompt, `apply_advice` | The LLM's suggested privacy method, noise, keep-correlation and criticality per column. | Applied only above the confidence rules; `preserve` refused for non-exempt columns (E-34). |
+| Break Cause | `break_causes` prompt | The named cause of a statistically confirmed structural break. | Kept only when its quote is in the source text. |
+| Section Template | `section_template` prompt | The pre-v3.2 placeholder-based section writer. | Retired when the v3.2 Section Writer (M8.7) is in place. |
+| Synthetic Record | `RunManifest.synthetic` | The only place that says the output is fabricated. | Never written into the PDF, its metadata or the HTML (E-32). |

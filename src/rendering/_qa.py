@@ -7,6 +7,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from src.contracts.dataset import CanonicalDataset
+from src.rendering._charts import chart_caption, sidecar_matches
 
 
 @dataclass
@@ -51,8 +52,12 @@ def _contact_sheet(images: list[Path], target: Path, columns: int = 3) -> None:
     sheet.save(target)
 
 
+def _squash(text: str) -> str:
+    return "".join(str(text).split()).lower()
+
+
 def run_qa(pdf_path: Path, data: CanonicalDataset, out_dir: Path, planned_pages: int | None = None,
-           min_words: int = 1000, page_tolerance: int = 1) -> QAResult:
+           min_words: int = 1000, page_tolerance: int = 1, planned_charts: int | None = None) -> QAResult:
     import pymupdf
 
     document = pymupdf.open(str(pdf_path))
@@ -69,9 +74,12 @@ def run_qa(pdf_path: Path, data: CanonicalDataset, out_dir: Path, planned_pages:
         blocks_within((page.rect.x0, page.rect.y0, page.rect.x1, page.rect.y1),
                       [b[:4] for b in page.get_text("blocks")])
         for page in document)
+    # every planned chart exists; each sidecar EQUALS the Display Table; each caption is on the page
+    checks["charts_present"] = planned_charts is None or len(data.charts) >= planned_charts
     checks["chart_sidecars"] = all(
-        (Path(out_dir) / "charts" / f"{chart_id}.json").exists() for chart_id in data.charts)
-    checks["charts_captioned"] = all(chart_id in text for chart_id in data.charts)
+        sidecar_matches(data, chart_id, Path(out_dir) / "charts" / f"{chart_id}.json") for chart_id in data.charts)
+    flat = _squash(text)
+    checks["charts_captioned"] = all(_squash(chart_caption(spec)) in flat for spec in data.charts.values())
 
     pages_dir = Path(out_dir) / "pages"
     pages_dir.mkdir(parents=True, exist_ok=True)

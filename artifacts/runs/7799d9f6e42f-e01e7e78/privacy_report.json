@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "checks_run": [
+    "identifier_reuse",
+    "value_distance",
+    "value_distance_displayed",
+    "quasi_identifier_match",
+    "rare_combination",
+    "headline_distance"
+  ],
+  "violations": [],
+  "limitations": [
+    "Synthetic data is not automatically anonymous.",
+    "No formal differential privacy mechanism is implemented or claimed."
+  ]
+}

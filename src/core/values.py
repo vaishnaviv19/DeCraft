@@ -47,3 +47,25 @@ def parse_date(value) -> date | None:
         except ValueError:
             continue
     return None
+
+
+NUMBER_IN_TEXT = re.compile(r"[-+]?\d[\d,]*(?:\.\d+)?")
+
+
+def format_number_like(template: str, value: float) -> str:
+    """`value` written the way `template` writes its number: same prefix and suffix ('Rs. ', '%', 'x'),
+    thousands separators, decimals and bracket negatives. 'Rs. 86,856' + 91234.4 -> 'Rs. 91,234'."""
+    text = str(template).strip()
+    bracket = text.startswith("(") and text.endswith(")")            # the source writes negatives as (x)
+    inner = text[1:-1] if bracket else text
+    m = NUMBER_IN_TEXT.search(inner)
+    if m is None:
+        return text
+    digits = m.group(0).lstrip("+-")
+    decimals = len(digits.split(".")[1]) if "." in digits else 0
+    body = f"{abs(value):,.{decimals}f}" if "," in digits else f"{abs(value):.{decimals}f}"
+    if value < 0 and bracket:
+        return "(" + inner[:m.start()] + body + inner[m.end():] + ")"
+    sign = "-" if value < 0 else ("+" if m.group(0).startswith("+") else "")
+    return inner[:m.start()] + sign + body + inner[m.end():]
+

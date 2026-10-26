@@ -429,3 +429,108 @@ Known gaps: the `generate` stage always reruns (the resume covers `extract`, `in
 **M10:** a reproducibility test (two runs with the same seed and cached replies produce identical
 CSV hashes), inference scoring on fixtures, and the measured coverage report. Alternatively close the
 page-count gap by compacting the layout, which is the only failing gate on the real report.
+
+## M10 - Audit, reproducibility and evaluation
+
+Status: **complete**. 500 tests pass; the Golden Baseline is green; coverage of the new packages is
+**87%** (gate: 80%).
+
+| Task | File | What it does |
+| --- | --- | --- |
+| M10.1 Run directory | `src/pipeline.py` | One Run writes its Manifest, Config snapshot, Inference Report, Privacy Plan and Report, Validation Report, Utility Report, Rendered-PDF QA, Facts, Charts, Lineage, Narrative, full-precision and display CSVs, HTML, PDF, page PNGs, contact sheet and `logs.jsonl`; every artifact is hashed into the Manifest. The real Run writes **67 hashed outputs**. |
+| M10.2 Reproducibility | `tests/pipeline/test_reproducibility.py` | Two cold Runs with the same seed and Config produce identical `canonical_dataset/*.csv` hashes and the same `run_id`. (The Config Hash includes `artifacts_dir`, so the test uses one directory and deletes it between Runs instead of comparing two locations.) |
+| M10.3 Inference scoring | `tests/inference/test_scoring.py`, `tests/fixtures/` | Four Fixtures - retail, finance, energy and the unknown domain - each with `source.csv` and a hand-written `expected_inference.json`. The test reports semantic-type accuracy, checks expected rules are enforced with the expected tier, and **asserts zero falsely enforced rules** (the gate). |
+| M10.4 Coverage | measured | `pytest --cov=src/contracts --cov=src/core --cov=src/inference --cov=src/privacy --cov=src/generation --cov=src/validation --cov=src/narrative --cov=src/rendering --cov=src/llm --cov=src/pipeline` -> **87%** (5458 statements, 720 missed). `src/blueprint` and `src/planner` are reported without a gate, as D-10 requires. |
+
+Real Run on `sample_input_1.pdf` (LLM off): **status `ok`**, every gate true -
+`validation`, `rendered_pdf_qa`, `word_count`, `no_placeholders`, `chart_table`, `privacy_audit`.
+
+Bugs fixed while measuring (all surfaced by the real document):
+
+- **Headline Distance for a column maximum (D-13).** The `largest` fact could sit within 10% of the
+  source maximum even when every cell was 5% away. Generation now moves the argmax cell at least 12%
+  from the source maximum (and then re-checks the total), skipping statement tables whose row shapes
+  must survive.
+- **Displayed Value Distance for scaled statements.** A statement in "Rs cr" can print two very
+  different base values as the same number (1.6 and 2.0 crore both show 2). Generation now moves one
+  whole display unit until the printed values differ by at least 5%.
+- **Statement totals were too close to their source.** The per-table factor for statements now
+  excludes +/-12% instead of +/-5%, so the row "latest" facts also clear Headline Distance, while the
+  row trends stay intact (the user's statement-trend tests pass for 8 seeds).
+- **Manifest keys are POSIX paths**, so hashes compare across platforms.
+
+Known gaps: the `generate` stage always reruns on a resume (`extract`, `infer` and `privacy_plan`
+resume); seasonality and lagged relationships are not detected; inference scoring uses a deterministic
+FakeLLM reply per fixture rather than a live model.
+
+### Next smallest task
+
+**M11 - acceptance.** Run the pipeline on `sample_input_1.pdf` plus at least two PDFs from other
+domains and the unknown-domain fixture, record every gate in the Manifest, and write the M11 report
+with the remaining limitations (seasonality, live-model scoring, `generate` resume).
+
+## v3.1 addendum - M8.0 foundations (in progress)
+
+The v3.1 addendum replaces v3 milestones M8-M11. It was read, and the new
+`UBIQUITOUS_LANGUAGE.md` (with the section 12 v3.1 terms) is now the repository copy.
+
+Done in this slice:
+
+| Item | File | Notes |
+| --- | --- | --- |
+| M8.0.1 Config | `src/config.py`, `config/default.yaml` | `Providers` (text/vision/image, each with `ProviderLimits`), `ReportSettings` (period shift, word/row tolerances, critic rounds, retries, dpi, image size). YAML and code defaults agree (`test_v31_defaults`). |
+| M8.0.2 Rate limiter | `src/llm/_limiter.py` | Client-side requests/min, tokens/min, requests/day, tokens/day; waits instead of erroring; the daily quota raises `LLMBudgetExceeded`. |
+| M8.0.2 Payload fitting | `src/llm/_payload.py` | `estimate_tokens`, `compact`, `fit_payload` (drops optional fields in priority order), `batch_items`. |
+| v3.1 contracts | `src/contracts/report.py` | `StyleProfile`, `TextStyle`, `FontSpec`, `PageTemplate`, `Block`, `FigureInfo`, `RecoveredChart`, `Outline`, `StoryBible`, `Claim`, `Conflict`, `QAReport`, `StyleAdjustments`, ... (additive). |
+| Story Bible and claims | `src/narrative/_claims.py`, `_tokens.py`, `src/rendering/_fit.py` | `merge_claims`, `check_resolution`, Period Tokens (`illegal_digits`), text fitting (`fits`, `word_budget`). |
+| Prompt specs | `src/narrative/_prompts.py`, `src/style/_prompts.py`, `src/rendering/_prompts.py` | Versioned prompts with per-prompt input/output caps, temperature, role and rationale (E-05, E-23). `PromptSpec` gained those fields with defaults. |
+| Period shift (E-16) | `src/core/periods.py` | `shift_period` and `format_like` (FY24 -> FY25, Q3 2023 -> Q3 2024). |
+| Style interface | `src/style/__init__.py` | `extract_style`, `build_templates`, `analyse_figures` signatures, raising `NotImplementedError` (v3 section 2.3). |
+
+Tests: the Appendix S test files were brought in unchanged and pass
+(`test_limiter_payload.py`, `test_report_contracts.py`, `test_claims_tokens_fit.py`,
+`test_prompt_budgets.py`), plus `test_v31_defaults`. The full suite is green (exit 0).
+
+Still to do for M8.0: gateway v2 (image payloads, `cache_only`/`CacheMiss`, JSONL prompt log,
+input caps), the Groq/Cloudflare clients and `make_gateways`, the prompt-log script, and the stage
+runner. Then M8.1 (style extraction body), M8.2-M8.12.
+
+## v3.2 addendum - originality foundations (task 1)
+
+The v3.2 addendum replaces the v3.1 report-generation plan and adds the challenge-text overrides
+E-25 to E-30. The new `UBIQUITOUS_LANGUAGE.md` (with Tone Profile, Avoid List, Generic Label, Label
+Fabricator and Font Lock) is now the repository copy.
+
+Done in this task:
+
+| Item | File | Notes |
+| --- | --- | --- |
+| Originality guards (E-25, E-26, E-27, E-28) | `src/narrative/_originality.py`, `tests/narrative/test_originality.py` | `source_proper_nouns`, `reused_names`, `is_generic_label`, `check_label_map`, `tone_profile`; the test also fails if any prompt mentions a fixed document type ("corporate", "annual report"). |
+| v3.2 prompt specs | `src/narrative/_prompts.py`, `src/style/_prompts.py`, `src/rendering/_prompts.py` | Refreshed from Appendix S.6: document-type-free wording, measured tone, Font Lock, plus the `label_fabricator` prompt. Budget tests still pass. |
+| v3.2 contracts | `src/contracts/report.py` | Refreshed additively (tone/avoid/font-lock fields). |
+| Config (section 7) | `src/config.py`, `config/default.yaml` | `row_compress_max` renamed to `row_padding_compress_max` (v3.2); provider and report settings already in place from the v3.1 slice. |
+
+Checks: `pytest -q` green (exit 0), including the new originality tests and the prompt-budget tests.
+
+Next: M8.4.0 label fabrication and the avoid list in `prepare_for_report`, then the remaining
+M8.0 gateway v2 work and the style module.
+
+## v3.2 addendum - M8.0.3 gateway v2 and providers (task 2)
+
+Done:
+
+| Item | File | Notes |
+| --- | --- | --- |
+| Gateway v2 | `src/llm/_gateway.py` | Per-prompt budgets (`max_input_tokens`, `max_output_tokens`, `temperature`, `reasoning_effort`, `role`), `images=` on `ask_json`, input cap enforced before sending, `calls limits` via an injected `RateLimiter`, `cache_only` with `CacheMiss`, JSONL `log_path`, and `start_stage()` so every Pipeline Stage gets its own token budget. An unreachable model server (`LLMUnavailable`) is logged and falls back instead of raising. |
+| Providers (E-01) | `src/llm/_providers.py` | `GroqClient` (JSON mode, `reasoning_effort` with one retry on a 400), `CloudflareVisionClient` (images as `data:image/jpeg;base64,` URLs), `CloudflareImageClient` (FLUX, seed and steps). Keys only from `GROQ_API_KEY`, `CF_ACCOUNT_ID`, `CF_API_TOKEN`. |
+| Factory (E-04, E-06, E-24) | `src/llm/__init__.py` | `make_gateways(cfg)` returns `{"text", "vision", "image"}`, one limiter per provider from `providers.*.limits`, caches under `artifacts/llm_cache/<kind>/`, prompt log at `artifacts/prompt_log.jsonl`, and `DECRAFT_CACHE_ONLY=1` support. A missing key disables that gateway instead of failing the Run. |
+| Client compatibility | `src/llm/_clients.py` | The Ollama client accepts `images` and `reasoning_effort`, so the legacy local path still works through the v2 gateway. |
+| Live smoke script | `scripts/smoke_llm.py` | One tiny text call, one vision call with a 256 px JPEG and one image call; prints the model ids or why a provider was skipped. |
+| Tests | `tests/llm/test_gateway.py`, `test_providers.py`, `test_gateways_factory.py` | 12 gateway tests (including cache-only, input cap, prompt log), 5 provider request-shape tests with `httpx.MockTransport` (model, `response_format`, `reasoning_effort` retry, data URL, seed/steps), 2 factory tests. `tests/llm` is 30 tests; the full suite is green. |
+
+Not run: `python scripts/smoke_llm.py` - there are no provider keys on this machine, so "all three
+providers answer" (the M8.0.3 Done condition) remains open. It must be run where `GROQ_API_KEY`,
+`CF_ACCOUNT_ID` and `CF_API_TOKEN` are set, and the verified model ids and limits then written into
+`config/default.yaml` and the M8 report.
+
+Next: M8.0.4 stage runner (`scripts/stage.py`), then M8.1 style extraction.

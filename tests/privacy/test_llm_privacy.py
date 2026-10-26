@@ -17,8 +17,8 @@ from src.generation import generate
 from src.generation._tiny import jitter_cells
 from src.inference import infer
 from src.privacy import Relabeler, audit_privacy, plan_privacy
-from src.privacy._agents import (MethodAdvice, apply_advice, expand_pattern, fake_value_pools,
-                                 find_entity)
+from src.privacy._agents import MethodAdvice, apply_advice, expand_pattern, find_entity
+from src.privacy._labels import LabelColumn, fabricate_labels
 from src.privacy._analysis import LabelMap, decide_risk, detect_evidence, detect_risk
 from tests.conftest import FakeLLM
 
@@ -48,10 +48,21 @@ ANNOTATION = json.dumps({"domain": "biology", "domain_confidence": 0.9, "columns
     meaning("Expression", "sensitive", "a genetic measurement about a patient", 0.8, "measurement"),
     meaning("Lab", "low_risk", "the company itself"),
     meaning("Lab Address", "low_risk", "the company's own address")]})
-FAKES = json.dumps({"columns": [{"column": "Patient Name", "values": [
-    "Asha Rao", "Mira Sen", "Mira Sen", "Omar Haddad", "Helix Labs", "Lena Park", "Ravi Iyer", "Tom Becker"]},
-    {"column": "Invented Column", "values": ["x"]}]})
-MORE = json.dumps({"columns": [{"column": "Patient Name", "values": ["Mira Sen", "Kiran Das"]}]})
+PN = "assay.Patient Name"
+
+
+def pairs(col, mapping):
+    return [{"col": col, "src": s, "new": n} for s, n in mapping.items()]
+
+
+# Label Fabricator, first answer: one real name kept, one duplicate, one company name; genes kept as
+# standard vocabulary; an invented column is ignored
+FAKES = json.dumps({"labels": pairs(PN, {"Asha Rao": "Asha Rao", "Ben Ortiz": "Mira Sen", "Chen Wei": "Mira Sen",
+                                         "Dana Fox": "Omar Haddad", "Eli Hart": "Helix Labs", "Fay Lin": "Lena Park"})
+                    + pairs("assay.Gene", {g: g for g in dict.fromkeys(GENES)})
+                    + pairs("assay.Invented Column", {"x": "y"})})
+# the retry fixes exactly the three rejected labels
+MORE = json.dumps({"labels": pairs(PN, {"Asha Rao": "Ravi Iyer", "Chen Wei": "Kiran Das", "Eli Hart": "Tom Becker"})})
 ENTITY = json.dumps({"name": LAB, "address": ADDRESS, "location": "Pune, India"})
 NO_ADVICE = json.dumps({"columns": []})
 REPLIES = [ANNOTATION, ENTITY, NO_ADVICE, FAKES, MORE]
@@ -128,13 +139,13 @@ def test_company_name_and_address_are_always_preserved(cfg, gateway_for):
 
 def test_fake_labels_are_checked_before_use(cfg, gateway_for):
     _, _, plan, _ = llm_run(cfg, gateway_for, REPLIES)
-    pool = plan.label_pools["assay.Patient Name"]
-    # round 1: real name, duplicate and company name dropped (5 left); round 2 asked for the 6th
-    assert pool == ["Mira Sen", "Omar Haddad", "Lena Park", "Ravi Iyer", "Tom Becker", "Kiran Das"]
-    assert "assay.Invented Column" not in plan.label_pools and plan.warnings == []
+    assert plan.label_maps[PN] == {"Asha Rao": "Ravi Iyer", "Ben Ortiz": "Mira Sen", "Chen Wei": "Kiran Das",
+                                   "Dana Fox": "Omar Haddad", "Eli Hart": "Tom Becker", "Fay Lin": "Lena Park"}
+    assert plan.kept_labels["assay.Gene"] == list(dict.fromkeys(GENES))   # standard vocabulary stays
+    assert "assay.Invented Column" not in plan.label_maps and plan.warnings == []
     second = json.loads(llm_run.calls[-1][1].split("<data>")[1].split("</data>")[0])
-    column = second["columns"][0]
-    assert column["needed"] == 1 and "Mira Sen" in column["already_given"]
+    assert [x["src"] for x in second["lab"]] == ["Asha Rao", "Chen Wei", "Eli Hart"]
+    assert len(second["errors"]) == 3
 
 
 def test_generated_data_uses_fake_names_and_keeps_the_company(cfg, gateway_for):
@@ -142,7 +153,7 @@ def test_generated_data_uses_fake_names_and_keeps_the_company(cfg, gateway_for):
     frame = generate(doc, report, plan, llm_cfg, np.random.default_rng(3)).tables["assay"]
     names = set(frame["Patient Name"].dropna())
     assert names.isdisjoint(NAMES)
-    assert names <= set(plan.label_pools["assay.Patient Name"])        # all believable, none numbered
+    assert names <= set(plan.label_maps[PN].values())                 # all believable, none numbered
     assert set(frame["Lab"]) == {LAB} and set(frame["Lab Address"]) == {ADDRESS}
     assert set(frame["Gene"]) <= set(GENES)                        # public gene symbols may stay
 
@@ -164,7 +175,8 @@ def test_llm_off_still_protects_with_the_keyword_fallback(cfg):
     d = by_column(plan)
     assert d["Patient Name"].risk is S.DIRECT_IDENTIFIER and d["Patient Name"].relabel
     assert d["Lab Address"].exempt and plan.label_pools == {}
-    assert any("Patient Name" in w and "numbered" in w for w in plan.warnings)
+    assert set(plan.label_maps[PN].values()) == {f"Patient Name {c}" for c in "ABCDEF"}   # spec fallback
+    assert any("LLM off" in w for w in plan.warnings)
 
 
 # ---------------------------------------------------------------- Label Map
@@ -248,7 +260,8 @@ def test_identifier_reuse_ignores_protected_and_total_labels(cfg, gateway_for):
     doc, report, plan, llm_cfg = llm_run(cfg, gateway_for, REPLIES)
     tables = {"assay": pd.DataFrame({"Sample ID": [f"Q-{i}" for i in range(6)],
                                      "Patient Name": ["Mira Sen"] * 5 + ["Total"],
-                                     "Gene": GENES, "Expression": [9.0] * 6, "Lab": [LAB] * 6,
+                                     "Gene": [f"Gene {c}" for c in "ABCDEF"],   # LLM-off audit plan: genes fabricated
+                                     "Expression": [9.0] * 6, "Lab": [LAB] * 6,
                                      "Lab Address": [ADDRESS] * 6})}
     clean = _audit(doc, report, llm_cfg, tables)
     assert "identifier_reuse" not in {v.check for v in clean.violations}
@@ -261,22 +274,22 @@ def test_identifier_reuse_ignores_protected_and_total_labels(cfg, gateway_for):
 def test_fake_values_are_asked_for_in_the_company_locale(cfg, gateway_for):
     _, _, plan, _ = llm_run(cfg, gateway_for, REPLIES)
     assert plan.locale == "Pune, India"
-    fake_call = next(user for system, user in llm_run.calls if "replacement values" in system)
-    assert '"locale": "Pune, India"' in fake_call
+    fake_call = next(user for system, user in llm_run.calls if "text labels" in system)
+    assert '"loc": "Pune, India"' in fake_call
 
 
 def test_a_large_column_is_built_from_a_pattern_and_parts(gateway_for):
-    reply = json.dumps({"columns": [{"column": "Customer", "pattern": "{first} {last}",
-                                     "parts": {"first": [f"F{i}a" for i in range(40)],
-                                               "last": [f"L{i}b" for i in range(40)]}}]})
+    reply = json.dumps({"labels": [], "patterns": [{"col": "crm.Customer", "pattern": "{first} {last}",
+                                                    "parts": {"first": [f"F{i}a" for i in range(40)],
+                                                              "last": [f"L{i}b" for i in range(40)]}}]})
     llm = FakeLLM([reply])
-    pools, warnings = fake_value_pools("crm", None, [{"column": "Customer", "description": "client name",
-                                                      "kind": "direct_identifier", "examples": ["Ann Lee"],
-                                                      "needed": 900}], gateway_for(llm), {"f1a l1b"})
-    values = pools["Customer"]
-    assert len(values) == 900 and len(set(values)) == 900 and warnings == []
+    column = LabelColumn("crm.Customer", "Customer", "client name", [f"Real {i}" for i in range(900)],
+                         "direct_identifier", must_replace=True)
+    made = fabricate_labels([column], gateway_for(llm), {"f1a l1b"}, set(), set())
+    values = made.pools["crm.Customer"]
+    assert len(values) == 900 and len(set(values)) == 900 and made.warnings == []
     assert "F1a L1b" not in values                              # a real value is never produced
-    assert '"mode": "pattern"' in llm.calls[0][1]
+    assert '"pat"' in llm.calls[0][1]
 
 
 def test_a_pattern_with_unknown_slots_produces_nothing():
@@ -285,11 +298,12 @@ def test_a_pattern_with_unknown_slots_produces_nothing():
     assert len(expand_pattern("LAB-{digits}", {}, 5, rng, set(), set())) == 5
 
 
-def test_a_shortfall_is_reported_not_hidden(gateway_for):
-    llm = FakeLLM([json.dumps({"columns": [{"column": "Name", "values": ["Ann Lee"]}]})])
-    pools, warnings = fake_value_pools("t", None, [{"column": "Name", "description": "", "kind": "direct_identifier",
-                                                    "examples": [], "needed": 3}], gateway_for(llm), set())
-    assert pools == {"Name": ["Ann Lee"]} and "only 1 believable" in warnings[0]
+def test_a_shortfall_gets_the_spec_fallback_and_a_warning(gateway_for):
+    llm = FakeLLM([json.dumps({"labels": pairs("t.Name", {"Ann": "Ann Lee"})}), json.dumps({"labels": []})])
+    column = LabelColumn("t.Name", "Name", "", ["Ann", "Bob", "Cy"], must_replace=True)
+    made = fabricate_labels([column], gateway_for(llm), set(), set(), set())
+    assert made.maps["t.Name"] == {"Ann": "Ann Lee", "Bob": "Name A", "Cy": "Name B"}
+    assert made.fallback["t.Name"] == ["Bob", "Cy"] and len(made.warnings) == 2
 
 
 # ---------------------------------------------------------------- LLM-chosen privacy methods (old PrivacyAgent)
@@ -309,9 +323,15 @@ def test_more_protection_needs_ordinary_trust():
 
 
 def test_less_protection_needs_the_override_bar():
-    assert apply_advice(_decision(), _advice("preserve", 0.85), False, 0.70, 0.90).method == "fitted_distribution"
-    assert apply_advice(_decision(), _advice("preserve", 0.95), False, 0.70, 0.90).method == "preserve"
+    assert apply_advice(_decision(), _advice("category_resample", 0.85), False, 0.70, 0.90).method == "fitted_distribution"
+    assert apply_advice(_decision(), _advice("category_resample", 0.95), False, 0.70, 0.90).method == "category_resample"
     assert apply_advice(_decision(), _advice("fitted_distribution", 0.8, noise=0.02), False, 0.7, 0.9).noise == 0.12
+
+
+def test_no_confidence_lets_a_column_keep_its_source_values():
+    """E-34 (task 6): only the organisation's own columns are preserved."""
+    assert apply_advice(_decision(), _advice("preserve", 0.99), False, 0.70, 0.90).method == "fitted_distribution"
+    assert apply_advice(_decision(), _advice("preserve", 0.99), True, 0.70, 0.90).method == "fitted_distribution"
 
 
 @pytest.mark.parametrize("decision,advice", [

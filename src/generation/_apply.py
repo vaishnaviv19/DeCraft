@@ -33,7 +33,7 @@ from src.generation._copula import generate_correlated
 from src.generation._distributions import sample_numeric
 from src.generation._graph import Step
 from src.generation._keys import fresh_key_values
-from src.generation._tiny import jitter_cells, safe_level_factor, scale_cells
+from src.generation._tiny import jitter_cells, perturb_text_numbers, safe_level_factor, scale_cells
 from src.generation._trend import generate_with_segments, generate_with_shape
 
 
@@ -198,6 +198,8 @@ def _sample_column(ctx: GenerationContext, table: str, column: str, tiny: bool, 
         if ctx.relabeler is not None and ctx.relabeler.wants(table, column):
             # identifying text (names, IDs, cities ...): same distribution, checked fake labels
             values = [ctx.relabeler.get(table, column, v) for v in values]
+        # numbers kept as text beside labels (stacked tables) are data: fabricated in their own format
+        values = perturb_text_numbers(values, rng, th.jitter_low, th.jitter_high, th.min_value_distance)
         for i in total_rows:
             values[i] = cleaned[i] if cleaned[i] not in (None, "") else "Total"
         frame[column] = pd.Series(values, index=frame.index, dtype=object)
@@ -249,12 +251,31 @@ def _sample_column(ctx: GenerationContext, table: str, column: str, tiny: bool, 
         sampled = jitter_cells(values, rng, th.jitter_low, th.jitter_high, th.min_value_distance)
     else:
         sampled = sample_numeric(values, n, rng, th.min_value_distance, noise=noise)
-    # Headline Distance (D-13): the column total must differ >= 10% from the source total.
+    # Headline Distance (D-13): the largest value and the column total must differ >= 10% from source.
+    # Statement tables are exempt: their rows are series whose shape must survive, and the per-table
+    # factor already moves every total.
     leaves = [i for i in range(len(values)) if i not in total_rows and values[i] is not None]
+    if leaves and table not in ctx.statements:
+        source_max = max(values[i] for i in leaves)
+        generated = [(abs(sampled[i]) if i < len(sampled) and sampled[i] is not None else -1.0, i)
+                     for i in leaves]
+        generated_max, max_index = max(generated)
+        if source_max and generated_max >= 0 \
+                and abs(sampled[max_index] - source_max) / abs(source_max) < th.min_headline_distance:
+            own = values[max_index]
+            above = sampled[max_index] <= source_max
+            candidates = (source_max * (1 + th.min_headline_distance * 1.2),
+                          source_max * (1 - th.min_headline_distance * 1.2))
+            if not above:
+                candidates = tuple(reversed(candidates))
+            for candidate in candidates:
+                if own in (None, 0) or abs(candidate - own) / abs(own) >= th.min_value_distance:
+                    sampled[max_index] = candidate
+                    break
     source_total = sum(values[i] for i in leaves)
     new_total = sum(sampled[i] for i in leaves if i < len(sampled) and sampled[i] is not None)
-    if leaves and source_total and abs(new_total - source_total) / abs(source_total) \
-            < th.min_headline_distance:
+    if leaves and table not in ctx.statements and source_total \
+            and abs(new_total - source_total) / abs(source_total) < th.min_headline_distance:
         factor = 1 + th.min_headline_distance * 1.2
         if new_total < source_total:
             factor = 1 / factor
@@ -272,6 +293,22 @@ def _sample_column(ctx: GenerationContext, table: str, column: str, tiny: bool, 
             out.append(new)
             continue
         moved = ensure_distance(new, old, th.min_value_distance, places)
+        # Displayed distance: a scaled statement shows 'Rs cr', so two base values that differ a lot
+        # can still print the same number. Move one display unit until the printed values differ.
+        if moved is not None and old not in (None, 0) and profile is not None \
+                and profile.scale != 1 and places is not None:
+            shown_old = round(old / profile.scale, places)
+            shown_new = round(moved / profile.scale, places)
+            if shown_old and abs(shown_new - shown_old) / abs(shown_old) < th.min_value_distance:
+                unit = 10.0 ** -places
+                direction = 1.0 if moved >= old else -1.0
+                target = shown_old
+                for _ in range(12):
+                    target = round(target + direction * max(unit, abs(shown_old)
+                                                            * th.min_value_distance * 1.2), places)
+                    if abs(target - shown_old) / abs(shown_old) >= th.min_value_distance:
+                        break
+                moved = target * profile.scale
         out.append(np.nan if moved is None else (round(moved, places) if places is not None else moved))
     frame[column] = pd.Series(out, index=frame.index, dtype="float64")
 
@@ -353,8 +390,8 @@ def apply_steps(ctx: GenerationContext, steps: list[Step], rules: list[Rule],
     sampled_nodes = {s.node for s in steps if s.action == "sample"}
     for table in sorted(ctx.statements):                # one factor per statement, drawn once (even a
         if table in ctx.source:                         # small statement: per-column factors break trends)
-            ctx.statement_factor[table] = safe_level_factor(rng, th.jitter_low, th.jitter_high,
-                                                           th.min_value_distance)
+            ctx.statement_factor[table] = safe_level_factor(
+                rng, th.jitter_low, th.jitter_high, th.min_headline_distance * 1.2)
     paired: set[str] = set()
     for pattern in patterns or []:                      # detected co-movement: ONE correlation step,
         if pattern.kind is not PatternKind.CORRELATION or pattern.uncertain or len(pattern.fields) < 2:
@@ -400,7 +437,8 @@ def apply_steps(ctx: GenerationContext, steps: list[Step], rules: list[Rule],
         frame = ctx.tables[table]
         if step.action == "fresh_key":
             src_keys = ctx.source[table][column]
-            if ctx.relabeler is not None and ctx.relabeler.wants(table, column):
+            wordy = src_keys.dropna().astype(str).str.contains(r"\d").mean() < 0.2 if src_keys.notna().any() else False
+            if ctx.relabeler is not None and ctx.relabeler.wants(table, column) and wordy:
                 # keys with no format to copy (names): believable fakes, one per source key
                 frame[column] = [ctx.relabeler.get(table, column, v) for v in src_keys]
             else:

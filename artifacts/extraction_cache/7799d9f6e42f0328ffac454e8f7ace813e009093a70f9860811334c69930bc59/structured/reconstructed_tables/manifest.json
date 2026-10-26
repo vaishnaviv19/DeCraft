@@ -1,0 +1,242 @@
+[
+  {
+    "table_number": 1,
+    "page": 1,
+    "rows": 2,
+    "columns": 2,
+    "merged_cell_count": 0,
+    "overlap_count": 0,
+    "merged_cells": [],
+    "overlaps": [],
+    "csv_path": "table_001.csv"
+  },
+  {
+    "table_number": 2,
+    "page": 1,
+    "rows": 23,
+    "columns": 4,
+    "merged_cell_count": 11,
+    "overlap_count": 0,
+    "merged_cells": [
+      {
+        "row": 0,
+        "column": 0,
+        "row_span": 1,
+        "column_span": 4,
+        "text": "Company Data"
+      },
+      {
+        "row": 1,
+        "column": 0,
+        "row_span": 1,
+        "column_span": 3,
+        "text": "Market Cap (cr)"
+      },
+      {
+        "row": 2,
+        "column": 0,
+        "row_span": 1,
+        "column_span": 3,
+        "text": "Enterprise Value (cr)"
+      },
+      {
+        "row": 3,
+        "column": 0,
+        "row_span": 1,
+        "column_span": 3,
+        "text": "Outstanding Shares (cr)"
+      },
+      {
+        "row": 4,
+        "column": 0,
+        "row_span": 1,
+        "column_span": 3,
+        "text": "Free Float"
+      },
+      {
+        "row": 5,
+        "column": 0,
+        "row_span": 1,
+        "column_span": 3,
+        "text": "Dividend Yield"
+      },
+      {
+        "row": 6,
+        "column": 0,
+        "row_span": 1,
+        "column_span": 3,
+        "text": "52 week high"
+      },
+      {
+        "row": 7,
+        "column": 0,
+        "row_span": 1,
+        "column_span": 3,
+        "text": "52 week low"
+      },
+      {
+        "row": 8,
+        "column": 0,
+        "row_span": 1,
+        "column_span": 3,
+        "text": "6m average volume"
+      },
+      {
+        "row": 9,
+        "column": 0,
+        "row_span": 1,
+        "column_span": 3,
+        "text": "Beta"
+      },
+      {
+        "row": 10,
+        "column": 0,
+        "row_span": 1,
+        "column_span": 3,
+        "text": "Face value"
+      }
+    ],
+    "overlaps": [],
+    "csv_path": "table_002.csv"
+  },
+  {
+    "table_number": 3,
+    "page": 1,
+    "rows": 14,
+    "columns": 4,
+    "merged_cell_count": 0,
+    "overlap_count": 0,
+    "merged_cells": [],
+    "overlaps": [],
+    "csv_path": "table_003.csv"
+  },
+  {
+    "table_number": 4,
+    "page": 2,
+    "rows": 19,
+    "columns": 6,
+    "merged_cell_count": 0,
+    "overlap_count": 0,
+    "merged_cells": [],
+    "overlaps": [],
+    "csv_path": "table_004.csv"
+  },
+  {
+    "table_number": 5,
+    "page": 2,
+    "rows": 7,
+    "columns": 7,
+    "merged_cell_count": 3,
+    "overlap_count": 0,
+    "merged_cells": [
+      {
+        "row": 0,
+        "column": 1,
+        "row_span": 1,
+        "column_span": 2,
+        "text": "Old estimates"
+      },
+      {
+        "row": 0,
+        "column": 3,
+        "row_span": 1,
+        "column_span": 2,
+        "text": "New estimates"
+      },
+      {
+        "row": 0,
+        "column": 5,
+        "row_span": 1,
+        "column_span": 2,
+        "text": "Change %"
+      }
+    ],
+    "overlaps": [],
+    "csv_path": "table_005.csv"
+  },
+  {
+    "table_number": 6,
+    "page": 2,
+    "rows": 18,
+    "columns": 6,
+    "merged_cell_count": 1,
+    "overlap_count": 0,
+    "merged_cells": [
+      {
+        "row": 16,
+        "column": 3,
+        "row_span": 1,
+        "column_span": 2,
+        "text": "10% holding discount to investments"
+      }
+    ],
+    "overlaps": [],
+    "csv_path": "table_006.csv"
+  },
+  {
+    "table_number": 7,
+    "page": 3,
+    "rows": 22,
+    "columns": 6,
+    "merged_cell_count": 0,
+    "overlap_count": 0,
+    "merged_cells": [],
+    "overlaps": [],
+    "csv_path": "table_007.csv"
+  },
+  {
+    "table_number": 8,
+    "page": 3,
+    "rows": 16,
+    "columns": 6,
+    "merged_cell_count": 0,
+    "overlap_count": 0,
+    "merged_cells": [],
+    "overlaps": [],
+    "csv_path": "table_008.csv"
+  },
+  {
+    "table_number": 9,
+    "page": 3,
+    "rows": 23,
+    "columns": 6,
+    "merged_cell_count": 0,
+    "overlap_count": 0,
+    "merged_cells": [],
+    "overlaps": [],
+    "csv_path": "table_009.csv"
+  },
+  {
+    "table_number": 10,
+    "page": 3,
+    "rows": 23,
+    "columns": 6,
+    "merged_cell_count": 0,
+    "overlap_count": 0,
+    "merged_cells": [],
+    "overlaps": [],
+    "csv_path": "table_010.csv"
+  },
+  {
+    "table_number": 11,
+    "page": 4,
+    "rows": 9,
+    "columns": 3,
+    "merged_cell_count": 0,
+    "overlap_count": 0,
+    "merged_cells": [],
+    "overlaps": [],
+    "csv_path": "table_011.csv"
+  },
+  {
+    "table_number": 12,
+    "page": 4,
+    "rows": 6,
+    "columns": 4,
+    "merged_cell_count": 0,
+    "overlap_count": 0,
+    "merged_cells": [],
+    "overlaps": [],
+    "csv_path": "table_012.csv"
+  }
+]

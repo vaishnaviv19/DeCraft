@@ -1,11 +1,19 @@
 # src/narrative/_placeholders.py
-"""Placeholder resolution (M8.3). The only way a number enters the narrative."""
+"""Placeholder resolution (M8.3). The only way a number enters the narrative.
+
+`{{ key }}` uses the fact's own displayed decimals and unit (%, currency), so the text shows exactly
+what the table shows. Optional format: `{{ key|%:1 }}` (percent, 1 decimal), `{{ key|:0 }}`,
+`{{ key|text }}`, `{{ key|word }}`, and the flag `abs` (`{{ key|%:1|abs }}`) for "fell by 5%".
+Period labels such as FY24, Q3 or H1 may be written as words; any other digit outside a placeholder
+is rejected."""
 from __future__ import annotations
 
 import re
 
 DIGIT = re.compile(r"[0-9]")
 PLACEHOLDER = re.compile(r"\{\{\s*([^}|]+?)\s*(?:\|([^}]+))?\}\}")
+PERIOD_WORD = re.compile(r"\b(?:(?:Q[1-4]|H[12]|9M)\s?(?:FY|CY)?\s?'?\d{0,4}|(?:FY|CY)\s?'?\d{2,4})[AEP]?\b", re.I)
+CURRENCY_SYMBOLS = {"$", "₹", "€", "£"}
 
 
 class UnknownPlaceholder(KeyError):
@@ -17,22 +25,30 @@ class StrayNumber(ValueError):
 
 
 def stray_numbers(template: str) -> list[str]:
-    outside = PLACEHOLDER.sub("", template)
+    outside = PERIOD_WORD.sub("", PLACEHOLDER.sub("", template))
     return DIGIT.findall(outside)
 
 
-def _format(value, spec: str | None, unit: str | None) -> str:
-    if spec in {"text", "word"} or isinstance(value, str):
+def _format(fact, spec: str | None) -> str:
+    value, unit = fact.value, getattr(fact, "unit", None)
+    parts = [p.strip() for p in (spec or "").split("|") if p.strip()]
+    flags = {p for p in parts if p in {"abs", "text", "word"}}
+    fmt = next((p for p in parts if p not in flags), "")
+    if flags & {"text", "word"} or isinstance(value, str):
         return str(value)
-    kind, _, decimals = (spec or "").partition(":")
-    places = int(decimals) if decimals.isdigit() else (0 if isinstance(value, float) else None)
-    number = float(value)
-    if places is None:
-        rendered = f"{number:,.0f}"
+    kind, _, decimals = fmt.partition(":")
+    if decimals.isdigit():
+        places = int(decimals)
+    elif getattr(fact, "decimals", None) is not None:
+        places = int(fact.decimals)
     else:
-        rendered = f"{number:,.{places}f}"
+        places = 0 if isinstance(value, float) else None
+    number = abs(float(value)) if "abs" in flags else float(value)
+    rendered = f"{number:,.0f}" if places is None else f"{number:,.{places}f}"
     if kind == "%" or (kind == "" and unit == "%"):
         return f"{rendered}%"
+    if unit in CURRENCY_SYMBOLS:
+        return f"-{unit}{rendered[1:]}" if rendered.startswith("-") else f"{unit}{rendered}"
     return rendered
 
 
@@ -47,7 +63,7 @@ def resolve(template: str, facts: dict) -> str:
         fact = facts.get(key)
         if fact is None:
             raise UnknownPlaceholder(key)
-        out.append(_format(fact.value, spec, fact.unit))
+        out.append(_format(fact, spec))
         position = match.end()
     out.append(template[position:])
     return "".join(out)
@@ -58,4 +74,4 @@ def contains_placeholder(text: str) -> bool:
 
 
 def placeholder_keys(template: str) -> list[str]:
-    return [m.group(1) for m in PLACEHOLDER.finditer(template)]
+    return [m.group(1).strip() for m in PLACEHOLDER.finditer(template)]

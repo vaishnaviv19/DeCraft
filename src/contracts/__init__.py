@@ -359,6 +359,9 @@ class PrivacyPlan(Strict):
     tiny_tables: list[str] = []                  # tables handled by the jitter policy (decision D-11)
     preserved_values: list[str] = []             # entity name and address: never replaced anywhere
     label_pools: dict[str, list[str]] = {}       # 'table.column' -> fresh labels (LLM, checked in Python)
+    label_maps: dict[str, dict[str, str]] = {}   # E-35: 'table.column' -> {source label: new label}
+    kept_labels: dict[str, list[str]] = {}       # E-39: labels kept as standard vocabulary, per column
+    avoid: list[str] = []                        # E-28: source proper nouns (avoid.json)
     locale: str | None = None                    # where the entity is (style hint for fake values only)
     warnings: list[str] = []                     # e.g. a column that will need numbered fallback labels
 
@@ -415,6 +418,7 @@ class Fact(Strict):
     kind: Literal["number", "text", "word"]
     unit: str | None = None
     source: str                                  # 'orders.revenue:sum' or 'pattern:p3'
+    decimals: int | None = None                  # displayed decimals of the column it comes from
 
 
 class ChartSpec(Strict):
@@ -424,6 +428,11 @@ class ChartSpec(Strict):
     label_column: str
     series_columns: list[str] = Field(min_length=1)
     title: str | None = None
+    kind: Literal["line", "bar", "pie"] = "line"
+    # 'columns': one series per column, x = the label column's values.
+    # 'rows' (statements): one series per line item in series_rows, x = series_columns (periods)
+    orientation: Literal["columns", "rows"] = "columns"
+    series_rows: list[str] = []
 
 
 class NarrativeSection(Strict):
@@ -468,7 +477,7 @@ class RunManifest(Strict):
     python_version: str
     packages: dict[str, str]
     llm: dict[str, Any]                          # {'enabled': bool, 'model': ..., 'prompt_versions': {...}}
-    synthetic: bool = True                       # also written to PDF metadata (decision D-07)
+    synthetic: bool = True                       # the ONLY record of synthetic status (E-32: never in the PDF)
     outputs: dict[str, str] = {}                 # artifact path -> sha256
     gates: dict[str, bool] = {}
     limitations: list[str] = []

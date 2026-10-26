@@ -1,0 +1,19 @@
+{
+  "chart_id": "chart_plan_003",
+  "table_id": "table_003",
+  "label_column": "Consolidated (cr)",
+  "kind": "line",
+  "orientation": "rows",
+  "labels": [
+    "FY23A",
+    "FY24E",
+    "FY25E"
+  ],
+  "series": {
+    "Adj. PAT": [
+      2.0,
+      1.8,
+      1.5
+    ]
+  }
+}

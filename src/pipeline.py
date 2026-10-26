@@ -20,11 +20,12 @@ from pathlib import Path
 from typing import Any, Callable
 
 from src.blueprint.build_blueprint import build_blueprint
+from src.extraction import extract_structured
 from src.config import Config
 from src.contracts import (InferenceReport, PrivacyPlan, RunManifest, RunResult, SCHEMA_VERSION)
 from src.contracts.dataset import CanonicalDataset
-from src.errors import DeCraftError, StageTimeout
-from src.generation import generate
+from src.errors import DeCraftError, LLMBudgetExceeded, StageTimeout
+from src.generation import generate, register_charts
 from src.inference import infer
 from src.llm import LLMGateway
 from src.narrative import write
@@ -32,6 +33,8 @@ from src.planner.build_plan import build_document_plan
 from src.privacy import audit_privacy, plan_privacy
 from src.rendering import render
 from src.validation import validate
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
 
 STAGES = ("extract", "infer", "privacy_plan", "generate", "privacy_audit", "write", "render")
 PACKAGES = ("pydantic", "pandas", "numpy", "scipy", "networkx", "pyyaml", "pymupdf", "jinja2",
@@ -137,6 +140,7 @@ def run(pdf_path: Path | str, cfg: Config, gateway: LLMGateway | None = None) ->
     manifest = _manifest(run_id, source_sha, cfg, started=started)
     _write_manifest(run, manifest)
     run.log("run_start", run_id=run_id, llm=cfg.llm_enabled, resumed=bool(run.state["stages"]))
+    fallbacks: list[str] = []
 
     if not pdf_path.is_file():
         _write_manifest(run, _manifest(run_id, "", cfg, status="failed", started=started,
@@ -148,12 +152,12 @@ def run(pdf_path: Path | str, cfg: Config, gateway: LLMGateway | None = None) ->
     try:
         blueprint = _load_blueprint(run)
         if blueprint is None:
-            blueprint, plan = run.stage("extract",
-                                        lambda: _extract(pdf_path, run), cfg.budgets.stage_timeout_seconds)
+            blueprint, plan = run.stage("extract", lambda: _extract(pdf_path, run, cfg),
+                                        cfg.extraction.timeout_seconds)
         else:
             plan = _load_plan(run)
             if plan is None:
-                plan = build_document_plan(blueprint)
+                plan = build_document_plan(blueprint, out_dir=run.dir / "outputs" / "plan")
         run.json("blueprint.json", blueprint)
         run.json("document_plan.json", plan)
 
@@ -161,23 +165,46 @@ def run(pdf_path: Path | str, cfg: Config, gateway: LLMGateway | None = None) ->
         if not cfg.llm_enabled:
             run.log("fallback", stage="narrative", reason="llm disabled")
 
+        def fresh_budget(stage: str) -> None:
+            if gateway is not None and cfg.llm_enabled:
+                gateway.start_stage(stage)             # every stage has its own token budget
+
         report = _load_model(run, "infer", "inference.json", InferenceReport)
         if report is None:
-            report = run.stage("infer",
-                               lambda: infer(doc, cfg, gateway if cfg.llm_enabled else None),
-                               cfg.budgets.stage_timeout_seconds)
+            fresh_budget("infer")
+            try:
+                report = run.stage("infer",
+                                   lambda: infer(doc, cfg, gateway if cfg.llm_enabled else None),
+                                   cfg.budgets.stage_timeout_seconds)
+            except LLMBudgetExceeded:
+                run.log("fallback", stage="infer", reason="token budget")
+                fallbacks.append("infer: token budget")
+                report = run.stage("infer", lambda: infer(doc, cfg, None),
+                                   cfg.budgets.stage_timeout_seconds)
             run.json("inference.json", report)
         if not cfg.llm_enabled:
             report.llm_used = False
 
         privacy_plan = _load_model(run, "privacy_plan", "privacy_plan.json", PrivacyPlan)
         if privacy_plan is None:
-            privacy_plan = run.stage("privacy_plan", lambda: plan_privacy(doc, report, cfg),
-                                     cfg.budgets.stage_timeout_seconds)
+            fresh_budget("privacy_plan")
+            try:
+                privacy_plan = run.stage(
+                    "privacy_plan", lambda: plan_privacy(doc, report, cfg, gateway if cfg.llm_enabled else None),
+                    cfg.budgets.stage_timeout_seconds)
+            except LLMBudgetExceeded:
+                run.log("fallback", stage="privacy_plan", reason="token budget")
+                fallbacks.append("privacy_plan: token budget")
+                privacy_plan = run.stage("privacy_plan", lambda: plan_privacy(doc, report, cfg),
+                                         cfg.budgets.stage_timeout_seconds)
             run.json("privacy_plan.json", privacy_plan)
+            run.json("avoid.json", privacy_plan.avoid)            # E-28: source proper nouns
+            run.log("labels", columns=len(privacy_plan.label_maps),
+                    replaced=sum(len(m) for m in privacy_plan.label_maps.values()),
+                    kept=sum(len(k) for k in privacy_plan.kept_labels.values()), avoid_size=len(privacy_plan.avoid))
 
-        data = run.stage("generate", lambda: generate(doc, report, privacy_plan, cfg,
-                                                     _rng(cfg)), cfg.budgets.stage_timeout_seconds)
+        data = run.stage("generate", lambda: _with_charts(generate(doc, report, privacy_plan, cfg, _rng(cfg)),
+                                                          plan), cfg.budgets.stage_timeout_seconds)
         _write_dataset(run, data)
         run.json("validation_report.json", data.validation)
 
@@ -185,11 +212,13 @@ def run(pdf_path: Path | str, cfg: Config, gateway: LLMGateway | None = None) ->
                                    cfg.budgets.stage_timeout_seconds)
         run.json("privacy_report.json", privacy_report)
 
-        narrative = run.stage("write", lambda: write(data, plan, cfg, gateway if cfg.llm_enabled else None),
+        fresh_budget("write")
+        narrative = run.stage("write", lambda: _write(run, data, plan, cfg, gateway),
                               cfg.budgets.stage_timeout_seconds)
         run.json("narrative.json", narrative)
 
-        result = run.stage("render", lambda: render(data, narrative, blueprint, cfg, run_dir / "render"),
+        result = run.stage("render", lambda: render(data, narrative, blueprint, cfg, run_dir / "render",
+                                                    plan=plan, doc=doc),
                            cfg.budgets.stage_timeout_seconds)
 
         qa = (result.qa or {}).get("rendered_pdf_qa", {})
@@ -217,6 +246,7 @@ def run(pdf_path: Path | str, cfg: Config, gateway: LLMGateway | None = None) ->
         finished = datetime.now(timezone.utc)
         manifest = _manifest(run_id, source_sha, cfg, status=status, started=started,
                              finished=finished, outputs=outputs, gates=gates, limitations=limitations)
+        manifest.llm["fallbacks"] = fallbacks
         manifest_path = _write_manifest(run, manifest)
         run.json("result.json", {"run_id": run_id, "status": status, "pdf_path": result.pdf_path,
                                  "gates": gates})
@@ -231,9 +261,37 @@ def run(pdf_path: Path | str, cfg: Config, gateway: LLMGateway | None = None) ->
         raise
 
 
-def _extract(pdf_path: Path, run: _Run):
-    blueprint = build_blueprint(pdf_path, project_root=Path.cwd())
-    plan = build_document_plan(blueprint)
+def _write(run: _Run, data, plan, cfg, gateway):
+    """Section writing with the Fallback Ladder: a spent budget drops to the deterministic templates."""
+    if not cfg.llm_enabled or gateway is None:
+        return write(data, plan, cfg, None)
+    try:
+        return write(data, plan, cfg, gateway)
+    except LLMBudgetExceeded:
+        run.log("fallback", stage="write", reason="token budget")
+        return write(data, plan, cfg, None)
+
+
+def _with_charts(data: CanonicalDataset, plan: dict) -> CanonicalDataset:
+    """Every chart the Document Plan pairs with a table becomes a registered ChartSpec."""
+    data.charts = register_charts(data, plan)
+    return data
+
+
+def _cache_dir(cfg: Config) -> Path:
+    path = Path(cfg.extraction.cache_dir)
+    return path if path.is_absolute() else REPO_ROOT / path
+
+
+def _extract(pdf_path: Path, run: _Run, cfg: Config):
+    """E-37: parse THIS PDF into the run folder, then run the frozen blueprint and planner code there
+    (never the repo's pre-extracted outputs/structured, never the repo's outputs/ folders)."""
+    summary = extract_structured(pdf_path, run.dir, cache_dir=_cache_dir(cfg), method=cfg.extraction.method,
+                                 models_dir=cfg.extraction.models_dir)
+    run.log("extraction", method=summary["method"], cached=summary["cached"], tables=summary["table_count"],
+            figures=len(summary.get("saved_figures", [])), warnings=summary.get("warnings", []))
+    blueprint = build_blueprint(pdf_path, project_root=run.dir)
+    plan = build_document_plan(blueprint, out_dir=run.dir / "outputs" / "plan")
     run.json("blueprint.json", blueprint)
     run.json("document_plan.json", plan)
     return blueprint, plan
@@ -303,5 +361,5 @@ def _hash_outputs(run_dir: Path) -> dict[str, str]:
     outputs = {}
     for path in sorted(run_dir.rglob("*")):
         if path.is_file() and path.name != "manifest.json":
-            outputs[str(path.relative_to(run_dir))] = _sha256(path)
+            outputs[path.relative_to(run_dir).as_posix()] = _sha256(path)
     return outputs

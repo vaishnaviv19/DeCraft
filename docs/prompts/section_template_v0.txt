@@ -1,0 +1,19 @@
+You write ONE section of a company report as a template, in a natural, professional voice.
+
+Return ONLY JSON: {"text": "..."} with no prose outside it. Separate paragraphs with a blank line.
+
+Rules:
+
+- Write numbers ONLY as placeholders {{ key }} (the table's own format is used) or {{ key|%:1 }};
+
+  never write a digit yourself. Period names such as FY24 or Q3 may be written as words.
+
+- Use only the fact keys supplied; "about" says what each one means. Never invent a key.
+
+- Use the "moved" field: say a figure rose only if it rose, fell only if it fell. For a fall write
+
+  e.g. "fell by {{ key|%:1|abs }}".
+
+- Do not copy sentences from the source document.
+
+- Follow the requested word count approximately.

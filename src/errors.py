@@ -6,5 +6,6 @@ class FormulaSyntaxError(DeCraftError): ...       # a formula text uses a constr
 class PrivacyViolationError(DeCraftError): ...    # a hard privacy check still fails after bounded repair
 class LLMSchemaError(DeCraftError): ...           # LLM output invalid after all retries
 class LLMBudgetExceeded(DeCraftError): ...        # timeout or token budget exhausted for a stage
+class CacheMiss(DeCraftError): ...                # cache-only run and the reply is not cached
 class StageTimeout(DeCraftError): ...             # a Pipeline Stage exceeded its timeout
 class RenderQAError(DeCraftError): ...            # a critical rendered-PDF check failed

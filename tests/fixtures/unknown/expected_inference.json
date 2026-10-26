@@ -1,0 +1,6 @@
+{
+  "domain": "unknown",
+  "types": {"t.alpha": "numeric", "t.beta": "numeric"},
+  "physical": {"t.alpha": "integer", "t.beta": "integer"},
+  "rules": []
+}

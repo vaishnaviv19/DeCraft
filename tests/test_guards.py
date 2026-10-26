@@ -3,7 +3,7 @@ import re
 from pathlib import Path
 
 SRC = Path(__file__).resolve().parents[1] / "src"
-MODULES = {"inference", "privacy", "generation", "validation", "narrative", "rendering", "llm"}
+MODULES = {"inference", "privacy", "generation", "validation", "narrative", "rendering", "llm", "extraction"}
 EXEMPT = {"blueprint", "planner"}            # existing code is not policed by these guards
 
 

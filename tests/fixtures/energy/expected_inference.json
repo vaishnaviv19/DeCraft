@@ -1,0 +1,24 @@
+{
+  "domain": "energy",
+  "types": {
+    "t.Period": "period",
+    "t.Revenue": "currency",
+    "t.Cost": "currency"
+  },
+  "physical": {
+    "t.Period": "period",
+    "t.Revenue": "integer"
+  },
+  "rules": [
+    {"kind": "formula", "columns": ["Revenue", "Cost"], "tier": "strongly_inferred", "enforcement": "hard"}
+  ],
+  "llm_reply": {
+    "domain": "energy",
+    "domain_confidence": 0.7,
+    "columns": [],
+    "proposals": [
+      {"kind": "formula", "columns": ["Revenue", "Cost"],
+       "params": {"expression": "[Revenue] = [Cost] * 2"}}
+    ]
+  }
+}

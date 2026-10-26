@@ -38,7 +38,9 @@ def test_html_contains_the_sections_tables_and_metadata(cfg):
     html = build_html(data, narrative, {"entity": {"entity_name": "Acme"}})
     assert "Acme" in html and "Overview" in html
     assert narrative.sections[0].text[:40] in html
-    assert "{{" not in html and "decraft:synthetic" in html
+    assert "{{" not in html
+    lowered = html.lower()
+    assert not any(word in lowered for word in ("synthetic", "fake", "decraft", "generated"))
     assert "<table" in html
 
 

@@ -22,11 +22,12 @@ from src.generation._apply import GenerationContext, apply_steps
 from src.generation._facts import compute_facts
 from src.core.periods import time_order
 from src.core.rows import statement_label_column
+from src.generation._charts import register_charts
 from src.generation._graph import build_plan
 from src.privacy import Relabeler, document_values
 from src.validation import repair_dataset, run_bounded_repair, validate
 
-__all__ = ["generate"]
+__all__ = ["generate", "register_charts"]
 
 
 def _links(table_id: str, frame: pd.DataFrame, profiles: list) -> dict[int, list[int]]:
@@ -116,7 +117,8 @@ def generate(doc, report, plan: PrivacyPlan, cfg: Config, rng: np.random.Generat
     display = {}
     for table_id, frame in ctx.tables.items():
         mode = "sum_of_displayed" if any(p.additive for p in profiles[table_id]) else "true_total"
-        display[table_id] = build_display_df(frame, decimals[table_id], links[table_id], mode)
+        display[table_id] = build_display_df(frame, decimals[table_id], links[table_id], mode,
+                                             {p.column: p.scale for p in profiles[table_id]})
 
     dataset = CanonicalDataset(
         dataset_id=f"dataset.{doc.document_sha256[:8] or 'unknown'}",
@@ -137,7 +139,8 @@ def generate(doc, report, plan: PrivacyPlan, cfg: Config, rng: np.random.Generat
     dataset.display = {
         table_id: build_display_df(frame, decimals[table_id], links[table_id],
                                    "sum_of_displayed" if any(p.additive for p in profiles[table_id])
-                                   else "true_total")
+                                   else "true_total",
+                                   {p.column: p.scale for p in profiles[table_id]})   # source units
         for table_id, frame in dataset.tables.items()}
     dataset.facts = compute_facts(dataset, report.patterns)
     return dataset

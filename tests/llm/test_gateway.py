@@ -58,3 +58,29 @@ def test_timeout_does_not_hang(gateway_for):
 def test_budget_exhaustion_raises(gateway_for):
     with pytest.raises(LLMBudgetExceeded):
         gateway_for(FakeLLM(['{"x": 1}']), stage_token_budget=10).ask_json(P, 'u', Out)
+
+
+def test_cache_only_mode_raises_on_miss_and_serves_hits(gateway_for):
+    from src.errors import CacheMiss
+    llm = FakeLLM(['{"x": 5}'])
+    gateway_for(llm).ask_json(P, 'u', Out)                      # fills the cache
+    g2 = gateway_for(FakeLLM([]), cache_only=True)
+    assert g2.ask_json(P, 'u', Out).x == 5
+    with pytest.raises(CacheMiss):
+        g2.ask_json(P, 'other', Out)
+
+
+def test_input_cap_is_enforced_before_sending(gateway_for):
+    small = PromptSpec('t', 'v1', 'sys', max_input_tokens=5)
+    llm = FakeLLM(['{"x": 1}'])
+    with pytest.raises(LLMBudgetExceeded):
+        gateway_for(llm).ask_json(small, 'a long user payload ' * 10, Out)
+    assert llm.calls == []
+
+
+def test_prompt_log_written(gateway_for, tmp_path):
+    import json as _j
+    g = gateway_for(FakeLLM(['bad', '{"x": 1}']), log_path=tmp_path / 'log.jsonl')
+    g.ask_json(P, 'u', Out)
+    recs = [_j.loads(l) for l in (tmp_path / 'log.jsonl').read_text().splitlines()]
+    assert [r['ok'] for r in recs] == [False, True] and recs[0]['version'] == 'v1'

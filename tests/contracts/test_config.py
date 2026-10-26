@@ -27,3 +27,13 @@ def test_band_order_is_enforced():
 
 def test_config_hash_changes_with_values():
     assert load_config().config_hash() != load_config(seed=7).config_hash()
+
+
+def test_v31_defaults():
+    cfg = load_config()
+    assert cfg.report.period_shift_years == 1
+    assert cfg.report.word_tolerance == 0.15
+    assert cfg.providers.text.limits.tpm == 8000
+    assert cfg.providers.text.model == "openai/gpt-oss-120b"
+    assert cfg.providers.image.steps == 4
+    assert cfg.report.min_total_words == 1000

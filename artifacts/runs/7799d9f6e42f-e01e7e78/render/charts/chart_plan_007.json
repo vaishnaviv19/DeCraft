@@ -1,0 +1,37 @@
+{
+  "chart_id": "chart_plan_007",
+  "table_id": "table_007",
+  "label_column": "Y.E March (Rs. cr)",
+  "kind": "line",
+  "orientation": "rows",
+  "labels": [
+    "FY21A",
+    "FY22A",
+    "FY23A",
+    "FY24E",
+    "FY25E"
+  ],
+  "series": {
+    "Reported PAT": [
+      9537.0,
+      11224.0,
+      12170.0,
+      13265.0,
+      14768.0
+    ],
+    "EBITDA": [
+      2632.0,
+      3965.0,
+      7196.0,
+      6717.0,
+      7645.0
+    ],
+    "No. of shares (cr)": [
+      -21.0,
+      68.0,
+      107.0,
+      -8.0,
+      22.0
+    ]
+  }
+}

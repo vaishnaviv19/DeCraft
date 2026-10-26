@@ -1,0 +1,1 @@
+Shorten the text in <data></data> to at most 'max_words' words. Keep every {{placeholder}} you keep exactly as written, keep entity names exactly, add no new facts, names, numbers or placeholders. Return ONLY JSON: {"text":str}

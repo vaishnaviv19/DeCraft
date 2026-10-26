@@ -1,0 +1,141 @@
+{
+  "chart_plan_006": {
+    "chart_id": "chart_plan_006",
+    "table_id": "table_006",
+    "label_column": "Particulars",
+    "series_columns": [
+      "Value (Rs. cr.)",
+      "Multiple"
+    ],
+    "title": "Value (Rs. cr.) and Multiple by Particulars",
+    "kind": "bar",
+    "orientation": "columns",
+    "series_rows": []
+  },
+  "chart_plan_011": {
+    "chart_id": "chart_plan_011",
+    "table_id": "table_011",
+    "label_column": "Rating",
+    "series_columns": [
+      "Target"
+    ],
+    "title": "Target by Rating",
+    "kind": "bar",
+    "orientation": "columns",
+    "series_rows": []
+  },
+  "chart_plan_007": {
+    "chart_id": "chart_plan_007",
+    "table_id": "table_007",
+    "label_column": "Y.E March (Rs. cr)",
+    "series_columns": [
+      "FY21A",
+      "FY22A",
+      "FY23A",
+      "FY24E",
+      "FY25E"
+    ],
+    "title": "Reported PAT, EBITDA and No. of shares (cr), FY21A to FY25E",
+    "kind": "line",
+    "orientation": "rows",
+    "series_rows": [
+      "Reported PAT",
+      "EBITDA",
+      "No. of shares (cr)"
+    ]
+  },
+  "chart_plan_003": {
+    "chart_id": "chart_plan_003",
+    "table_id": "table_003",
+    "label_column": "Consolidated (cr)",
+    "series_columns": [
+      "FY23A",
+      "FY24E",
+      "FY25E"
+    ],
+    "title": "Adj. PAT, FY23A to FY25E",
+    "kind": "line",
+    "orientation": "rows",
+    "series_rows": [
+      "Adj. PAT"
+    ]
+  },
+  "chart_plan_008": {
+    "chart_id": "chart_plan_008",
+    "table_id": "table_008",
+    "label_column": "Y.E March (Rs. cr)",
+    "series_columns": [
+      "FY21A",
+      "FY22A",
+      "FY23A",
+      "FY24E",
+      "FY25E"
+    ],
+    "title": "Capital exp., Net inc. + Depn. and C.F - Finance, FY21A to FY25E",
+    "kind": "line",
+    "orientation": "rows",
+    "series_rows": [
+      "Capital exp.",
+      "Net inc. + Depn.",
+      "C.F - Finance"
+    ]
+  },
+  "chart_plan_004": {
+    "chart_id": "chart_plan_004",
+    "table_id": "table_004",
+    "label_column": "Unnamed: 0",
+    "series_columns": [
+      "Q1FY23",
+      "Q4FY23",
+      "Q1FY24"
+    ],
+    "title": "Revenue, EBITDA and EBIT, Q1FY23 to Q1FY24",
+    "kind": "line",
+    "orientation": "rows",
+    "series_rows": [
+      "Revenue",
+      "EBITDA",
+      "EBIT"
+    ]
+  },
+  "chart_plan_009": {
+    "chart_id": "chart_plan_009",
+    "table_id": "table_009",
+    "label_column": "Y.E March (Rs. cr)",
+    "series_columns": [
+      "FY21A",
+      "FY22A",
+      "FY23A",
+      "FY24E",
+      "FY25E"
+    ],
+    "title": "Gross Fixed Assets, Net Fixed Assets and Debt Funds, FY21A to FY25E",
+    "kind": "line",
+    "orientation": "rows",
+    "series_rows": [
+      "Gross Fixed Assets",
+      "Net Fixed Assets",
+      "Debt Funds"
+    ]
+  },
+  "chart_plan_010": {
+    "chart_id": "chart_plan_010",
+    "table_id": "table_010",
+    "label_column": "Y.E March",
+    "series_columns": [
+      "FY21A",
+      "FY22A",
+      "FY23A",
+      "FY24E",
+      "FY25E"
+    ],
+    "title": "Payables (days), Receivables (days) and Inventory (days), FY21A to FY25E",
+    "kind": "line",
+    "orientation": "rows",
+    "series_rows": [
+      "Payables (days)",
+      "Receivables (days)",
+      "Inventory (days)"
+    ]
+  }
+}

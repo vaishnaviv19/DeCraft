@@ -1,0 +1,17 @@
+{
+  "domain": "retail",
+  "types": {
+    "t.Region": "category",
+    "t.Q1": "numeric",
+    "t.Q2": "numeric",
+    "t.Total": "numeric"
+  },
+  "physical": {
+    "t.Region": "text",
+    "t.Q1": "integer",
+    "t.Total": "integer"
+  },
+  "rules": [
+    {"kind": "formula", "columns": ["Total", "Q1", "Q2"], "tier": "strongly_inferred", "enforcement": "hard"}
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "domain": "finance",
+  "types": {
+    "t.Ref": "identifier",
+    "t.Amount": "currency",
+    "t.Tax": "numeric"
+  },
+  "physical": {
+    "t.Ref": "text",
+    "t.Amount": "integer"
+  },
+  "rules": [
+    {"kind": "formula", "columns": ["Tax", "Amount"], "tier": "strongly_inferred", "enforcement": "hard"}
+  ],
+  "llm_reply": {
+    "domain": "finance",
+    "domain_confidence": 0.8,
+    "columns": [],
+    "proposals": [
+      {"kind": "formula", "columns": ["Tax", "Amount"],
+       "params": {"expression": "[Tax] = 0.18 * [Amount]"}}
+    ]
+  }
+}
