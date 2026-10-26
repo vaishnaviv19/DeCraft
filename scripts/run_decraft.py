@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from src.config import load_config  # noqa: E402
+from src.llm import make_gateways  # noqa: E402
 from src.pipeline import run  # noqa: E402
 
 
@@ -23,7 +24,12 @@ def main() -> int:
     if args.artifacts:
         overrides["artifacts_dir"] = args.artifacts
     cfg = load_config(**overrides)
-    result = run(Path(args.pdf), cfg)
+    gateway = None
+    if args.llm:                                   # before: --llm turned the LLM on but built no gateway
+        gateway = make_gateways(cfg)["text"]
+        provider = getattr(gateway, "provider", None)
+        print(f"[run] text model: {provider or 'none (set GROQ_API_KEY or start Ollama) - deterministic fallbacks'}")
+    result = run(Path(args.pdf), cfg, gateway=gateway)
     print(f"[run] {result.run_id} status={result.status}")
     print(f"[run] directory: {result.run_dir}")
     print(f"[run] pdf: {result.pdf_path}")

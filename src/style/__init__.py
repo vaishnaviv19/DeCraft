@@ -13,19 +13,10 @@ from src.config import Config
 from src.contracts import SourceDocument
 from src.contracts.report import FigureInfo, PageTemplate, RecoveredChart, StyleProfile
 from src.llm import LLMGateway
+from src.style._extract import extract_style
+from src.style._templates import build_templates
 
 __all__ = ["extract_style", "build_templates", "analyse_figures"]
-
-
-def extract_style(pdf_path: Path, cfg: Config) -> StyleProfile:
-    """Fonts, Text Styles, palette, page size, margins, borders, running header/footer."""
-    raise NotImplementedError("M8.1: style.extract_style")
-
-
-def build_templates(pdf_path: Path, doc: SourceDocument, style: StyleProfile,
-                    cfg: Config) -> list[PageTemplate]:
-    """One Page Template per source page, Block classification and mirror/flow mode."""
-    raise NotImplementedError("M8.2: style.build_templates")
 
 
 def analyse_figures(pdf_path: Path, templates: list[PageTemplate], cfg: Config,

@@ -256,30 +256,7 @@ def _sample_column(ctx: GenerationContext, table: str, column: str, tiny: bool, 
     # factor already moves every total.
     leaves = [i for i in range(len(values)) if i not in total_rows and values[i] is not None]
     if leaves and table not in ctx.statements:
-        source_max = max(values[i] for i in leaves)
-        generated = [(abs(sampled[i]) if i < len(sampled) and sampled[i] is not None else -1.0, i)
-                     for i in leaves]
-        generated_max, max_index = max(generated)
-        if source_max and generated_max >= 0 \
-                and abs(sampled[max_index] - source_max) / abs(source_max) < th.min_headline_distance:
-            own = values[max_index]
-            above = sampled[max_index] <= source_max
-            candidates = (source_max * (1 + th.min_headline_distance * 1.2),
-                          source_max * (1 - th.min_headline_distance * 1.2))
-            if not above:
-                candidates = tuple(reversed(candidates))
-            for candidate in candidates:
-                if own in (None, 0) or abs(candidate - own) / abs(own) >= th.min_value_distance:
-                    sampled[max_index] = candidate
-                    break
-    source_total = sum(values[i] for i in leaves)
-    new_total = sum(sampled[i] for i in leaves if i < len(sampled) and sampled[i] is not None)
-    if leaves and table not in ctx.statements and source_total \
-            and abs(new_total - source_total) / abs(source_total) < th.min_headline_distance:
-        factor = 1 + th.min_headline_distance * 1.2
-        if new_total < source_total:
-            factor = 1 / factor
-        sampled = [None if value is None else value * factor for value in sampled]
+        sampled = headline_push(sampled, values, leaves, th.min_headline_distance, th.min_value_distance)
     # Round to the displayed decimals NOW (formulas then use exactly what is printed), keeping the
     # distance after that rounding, and leave source blanks blank.
     places = ctx.decimals.get(table, {}).get(column)
@@ -498,3 +475,42 @@ def apply_steps(ctx: GenerationContext, steps: list[Step], rules: list[Rule],
             if step.action in ("derive", "rollup", "aggregate"):
                 run(step)
     _enforce_ordering(ctx, rules)
+
+
+def headline_push(sampled: list, values: list, leaves: list[int], headline: float, distance: float,
+                  rounds: int = 4) -> list:
+    """Headline Distance (D-13): the largest value AND the column total must each differ >= `headline`
+    from the source. The two pushes are repeated until both hold, because scaling the column for the
+    total can undo the push of the largest value (live run 2026-10-26: 337 scaled back to 301)."""
+    sampled = list(sampled)
+    source_max = max(values[i] for i in leaves)
+    source_total = sum(values[i] for i in leaves)
+
+    def far(a, b):
+        return not b or abs(a - b) / abs(b) >= headline
+
+    for _ in range(rounds):
+        present = [i for i in leaves if i < len(sampled) and sampled[i] is not None]
+        if not present:
+            return sampled
+        new_total = sum(sampled[i] for i in present)
+        if not far(new_total, source_total):
+            factor = 1 + headline * 1.2
+            factor = 1 / factor if new_total < source_total else factor
+            sampled = [None if v is None else v * factor for v in sampled]
+        max_index = max(present, key=lambda i: abs(sampled[i]))
+        if not far(sampled[max_index], source_max):
+            own = values[max_index]
+            candidates = (source_max * (1 + headline * 1.2), source_max * (1 - headline * 1.2))
+            if sampled[max_index] > source_max:
+                candidates = tuple(reversed(candidates))
+            for candidate in candidates:
+                if own in (None, 0) or abs(candidate - own) / abs(own) >= distance:
+                    sampled[max_index] = candidate
+                    break
+        present = [i for i in leaves if i < len(sampled) and sampled[i] is not None]
+        top = max(present, key=lambda i: abs(sampled[i]))
+        if far(sum(sampled[i] for i in present), source_total) and far(sampled[top], source_max):
+            break
+    return sampled
+

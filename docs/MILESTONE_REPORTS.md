@@ -534,3 +534,62 @@ providers answer" (the M8.0.3 Done condition) remains open. It must be run where
 `config/default.yaml` and the M8 report.
 
 Next: M8.0.4 stage runner (`scripts/stage.py`), then M8.1 style extraction.
+
+## v3.2 addendum - M8.0.4 stage runner (task 3)
+
+Done:
+
+| Item | File | Notes |
+| --- | --- | --- |
+| Stage machine | `src/stage_runner.py` | `Stage(name, run)`, the v3.2 stage order (`style, templates, figures, prepare, charts, plan, write, fit, images, render, qa`), and `run_stages(stages, until, root, fresh)`. A stage writes `output.json` and `done.json` (a sha256 of its inputs); a rerun reuses it when the hash matches, `--fresh` ignores the state. Returns and prints one JSON summary. |
+| CLI | `scripts/stage.py` | `--pdf`, `--until`, `--dir` (default `artifacts/runs/dev`), `--fresh`. `style` and `templates` are wired lazily; every later stage stops with a `NotImplementedError` naming its milestone rather than pretending to run. |
+| Tests | `tests/pipeline/test_stage_runner.py` | 5 tests: exactly the stages up to the target, reuse on the second run (no stage called), `--fresh` re-runs all, JSON summary printed, unknown stage rejected. |
+
+Check: `python scripts/stage.py --until style` stops with
+`NotImplementedError: stage 'style' lands in M8.1` (expected until M8.1 is built), and `pytest -q`
+is green (exit 0).
+
+Next: M8.1 style extraction (`style.extract_style`).
+
+## v3.2 addendum - M8.1 style extraction (task 4)
+
+Done:
+
+| Item | File | Notes |
+| --- | --- | --- |
+| Fonts and Text Styles | `src/style/_extract.py` | Spans from `page.get_text("dict")`; subset prefixes and style suffixes are cleaned with a family alias table (`ABCDEF+Calibri-Bold` -> `Calibri`, bold); styles cluster by family, bold, italic, size (0.5 pt) and colour, with line height = median baseline gap / size. The style list is capped at 25 by character count (the long tail of odd colours is noise). |
+| Embedded fonts (E-21) | `src/style/_extract.py` | `doc.extract_font` for TrueType/OpenType/CFF files, accepted only when fontTools shows more than 200 glyphs; complete files are written to `artifacts/runs/dev/style/fonts/`. Every other font gets the metric-compatible fallback (Calibri -> Carlito, Arial/Helvetica -> Liberation Sans, Times -> Liberation Serif, ...; unknown faces by serif/sans hint). |
+| Palette and geometry | `src/style/_extract.py` | Palette from span colours plus drawing fills/strokes, weighted by characters and area; near-white always dropped, near-black only when the body text is black; top 8. Page size, margins (top/right/bottom/left from the text bbox), median table stroke width and the running header/footer (text repeated at the same top/bottom position on 60% of pages, with the page-1 top line as the header fallback). |
+| Public interface | `src/style/__init__.py` | `extract_style` now returns a validated `StyleProfile`; `build_templates` and `analyse_figures` still raise `NotImplementedError` for M8.2/M8.3. |
+| Tests | `tests/style/test_extract_style.py` | Font-name cleaning and aliases, fallback mapping, a synthetic two-page PDF (18 pt bold title, 10 pt body, blue rectangle, running header/footer) giving two styles, `#1F3864` first in the palette and non-zero margins, and the real sample giving 3-25 styles, a 3-8 colour palette, a header, a footer and non-zero margins. |
+
+Checks: `pytest tests/style -q` -> 4 passed; `python scripts/stage.py --until style` prints the
+profile (styles, palette, page size, margins, header/footer) and a second run reports
+`"executed": []` (it reuses the saved output); `pytest -q` is green (exit 0).
+
+Real sample: 25 styles after the cap (35 raw colour/size variants), palette of 8, margins
+(70.92, 19.35, 65.56, 22.44) pt, header "11 th September 2023 Q1FY24 RESULTS UPDATE", footer
+"www.geojit.com", table border 0.75 pt, 8 fonts with fallbacks.
+
+Next: M8.2 page templates (`build_templates`: Block classification, mirror/flow, section ownership).
+
+## v3.2 addendum - M8.2 page templates (task 5)
+
+Done:
+
+| Item | File | Notes |
+| --- | --- | --- |
+| Block classification | `src/style/_templates.py` | Text blocks become heading / header / footer / page_number / caption / text: page numbers are digits in the top or bottom 8%; the running header/footer match the extracted text; headings need a style at least 1.2x the body size, or bold text at body size with at most 12 words; captions are smaller text within 24 pt of a figure. Tables are detected as line grids from `get_drawings` (at least 2 horizontal and 2 vertical segments forming a region under 60% of the page); other drawings are decoration. Images are `photo`, or `logo` when the xref repeats or the first image on page 1 is at most 25% of the page wide. Text inside a table/photo is dropped. Every block carries `block_id` (`p<page>b<nn>`), `source_words` and `section_id`. |
+| Mirror or flow (E-15) | same | `flow` for a rotated page, more than three real text columns (x0 clusters whose blocks sit side by side, rather than any indentation), or overlapping text blocks (IoU > 0.1); otherwise `mirror`, with the reason recorded. |
+| Section ownership | same | A heading opens a section (S1, S2, ... in document order); text before the first heading is `S0`. Every block has a section id. |
+| Public interface | `src/style/__init__.py` | `build_templates` is exported; `analyse_figures` still raises `NotImplementedError` for M8.3. |
+| Tests | `tests/style/test_build_templates.py` | 6 tests: the exact kind sequence on a synthetic page (heading, text, text, table, caption, page_number); a rotated page flows with reason `rotated`; four real columns flow with `columns`; the overlap helper; front matter S0 then S1/S2 by headings; the real sample gives 5 templates, unique block ids and every block owned. |
+
+Checks: `pytest tests/style -q` -> 10 passed; `python scripts/stage.py --until templates` prints the
+templates and reuses them on the next run. Real sample: 5 pages (page 1 flow `columns`, pages 2-5
+mirror), 176 blocks, 44 sections, 3,539 words in text/heading/caption blocks against the document
+plan's 3,565 (0.7% difference).
+
+Not done yet: the debug overlay PNGs (`overlay_p<N>.png`) named in the M8.2.1 check.
+
+Next: M8.3 figure analysis (`analyse_figures`, Figure Analyst and recovered chart data).

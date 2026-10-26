@@ -45,3 +45,22 @@ def batch_items(items: list[dict], max_tokens: int, overhead_tokens: int = 0) ->
     if cur:
         batches.append(cur)
     return batches
+
+
+TILE_PX, TOKENS_PER_TILE, MAX_TILES = 560, 1650, 4
+
+
+def image_tokens(image: bytes) -> int:
+    """Input tokens one image costs on the vision model. Measured 2026-10-26 on llama-3.2-11b-vision:
+    the image is cut into 560 px tiles (at most 4) of ~1,630 tokens each - 256 px: 1,640; 560x792: 3,229;
+    1024 px: 6,431. Unknown sizes count as the maximum."""
+    try:
+        from PIL import Image
+        import io
+        with Image.open(io.BytesIO(image)) as im:
+            w, h = im.size
+    except Exception:
+        return TOKENS_PER_TILE * MAX_TILES
+    tiles = min(MAX_TILES, math.ceil(w / TILE_PX) * math.ceil(h / TILE_PX))
+    return TOKENS_PER_TILE * max(tiles, 1)
+

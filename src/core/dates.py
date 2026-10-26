@@ -15,13 +15,16 @@ import pandas as pd
 #     `date_format` when the caller has one, otherwise with the order the column's own unambiguous
 #     values prove (a first part > 12 -> day first; a second part > 12 -> month first). With no or
 #     conflicting evidence those values are INVALID - never guessed;
-#   * only full dates are accepted (a 4-digit year, a month and a day). '2025', 'March 2024' or plain
-#     numbers (spreadsheet serials) are invalid, so nothing is filled in from today's date.
+#   * only full dates are accepted (a year, a month and a day). '2025', 'March 2024' or plain numbers
+#     (spreadsheet serials) are invalid, so nothing is filled in from today's date. A 2-digit year is
+#     accepted only with the month written as a word ('14-May-21'), read with Python's %y rule
+#     (00-68 -> 20xx, 69-99 -> 19xx); day and month cannot be confused there.
 DEFAULT_TZ = "UTC"
 LEAP_POLICIES = ("mar1", "feb28")
 _ISO_RE = re.compile(r"^\d{4}-\d{1,2}-\d{1,2}(?:[ T]\d{1,2}:\d{2}(?::\d{2}(?:\.\d+)?)?\s*(?:Z|[+-]\d{2}:?\d{2})?)?$")
 _YMD_SLASH_RE = re.compile(r"^(\d{4})[/.](\d{1,2})[/.](\d{1,2})$")
 _NUMERIC_RE = re.compile(r"^(\d{1,2})[/.\-](\d{1,2})[/.\-](\d{4})$")
+_TEXT_YY_RE = re.compile(r"^\d{1,2}[-\s/][A-Za-z]{3,9}\.?[-\s/,]+(?:\d{2}|\d{4})$")
 _TEXT_RE = re.compile(r"^(?:\d{1,2}\s+[A-Za-z]{3,9}\.?,?\s+\d{4}|[A-Za-z]{3,9}\.?\s+\d{1,2},?\s+\d{4})$")
 
 
@@ -54,6 +57,17 @@ def _parse_one(v, tz: str, date_format: str | None, order: str | None) -> pd.Tim
             ts = pd.Timestamp(year=int(m.group(1)), month=int(m.group(2)), day=int(m.group(3)))
         elif _ISO_RE.match(s) or _TEXT_RE.match(s):
             ts = pd.Timestamp(s)
+        elif _TEXT_YY_RE.match(s):
+            parts = re.split(r"[-\s/,.]+", s)
+            parts[1] = parts[1][:3] if parts[1].lower().startswith("sept") else parts[1]
+            for fmt in ("%d %b %y", "%d %B %y", "%d %b %Y", "%d %B %Y"):
+                try:
+                    ts = pd.Timestamp(datetime.strptime(" ".join(parts[:3]), fmt))
+                    break
+                except ValueError:
+                    continue
+            else:
+                return None
         else:
             return None
     else:

@@ -41,12 +41,19 @@ budgets:
   stage_token_budget: 200000
   stage_timeout_seconds: 600
 
-# v3.1: providers (free tiers; verify the real model ids and limits in M8.0)
+# v3.1: providers. Verified live on 2026-10-26 (scripts/smoke_llm.py: text, vision and image all OK):
+#  - Groq openai/gpt-oss-120b: headers say 1,000 requests/day and 8,000 tokens/minute (= limits below).
+#  - Cloudflare Workers AI is billed in neurons (free: 10,000/day). Vision llama-3.2-11b: ~1,650 input
+#    tokens and ~7.5 neurons per 560 px tile, up to 4 tiles (a 1024 px page = ~6,600 tokens, ~30 neurons).
+#    Needs the one-time Meta license 'agree' (done for this account) and the native ai/run endpoint.
+#  - FLUX-1-schnell: ~173 neurons per image (20/day = ~3,500 neurons); it does not accept a seed.
 providers:
   text:
     kind: groq
     model: openai/gpt-oss-120b
     max_concurrency: 2
+    fallback: ollama            # E-33: no GROQ_API_KEY -> the local Ollama model, if its server answers
+    fallback_model: llama3.1
     limits: {rpm: 30, tpm: 8000, rpd: 1000, tpd: 200000}
   vision:
     kind: cloudflare

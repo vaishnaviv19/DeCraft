@@ -2,7 +2,7 @@
 from src.llm import PromptSpec
 
 CRITIC = PromptSpec(
-    name="visual_critic", version="v2", role="vision", temperature=0.0, max_input_tokens=3200,
+    name="visual_critic", version="v2", role="vision", temperature=0.0, max_input_tokens=14500,
     max_output_tokens=700, reasoning_effort=None,
     rationale="Deterministic judgement; may only propose changes to the listed parameters (decision E-18).",
     system=("Image 1 is a SOURCE document page, image 2 the GENERATED page that must look like it was published by "
@@ -14,7 +14,7 @@ CRITIC = PromptSpec(
             '"value":number|str|null}]}'))
 
 IMAGE_CHECK = PromptSpec(
-    name="image_check", version="v1", role="vision", temperature=0.0, max_input_tokens=1600,
+    name="image_check", version="v1", role="vision", temperature=0.0, max_input_tokens=7500,
     max_output_tokens=300, reasoning_effort=None,
     rationale="Checks a generated photo against its caption (decision E-20).",
     system=("Does the image match the caption in <data></data>? List caption elements that are clearly missing or "

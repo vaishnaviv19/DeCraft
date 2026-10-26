@@ -37,9 +37,16 @@ def make_gateways(cfg: Config) -> dict[str, object]:
     cache_only = os.environ.get("DECRAFT_CACHE_ONLY") == "1"
     log_path = root / "prompt_log.jsonl"
 
-    text_client = None
-    if os.environ.get("GROQ_API_KEY"):
-        text_client = GroqClient(cfg.providers.text.model, cfg.budgets.llm_timeout_seconds)
+    text, text_kind, text_client = cfg.providers.text, cfg.providers.text.kind, None
+    if text.kind == "ollama":                                      # E-33: the local model as the main one
+        text_client = OllamaClient(model=text.model, timeout_s=cfg.budgets.llm_timeout_seconds)
+        text_client = text_client if text_client.available() else None
+    elif os.environ.get("GROQ_API_KEY"):
+        text_client = GroqClient(text.model, cfg.budgets.llm_timeout_seconds)
+    elif text.fallback == "ollama":                                # no key: the local model, if it answers
+        local = OllamaClient(model=text.fallback_model, timeout_s=cfg.budgets.llm_timeout_seconds)
+        if local.available():
+            text_client, text_kind = local, "ollama"
     vision_client = None
     if os.environ.get("CF_ACCOUNT_ID") and os.environ.get("CF_API_TOKEN"):
         vision_client = CloudflareVisionClient(cfg.providers.vision.model,
@@ -48,14 +55,16 @@ def make_gateways(cfg: Config) -> dict[str, object]:
     if os.environ.get("CF_ACCOUNT_ID") and os.environ.get("CF_API_TOKEN"):
         image_client = CloudflareImageClient(cfg.providers.image.model)
 
-    def gateway(client, settings) -> LLMGateway:
-        return LLMGateway(
-            client=client, cache_dir=root / "llm_cache" / settings.kind,
+    def gateway(client, settings, kind=None) -> LLMGateway:
+        made = LLMGateway(
+            client=client, cache_dir=root / "llm_cache" / (kind or settings.kind),
             enabled=client is not None, retries=cfg.thresholds.llm_retries,
             timeout_s=cfg.budgets.llm_timeout_seconds,
             stage_token_budget=cfg.budgets.stage_token_budget,
             limiter=RateLimiter(_limits(settings)), cache_only=cache_only, log_path=log_path)
+        made.provider = (kind or settings.kind) if client is not None else None   # shown by the CLI
+        return made
 
-    return {"text": gateway(text_client, cfg.providers.text),
+    return {"text": gateway(text_client, cfg.providers.text, text_kind),
             "vision": gateway(vision_client, cfg.providers.vision),
             "image": image_client}

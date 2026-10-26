@@ -66,4 +66,6 @@ One note per prompt version change (E-24). The full text of each saved version i
 
 `outline_titles` v2, `story_bible` v2, `section_writer` v2, `shorten` v1, `reconciler` v1,
 `figure_analyst` v1, `chart_data_recovery` v1, `visual_critic` v2, `image_check` v1: brought in from the spec
-unchanged; their v1 texts (where v2 exists) are in the v3.1 addendum.
+unchanged; their v1 texts (where v2 exists) are in the v3.1 addendum. Input caps of the four vision prompts
+were raised to the measured image cost without a text change (E-40): `visual_critic` 3,200 → 14,500,
+`figure_analyst` 2,600 → 8,200, `image_check` 1,600 → 7,500, `chart_data_recovery` 1,800 → 7,500.

@@ -2,7 +2,7 @@
 from src.llm import PromptSpec
 
 FIGURES = PromptSpec(
-    name="figure_analyst", version="v1", role="vision", temperature=0.0, max_input_tokens=2600,
+    name="figure_analyst", version="v1", role="vision", temperature=0.0, max_input_tokens=8200,
     max_output_tokens=700, reasoning_effort=None,
     rationale="Deterministic labels of source figures; one call per page that has figures.",
     system=("You see one page of a report and a list of figure boxes (id + bbox in points, origin top-left). For each "
@@ -14,7 +14,7 @@ FIGURES = PromptSpec(
             '"has_data_labels":bool,"description":str}]}'))
 
 CHART_DATA = PromptSpec(
-    name="chart_data_recovery", version="v1", role="vision", temperature=0.0, max_input_tokens=1800,
+    name="chart_data_recovery", version="v1", role="vision", temperature=0.0, max_input_tokens=7500,
     max_output_tokens=700, reasoning_effort=None,
     rationale="Recovers series only for charts with no table behind them; values are inputs to inference, "
               "never printed.",

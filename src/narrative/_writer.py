@@ -28,6 +28,7 @@ from pydantic import BaseModel, ConfigDict
 
 from src.config import Config
 
+from src.llm import estimate_tokens
 from src.llm import LLMGateway, PromptSpec
 
 from src.narrative._placeholders import placeholder_keys, stray_numbers
@@ -205,13 +206,32 @@ def build_prompt(section: dict, fact_keys: list[str], facts: dict | None = None)
 
 
 
+def section_first(section: dict, fact_keys: list[str]) -> list[str]:
+    """Facts of the section's own tables first, then the document-level rest, order otherwise kept."""
+    own = {str(t.get("table_id")) for t in section.get("tables") or [] if isinstance(t, dict)}
+    mine = [k for k in fact_keys if k.split(".", 1)[0] in own]
+    return mine + [k for k in fact_keys if k not in set(mine)]
+
+
+def fitted_prompt(section: dict, fact_keys: list[str], facts: dict | None = None) -> str:
+    """The section payload cut to the prompt's input cap: the least relevant facts are dropped first.
+    Before this, every section sent up to 120 facts, went over the cap and fell back to the template."""
+    keys = section_first(section, fact_keys)[:MAX_KEYS]
+    budget = SECTION_PROMPT.max_input_tokens - estimate_tokens(SECTION_PROMPT.system)
+    while True:
+        user = build_prompt(section, keys, facts)
+        if estimate_tokens(user) <= budget or len(keys) <= 1:
+            return user
+        keys = keys[:max(1, int(len(keys) * 0.8))]
+
+
 def write_section(section: dict, fact_keys: list[str], cfg: Config, gateway: LLMGateway,
 
                   facts: dict | None = None) -> str | None:
 
     """A validated placeholder template, or None so the caller falls back to the deterministic text."""
 
-    draft = gateway.ask_json(SECTION_PROMPT, build_prompt(section, fact_keys, facts), SectionDraft)
+    draft = gateway.ask_json(SECTION_PROMPT, fitted_prompt(section, fact_keys, facts), SectionDraft)
 
     if draft is None or not draft.text.strip() or len(draft.text) > MAX_DRAFT_CHARS:
 

@@ -41,7 +41,10 @@ def main() -> int:
     text = gateways["text"].ask_json(prompt, 'Reply with {"ok": 1}', Ok)
     print(("text OK " + cfg.providers.text.model) if text else "text FAILED (missing GROQ_API_KEY?)")
 
-    vision = gateways["vision"].ask_json(prompt, 'Return {"ok": 1} for this image.',
+    # one 256 px image counts ~1,650 input tokens (one 560 px tile), so the vision call needs its own cap
+    vision_prompt = PromptSpec("smoke_vision", "v1", 'Return ONLY JSON: {"ok": 1}.', max_input_tokens=2500,
+                               max_output_tokens=32, role="vision", rationale="M8.0.3 live smoke test")
+    vision = gateways["vision"].ask_json(vision_prompt, 'Return {"ok": 1} for this image.',
                                          Ok, images=[small_jpeg()])
     print(("vision OK " + cfg.providers.vision.model) if vision
           else "vision FAILED (missing CF_ACCOUNT_ID / CF_API_TOKEN?)")

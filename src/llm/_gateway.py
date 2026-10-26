@@ -11,7 +11,7 @@ from typing import Protocol, TypeVar
 from pydantic import BaseModel, ValidationError
 
 from src.errors import CacheMiss, LLMBudgetExceeded
-from src.llm._payload import estimate_tokens
+from src.llm._payload import estimate_tokens, image_tokens
 
 T = TypeVar("T", bound=BaseModel)
 FENCE = chr(96) * 3
@@ -127,7 +127,7 @@ class LLMGateway:
             return json.loads(path.read_text(encoding="utf-8"))["reply"], True
         if self.cache_only:
             raise CacheMiss(f"{prompt.name}/{prompt.version}: no cached reply (cache-only mode)")
-        in_tok = estimate_tokens(prompt.system + user) + 1100 * len(images)   # ~1,100 tokens per <=1024 px image
+        in_tok = estimate_tokens(prompt.system + user) + sum(image_tokens(b) for b in images)
         if in_tok > prompt.max_input_tokens:
             raise LLMBudgetExceeded(f"{prompt.name}: {in_tok} input tokens > cap {prompt.max_input_tokens}")
         est = in_tok + prompt.max_output_tokens

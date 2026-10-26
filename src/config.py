@@ -86,9 +86,11 @@ class ProviderLimits(BaseModel):
 
 class ProviderSettings(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
-    kind: str = "groq"
+    kind: str = "groq"                                # 'groq', 'cloudflare' or 'ollama'
     model: str = "openai/gpt-oss-120b"
     max_concurrency: int = Field(2, ge=1)
+    fallback: str | None = None                       # E-33: 'ollama' = local model when the key is missing
+    fallback_model: str | None = None
     limits: ProviderLimits = Field(default_factory=ProviderLimits)
 
 
@@ -102,7 +104,8 @@ class ImageProviderSettings(BaseModel):
 
 class Providers(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
-    text: ProviderSettings = Field(default_factory=ProviderSettings)
+    text: ProviderSettings = Field(default_factory=lambda: ProviderSettings(
+        fallback="ollama", fallback_model="llama3.1"))                    # E-33
     vision: ProviderSettings = Field(default_factory=lambda: ProviderSettings(
         kind="cloudflare", model="@cf/meta/llama-3.2-11b-vision-instruct", max_concurrency=1,
         limits=ProviderLimits(rpm=10, tpm=100_000, rpd=80, tpd=400_000)))
