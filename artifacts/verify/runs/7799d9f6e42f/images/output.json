@@ -1,0 +1,115 @@
+{
+  "photos": 1,
+  "slots": 1,
+  "generated": 0,
+  "checks_passed": 0,
+  "captions_simplified": 0,
+  "skipped_slots": 0,
+  "skipped": true,
+  "reason": "no image gateway",
+  "logos": [
+    {
+      "block_id": "p1b03",
+      "page": 1,
+      "file": "artifacts\\verify\\runs\\7799d9f6e42f\\images\\logo_0.png"
+    },
+    {
+      "block_id": "p1b27",
+      "page": 1,
+      "file": "artifacts\\verify\\runs\\7799d9f6e42f\\images\\logo_1.png"
+    },
+    {
+      "block_id": "p2b02",
+      "page": 2,
+      "file": "artifacts\\verify\\runs\\7799d9f6e42f\\images\\logo_2.png"
+    },
+    {
+      "block_id": "p2b10",
+      "page": 2,
+      "file": "artifacts\\verify\\runs\\7799d9f6e42f\\images\\logo_3.png"
+    },
+    {
+      "block_id": "p3b02",
+      "page": 3,
+      "file": "artifacts\\verify\\runs\\7799d9f6e42f\\images\\logo_4.png"
+    },
+    {
+      "block_id": "p3b15",
+      "page": 3,
+      "file": "artifacts\\verify\\runs\\7799d9f6e42f\\images\\logo_5.png"
+    },
+    {
+      "block_id": "p4b02",
+      "page": 4,
+      "file": "artifacts\\verify\\runs\\7799d9f6e42f\\images\\logo_6.png"
+    },
+    {
+      "block_id": "p4b23",
+      "page": 4,
+      "file": "artifacts\\verify\\runs\\7799d9f6e42f\\images\\logo_7.png"
+    },
+    {
+      "block_id": "p5b02",
+      "page": 5,
+      "file": "artifacts\\verify\\runs\\7799d9f6e42f\\images\\logo_8.png"
+    },
+    {
+      "block_id": "p5b07",
+      "page": 5,
+      "file": "artifacts\\verify\\runs\\7799d9f6e42f\\images\\logo_9.png"
+    }
+  ],
+  "items": [
+    {
+      "slot": {
+        "index": 0,
+        "page": 5,
+        "block_id": "p5b06",
+        "figure_id": "p5b06",
+        "bbox": [
+          36.0,
+          703.8519897460938,
+          558.8499755859375,
+          778.1519775390625
+        ],
+        "caption_block_id": null,
+        "caption": "",
+        "description": ""
+      },
+      "checks": 0,
+      "passed": false,
+      "missing": [],
+      "caption": "",
+      "simplified": false
+    }
+  ],
+  "blocks": {
+    "p1b07": "The largest TATAPOWER was reported for Sep-24, amounting to 427. That item accounted for 28.5% of the total.",
+    "p1b08": "In total, TATAPOWER came to 1,497.",
+    "p1b09": "The largest Sensex Rebased was reported for",
+    "p1b13": "The narrative below highlights the items that moved most during the period. Efficiency measures introduced earlier began to show in the results. Management continues to track these indicators on a regular basis. Management attributes the result to steady execution across the portfolio. The mix of activities remained broadly consistent with earlier reporting periods. Working capital and cost discipline stayed in focus throughout the year. The figures below set out the main components behind these movements. Comparisons are made on the same basis as in the prior presentation. Operating conditions were mixed, with some segments advancing faster than others. Capital allocation continued to favour projects with clear returns. The board reviewed these results against the plan set at the start of the period. Seasonal effects are reflected in the timing of several line items.",
+    "p1b14": "Further detail on each component is provided in the accompanying table. Risk management practices were applied consistently across reporting units. The outlook takes into account current demand and the pipeline of commitments. Pricing and volume both contributed to the movements described here. Overheads were monitored closely against the approved budget. These results are presented after the usual internal review and reconciliation. Investment in capacity is expected to support the next phase of growth. The relationship between revenue and costs is discussed alongside the table. Exposure to external factors was managed within the agreed limits. The performance of individual items is summarised in the chart that follows. Liquidity remained adequate to meet the commitments of the period.",
+    "p1b15": "",
+    "p1b16": "",
+    "p1b19": "Each figure is shown on the same basis as the related table. The narrative below highlights the items that moved most during the period. Efficiency measures introduced earlier began to show in the results. Management continues to track these indicators on a regular basis. Management attributes the result to steady execution across the portfolio.",
+    "p1b25": "Over the period from FY24A to FY26E, Consolidated A fell by 85.5% to reach 14.8. Each figure is shown on the same basis as the related table. Consolidated D ended FY26E at 15.7, having risen by 9.8% since FY24A. Consolidated E fell by 6.5% between FY24A and FY26E, closing at 17.4. Management attributes the result to steady execution across the portfolio.",
+    "p1b26": "The mix of activities remained broadly consistent with earlier reporting periods. Working capital and cost discipline stayed in focus throughout the year. The figures below set out the main components behind these movements. Comparisons are made on the same basis as in the prior presentation.",
+    "p4b13": "",
+    "p4b15": "Among all items, Rating A stood out with Target of 337. Across the table, Target amounted to 2,123. Risk management practices were applied consistently across reporting units. The outlook takes into account current demand and the pipeline of commitments. Pricing and volume both contributed to the movements described here. Overheads were monitored closely against the approved budget. These results are presented after the usual internal review and reconciliation. Investment in capacity is expected to support the next phase of growth. The relationship between revenue and costs is discussed alongside the table. Exposure to external factors was managed within the agreed limits. The performance of individual items is summarised in the chart that follows.",
+    "p4b17": "These results are presented after the usual internal review and reconciliation. Investment in capacity is expected to support the next phase of growth. The relationship between revenue and costs is discussed alongside the table. Exposure to external factors was managed within the agreed limits.",
+    "p4b19": "Liquidity remained adequate to meet the commitments of the period. Each figure is shown on the same basis as the related table. Management attributes the result to steady execution across the portfolio. The mix of activities remained broadly consistent with earlier reporting periods. Working capital and cost discipline stayed in focus throughout the year. The figures below set out the main components behind these movements.",
+    "p4b20": "Operating conditions were mixed, with some segments advancing faster than others. Capital allocation continued to favour projects with clear returns. The board reviewed these results against the plan set at the start of the period.",
+    "p4b21": "The outlook takes into account current demand and the pipeline of commitments. Pricing and volume both contributed to the movements described here. Overheads were monitored closely against the approved budget. These results are presented after the usual internal review and reconciliation. Investment in capacity is expected to support the next phase of growth. The relationship between revenue and costs is discussed alongside the table. Exposure to external factors was managed within the agreed limits. The performance of individual items is summarised in the chart that follows. Liquidity remained adequate to meet the commitments of the period. Each figure is shown on the same basis as the related table.",
+    "p4b22": "Management attributes the result to steady execution across the portfolio. The mix of activities remained broadly consistent with earlier reporting periods. Working capital and cost discipline stayed in focus throughout the year. The figures below set out the main components behind these movements. Operating conditions were mixed, with some segments advancing faster than others. Capital allocation continued to favour projects with clear returns. The board reviewed these results against the plan set at the start of the period.",
+    "p5b03": "The outlook takes into account current demand and the pipeline of commitments. Pricing and volume both contributed to the movements described here. Overheads were monitored closely against the approved budget. These results are presented after the usual internal review and reconciliation. Investment in capacity is expected to support the next phase of growth. The relationship between revenue and costs is discussed alongside the table.",
+    "p5b04": "Exposure to external factors was managed within the agreed limits. The performance of individual items is summarised in the chart that follows. Liquidity remained adequate to meet the commitments of the period. Each figure is shown on the same basis as the related table. Management attributes the result to steady execution across the portfolio. The mix of activities remained broadly consistent with earlier reporting periods. Working capital and cost discipline stayed in focus throughout the year. The figures below set out the main components behind these movements. Operating conditions were mixed, with some segments advancing faster than others. Capital allocation continued to favour projects with clear returns. The board reviewed these results against the plan set at the start of the period. The outlook takes into account current demand and the pipeline of commitments. Pricing and volume both contributed to the movements described here. Overheads were monitored closely against the approved budget. These results are presented after the usual internal review and reconciliation. Investment in capacity is expected to support the next phase of growth. The relationship between revenue and costs is discussed alongside the table. Exposure to external factors was managed within the agreed limits. The performance of individual items is summarised in the chart that follows. Liquidity remained adequate to meet the commitments of the period. Each figure is shown on the same basis as the related table. Management attributes the result to steady execution across the portfolio. The mix of activities remained broadly consistent with earlier reporting periods. Working capital and cost discipline stayed in focus throughout the year. The figures below set out the main components behind these movements. Operating conditions were mixed, with some segments advancing faster than others. Capital allocation continued to favour projects with clear returns. The board reviewed these results against the plan set at the start of the period. The outlook takes into account current demand and the pipeline of commitments. Pricing and volume both contributed to the movements described here. Overheads were monitored closely against the approved budget. These results are presented after the usual internal review and reconciliation. Investment in capacity is expected to support the next phase of growth. The relationship between revenue and costs is discussed alongside the table. Exposure to external factors was managed within the agreed limits. The performance of individual items is summarised in the chart that follows. Liquidity remained adequate to meet the commitments of the period. Each figure is shown on the same basis as the related table. Management attributes the result to steady execution across the portfolio. The mix of activities remained broadly consistent with earlier reporting periods. Working capital and cost discipline stayed in focus throughout the year. The figures below set out the main components behind these movements. Operating conditions were mixed, with some segments advancing faster than others. Capital allocation continued to favour projects with clear returns. The board reviewed these results against the plan set at the start of the period. The outlook takes into account current demand and the pipeline of commitments. Pricing and volume both contributed to the movements described here. Overheads were monitored closely against the approved budget. These results are presented after the usual internal review and reconciliation. Investment in capacity is expected to support the next phase of growth. The relationship between revenue and costs is discussed alongside the table.",
+    "p5b05": "Exposure to external factors was managed within the agreed limits. The performance of individual items is summarised in the chart that follows. Liquidity remained adequate to meet the commitments of the period. Each figure is shown on the same basis as the related table. Management attributes the result to steady execution across the portfolio. The mix of activities remained broadly consistent with earlier reporting periods. Working capital and cost discipline stayed in focus throughout the year. The figures below set out the main components behind these movements. Operating conditions were mixed, with some segments advancing faster than others. Capital allocation continued to favour projects with clear returns. The board reviewed these results against the plan set at the start of the period. The outlook takes into account current demand and the pipeline of commitments. Pricing and volume both contributed to the movements described here. Overheads were monitored closely against the approved budget. These results are presented after the usual internal review and reconciliation. Investment in capacity is expected to support the next phase of growth. The relationship between revenue and costs is discussed alongside the table. Exposure to external factors was managed within the agreed limits. The performance of individual items is summarised in the chart that follows. Liquidity remained adequate to meet the commitments of the period. Each figure is shown on the same basis as the related table."
+  },
+  "captions": [
+    {
+      "slot": 0,
+      "block_id": null,
+      "caption": ""
+    }
+  ]
+}

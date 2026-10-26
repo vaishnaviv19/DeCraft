@@ -186,7 +186,7 @@ def extract_style(pdf_path: Path, cfg: Config, out_dir: Path | None = None) -> S
                 stats["blocks"].append((block_no, line_no, float(span["bbox"][0]),
                                         float(span["bbox"][1]), float(span["bbox"][2]),
                                         float(span["bbox"][3])))
-                stats["gap"].append((block_no, line_no, float(span["origin"][1])))
+                stats["gap"].append((page_no, block_no, line_no, float(span["origin"][1]), len(text)))
                 palette_counts[color] += len(text)
 
                 x0, y0, x1, y1 = (float(v) for v in span["bbox"])
@@ -218,7 +218,8 @@ def extract_style(pdf_path: Path, cfg: Config, out_dir: Path | None = None) -> S
                 fonts_dir.mkdir(parents=True, exist_ok=True)
                 suffix = "otf" if spec.family.lower() in {"cff"} else "ttf"
                 target = fonts_dir / f"{spec.font_id}-{re.sub(r'[^A-Za-z0-9]', '_', spec.family)}.{suffix}"
-                target.write_bytes(embedded[key])
+                if not (target.exists() and target.read_bytes() == embedded[key]):
+                    target.write_bytes(embedded[key])          # same bytes already there: no rewrite
                 try:                                   # relative when under artifacts, else the full path
                     spec.file = target.resolve().relative_to(Path(cfg.artifacts_dir).resolve()).as_posix()
                 except ValueError:
@@ -231,15 +232,31 @@ def extract_style(pdf_path: Path, cfg: Config, out_dir: Path | None = None) -> S
         for n, (key, stats) in enumerate(ordered, start=1):
             family, bold, italic, size, color = key
             font_key = (family, bold, italic)
-            gaps = []
-            by_block: dict[int, list[tuple[int, float]]] = defaultdict(list)
-            for block_no, line_no, baseline in stats["gap"]:
-                by_block[block_no].append((line_no, baseline))
+            # Line height is the leading that most characters actually use. A plain median over every
+            # gap lets one spaced-out block win over the dominant body leading (e.g. 12.5 vs 10.56 on
+            # the sample's first page), which then makes the source block itself fail `fits`. Median
+            # each block first, then weight the blocks by their character count.
+            by_block: dict[tuple[int, int], list[tuple[int, float, int]]] = defaultdict(list)
+            for page_no, block_no, line_no, baseline, chars in stats["gap"]:
+                by_block[(page_no, block_no)].append((line_no, baseline, chars))
+            weighted: list[tuple[float, int]] = []
             for lines in by_block.values():
                 lines.sort()
-                baselines = [b for _, b in lines]
-                gaps.extend(b - a for a, b in zip(baselines, baselines[1:]) if b > a)
-            line_height = round(statistics.median(gaps) / size, 2) if gaps and size else 1.2
+                baselines = [b for _, b, _ in lines]
+                gaps = [b - a for a, b in zip(baselines, baselines[1:])
+                        if 0 < b - a <= 3.0 * size]        # one very sparse block is not leading
+                if gaps:
+                    weighted.append((statistics.median(gaps), sum(c for _, _, c in lines)))
+            line_height = 1.2
+            if weighted and size:
+                weighted.sort()
+                total = sum(chars for _, chars in weighted)
+                seen = 0
+                for gap, chars in weighted:
+                    seen += chars
+                    if seen >= total / 2:
+                        line_height = round(gap / size, 2)
+                        break
             text_styles.append(TextStyle(
                 style_id=f"T{n}", font_id=fonts[font_key].font_id, size_pt=size, color=color,
                 line_height=max(0.8, min(3.0, line_height)), align="left"))

@@ -710,3 +710,131 @@ Known gaps: the block-level path is not yet called by `pipeline.run` (it still u
 one very large section must be split into several writer calls.
 
 Next: M8.8 consistency (claims merge and the Reconciler with its four guards).
+
+## v3.2 addendum - M8.8 consistency (task 11)
+
+Done:
+
+| Item | File | Notes |
+| --- | --- | --- |
+| New ids (M8.8.1) | `src/narrative/_consistency.py` | `rename_new` turns a writer's `N1` into `N:<section>:1`, so parallel sections never collide. `merge` converts the `StoryBible` to the S.3 `Entity` map and runs `merge_claims`, returning the merged bible, the conflicts and the claims whose entity is unknown. |
+| Four guards (M8.8.2) | same | `rewrite_guards`: (a) the choice is one of the candidates (`check_resolution`); (b) the rewrite may only touch a block that holds a flagged paragraph, and a paragraph diff rejects any change to an unflagged paragraph (or a change in paragraph count); (c) the rewritten text must pass the writer's digit and placeholder checks and contain the chosen value verbatim; (d) a capitalised multi-word name that is not in the bible, the source glossary or the source text is rejected. |
+| Reconciler loop | same | `reconcile` runs at most `report.reconcile_rounds` (2) rounds; a rejected reply stays in the queue for the next round; the accepted rewrite replaces the block text and updates the bible entity (`name` or the attr). What is still conflicting after the last round has its sentences dropped and is counted in the flags. |
+| Writer integration | `src/narrative/_writer.py` | Every successful section returns its resolved block texts plus `Claim`s (carrying the block id) and renamed new entities. After the parallel pass: merge, drop the sentences of unknown claims, reconcile conflicts, rebuild each section's text from its blocks, and record the statistics. |
+| Contracts | `src/contracts/__init__.py` | `NarrativeDoc.claims`, `new_entities`, `conflicts`, `resolved`, `dropped`, `unknown_refs` (additive). |
+| Stage summary | `scripts/stage.py` | `--until write` now prints `claims`, `new_entities`, `conflicts`, `unknown_refs`, `resolved`, `dropped` and `final_conflicts` beside the per-section rows. |
+| Tests | `tests/narrative/test_consistency.py`, `tests/narrative/test_write_blocks.py` | 19 tests in the two files: namespaced ids; conflict and unknown-ref detection; invented choice, unflagged block, unflagged paragraph and missing-value rewrites rejected; a valid rewrite applied with the bible updated; unresolved conflicts dropped; an accepted single-paragraph diff; claims merged by the writer; two writers disagreeing reconciled end to end. |
+
+Checks: `pytest tests/narrative/test_consistency.py tests/narrative/test_write_blocks.py -q` -> 19 passed;
+the full suite is green. `--until write` on the sample reports the new counters (0 claims / 0 conflicts
+without a model, 44/44 sections) and keeps the per-section `ok` rows.
+
+Known gaps: claim merging and reconciliation are only exercised with a model in the tests here (no
+provider keys on this machine); the reconciled bible is applied within the rounds and is persisted when
+the pipeline owns the plan stage (M8.11).
+
+Next: M8.9 box fitting (per-block word budgets, shorten/fit inside each box).
+
+## v3.2 addendum - M8.9 box fitting (task 12)
+
+Done:
+
+| Item | File | Notes |
+| --- | --- | --- |
+| Text measurement (M8.9.1) | `src/rendering/_measure.py` | `advance_width_fn` reads the font's `hmtx` advances and `unitsPerEm`, ignores kerning and applies the 2% safety margin. A block's font is the extracted file when it exists, else the metric-compatible fallback family, else DejaVu Sans from the matplotlib data (always on D:). `box_for` / `width_fn_for` take the width, height, size and line height from the block's bbox and Text Style. |
+| Shorten loop (M8.9.2) | `src/rendering/_fit_doc.py` | `fit_blocks` measures the resolved text; a block that does not fit goes to `shorten` with `max_words = floor(words x have / need x 0.95)`, at most 2 tries. A draft is accepted only if it keeps every original placeholder, keeps every original capitalised name, adds no digits and fits. Otherwise the text is cut at the last full sentence that fits and flagged; a final word-level trim guarantees the box is not left overflowing. Font sizes never change. |
+| Writer | `src/narrative/_writer.py` | The deterministic fallback is now spread over the section's blocks (`_split_for_blocks`) by source word budget, so every mirrored box has text to fit; `NarrativeDoc.blocks` is populated. |
+| Stage | `scripts/stage.py` | `--until fit` measures every block and prints one row `{id, need, have, fits}` plus `{overflow_before, shortened, cut}`; the write stage now saves the block texts and each section's text. Every block fits after the stage in the sample run. |
+| Tests | `tests/rendering/test_measure.py`, `tests/rendering/test_fit_doc.py` | 7 tests: "MMMM" wider than "iiii" from real hmtx, box/text-style mapping, already-fitting text untouched, a valid shorter text accepted, a shorter draft that adds a placeholder rejected, two failed drafts cut at the last full sentence with a flag, and the LLM-off cut path. |
+
+Checks: `pytest tests/rendering/test_measure.py tests/rendering/test_fit_doc.py tests/test_guards.py -q`
+-> 10 passed; the full suite is green. On the sample `--until fit`: **153 blocks**, **111** overflowed
+before, **0** shortened (no model), **111** cut, **0** blocks still overflowing, **1,446 words**.
+
+Known gaps: with a model the `shorten` path reduces the cut count; the deterministic sample is the
+worst case. The final `write()` gate ("every block fits") is satisfied by the write+fit pair; the
+pipeline switches to this pair in M8.11.
+
+Next: M8.10 images (photo slots, captions, FLUX prompts).
+
+## v3.2 addendum - M8.10 images (task 13)
+
+Done:
+
+| Item | File | Notes |
+| --- | --- | --- |
+| Photo slots (M8.10.1) | `src/rendering/_images.py` | `photo_slots` turns every `photo` block into a slot and finds the nearest `caption` block above or below it (within 48 pt); the caption is the writer's text for that block. `logo_slots` lists the logo blocks. |
+| Prompt, generation, check (M8.10.2) | same | `build_prompt` uses the exact spec shape (caption, composition from the Figure Analyst, the top three palette hexes, document type, natural light, no text/logos/watermarks). `image_size` keeps the slot's aspect ratio with the longest side <= 1024 and both sides multiples of 8. Seeds are `cfg.seed + slot_index + 100*k` for the initial call and up to `report.image_retries` regenerations. `image_check` is the existing rendering prompt (budget aligned to the v3.2 table: 1600 in / 300 out), so there is no duplicate prompt name. |
+| Caption simplification | same | After three misses the caption goes through a `shorten` call with the `missing` list; sentences that still mention a missing element are removed, and the result is flagged. |
+| Logos | same | `extract_logo` copies the original embedded image at the logo's place (else a 300 dpi crop). Logos are written to `images/logo_<i>.png` and never passed to the image or vision client. |
+| Saves and summary | same | Generated photos are JPEG quality 80, longest side 1024; the summary is `{photos, slots, generated, checks_passed, captions_simplified, skipped, logos}`. A photo with neither caption nor description is skipped instead of inventing content. |
+| Provider | `src/llm/_providers.py` | `CloudflareImageClient.generate` accepts the slot's `width`/`height` (longest side 1024) and keeps recording the seed. |
+| Stage | `scripts/stage.py` | `--until images` lists slots and captions, copies logos, and records the simplified captions in the output's block map for rendering. |
+| Tests | `tests/rendering/test_images.py` | 8 tests: a first-try match generates once; two misses then a match generates three times with seeds 42/142/242; three misses simplify and flag; a simplified caption never mentions the missing elements; a caption block below a photo is its caption; the prompt and size match the spec; logos are copied and never sent to the client; a photo with no caption/description is skipped. |
+
+Checks: `pytest tests/rendering/test_images.py tests/test_prompt_budgets.py tests/test_guards.py -q`
+-> 32 passed; the full suite is green. On the sample `--until images`: **3 photo slots**, **8 logos
+copied from the source bytes**, **0 generated** (no image gateway; the source photos have no caption
+block and no description, so nothing would be fabricated).
+
+Known gaps: live FLUX/vision calls need the Cloudflare keys (not on this machine); the sample's photos
+have neither captions nor descriptions, so the stage lists them as skipped slots rather than generating.
+
+Next: M8.11 rendering (mirror and flow pages, PDF metadata).
+
+## v3.2 addendum - M8.11 rendering (task 14)
+
+Done:
+
+| Item | File | Notes |
+| --- | --- | --- |
+| Mirror pages (M8.11.1) | `src/rendering/_pages.py`, `templates/page_mirror.html.j2` | One `<section class="sheet">` per template at its page size; every block is `position:absolute` with `left/top/width/height` in points and `overflow:hidden`. Text uses its Text Style (size, colour, line height, alignment) and `@font-face` from the extracted font file (fallback family when absent). Tables are rebuilt from the display frames with the source border width and header fill; charts are inline SVG; photos/logos are images. The decoration layer redraws `get_drawings()` paths outside table/chart boxes as one SVG behind the blocks. |
+| Flow pages (M8.11.2) | same, `templates/page_flow.html.j2` | Blocks in reading order inside the margins, page furniture (header/footer/logo/page number) left out; each table is immediately followed by its chart; `break-inside: avoid` on blocks. The content sits in a fixed inner box so one template stays one PDF page. |
+| PDF metadata (M8.11.3) | `_pages.write_metadata_v32` | Info keys title/author/subject/keywords plus XMP with `decraft:synthetic="true"` and `decraft:run_id`. Applied after WeasyPrint renders. |
+| Page images | `_pages.render_pages` | `output.pdf`, `pages/p<N>.png` at 110 dpi, and `side_by_side_p<N>.png` (source page \| output page) for every page. |
+| Stage | `scripts/stage.py` | `--until render` loads style, templates, fitted text, display tables, chart SVG sidecars, photo/logo files and the plan metadata and renders the run. |
+| Tests | `tests/rendering/test_pages.py` | 4 tests: mirror HTML has absolute pt positions and an `@font-face` file that exists; flow order is text -> table -> chart with `break-inside: avoid`; metadata contains the synthetic marker and run id; a full render writes the PDF, page PNG and metadata. |
+
+Checks: `pytest tests/rendering/test_pages.py -q` -> 4 passed; the full suite is green.
+On the sample `--until render`: 5 templates -> **5 PDF pages**, **5 page PNGs**, **5 side-by-side
+images**, 4 decorated mirror pages (the flow page has no drawing layer); metadata title
+"Tata Power Company Limited", author "Operations Division", `decraft:synthetic` and `decraft:run_id`
+present in XMP. A visual check of `side_by_side_p1.png` and `p2.png` shows the mirror blocks at their
+source positions and the flow page reflowed in reading order.
+
+Known gaps: a flow page whose content is taller than one page is clipped (QA/critic in M8.12 will
+report and adjust line height/spacing); some source text blocks overlap tables because their
+template boxes do, which M8.12's layout gate will measure.
+
+Next: M8.12 QA and the Visual Critic.
+
+## v3.2 addendum - M8.12, M9, M10 review and v3.3 (2026-10-26)
+
+M9/M10 were built by a second session; this entry records the review and the v3.3 work on top.
+
+| Area | Files | What it does now |
+| --- | --- | --- |
+| M9.1 stage machine (review) | `src/pipeline.py` | 17 stages, `done.json` with input/output hashes, config-slice reruns, partial runs on `LLMBudgetExceeded`/`CacheMiss`. Fixed: a stage timeout hung the run (`with ThreadPoolExecutor` waits for the stuck worker); test runs overwrote the repo's `report_output.pdf`. |
+| Gates | `src/gates.py`, `gates.json` | v3.2 section 9 + v3.3 section 5 (29 gates) from the stage outputs; model-only gates (`words_per_page`, `no_cross_section_repeats`) are "skipped (llm disabled)" when the model is off (M9.2). `metadata_synthetic` is `metadata_clean` (E-32). |
+| M9.3 | `tests/pipeline/test_injection.py` | Echo model; the injected instruction reaches no text/title/bible, prompts unchanged, no key in any artifact. Passes. |
+| M10.1 (review) | `src/prompt_registry.py`, `scripts/build_prompt_log.py`, `scripts/archive_prompts.py` | Registry moved out of `src/llm` (module-boundary guard). Vision prompts were listed as Groq; now from `PromptSpec.role`. `requirements.txt` is a `pip freeze` (was a 16-line hand list). |
+| M10.2 | `scripts/make_notebook.py`, `solution.ipynb` | 13 cells; executes end to end with no keys (model-off). Not yet executed with live models. |
+| M10.3 (review) | `scripts/package.py` | 370 entries, 3.4 MB, relative paths, no `.env`, no key values. |
+| Tests and quota | `tests/conftest.py` | Tests were making LIVE provider calls (default config + keys in the environment): at least 27 today. An autouse fixture now removes the keys for every test. |
+| Windows | `_measure.py`, `_extract.py`, `report_stages.py` | Fonts held open by fontTools and matplotlib locked `style/fonts/*.ttf`; closed/released. |
+| v3.3 F-01..F-03 | `_tiny.py`, `src/core/dcr.py`, `_autounits.py`, `_placeholders.py` | Per-cell tiny-table jitter; DCR in audit and validation (E-46); `{{key|auto}}`, `section_writer` v3. |
+| v3.3 F-04 | `src/style/_ocr.py`, pipeline | Scanned pages get an invisible OCR layer (RapidOCR, 100% word recovery on the test scan); `ocr.json`. |
+| v3.3 F-05 | `src/style/_layout_check.py`, `scripts/fetch_layout_model.py` | DocLayout-YOLO agreement, flags only (E-48/E-49). Weights NOT downloaded (needs the owner's approval): the check reports "not run". |
+| v3.3 F-06/F-07 | `src/style/_chart_geometry.py` | Exact geometry recovery of the two vector price charts (confidence 0.999-1.0); redrawn charts keep the source colours and plain lines: style similarity 1.0 / 0.98. |
+| v3.3 F-08/F-09 | `src/rendering/_structure.py`, `src/report_checks.py` | Round trip + metrics (E-50); discriminator (vision, 2 calls/page) when a vision model is on. |
+| v3.3 F-10/F-11 | `src/rendering/_css.py`, `src/narrative/_repeats.py` | Hyphenation + `<html lang>`; cross-section repeats with one `rep` retry, drop or flag. |
+| Layout (owner) | E-48, `page_texts` | Every page mirrored; every heading box gets a heading; brand images in the header/footer bands are logos. |
+
+Sample, model off, fresh (`scripts/run_decraft.py --no-llm --fresh`): 5 pages, 27 of 29 gates true, 2 skipped (model-only).
+False: `roundtrip_structure` and `layout_metrics`. Text placement passes on 4 of 5 pages; the
+structural counts and block IoU (0.33-0.66) differ mostly because our rule extractor reads the
+RENDERED pages differently (merged table regions, heading classes), not because boxes moved.
+
+Open: live run with the models (writer word limits, titles, discriminator, critic); F-05 weights;
+`assets/fonts/` fallback fonts not shipped (the sample uses its own extracted fonts); M11 (second PDF,
+acceptance). Model-off text uses fallback labels (e.g. "Item E") because the Label Fabricator needs the model.

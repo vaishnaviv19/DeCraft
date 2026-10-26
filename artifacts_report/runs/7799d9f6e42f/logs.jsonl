@@ -1,0 +1,42 @@
+{"at": "2026-10-26T13:56:30.413048+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": false, "resumed": false}
+{"at": "2026-10-26T13:56:30.827342+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T13:56:30.895739+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T13:56:31.479435+00:00", "event": "stage_done", "stage": "extract", "seconds": 0.64}
+{"at": "2026-10-26T13:56:31.479435+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T13:56:32.078781+00:00", "event": "stage_done", "stage": "infer", "seconds": 0.61}
+{"at": "2026-10-26T13:56:32.081175+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T13:56:32.215232+00:00", "event": "labels", "columns": 14, "replaced": 95, "kept": 79, "avoid_size": 213}
+{"at": "2026-10-26T13:56:32.220631+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.14}
+{"at": "2026-10-26T13:56:32.220631+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T13:56:32.642261+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.42}
+{"at": "2026-10-26T13:56:32.642261+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T13:56:32.931220+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.28}
+{"at": "2026-10-26T13:56:32.931220+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T13:56:33.137254+00:00", "event": "stage_done", "stage": "style", "seconds": 0.22}
+{"at": "2026-10-26T13:56:33.149957+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T13:56:42.683360+00:00", "event": "stage_done", "stage": "templates", "seconds": 9.53}
+{"at": "2026-10-26T13:56:42.683360+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T13:56:42.753253+00:00", "event": "stage_done", "stage": "figures", "seconds": 0.08}
+{"at": "2026-10-26T13:56:42.753253+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T13:56:43.122768+00:00", "event": "stage_done", "stage": "prepare", "seconds": 0.38}
+{"at": "2026-10-26T13:56:43.122768+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T13:56:45.688398+00:00", "event": "stage_done", "stage": "charts", "seconds": 2.56}
+{"at": "2026-10-26T13:56:45.688398+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T13:56:45.754730+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.06}
+{"at": "2026-10-26T13:56:45.754730+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T13:56:45.877193+00:00", "event": "fallback", "stage": "write", "reason": "repeats: 378 found, 0 fixed, 51 dropped, 262 flagged"}
+{"at": "2026-10-26T13:56:45.881289+00:00", "event": "stage_done", "stage": "write", "seconds": 0.12}
+{"at": "2026-10-26T13:56:45.883272+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T13:56:45.935629+00:00", "event": "fallback", "stage": "fit", "reason": "repeats: 378 found, 0 fixed, 51 dropped, 262 flagged"}
+{"at": "2026-10-26T13:56:45.935629+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:56:45.935629+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:56:45.939201+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.06}
+{"at": "2026-10-26T13:56:45.939201+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T13:56:46.139471+00:00", "event": "stage_done", "stage": "images", "seconds": 0.2}
+{"at": "2026-10-26T13:56:46.139471+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T13:56:53.707518+00:00", "event": "stage_done", "stage": "render", "seconds": 7.56}
+{"at": "2026-10-26T13:56:53.708028+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T13:56:54.586539+00:00", "event": "stage_done", "stage": "qa", "seconds": 0.88}
+{"at": "2026-10-26T13:56:54.587053+00:00", "event": "stage_start", "stage": "package"}
+{"at": "2026-10-26T13:56:55.156664+00:00", "event": "stage_done", "stage": "package", "seconds": 0.58}
+{"at": "2026-10-26T13:56:55.735877+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "privacy_audit": true, "data_valid": true, "periods_shifted": true, "every_table_has_chart": true, "charts_match_tables": true, "no_unresolved_placeholders": true, "no_illegal_digits": true, "bible_consistent": true, "same_sections_new_titles": true, "min_1000_words": true, "layout_fits": true, "fonts_embedded": true, "font_sizes_locked": true, "labels_fabricated": true, "no_source_names": true, "no_fixed_doc_type": true, "entity_and_branding": true, "metadata_clean": true, "critic_not_worse": true, "no_source_copy": true, "deliverables": true, "share_distance": true, "dcr": true, "no_typed_units": true, "ocr_coverage": true, "layout_agreement": true, "chart_style_similar": true, "vector_recovery_exact": true, "roundtrip_structure": false, "layout_metrics": false}}

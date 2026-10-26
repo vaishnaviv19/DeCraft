@@ -108,6 +108,8 @@ class SectionPlan(Strict):
 class Outline(Strict):
     report_title: str
     sections: list[SectionPlan]
+    doc_type: str = ""                 # 'dt' (E-25): named by the Titles call from page 1, never assumed
+    domain: str = ""                   # 'dom' (E-25): the Annotator's domain from the Inference Report
 
 
 class BibleEntity(Strict):
@@ -215,6 +217,26 @@ class CriticOut(Strict):
     issues: list[CriticIssue] = []
 
 
+class DiscriminatorOut(Strict):
+    """v3.3 F-09: which of two pages the vision model takes for the published original."""
+    original: Literal["A", "B"]
+    reason: str
+
+
 class ImageCheckOut(Strict):
     matches: bool
     missing: list[str] = []            # caption elements not visible in the image
+
+
+class StyleAdjustments(Strict):
+    """E-18: parameter -> target -> value. Only the allow-listed parameters can appear."""
+    values: dict[str, dict[str, float | str]] = {}
+
+
+class QAReport(Strict):
+    gates: dict[str, bool] = {}
+    failures: list[str] = []
+    round_scores: list[list[int]] = []
+    kept_round: int = 0
+    manual_review_required: list[str] = []
+    pdf_path: str = ""

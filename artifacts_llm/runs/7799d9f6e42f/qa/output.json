@@ -1,0 +1,144 @@
+{
+  "gates": {
+    "pages": true,
+    "placeholders": true,
+    "words": true,
+    "words_per_page": false,
+    "font_sizes_locked": true,
+    "no_source_names": true,
+    "fonts_embedded": true,
+    "text_in_boxes": true,
+    "layout_fits": true,
+    "tables_charted": true,
+    "charts_match_tables": true,
+    "roundtrip_structure": false,
+    "layout_metrics": false,
+    "chart_style_similar": false,
+    "discriminator": true,
+    "layout_agreement": true
+  },
+  "failures": [
+    "words_per_page: page 1 has 480 words, source 706",
+    "words_per_page: page 4 has 560 words, source 734",
+    "words_per_page: page 5 has 840 words, source 1197",
+    "roundtrip: p1: table count 5 vs intended 2",
+    "roundtrip: p1: chart count 1 vs intended 3",
+    "roundtrip: p2: table count 2 vs intended 3",
+    "roundtrip: p2: chart count 2 vs intended 3",
+    "roundtrip: p2: heading count 10 vs intended 4",
+    "roundtrip: p3: chart count 2 vs intended 4",
+    "roundtrip: p3: heading count 2 vs intended 8",
+    "roundtrip: p4: chart count 1 vs intended 2",
+    "roundtrip: p4: heading count 1 vs intended 3",
+    "roundtrip: p5: photo count 0 vs intended 1",
+    "roundtrip: p1: reading order similarity 0.77 < 0.9",
+    "roundtrip: p2: reading order similarity 0.43 < 0.9",
+    "roundtrip: p3: reading order similarity 0.71 < 0.9",
+    "roundtrip: p4: reading order similarity 0.80 < 0.9",
+    "roundtrip: p5: reading order similarity 0.80 < 0.9",
+    "layout_metrics: p1: mean block IoU 0.38 < 0.9",
+    "layout_metrics: p2: overlap 0.051 vs intended 0.000",
+    "layout_metrics: p2: mean block IoU 0.48 < 0.9",
+    "layout_metrics: p3: 0% of the text sits in its intended boxes (< 90%)",
+    "layout_metrics: p3: mean block IoU 0.35 < 0.9",
+    "layout_metrics: p4: mean block IoU 0.41 < 0.9",
+    "layout_metrics: p5: alignment 374.4 pt vs intended 10.7",
+    "layout_metrics: p5: mean block IoU 0.66 < 0.9",
+    "chart_style_similar: p1b18: chart style similarity 0.71 < 0.85",
+    "chart_style_similar: p4b06: chart style similarity 0.71 < 0.85"
+  ],
+  "round_scores": [
+    [],
+    [],
+    []
+  ],
+  "kept_round": 0,
+  "critic_ran": true,
+  "manual_review": [],
+  "roundtrip": [
+    "p1: table count 5 vs intended 2",
+    "p1: chart count 1 vs intended 3",
+    "p2: table count 2 vs intended 3",
+    "p2: chart count 2 vs intended 3",
+    "p2: heading count 10 vs intended 4",
+    "p3: chart count 2 vs intended 4",
+    "p3: heading count 2 vs intended 8",
+    "p4: chart count 1 vs intended 2",
+    "p4: heading count 1 vs intended 3",
+    "p5: photo count 0 vs intended 1",
+    "p1: reading order similarity 0.77 < 0.9",
+    "p2: reading order similarity 0.43 < 0.9",
+    "p3: reading order similarity 0.71 < 0.9",
+    "p4: reading order similarity 0.80 < 0.9",
+    "p5: reading order similarity 0.80 < 0.9"
+  ],
+  "iou": {
+    "p1": 0.376,
+    "p2": 0.484,
+    "p3": 0.349,
+    "p4": 0.414,
+    "p5": 0.663
+  },
+  "text_placement": {
+    "p1": 0.9,
+    "p2": 1.0,
+    "p3": 0.0,
+    "p4": 1.0,
+    "p5": 1.0
+  },
+  "alignment": {
+    "p1": {
+      "src": 1.42,
+      "out": 1.39
+    },
+    "p2": {
+      "src": 1.67,
+      "out": 1.4
+    },
+    "p3": {
+      "src": 0.58,
+      "out": 1.56
+    },
+    "p4": {
+      "src": 1.86,
+      "out": 2.65
+    },
+    "p5": {
+      "src": 10.73,
+      "out": 374.4
+    }
+  },
+  "overlap": {
+    "p1": {
+      "src": 0.0,
+      "out": 0.0
+    },
+    "p2": {
+      "src": 0.0,
+      "out": 0.051
+    },
+    "p3": {
+      "src": 0.007,
+      "out": 0.0
+    },
+    "p4": {
+      "src": 0.0,
+      "out": 0.0
+    },
+    "p5": {
+      "src": 0.0,
+      "out": 0.0
+    }
+  },
+  "chart_style": {
+    "p1b18": 0.71,
+    "p4b06": 0.71
+  },
+  "discriminator": {
+    "pages": 0,
+    "distinguishable": 0,
+    "distinguishable_pages": [],
+    "reasons": {}
+  },
+  "pdf": "artifacts_llm\\runs\\7799d9f6e42f\\report_output.pdf"
+}

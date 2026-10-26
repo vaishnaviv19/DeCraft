@@ -28,7 +28,9 @@ def wrap_lines(text: str, box: Box, width_fn) -> int:
 
 
 def capacity_lines(box: Box) -> int:
-    return int(box.height_pt // (box.font_size * box.line_height))
+    # A non-empty box always has room for at least one line. Source one-line boxes are only a glyph
+    # bbox tall (e.g. 10.5 pt for 9 pt text), so a raw floor would yield zero and cut the block away.
+    return max(1, int(box.height_pt // (box.font_size * box.line_height)))
 
 
 def fits(text: str, box: Box, width_fn) -> tuple[bool, int, int]:
@@ -37,5 +39,6 @@ def fits(text: str, box: Box, width_fn) -> tuple[bool, int, int]:
 
 
 def word_budget(source_words: int, tolerance: float = 0.15) -> tuple[int, int]:
-    """Per-box word range from the SOURCE box's word count (decision E-13): +/- 15%."""
-    return max(1, int(source_words * (1 - tolerance))), int(round(source_words * (1 + tolerance)))
+    """Per-box word range from the SOURCE box's word count (E-13): -15% up to the source count itself
+    (the maximum is a hard limit given to the writer; the source text fits its box)."""
+    return max(1, int(source_words * (1 - tolerance))), max(1, int(source_words))

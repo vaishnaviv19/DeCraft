@@ -23,9 +23,12 @@
     "Q1FY23",
     "Q1FY24",
     "Q1FY25",
+    "Q3FY23",
+    "Q3FY24",
     "Q4FY23",
     "Q4FY24"
   ],
+  "validation_ok": true,
   "labels": 0,
   "replaced": 0,
   "kept_generic": [
@@ -93,9 +96,9 @@
   "facts": 318,
   "bands": {
     "strong increase": 52,
-    "flat": 4,
+    "flat": 5,
     "sharp decline": 12,
-    "increase": 7,
+    "increase": 6,
     "decline": 5,
     "major": 1,
     "minor": 1

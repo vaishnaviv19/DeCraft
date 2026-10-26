@@ -1,0 +1,57 @@
+{
+  "chart_id": "chart_table_005",
+  "table_id": "table_005",
+  "label_column": "Unnamed: 0",
+  "kind": "bar",
+  "orientation": "rows",
+  "labels": [
+    "Old estimates",
+    "Unnamed: 2",
+    "New estimates",
+    "Unnamed: 4",
+    "Change %",
+    "Unnamed: 6"
+  ],
+  "series": {
+    "Revenue": [
+      54378.0,
+      96333.0,
+      97002.0,
+      79193.0,
+      1.7,
+      1.5
+    ],
+    "EBITDA": [
+      9102.0,
+      16899.0,
+      16472.0,
+      13565.0,
+      3.2,
+      2.6
+    ],
+    "Margins (%)": [
+      15.3,
+      27.7,
+      27.9,
+      21.1,
+      27.0,
+      11.0
+    ],
+    "Adj. PAT": [
+      3187.0,
+      6031.0,
+      5452.0,
+      4520.0,
+      -5.4,
+      -8.1
+    ],
+    "Adj. EPS": [
+      10.4,
+      18.8,
+      16.7,
+      14.3,
+      -5.6,
+      -8.0
+    ]
+  }
+}

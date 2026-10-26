@@ -153,7 +153,8 @@ def _fallback(column: str, src: str, checker: _Checker, counter: dict) -> str:
     prefix = "- " if src.startswith("- ") else ""
     unit = UNIT_SUFFIX.search(src)
     suffix = f" {unit.group(1)}" if unit else ""
-    base = column if len(column) <= 24 and not any(c.isdigit() or c in ":/" for c in column) else "Item"
+    stem = UNIT_SUFFIX.sub("", column).strip()          # a column 'Consolidated (cr)' gives 'Consolidated B'
+    base = stem if len(stem) <= 24 and not any(c.isdigit() or c in ":/" for c in stem) else "Item"
     while True:
         counter[base] = counter.get(base, -1) + 1
         candidate = f"{prefix}{base} {_letters(counter[base])}{suffix}"

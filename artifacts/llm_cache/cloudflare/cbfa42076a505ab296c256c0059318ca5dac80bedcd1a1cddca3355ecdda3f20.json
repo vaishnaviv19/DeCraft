@@ -1,0 +1,1 @@
+{"reply": "{\"matches\": false, \"missing\": [\"graph\", \"chart\", \"document\", \"table\", \"data\", \"paper\", \"report\"]}", "prompt": "image_check", "version": "v1", "payload": "{\"caption\": \"\"}"}

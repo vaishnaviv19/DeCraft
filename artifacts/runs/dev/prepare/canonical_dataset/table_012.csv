@@ -1,6 +1,6 @@
-Large caps,Midcaps,Ratings,Small Caps
-Upside is above 10%,Upside is above 15%,Buy,Upside is above 20%
-,Upside is between 10%-15%,Accumulate,Upside is between 10%-20%
-Upside is between 0% - 10%,Upside is between 0%-10%,Hold,Upside is between 0%-10%
-Downside is more than 0%,Downside is more than 0%,Reduce/sell,Downside is more than 0%
-,,Unrated/Standard,
+Ratings,Large caps,Midcaps,Small Caps
+Buy,Upside is above 10%,Upside is above 15%,Upside is above 20%
+Accumulate,,Upside is between 10%-15%,Upside is between 10%-20%
+Hold,Upside is between 0% - 10%,Upside is between 0%-10%,Upside is between 0%-10%
+Reduce/sell,Downside is more than 0%,Downside is more than 0%,Downside is more than 0%
+Unrated/Standard,,,

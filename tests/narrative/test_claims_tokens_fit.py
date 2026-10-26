@@ -46,7 +46,7 @@ def test_reconciler_may_only_choose_existing_values():
 
 def test_period_tokens_allowed_only_if_in_the_generated_periods():
     allowed = {'FY2024', 'FY2025', 'Q3 FY2025', '2025'}
-    assert illegal_digits('Launched in FY25 and scaled in Q3 FY25 to {{rev.total|bn:1}} billion.', allowed) == []
+    assert illegal_digits('Launched in FY25 and scaled in Q3 FY25 to {{rev.total|auto}}.', allowed) == []
     assert illegal_digits('Growth in FY27 was strong.', allowed) == ['FY27']
     assert illegal_digits('We opened 3 plants in 2025.', allowed) == ['3']
     assert illegal_digits('Revenue rose 12% in 2025.', allowed) == ['12%']
@@ -63,4 +63,4 @@ def test_text_fit_and_budget():
     w = lambda s: 6.0 * len(s)                                             # fake 6 pt per char
     assert fits('one two three four five six', box, w)[0]
     assert not fits(' '.join(['word'] * 40), box, w)[0]
-    assert word_budget(100) == (85, 115)
+    assert word_budget(100) == (85, 100)                    # E-48: the source count is the maximum

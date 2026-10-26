@@ -73,3 +73,25 @@ privacy plan's Label Fabricator decisions (E-35, E-39).
 unchanged; their v1 texts (where v2 exists) are in the v3.1 addendum. Input caps of the four vision prompts
 were raised to the measured image cost without a text change (E-40): `visual_critic` 3,200 → 14,500,
 `figure_analyst` 2,600 → 8,200, `image_check` 1,600 → 7,500, `chart_data_recovery` 1,800 → 7,500.
+
+## outline_titles v3 (2026-10-26)
+
+| Version | Change | Reason |
+| --- | --- | --- |
+| v2 | Spec text (Appendix S.6); reply `{"report_title","sections"}`. | — |
+| v3 | Also returns `dt`: the document's type in 2-4 plain words, judged only from `p1` (the opening words of page 1). | E-25 says `dt` comes from the Titles call input, but v2 never asked for it, so every writer, the bible and the image prompts got an empty `dt` (and the image stage hardcoded "business report"). |
+
+## section_writer v3 (2026-10-26, v3.3 F-03)
+
+| Version | Change | Reason |
+| --- | --- | --- |
+| v2 | Placeholders `{{key}}`, `{{key|bn:1}}`, `{{key|m:1}}`, `{{key|pct:1}}`, `|text`, `|word`. | — |
+| v3 | Numbers are written `{{key|auto}}` (or `|text`, `|word`); the writer must not type scale, unit or currency words next to a placeholder. | v2 let the writer type scale words; v3 delegates them to `|auto` (F-03). The repo's resolver never divided by `bn`/`m`, so `{{x|bn:1}} billion` would have printed a crore figure followed by "billion". |
+
+Same day (E-48, before either v3 was used live): `section_writer` v3 also states that `w[1]` is a hard maximum ("NEVER more than w[1] words"), and `outline_titles` v3 gives each section a `tw` word limit for its title. Reason: text over the source box's word count overflowed the box and was cut.
+
+## discriminator v1 (2026-10-26, v3.3 F-09)
+
+Spec text (Appendix T.5). Input cap 14,500 instead of 3,000: two page images at the measured image cost (E-40), as for `visual_critic`.
+
+Same day (v3.3 F-11, before v3 was used live): `section_writer` v3 adds rule (8) "Do not restate any sentence listed in 'rep'" and the legend key `rep`; the field is only sent on the one retry of a section that repeated another.

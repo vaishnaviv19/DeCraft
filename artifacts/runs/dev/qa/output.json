@@ -1,0 +1,26 @@
+{
+  "gates": {
+    "pages": true,
+    "placeholders": true,
+    "words": true,
+    "words_per_page": false,
+    "font_sizes_locked": true,
+    "no_source_names": true,
+    "fonts_embedded": true,
+    "text_in_boxes": true,
+    "layout_fits": true,
+    "tables_charted": true,
+    "charts_match_tables": true
+  },
+  "failures": [
+    "words_per_page: page 1 has 534 words, source 706",
+    "words_per_page: page 3 has 447 words, source 604",
+    "words_per_page: page 4 has 494 words, source 734",
+    "words_per_page: page 5 has 0 words, source 1197"
+  ],
+  "round_scores": [],
+  "kept_round": 0,
+  "critic_ran": false,
+  "manual_review": [],
+  "pdf": "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\report_output.pdf"
+}

@@ -49,6 +49,49 @@ def _statement_chart(chart_id: str, table_id: str, display: pd.DataFrame, label:
                      orientation="rows", series_rows=rows, kind="line", title=title)
 
 
+def text_number_chart(chart_id: str, table_id: str, display: pd.DataFrame, label: str) -> ChartSpec | None:
+    """A chart for a table whose numbers are text cells, typically several small tables stacked in
+    one grid ('Shareholding % | Q3FY24 | Q4FY24 | Q1FY25', then 'Promoters | 49.4 | 58.7 | 59.9'):
+    the largest group of uniquely labelled rows that are numbers in the SAME columns (at least two)
+    and written in the same form (all percentages or none) becomes 'rows' series across those columns,
+    so every plotted value is a cell of the table (task 7). None when no such group exists."""
+    from src.core.values import parse_number
+
+    columns = [str(c) for c in display.columns if c != label]
+    once = {k for k, rows in label_positions(display[label]).items() if len(rows) == 1}
+    groups: dict[tuple, list[str]] = {}
+    for i in range(len(display)):
+        name = str(display[label].iloc[i]).strip()
+        if not name or name.lower() == "nan" or norm_label(name) not in once or TOTAL_RE.search(name):
+            continue
+        cells = {c: display[c].iloc[i] for c in columns}
+        numeric = tuple(c for c, v in cells.items() if v is not None and str(v).strip()
+                        and str(v).strip().lower() != "nan" and parse_number(v) is not None)
+        if len(numeric) < 2:
+            continue
+        percent = all("%" in str(cells[c]) for c in numeric)
+        groups.setdefault((numeric, percent), []).append(name)
+    if not groups:
+        return None
+    (series_columns, _), rows = max(groups.items(), key=lambda item: (len(item[1]), len(item[0][0])))
+    if len(rows) < 2:
+        return None
+    rows = rows[:5]
+    # the sub-header row nearest above the first series row names the columns ('Shareholding % |
+    # Q3FY24 | Q4FY24 | Q1FY25'); its cells become the axis labels instead of 'Unnamed: 1'
+    x_labels: list[str] = []
+    first = next(i for i in range(len(display)) if str(display[label].iloc[i]).strip() == rows[0])
+    for i in range(first - 1, -1, -1):
+        cells = [str(display[c].iloc[i]).strip() for c in series_columns]
+        if all(cell and cell.lower() != "nan" and parse_number(cell) is None for cell in cells):
+            x_labels = cells
+            break
+    title = f"{', '.join(rows[:-1])} and {rows[-1]}"
+    return ChartSpec(chart_id=chart_id, table_id=table_id, label_column=label,
+                     series_columns=list(series_columns), orientation="rows", series_rows=rows,
+                     kind="bar", title=title, x_labels=x_labels)
+
+
 def _column_chart(chart_id: str, table_id: str, display: pd.DataFrame, label: str, profiles: dict,
                   keys: set[str], wanted_kind: str, y_hint: str | None) -> ChartSpec | None:
     numbers = [c for c in display.columns if c != label and c not in keys
@@ -81,7 +124,12 @@ def register_all_charts(data, document_plan: dict | None = None) -> dict[str, Ch
         numbers = [str(c) for c in display.columns if c != label
                    and pd.api.types.is_numeric_dtype(display[c])
                    and pd.to_numeric(display[c], errors="coerce").notna().any()]
-        if label is None or not numbers:
+        if label is None:
+            continue
+        if not numbers:                  # numbers stored as text ('Rs. 86,856', '46.9'): line items
+            spec = text_number_chart(f"chart_{table_id}", table_id, display, label)
+            if spec is not None:
+                charts[spec.chart_id] = spec
             continue
         series = numbers[:3]
         unit = next((p.unit for p in profiles if p.column == series[0] and p.unit), None)

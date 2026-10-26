@@ -1,0 +1,44 @@
+{
+  "chart_id": "chart_plan_010",
+  "table_id": "table_010",
+  "label_column": "Y.E March",
+  "kind": "line",
+  "orientation": "rows",
+  "columns": [
+    "FY22A",
+    "FY23A",
+    "FY24A",
+    "FY25E",
+    "FY26E"
+  ],
+  "labels": [
+    "FY22A",
+    "FY23A",
+    "FY24A",
+    "FY25E",
+    "FY26E"
+  ],
+  "series": {
+    "Y.E March F (days)": [
+      179.3,
+      195.1,
+      102.2,
+      171.9,
+      148.1
+    ],
+    "Y.E March D (days)": [
+      80.2,
+      67.5,
+      63.4,
+      59.1,
+      67.9
+    ],
+    "Y.E March E (days)": [
+      47.8,
+      80.3,
+      54.1,
+      63.4,
+      67.5
+    ]
+  }
+}

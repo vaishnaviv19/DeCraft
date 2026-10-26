@@ -1,0 +1,4337 @@
+{
+  "schema_version": "2.6",
+  "source_sha256": "7799d9f6e42f0328ffac454e8f7ace813e009093a70f9860811334c69930bc59",
+  "config_hash": "0a7600c2b980eebee86054bbf751773148a851fc0ff2579b67ad891d00665121",
+  "domain": "finance",
+  "domain_confidence": 0.9,
+  "reference_date": "2024-03-31",
+  "table_quality": {
+    "table_001": {
+      "grade": "good",
+      "issues": []
+    },
+    "table_002": {
+      "grade": "good",
+      "issues": []
+    },
+    "table_003": {
+      "grade": "good",
+      "issues": []
+    },
+    "table_004": {
+      "grade": "good",
+      "issues": []
+    },
+    "table_005": {
+      "grade": "good",
+      "issues": []
+    },
+    "table_006": {
+      "grade": "good",
+      "issues": []
+    },
+    "table_007": {
+      "grade": "good",
+      "issues": []
+    },
+    "table_008": {
+      "grade": "good",
+      "issues": []
+    },
+    "table_009": {
+      "grade": "good",
+      "issues": []
+    },
+    "table_010": {
+      "grade": "good",
+      "issues": []
+    },
+    "table_011": {
+      "grade": "good",
+      "issues": []
+    },
+    "table_012": {
+      "grade": "good",
+      "issues": []
+    }
+  },
+  "profiles": [
+    {
+      "table_id": "table_001",
+      "column": "BSE CODE: 500400",
+      "physical_type": "text",
+      "semantic_type": "category",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 1,
+      "n_missing": 0,
+      "n_unique": 1,
+      "missing_kinds": {},
+      "numeric": null,
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "Bloomberg CODE: TPWR:IN": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "few distinct text values",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_001",
+      "column": "NSE CODE: TATAPOWER",
+      "physical_type": "text",
+      "semantic_type": "category",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 1,
+      "n_missing": 0,
+      "n_unique": 1,
+      "missing_kinds": {},
+      "numeric": null,
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "SENSEX: 67,127": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "few distinct text values",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_002",
+      "column": "Company Data",
+      "physical_type": "text",
+      "semantic_type": "unknown",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 22,
+      "n_missing": 0,
+      "n_unique": 22,
+      "missing_kinds": {},
+      "numeric": null,
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "Market Cap (cr)": 1,
+          "Enterprise Value (cr)": 1,
+          "Outstanding Shares (cr)": 1,
+          "Free Float": 1,
+          "Dividend Yield": 1,
+          "52 week high": 1,
+          "52 week low": 1,
+          "6m average volume": 1,
+          "Beta": 1,
+          "Face value": 1,
+          "Shareholding %": 1,
+          "Promoters": 1,
+          "FII's": 1,
+          "MFs/Insti": 1,
+          "Public": 1,
+          "Others": 1,
+          "Total": 1,
+          "Promoters' pledge": 1,
+          "Price Performance": 1,
+          "Absolute Return": 1,
+          "Absolute Sensex": 1,
+          "Relative Return*": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_002",
+      "column": "Unnamed: 1",
+      "physical_type": "text",
+      "semantic_type": "unknown",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 22,
+      "n_missing": 10,
+      "n_unique": 12,
+      "missing_kinds": {
+        "null": 10
+      },
+      "numeric": {
+        "minimum": 0.8,
+        "maximum": 100.0,
+        "mean": 24.52,
+        "quantiles": {
+          "p25": 6.9,
+          "p50": 15.3,
+          "p75": 26.475
+        }
+      },
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "Q3FY23": 1,
+          "46.9": 1,
+          "9.6": 1,
+          "14.7": 1,
+          "28.0": 1,
+          "0.8": 1,
+          "100.0": 1,
+          "1.4": 1,
+          "3 Month": 1,
+          "21.9%": 1,
+          "6.0%": 1,
+          "15.9%": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": 0.5,
+      "evidence": [
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_002",
+      "column": "Unnamed: 2",
+      "physical_type": "text",
+      "semantic_type": "unknown",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 22,
+      "n_missing": 10,
+      "n_unique": 12,
+      "missing_kinds": {
+        "null": 10
+      },
+      "numeric": {
+        "minimum": 0.7,
+        "maximum": 100.0,
+        "mean": 25.610000000000003,
+        "quantiles": {
+          "p25": 9.725,
+          "p50": 15.7,
+          "p75": 28.2
+        }
+      },
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "Q4FY23": 1,
+          "46.9": 1,
+          "9.5": 1,
+          "14.5": 1,
+          "28.5": 1,
+          "0.7": 1,
+          "100.0": 1,
+          "1.4": 1,
+          "6 Month": 1,
+          "27.3%": 1,
+          "10.4%": 1,
+          "16.9%": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": 0.5,
+      "evidence": [
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_002",
+      "column": "Unnamed: 3",
+      "physical_type": "text",
+      "semantic_type": "unknown",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 22,
+      "n_missing": 0,
+      "n_unique": 22,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": -1.8,
+        "maximum": 816497.0,
+        "mean": 51787.37,
+        "quantiles": {
+          "p25": 1.2999999999999998,
+          "p50": 21.35,
+          "p75": 205.75
+        }
+      },
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "Rs. 86,856": 1,
+          "Rs. 131,339": 1,
+          "319.6": 1,
+          "53.0%": 1,
+          "0.7%": 1,
+          "Rs. 277": 1,
+          "Rs. 182": 1,
+          "816,497": 1,
+          "1.0": 1,
+          "Rs. 1": 1,
+          "Q1FY24": 1,
+          "46.9": 1,
+          "9.8": 1,
+          "14.9": 1,
+          "27.8": 1,
+          "0.7": 1,
+          "100.0": 1,
+          "1.4": 1,
+          "1 Year": 1,
+          "9.8%": 1,
+          "11.6%": 1,
+          "-1.8%": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": 0.5,
+      "evidence": [
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_003",
+      "column": "Consolidated (cr)",
+      "physical_type": "text",
+      "semantic_type": "unknown",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 13,
+      "n_missing": 0,
+      "n_unique": 11,
+      "missing_kinds": {},
+      "numeric": null,
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "Growth (%)": 3,
+          "Sales": 1,
+          "EBITDA": 1,
+          "EBITDA Margin (%)": 1,
+          "Adj. PAT": 1,
+          "Adj. EPS": 1,
+          "P/E": 1,
+          "P/B": 1,
+          "EV/EBITDA": 1,
+          "ROE (%)": 1,
+          "D/E": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_003",
+      "column": "FY23A",
+      "physical_type": "float",
+      "semantic_type": "numeric",
+      "unit": null,
+      "scale": 10000000.0,
+      "decimals": 1,
+      "additive": null,
+      "n": 13,
+      "n_missing": 0,
+      "n_unique": 13,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": 15000000.0,
+        "maximum": 551090000000.0,
+        "mean": 52178923076.92308,
+        "quantiles": {
+          "p25": 115000000.0,
+          "p50": 180000000.0,
+          "p75": 764000000.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "header",
+          "detail": "scale 1e+07 from 'cr'",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_003",
+      "column": "FY24E",
+      "physical_type": "float",
+      "semantic_type": "numeric",
+      "unit": null,
+      "scale": 10000000.0,
+      "decimals": 1,
+      "additive": null,
+      "n": 13,
+      "n_missing": 0,
+      "n_unique": 12,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": 3000000.0,
+        "maximum": 595180000000.0,
+        "mean": 56266461538.46154,
+        "quantiles": {
+          "p25": 28000000.0,
+          "p50": 122000000.0,
+          "p75": 260000000.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "header",
+          "detail": "scale 1e+07 from 'cr'",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_003",
+      "column": "FY25E",
+      "physical_type": "float",
+      "semantic_type": "numeric",
+      "unit": null,
+      "scale": 10000000.0,
+      "decimals": 1,
+      "additive": null,
+      "n": 13,
+      "n_missing": 0,
+      "n_unique": 12,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": 11000000.0,
+        "maximum": 645770000000.0,
+        "mean": 61477769230.76923,
+        "quantiles": {
+          "p25": 108000000.0,
+          "p50": 130000000.0,
+          "p75": 234000000.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "header",
+          "detail": "scale 1e+07 from 'cr'",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_004",
+      "column": "Unnamed: 0",
+      "physical_type": "text",
+      "semantic_type": "unknown",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 18,
+      "n_missing": 0,
+      "n_unique": 18,
+      "missing_kinds": {},
+      "numeric": null,
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "Revenue": 1,
+          "EBITDA": 1,
+          "EBITDA margins": 1,
+          "Depreciation": 1,
+          "EBIT": 1,
+          "Interest": 1,
+          "Other Income": 1,
+          "Exceptional Items": 1,
+          "Share of profit from Associate": 1,
+          "PBT": 1,
+          "Tax": 1,
+          "Reported PAT": 1,
+          "Minority Interest": 1,
+          "PAT att. to shareholders": 1,
+          "Adjustments": 1,
+          "Adj. PAT": 1,
+          "No. of shares": 1,
+          "Adj. EPS (Rs.)": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_004",
+      "column": "Q1FY24",
+      "physical_type": "float",
+      "semantic_type": "numeric",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": 0,
+      "additive": null,
+      "n": 18,
+      "n_missing": 0,
+      "n_unique": 18,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": -235.0,
+        "maximum": 15213.0,
+        "mean": 1578.4444444444443,
+        "quantiles": {
+          "p25": 184.75,
+          "p50": 544.0,
+          "p75": 1201.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_004",
+      "column": "Q1FY23",
+      "physical_type": "float",
+      "semantic_type": "numeric",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": 0,
+      "additive": null,
+      "n": 18,
+      "n_missing": 2,
+      "n_unique": 15,
+      "missing_kinds": {
+        "dash": 2
+      },
+      "numeric": {
+        "minimum": 2.5,
+        "maximum": 14495.0,
+        "mean": 1524.79375,
+        "quantiles": {
+          "p25": 254.75,
+          "p50": 799.0,
+          "p75": 1010.25
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_004",
+      "column": "YoY Growth %",
+      "physical_type": "float",
+      "semantic_type": "percentage",
+      "unit": "bps",
+      "scale": 1.0,
+      "decimals": 1,
+      "additive": null,
+      "n": 18,
+      "n_missing": 3,
+      "n_unique": 14,
+      "missing_kinds": {
+        "dash": 1,
+        "nm": 2
+      },
+      "numeric": {
+        "minimum": -91.2,
+        "maximum": 850.0,
+        "mean": 79.66666666666667,
+        "quantiles": {
+          "p25": -1.1000000000000005,
+          "p50": 22.4,
+          "p75": 81.7
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "header",
+          "detail": "percentage column",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_004",
+      "column": "Q4FY23",
+      "physical_type": "float",
+      "semantic_type": "numeric",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": 0,
+      "additive": null,
+      "n": 18,
+      "n_missing": 2,
+      "n_unique": 15,
+      "missing_kinds": {
+        "dash": 2
+      },
+      "numeric": {
+        "minimum": 2.4,
+        "maximum": 12454.0,
+        "mean": 1506.65625,
+        "quantiles": {
+          "p25": 209.0,
+          "p50": 778.0,
+          "p75": 1167.5
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_004",
+      "column": "QoQ Growth %",
+      "physical_type": "float",
+      "semantic_type": "percentage",
+      "unit": "bps",
+      "scale": 1.0,
+      "decimals": 1,
+      "additive": null,
+      "n": 18,
+      "n_missing": 3,
+      "n_unique": 14,
+      "missing_kinds": {
+        "dash": 1,
+        "nm": 2
+      },
+      "numeric": {
+        "minimum": -140.0,
+        "maximum": 95.8,
+        "mean": 3.0,
+        "quantiles": {
+          "p25": -4.35,
+          "p50": 14.9,
+          "p75": 24.5
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "header",
+          "detail": "percentage column",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_005",
+      "column": "Unnamed: 0",
+      "physical_type": "text",
+      "semantic_type": "category",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 6,
+      "n_missing": 0,
+      "n_unique": 6,
+      "missing_kinds": {},
+      "numeric": null,
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "Year / Rs. cr": 1,
+          "Revenue": 1,
+          "EBITDA": 1,
+          "Margins (%)": 1,
+          "Adj. PAT": 1,
+          "Adj. EPS": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "few distinct text values",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_005",
+      "column": "Old estimates",
+      "physical_type": "text",
+      "semantic_type": "category",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 6,
+      "n_missing": 0,
+      "n_unique": 6,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": 11.2,
+        "maximum": 58416.0,
+        "mean": 14370.4,
+        "quantiles": {
+          "p25": 16.8,
+          "p50": 3566.0,
+          "p75": 9842.0
+        }
+      },
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "FY24E": 1,
+          "58,416": 1,
+          "9,842": 1,
+          "16.8": 1,
+          "3,566": 1,
+          "11.2": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "few distinct text values",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_005",
+      "column": "Unnamed: 2",
+      "physical_type": "text",
+      "semantic_type": "category",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 6,
+      "n_missing": 0,
+      "n_unique": 6,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": 12.5,
+        "maximum": 63673.0,
+        "mean": 15792.439999999999,
+        "quantiles": {
+          "p25": 17.7,
+          "p50": 4008.0,
+          "p75": 11251.0
+        }
+      },
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "FY25E": 1,
+          "63,673": 1,
+          "11,251": 1,
+          "17.7": 1,
+          "4,008": 1,
+          "12.5": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "few distinct text values",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_005",
+      "column": "New estimates",
+      "physical_type": "text",
+      "semantic_type": "category",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 6,
+      "n_missing": 0,
+      "n_unique": 6,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": 10.5,
+        "maximum": 59518.0,
+        "mean": 14616.52,
+        "quantiles": {
+          "p25": 17.1,
+          "p50": 3345.0,
+          "p75": 10192.0
+        }
+      },
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "FY24E": 1,
+          "59,518": 1,
+          "10,192": 1,
+          "17.1": 1,
+          "3,345": 1,
+          "10.5": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "few distinct text values",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_005",
+      "column": "Unnamed: 4",
+      "physical_type": "text",
+      "semantic_type": "category",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 6,
+      "n_missing": 0,
+      "n_unique": 6,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": 11.6,
+        "maximum": 64577.0,
+        "mean": 15966.679999999998,
+        "quantiles": {
+          "p25": 17.8,
+          "p50": 3707.0,
+          "p75": 11520.0
+        }
+      },
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "FY25E": 1,
+          "64,577": 1,
+          "11,520": 1,
+          "17.8": 1,
+          "3,707": 1,
+          "11.6": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "few distinct text values",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_005",
+      "column": "Change %",
+      "physical_type": "text",
+      "semantic_type": "percentage",
+      "unit": "bps",
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 6,
+      "n_missing": 0,
+      "n_unique": 6,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": -6.5,
+        "maximum": 30.0,
+        "mean": 4.5600000000000005,
+        "quantiles": {
+          "p25": -6.2,
+          "p50": 1.9,
+          "p75": 3.6
+        }
+      },
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "FY24E": 1,
+          "1.9": 1,
+          "3.6": 1,
+          "30bps": 1,
+          "(6.2)": 1,
+          "(6.5)": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "header",
+          "detail": "percentage column",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_005",
+      "column": "Unnamed: 6",
+      "physical_type": "text",
+      "semantic_type": "category",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 6,
+      "n_missing": 0,
+      "n_unique": 6,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": -7.5,
+        "maximum": 10.0,
+        "mean": -0.18000000000000008,
+        "quantiles": {
+          "p25": -7.2,
+          "p50": 1.4,
+          "p75": 2.4
+        }
+      },
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "FY25E": 1,
+          "1.4": 1,
+          "2.4": 1,
+          "10bps": 1,
+          "(7.5)": 1,
+          "(7.2)": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "few distinct text values",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_006",
+      "column": "Particulars",
+      "physical_type": "text",
+      "semantic_type": "unknown",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 17,
+      "n_missing": 1,
+      "n_unique": 16,
+      "missing_kinds": {
+        "null": 1
+      },
+      "numeric": null,
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "Regulated Equity": 1,
+          "- Mumbai Operations": 1,
+          "- Jojobera": 1,
+          "- Delhi Discom": 1,
+          "- Odisha Discoms": 1,
+          "- Maithon Power": 1,
+          "- Industrial Energy": 1,
+          "- Powerlinks Transmission": 1,
+          "Other Operations": 1,
+          "- Renewables": 1,
+          "- Coal Operations": 1,
+          "- Mundra UMPP": 1,
+          "- Tata Power Trading": 1,
+          "- Other investments": 1,
+          "- Cash": 1,
+          "Target Price": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_006",
+      "column": "Methodology",
+      "physical_type": "text",
+      "semantic_type": "category",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 17,
+      "n_missing": 5,
+      "n_unique": 3,
+      "missing_kinds": {
+        "null": 5
+      },
+      "numeric": null,
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "P/BV": 8,
+          "P/E": 2,
+          "EV/EBITDA": 2
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "few distinct text values",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_006",
+      "column": "Multiple",
+      "physical_type": "float",
+      "semantic_type": "numeric",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": 1,
+      "additive": null,
+      "n": 17,
+      "n_missing": 5,
+      "n_unique": 8,
+      "missing_kinds": {
+        "null": 5
+      },
+      "numeric": {
+        "minimum": 1.7,
+        "maximum": 36.0,
+        "mean": 6.016666666666667,
+        "quantiles": {
+          "p25": 2.375,
+          "p50": 2.5,
+          "p75": 4.25
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_006",
+      "column": "% Holding",
+      "physical_type": "text",
+      "semantic_type": "percentage",
+      "unit": "%",
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 17,
+      "n_missing": 9,
+      "n_unique": 4,
+      "missing_kinds": {
+        "null": 9
+      },
+      "numeric": {
+        "minimum": 51.0,
+        "maximum": 100.0,
+        "mean": 71.57142857142857,
+        "quantiles": {
+          "p25": 51.0,
+          "p50": 74.0,
+          "p75": 87.0
+        }
+      },
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "51.0%": 3,
+          "100.0%": 2,
+          "74.0%": 2,
+          "10% holding discount to investments": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": 0.5,
+      "evidence": [
+        {
+          "source": "header",
+          "detail": "percentage column",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_006",
+      "column": "Value (Rs. cr.)",
+      "physical_type": "integer",
+      "semantic_type": "currency",
+      "unit": "INR",
+      "scale": 10000000.0,
+      "decimals": 0,
+      "additive": null,
+      "n": 17,
+      "n_missing": 4,
+      "n_unique": 13,
+      "missing_kinds": {
+        "null": 4
+      },
+      "numeric": {
+        "minimum": -6530000000.0,
+        "maximum": 321960000000.0,
+        "mean": 78838461538.46153,
+        "quantiles": {
+          "p25": 13700000000.0,
+          "p50": 24800000000.0,
+          "p75": 112070000000.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "header",
+          "detail": "currency amount",
+          "ref": null
+        },
+        {
+          "source": "header",
+          "detail": "scale 1e+07 from 'cr'",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_006",
+      "column": "Value Per Share (Rs.)",
+      "physical_type": "integer",
+      "semantic_type": "currency",
+      "unit": "INR",
+      "scale": 10000000.0,
+      "decimals": 0,
+      "additive": null,
+      "n": 17,
+      "n_missing": 2,
+      "n_unique": 14,
+      "missing_kinds": {
+        "null": 2
+      },
+      "numeric": {
+        "minimum": -290000000.0,
+        "maximum": 3010000000.0,
+        "mean": 402666666.6666667,
+        "quantiles": {
+          "p25": 35000000.0,
+          "p50": 80000000.0,
+          "p75": 430000000.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "header",
+          "detail": "currency amount",
+          "ref": null
+        },
+        {
+          "source": "header",
+          "detail": "scale 1e+07 from 'cr'",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_007",
+      "column": "Y.E March (Rs. cr)",
+      "physical_type": "text",
+      "semantic_type": "unknown",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 21,
+      "n_missing": 0,
+      "n_unique": 17,
+      "missing_kinds": {},
+      "numeric": null,
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "% change": 5,
+          "Revenue": 1,
+          "EBITDA": 1,
+          "Depreciation": 1,
+          "EBIT": 1,
+          "Interest": 1,
+          "Other Income": 1,
+          "PBT": 1,
+          "Tax": 1,
+          "Tax Rate (%)": 1,
+          "Reported PAT": 1,
+          "PAT att. to common shareholders": 1,
+          "Adj*": 1,
+          "Adj PAT": 1,
+          "No. of shares (cr)": 1,
+          "Adj EPS (Rs.)": 1,
+          "DPS (Rs.)": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_007",
+      "column": "FY21A",
+      "physical_type": "float",
+      "semantic_type": "currency",
+      "unit": "INR",
+      "scale": 10000000.0,
+      "decimals": 0,
+      "additive": null,
+      "n": 21,
+      "n_missing": 0,
+      "n_unique": 21,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": -161000000.0,
+        "maximum": 327030000000.0,
+        "mean": 28432190476.190475,
+        "quantiles": {
+          "p25": 202000000.0,
+          "p50": 5020000000.0,
+          "p75": 19870000000.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "header",
+          "detail": "scale 1e+07 from 'cr'",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_007",
+      "column": "FY22A",
+      "physical_type": "float",
+      "semantic_type": "currency",
+      "unit": "INR",
+      "scale": 10000000.0,
+      "decimals": 0,
+      "additive": null,
+      "n": 21,
+      "n_missing": 0,
+      "n_unique": 21,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": 18000000.0,
+        "maximum": 428160000000.0,
+        "mean": 35689571428.57143,
+        "quantiles": {
+          "p25": 490000000.0,
+          "p50": 3800000000.0,
+          "p75": 30030000000.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "header",
+          "detail": "scale 1e+07 from 'cr'",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_007",
+      "column": "FY23A",
+      "physical_type": "float",
+      "semantic_type": "currency",
+      "unit": "INR",
+      "scale": 10000000.0,
+      "decimals": 0,
+      "additive": null,
+      "n": 21,
+      "n_missing": 1,
+      "n_unique": 19,
+      "missing_kinds": {
+        "dash": 1
+      },
+      "numeric": {
+        "minimum": 20000000.0,
+        "maximum": 551090000000.0,
+        "mean": 50050400000.0,
+        "quantiles": {
+          "p25": 564500000.0,
+          "p50": 24915000000.0,
+          "p75": 41860000000.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "header",
+          "detail": "scale 1e+07 from 'cr'",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_007",
+      "column": "FY24E",
+      "physical_type": "float",
+      "semantic_type": "currency",
+      "unit": "INR",
+      "scale": 10000000.0,
+      "decimals": 0,
+      "additive": null,
+      "n": 21,
+      "n_missing": 1,
+      "n_unique": 18,
+      "missing_kinds": {
+        "dash": 1
+      },
+      "numeric": {
+        "minimum": -63000000.0,
+        "maximum": 595180000000.0,
+        "mean": 52059150000.0,
+        "quantiles": {
+          "p25": 98750000.0,
+          "p50": 20040000000.0,
+          "p75": 39202500000.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "header",
+          "detail": "scale 1e+07 from 'cr'",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_007",
+      "column": "FY25E",
+      "physical_type": "float",
+      "semantic_type": "currency",
+      "unit": "INR",
+      "scale": 10000000.0,
+      "decimals": 0,
+      "additive": null,
+      "n": 21,
+      "n_missing": 1,
+      "n_unique": 18,
+      "missing_kinds": {
+        "dash": 1
+      },
+      "numeric": {
+        "minimum": 23000000.0,
+        "maximum": 645770000000.0,
+        "mean": 56928300000.0,
+        "quantiles": {
+          "p25": 158500000.0,
+          "p50": 19085000000.0,
+          "p75": 42275000000.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "header",
+          "detail": "scale 1e+07 from 'cr'",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_008",
+      "column": "Y.E March (Rs. cr)",
+      "physical_type": "text",
+      "semantic_type": "unknown",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 15,
+      "n_missing": 0,
+      "n_unique": 15,
+      "missing_kinds": {},
+      "numeric": null,
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "Net inc. + Depn.": 1,
+          "Non-cash adj.": 1,
+          "Changes in W.C": 1,
+          "C.F. Operation": 1,
+          "Capital exp.": 1,
+          "Change in inv.": 1,
+          "Other invest.CF": 1,
+          "C.F - Investment": 1,
+          "Issue of equity": 1,
+          "Issue/repay debt": 1,
+          "Dividends paid": 1,
+          "Other finance.CF": 1,
+          "C.F - Finance": 1,
+          "Chg. in cash": 1,
+          "Closing cash": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_008",
+      "column": "FY21A",
+      "physical_type": "integer",
+      "semantic_type": "currency",
+      "unit": "INR",
+      "scale": 10000000.0,
+      "decimals": 0,
+      "additive": null,
+      "n": 15,
+      "n_missing": 0,
+      "n_unique": 15,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": -76030000000.0,
+        "maximum": 83450000000.0,
+        "mean": 6734666666.666667,
+        "quantiles": {
+          "p25": -11565000000.0,
+          "p50": 6780000000.0,
+          "p75": 34755000000.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "header",
+          "detail": "scale 1e+07 from 'cr'",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_008",
+      "column": "FY22A",
+      "physical_type": "integer",
+      "semantic_type": "currency",
+      "unit": "INR",
+      "scale": 10000000.0,
+      "decimals": 0,
+      "additive": null,
+      "n": 15,
+      "n_missing": 0,
+      "n_unique": 15,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": -72330000000.0,
+        "maximum": 66930000000.0,
+        "mean": 2894000000.0,
+        "quantiles": {
+          "p25": -11555000000.0,
+          "p50": 260000000.0,
+          "p75": 31210000000.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "header",
+          "detail": "scale 1e+07 from 'cr'",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_008",
+      "column": "FY23A",
+      "physical_type": "integer",
+      "semantic_type": "currency",
+      "unit": "INR",
+      "scale": 10000000.0,
+      "decimals": 0,
+      "additive": null,
+      "n": 15,
+      "n_missing": 0,
+      "n_unique": 15,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": -76060000000.0,
+        "maximum": 112070000000.0,
+        "mean": 9721333333.333334,
+        "quantiles": {
+          "p25": -36640000000.0,
+          "p50": 11690000000.0,
+          "p75": 47525000000.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "header",
+          "detail": "scale 1e+07 from 'cr'",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_008",
+      "column": "FY24E",
+      "physical_type": "integer",
+      "semantic_type": "currency",
+      "unit": "INR",
+      "scale": 10000000.0,
+      "decimals": 0,
+      "additive": null,
+      "n": 15,
+      "n_missing": 1,
+      "n_unique": 14,
+      "missing_kinds": {
+        "dash": 1
+      },
+      "numeric": {
+        "minimum": -122010000000.0,
+        "maximum": 140880000000.0,
+        "mean": 2925714285.714286,
+        "quantiles": {
+          "p25": -39985000000.0,
+          "p50": -3630000000.0,
+          "p75": 46575000000.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "header",
+          "detail": "scale 1e+07 from 'cr'",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_008",
+      "column": "FY25E",
+      "physical_type": "integer",
+      "semantic_type": "currency",
+      "unit": "INR",
+      "scale": 10000000.0,
+      "decimals": 0,
+      "additive": null,
+      "n": 15,
+      "n_missing": 1,
+      "n_unique": 14,
+      "missing_kinds": {
+        "dash": 1
+      },
+      "numeric": {
+        "minimum": -77490000000.0,
+        "maximum": 77410000000.0,
+        "mean": -4790000000.0,
+        "quantiles": {
+          "p25": -38897500000.0,
+          "p50": -14950000000.0,
+          "p75": 38870000000.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "header",
+          "detail": "scale 1e+07 from 'cr'",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_009",
+      "column": "Y.E March (Rs. cr)",
+      "physical_type": "text",
+      "semantic_type": "unknown",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 22,
+      "n_missing": 0,
+      "n_unique": 22,
+      "missing_kinds": {},
+      "numeric": null,
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "Cash": 1,
+          "Accounts Receivable": 1,
+          "Inventories": 1,
+          "Other Cur. Assets": 1,
+          "Investments": 1,
+          "Gross Fixed Assets": 1,
+          "Net Fixed Assets": 1,
+          "CWIP": 1,
+          "Intangible Assets": 1,
+          "Def. Tax (Net)": 1,
+          "Other Assets": 1,
+          "Total Assets": 1,
+          "Current Liabilities": 1,
+          "Provisions": 1,
+          "Debt Funds": 1,
+          "Other Liabilities": 1,
+          "Equity Capital": 1,
+          "Reserves & Surplus": 1,
+          "Shareholder's Fund": 1,
+          "Minority Interest": 1,
+          "Total Liabilities": 1,
+          "BVPS (Rs.)": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_009",
+      "column": "FY21A",
+      "physical_type": "integer",
+      "semantic_type": "currency",
+      "unit": "INR",
+      "scale": 10000000.0,
+      "decimals": 0,
+      "additive": null,
+      "n": 22,
+      "n_missing": 0,
+      "n_unique": 21,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": 700000000.0,
+        "maximum": 988390000000.0,
+        "mean": 221880000000.0,
+        "quantiles": {
+          "p25": 29802500000.0,
+          "p50": 79905000000.0,
+          "p75": 222422500000.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "header",
+          "detail": "scale 1e+07 from 'cr'",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_009",
+      "column": "FY22A",
+      "physical_type": "integer",
+      "semantic_type": "currency",
+      "unit": "INR",
+      "scale": 10000000.0,
+      "decimals": 0,
+      "additive": null,
+      "n": 22,
+      "n_missing": 0,
+      "n_unique": 21,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": 700000000.0,
+        "maximum": 1128850000000.0,
+        "mean": 251083636363.63635,
+        "quantiles": {
+          "p25": 37482500000.0,
+          "p50": 95120000000.0,
+          "p75": 239915000000.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "header",
+          "detail": "scale 1e+07 from 'cr'",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_009",
+      "column": "FY23A",
+      "physical_type": "integer",
+      "semantic_type": "currency",
+      "unit": "INR",
+      "scale": 10000000.0,
+      "decimals": 0,
+      "additive": null,
+      "n": 22,
+      "n_missing": 0,
+      "n_unique": 21,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": 900000000.0,
+        "maximum": 1283490000000.0,
+        "mean": 285550000000.0,
+        "quantiles": {
+          "p25": 43012500000.0,
+          "p50": 132425000000.0,
+          "p75": 287072500000.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "header",
+          "detail": "scale 1e+07 from 'cr'",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_009",
+      "column": "FY24E",
+      "physical_type": "integer",
+      "semantic_type": "currency",
+      "unit": "INR",
+      "scale": 10000000.0,
+      "decimals": 0,
+      "additive": null,
+      "n": 22,
+      "n_missing": 0,
+      "n_unique": 21,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": 980000000.0,
+        "maximum": 1354800000000.0,
+        "mean": 305281818181.8182,
+        "quantiles": {
+          "p25": 48350000000.0,
+          "p50": 120135000000.0,
+          "p75": 329285000000.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "header",
+          "detail": "scale 1e+07 from 'cr'",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_009",
+      "column": "FY25E",
+      "physical_type": "integer",
+      "semantic_type": "currency",
+      "unit": "INR",
+      "scale": 10000000.0,
+      "decimals": 0,
+      "additive": null,
+      "n": 22,
+      "n_missing": 0,
+      "n_unique": 21,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": 1080000000.0,
+        "maximum": 1365650000000.0,
+        "mean": 312129545454.5455,
+        "quantiles": {
+          "p25": 49877500000.0,
+          "p50": 108110000000.0,
+          "p75": 343490000000.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "header",
+          "detail": "scale 1e+07 from 'cr'",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_010",
+      "column": "Y.E March",
+      "physical_type": "text",
+      "semantic_type": "unknown",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 22,
+      "n_missing": 0,
+      "n_unique": 22,
+      "missing_kinds": {},
+      "numeric": null,
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "Profitab. & Return": 1,
+          "EBITDA margin (%)": 1,
+          "EBIT margin (%)": 1,
+          "Net profit mgn.(%)": 1,
+          "ROE (%)": 1,
+          "ROCE (%)": 1,
+          "W.C & Liquidity": 1,
+          "Receivables (days)": 1,
+          "Inventory (days)": 1,
+          "Payables (days)": 1,
+          "Current ratio (x)": 1,
+          "Quick ratio (x)": 1,
+          "Turnover & Leverage": 1,
+          "Gross asset T.O (x)": 1,
+          "Total asset T.O (x)": 1,
+          "Int. coverage ratio (x)": 1,
+          "Adj. debt/equity (x)": 1,
+          "Valuation": 1,
+          "EV/Sales (x)": 1,
+          "EV/EBITDA (x)": 1,
+          "P/E (x)": 1,
+          "P/BV (x)": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_010",
+      "column": "FY21A",
+      "physical_type": "float",
+      "semantic_type": "numeric",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": 1,
+      "additive": null,
+      "n": 22,
+      "n_missing": 4,
+      "n_unique": 18,
+      "missing_kinds": {
+        "null": 4
+      },
+      "numeric": {
+        "minimum": 0.3,
+        "maximum": 130.0,
+        "mean": 17.86111111111111,
+        "quantiles": {
+          "p25": 1.275,
+          "p50": 4.9,
+          "p75": 20.700000000000003
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_010",
+      "column": "FY22A",
+      "physical_type": "float",
+      "semantic_type": "numeric",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": 1,
+      "additive": null,
+      "n": 22,
+      "n_missing": 4,
+      "n_unique": 18,
+      "missing_kinds": {
+        "null": 4
+      },
+      "numeric": {
+        "minimum": 0.3,
+        "maximum": 143.4,
+        "mean": 20.65,
+        "quantiles": {
+          "p25": 1.525,
+          "p50": 5.6,
+          "p75": 18.4
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_010",
+      "column": "FY23A",
+      "physical_type": "float",
+      "semantic_type": "numeric",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": 1,
+      "additive": null,
+      "n": 22,
+      "n_missing": 4,
+      "n_unique": 18,
+      "missing_kinds": {
+        "null": 4
+      },
+      "numeric": {
+        "minimum": 0.4,
+        "maximum": 73.5,
+        "mean": 13.911111111111111,
+        "quantiles": {
+          "p25": 1.35,
+          "p50": 6.4,
+          "p75": 15.75
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_010",
+      "column": "FY24E",
+      "physical_type": "float",
+      "semantic_type": "numeric",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": 1,
+      "additive": null,
+      "n": 22,
+      "n_missing": 4,
+      "n_unique": 18,
+      "missing_kinds": {
+        "null": 4
+      },
+      "numeric": {
+        "minimum": 0.3,
+        "maximum": 127.8,
+        "mean": 17.766666666666666,
+        "quantiles": {
+          "p25": 1.375,
+          "p50": 6.65,
+          "p75": 16.05
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_010",
+      "column": "FY25E",
+      "physical_type": "float",
+      "semantic_type": "numeric",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": 1,
+      "additive": null,
+      "n": 22,
+      "n_missing": 4,
+      "n_unique": 17,
+      "missing_kinds": {
+        "null": 4
+      },
+      "numeric": {
+        "minimum": 0.3,
+        "maximum": 109.5,
+        "mean": 17.244444444444444,
+        "quantiles": {
+          "p25": 1.3,
+          "p50": 7.35,
+          "p75": 16.6
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_011",
+      "column": "Dates",
+      "physical_type": "date",
+      "semantic_type": "date",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 8,
+      "n_missing": 0,
+      "n_unique": 8,
+      "missing_kinds": {},
+      "numeric": null,
+      "dates": {
+        "earliest": "2021-05-14",
+        "latest": "2023-09-11"
+      },
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "values parse as date",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_011",
+      "column": "Rating",
+      "physical_type": "text",
+      "semantic_type": "category",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 8,
+      "n_missing": 0,
+      "n_unique": 2,
+      "missing_kinds": {},
+      "numeric": null,
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "BUY": 4,
+          "HOLD": 4
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "few distinct text values",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_011",
+      "column": "Target",
+      "physical_type": "integer",
+      "semantic_type": "numeric",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": 0,
+      "additive": null,
+      "n": 8,
+      "n_missing": 0,
+      "n_unique": 8,
+      "missing_kinds": {},
+      "numeric": {
+        "minimum": 120.0,
+        "maximum": 301.0,
+        "mean": 224.125,
+        "quantiles": {
+          "p25": 207.5,
+          "p50": 235.0,
+          "p75": 257.0
+        }
+      },
+      "dates": null,
+      "categories": null,
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "numeric values without a currency unit",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_012",
+      "column": "Ratings",
+      "physical_type": "text",
+      "semantic_type": "category",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 5,
+      "n_missing": 0,
+      "n_unique": 5,
+      "missing_kinds": {},
+      "numeric": null,
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "Buy": 1,
+          "Accumulate": 1,
+          "Hold": 1,
+          "Reduce/sell": 1,
+          "Not rated/Neutral": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "few distinct text values",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_012",
+      "column": "Large caps",
+      "physical_type": "text",
+      "semantic_type": "category",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 5,
+      "n_missing": 2,
+      "n_unique": 3,
+      "missing_kinds": {
+        "dash": 1,
+        "null": 1
+      },
+      "numeric": null,
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "Upside is above 10%": 1,
+          "Upside is between 0% - 10%": 1,
+          "Downside is more than 0%": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "few distinct text values",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_012",
+      "column": "Midcaps",
+      "physical_type": "text",
+      "semantic_type": "category",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 5,
+      "n_missing": 1,
+      "n_unique": 4,
+      "missing_kinds": {
+        "null": 1
+      },
+      "numeric": null,
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "Upside is above 15%": 1,
+          "Upside is between 10%-15%": 1,
+          "Upside is between 0%-10%": 1,
+          "Downside is more than 0%": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "few distinct text values",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "table_id": "table_012",
+      "column": "Small Caps",
+      "physical_type": "text",
+      "semantic_type": "category",
+      "unit": null,
+      "scale": 1.0,
+      "decimals": null,
+      "additive": null,
+      "n": 5,
+      "n_missing": 1,
+      "n_unique": 4,
+      "missing_kinds": {
+        "null": 1
+      },
+      "numeric": null,
+      "dates": null,
+      "categories": {
+        "frequencies": {
+          "Upside is above 20%": 1,
+          "Upside is between 10%-20%": 1,
+          "Upside is between 0%-10%": 1,
+          "Downside is more than 0%": 1
+        }
+      },
+      "extraction_grade": "good",
+      "llm_confidence": null,
+      "evidence": [
+        {
+          "source": "cell_format",
+          "detail": "few distinct text values",
+          "ref": null
+        },
+        {
+          "source": "extraction",
+          "detail": "table grade good",
+          "ref": null
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "rule_id": "table_003.r1",
+      "kind": "row_formula",
+      "table_id": "table_003",
+      "columns": [
+        "Consolidated (cr)"
+      ],
+      "formula": {
+        "output": "EBITDA Margin (%)",
+        "expr": {
+          "op": "ratio_pct",
+          "col": null,
+          "value": null,
+          "args": [
+            {
+              "op": "col",
+              "col": "EBITDA",
+              "value": null,
+              "args": []
+            },
+            {
+              "op": "col",
+              "col": "Sales",
+              "value": null,
+              "args": []
+            }
+          ]
+        },
+        "text": "[EBITDA Margin (%)] = ratio_pct([EBITDA],[Sales])"
+      },
+      "params": {
+        "label_column": "Consolidated (cr)",
+        "expression": "[EBITDA Margin (%)] = ratio_pct([EBITDA],[Sales])"
+      },
+      "tier": "contradicted",
+      "status": "rejected",
+      "enforcement": "none",
+      "match_rate": 0.0,
+      "n_rows": 3,
+      "rel_tol": 0.005,
+      "abs_tol": 0.0,
+      "llm_confidence": null,
+      "extraction_grade": "good",
+      "evidence": [
+        {
+          "source": "llm_proposal",
+          "detail": "EBITDA margin is typically EBITDA divided by Sales expressed as a percentage",
+          "ref": null
+        },
+        {
+          "source": "stat_test",
+          "detail": "row formula [EBITDA Margin (%)] = ratio_pct([EBITDA],[Sales]): 0/3 tested rows match (3 mismatched, 0 undefined); skipped 0 unreadable and 0 missing: match_rate=0.0 on 3 rows",
+          "ref": null
+        }
+      ],
+      "contradicting": [],
+      "reason": "match_rate=0.0 on 3 rows (0 invalid) -> contradicted"
+    },
+    {
+      "rule_id": "table_004.r1",
+      "kind": "row_formula",
+      "table_id": "table_004",
+      "columns": [
+        "Unnamed: 0"
+      ],
+      "formula": {
+        "output": "EBITDA margins",
+        "expr": {
+          "op": "mul",
+          "col": null,
+          "value": null,
+          "args": [
+            {
+              "op": "div",
+              "col": null,
+              "value": null,
+              "args": [
+                {
+                  "op": "col",
+                  "col": "EBITDA",
+                  "value": null,
+                  "args": []
+                },
+                {
+                  "op": "col",
+                  "col": "Revenue",
+                  "value": null,
+                  "args": []
+                }
+              ]
+            },
+            {
+              "op": "const",
+              "col": null,
+              "value": 100.0,
+              "args": []
+            }
+          ]
+        },
+        "text": "[EBITDA margins] = ([EBITDA] / [Revenue]) * 100"
+      },
+      "params": {
+        "label_column": "Unnamed: 0",
+        "expression": "[EBITDA margins] = ([EBITDA] / [Revenue]) * 100"
+      },
+      "tier": "unknown",
+      "status": "needs_review",
+      "enforcement": "none",
+      "match_rate": 0.6,
+      "n_rows": 5,
+      "rel_tol": 0.005,
+      "abs_tol": 0.0,
+      "llm_confidence": null,
+      "extraction_grade": "good",
+      "evidence": [
+        {
+          "source": "llm_proposal",
+          "detail": "row_formula",
+          "ref": null
+        },
+        {
+          "source": "stat_test",
+          "detail": "row formula [EBITDA margins] = ([EBITDA] / [Revenue]) * 100: 3/5 tested rows match (2 mismatched, 0 undefined); skipped 0 unreadable and 0 missing: match_rate=0.6 on 5 rows",
+          "ref": null
+        }
+      ],
+      "contradicting": [],
+      "reason": "match_rate=0.6 on 5 rows (0 invalid) -> unknown"
+    },
+    {
+      "rule_id": "table_005.r1",
+      "kind": "formula",
+      "table_id": "table_005",
+      "columns": [
+        "Change %"
+      ],
+      "formula": null,
+      "params": {
+        "expression": "([New estimates] - [Old estimates]) / [Old estimates] * 100"
+      },
+      "tier": "contradicted",
+      "status": "rejected",
+      "enforcement": "none",
+      "match_rate": 0.0,
+      "n_rows": 0,
+      "rel_tol": 0.005,
+      "abs_tol": 0.0,
+      "llm_confidence": null,
+      "extraction_grade": "good",
+      "evidence": [
+        {
+          "source": "llm_proposal",
+          "detail": "formula",
+          "ref": null
+        },
+        {
+          "source": "stat_test",
+          "detail": "rejected formula: formula must be one '<[output]> = <expression>' under 300 chars: match_rate=0.0 on 0 rows",
+          "ref": null
+        }
+      ],
+      "contradicting": [],
+      "reason": "proposal rejected before testing (rejected formula: formula must be one '<[output]> = <expression>' under 300 chars) -> contradicted"
+    },
+    {
+      "rule_id": "table_007.r1",
+      "kind": "row_formula",
+      "table_id": "table_007",
+      "columns": [
+        "Y.E March (Rs. cr)"
+      ],
+      "formula": null,
+      "params": {
+        "label_column": "Y.E March (Rs. cr)",
+        "expression": "[% change] = ratio_pct([FY22A],[FY21A])"
+      },
+      "tier": "contradicted",
+      "status": "rejected",
+      "enforcement": "none",
+      "match_rate": 0.0,
+      "n_rows": 0,
+      "rel_tol": 0.005,
+      "abs_tol": 0.0,
+      "llm_confidence": null,
+      "extraction_grade": "good",
+      "evidence": [
+        {
+          "source": "llm_proposal",
+          "detail": "row_formula",
+          "ref": null
+        },
+        {
+          "source": "stat_test",
+          "detail": "rejected formula: row label '% change' appears more than once: match_rate=0.0 on 0 rows",
+          "ref": null
+        }
+      ],
+      "contradicting": [],
+      "reason": "proposal rejected before testing (rejected formula: row label '% change' appears more than once) -> contradicted"
+    }
+  ],
+  "relationships": [],
+  "patterns": [
+    {
+      "pattern_id": "table_007.row:Revenue.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_007",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Revenue",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9999999999999999,
+      "p_value": 0.016666666666666666,
+      "slope": 81597500000.0,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9999999999999999, p=0.016666666666666666, slope=81597500000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_007.row:EBITDA.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_007",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "EBITDA",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9999999999999999,
+      "p_value": 0.016666666666666666,
+      "slope": 10042500000.0,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9999999999999999, p=0.016666666666666666, slope=10042500000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_007.row:Depreciation.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_007",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Depreciation",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9999999999999999,
+      "p_value": 0.016666666666666666,
+      "slope": 2380000000.0,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9999999999999999, p=0.016666666666666666, slope=2380000000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_007.row:EBIT.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_007",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "EBIT",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9999999999999999,
+      "p_value": 0.016666666666666666,
+      "slope": 7122500000.0,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9999999999999999, p=0.016666666666666666, slope=7122500000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_007.row:PBT.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_007",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "PBT",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.7999999999999999,
+      "p_value": 0.08333333333333333,
+      "slope": 10058750000.0,
+      "segments": [],
+      "tier": "probable",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.7999999999999999, p=0.08333333333333333, slope=10058750000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_007.row:Reported PAT.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_007",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Reported PAT",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9999999999999999,
+      "p_value": 0.016666666666666666,
+      "slope": 7633750000.0,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9999999999999999, p=0.016666666666666666, slope=7633750000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_007.row:PAT att. to common shareholders.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_007",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "PAT att. to common shareholders",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9999999999999999,
+      "p_value": 0.016666666666666666,
+      "slope": 6501666666.666666,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9999999999999999, p=0.016666666666666666, slope=6501666666.666666",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_007.row:Adj PAT.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_007",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Adj PAT",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9999999999999999,
+      "p_value": 0.016666666666666666,
+      "slope": 6362500000.0,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9999999999999999, p=0.016666666666666666, slope=6362500000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_007.row:Adj EPS (Rs.).trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_007",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Adj EPS (Rs.)",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9999999999999999,
+      "p_value": 0.016666666666666666,
+      "slope": 19625000.0,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9999999999999999, p=0.016666666666666666, slope=19625000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_007.row:DPS (Rs.).trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_007",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "DPS (Rs.)",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9999999999999999,
+      "p_value": 0.016666666666666666,
+      "slope": 1708333.3333333335,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9999999999999999, p=0.016666666666666666, slope=1708333.3333333335",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_008.row:Net inc. + Depn..trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_008",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Net inc. + Depn.",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9999999999999999,
+      "p_value": 0.016666666666666666,
+      "slope": 9555000000.0,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9999999999999999, p=0.016666666666666666, slope=9555000000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_008.row:Capital exp..trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_008",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Capital exp.",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "down",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": -0.7999999999999999,
+      "p_value": 0.08333333333333333,
+      "slope": -19872500000.0,
+      "segments": [],
+      "tier": "probable",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=-0.7999999999999999, p=0.08333333333333333, slope=-19872500000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_008.row:Other invest.CF.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_008",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Other invest.CF",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9999999999999999,
+      "p_value": 0.016666666666666666,
+      "slope": 6881250000.0,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9999999999999999, p=0.016666666666666666, slope=6881250000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_008.row:Chg. in cash.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_008",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Chg. in cash",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "down",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": -0.7999999999999999,
+      "p_value": 0.08333333333333333,
+      "slope": -12250000000.0,
+      "segments": [],
+      "tier": "probable",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=-0.7999999999999999, p=0.08333333333333333, slope=-12250000000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_009.row:Accounts Receivable.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_009",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Accounts Receivable",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9999999999999999,
+      "p_value": 0.016666666666666666,
+      "slope": 8777500000.0,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9999999999999999, p=0.016666666666666666, slope=8777500000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_009.row:Inventories.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_009",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Inventories",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.7999999999999999,
+      "p_value": 0.08333333333333333,
+      "slope": 8122500000.0,
+      "segments": [],
+      "tier": "probable",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.7999999999999999, p=0.08333333333333333, slope=8122500000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_009.row:Gross Fixed Assets.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_009",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Gross Fixed Assets",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9999999999999999,
+      "p_value": 0.016666666666666666,
+      "slope": 90300416666.66666,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9999999999999999, p=0.016666666666666666, slope=90300416666.66666",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_009.row:Net Fixed Assets.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_009",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Net Fixed Assets",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9999999999999999,
+      "p_value": 0.016666666666666666,
+      "slope": 59797083333.33333,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9999999999999999, p=0.016666666666666666, slope=59797083333.33333",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_009.row:Intangible Assets.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_009",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Intangible Assets",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9999999999999999,
+      "p_value": 0.016666666666666666,
+      "slope": 157500000.0,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9999999999999999, p=0.016666666666666666, slope=157500000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_009.row:Total Assets.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_009",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Total Assets",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9999999999999999,
+      "p_value": 0.016666666666666666,
+      "slope": 103645000000.0,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9999999999999999, p=0.016666666666666666, slope=103645000000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_009.row:Current Liabilities.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_009",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Current Liabilities",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.7999999999999999,
+      "p_value": 0.08333333333333333,
+      "slope": 40437500000.0,
+      "segments": [],
+      "tier": "probable",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.7999999999999999, p=0.08333333333333333, slope=40437500000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_009.row:Provisions.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_009",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Provisions",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9999999999999999,
+      "p_value": 0.016666666666666666,
+      "slope": 1585000000.0,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9999999999999999, p=0.016666666666666666, slope=1585000000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_009.row:Reserves & Surplus.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_009",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Reserves & Surplus",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9999999999999999,
+      "p_value": 0.016666666666666666,
+      "slope": 30367500000.0,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9999999999999999, p=0.016666666666666666, slope=30367500000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_009.row:Shareholder's Fund.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_009",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Shareholder's Fund",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9999999999999999,
+      "p_value": 0.016666666666666666,
+      "slope": 30368750000.0,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9999999999999999, p=0.016666666666666666, slope=30368750000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_009.row:Minority Interest.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_009",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Minority Interest",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9999999999999999,
+      "p_value": 0.016666666666666666,
+      "slope": 9605416666.666668,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9999999999999999, p=0.016666666666666666, slope=9605416666.666668",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_009.row:Total Liabilities.trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_009",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Total Liabilities",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9999999999999999,
+      "p_value": 0.016666666666666666,
+      "slope": 103645000000.0,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9999999999999999, p=0.016666666666666666, slope=103645000000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_009.row:BVPS (Rs.).trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_009",
+          "column": "Y.E March (Rs. cr)"
+        }
+      ],
+      "time_field": null,
+      "row_label": "BVPS (Rs.)",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.9486832980505137,
+      "p_value": 0.022977401503206065,
+      "slope": 97500000.0,
+      "segments": [],
+      "tier": "confirmed",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.9486832980505137, p=0.022977401503206065, slope=97500000.0",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_010.row:ROCE (%).trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_010",
+          "column": "Y.E March"
+        }
+      ],
+      "time_field": null,
+      "row_label": "ROCE (%)",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.7378647873726218,
+      "p_value": 0.07697417298126674,
+      "slope": 0.4874999999999997,
+      "segments": [],
+      "tier": "probable",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.7378647873726218, p=0.07697417298126674, slope=0.4874999999999997",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_010.row:Total asset T.O (x).trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_010",
+          "column": "Y.E March"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Total asset T.O (x)",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.8366600265340756,
+      "p_value": 0.05220363534131463,
+      "slope": 0.049999999999999996,
+      "segments": [],
+      "tier": "probable",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.8366600265340756, p=0.05220363534131463, slope=0.049999999999999996",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_010.row:Int. coverage ratio (x).trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_010",
+          "column": "Y.E March"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Int. coverage ratio (x)",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "up",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": 0.7999999999999999,
+      "p_value": 0.08333333333333333,
+      "slope": 0.17083333333333334,
+      "segments": [],
+      "tier": "probable",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=0.7999999999999999, p=0.08333333333333333, slope=0.17083333333333334",
+          "ref": null
+        }
+      ]
+    },
+    {
+      "pattern_id": "table_010.row:Adj. debt/equity (x).trend",
+      "kind": "trend",
+      "fields": [
+        {
+          "table_id": "table_010",
+          "column": "Y.E March"
+        }
+      ],
+      "time_field": null,
+      "row_label": "Adj. debt/equity (x)",
+      "period_columns": [
+        "FY21A",
+        "FY22A",
+        "FY23A",
+        "FY24E",
+        "FY25E"
+      ],
+      "segment_field": null,
+      "direction": "down",
+      "n": 5,
+      "statistic_name": "kendall_tau",
+      "statistic_value": -0.7999999999999999,
+      "p_value": 0.08333333333333333,
+      "slope": -0.19999999999999996,
+      "segments": [],
+      "tier": "probable",
+      "uncertain": false,
+      "on_residuals": false,
+      "evidence": [
+        {
+          "source": "stat_test",
+          "detail": "kendall tau=-0.7999999999999999, p=0.08333333333333333, slope=-0.19999999999999996",
+          "ref": null
+        }
+      ]
+    }
+  ],
+  "text_facts": [],
+  "warnings": [
+    "table_002.Unnamed: 1: mixed formats, 2 of 12 values did not parse as numbers",
+    "table_002.Unnamed: 2: mixed formats, 2 of 12 values did not parse as numbers",
+    "table_002.Unnamed: 3: mixed formats, 2 of 22 values did not parse as numbers",
+    "table_006.% Holding: mixed formats, 1 of 8 values did not parse as numbers"
+  ],
+  "llm_used": true,
+  "sensitivity_labels": {
+    "table_001.BSE CODE: 500400": "direct_identifier",
+    "table_001.NSE CODE: TATAPOWER": "direct_identifier",
+    "table_002.Company Data": "business_metric",
+    "table_002.Unnamed: 1": "low_risk",
+    "table_002.Unnamed: 2": "low_risk",
+    "table_002.Unnamed: 3": "business_metric",
+    "table_003.Consolidated (cr)": "low_risk",
+    "table_003.FY23A": "business_metric",
+    "table_003.FY24E": "business_metric",
+    "table_003.FY25E": "business_metric",
+    "table_004.Unnamed: 0": "low_risk",
+    "table_004.Q1FY24": "business_metric",
+    "table_004.Q1FY23": "business_metric",
+    "table_004.YoY Growth %": "low_risk",
+    "table_004.Q4FY23": "business_metric",
+    "table_004.QoQ Growth %": "low_risk",
+    "table_005.Unnamed: 0": "low_risk",
+    "table_005.Old estimates": "low_risk",
+    "table_005.Unnamed: 2": "low_risk",
+    "table_005.New estimates": "low_risk",
+    "table_005.Unnamed: 4": "low_risk",
+    "table_005.Change %": "low_risk",
+    "table_005.Unnamed: 6": "low_risk",
+    "table_006.Particulars": "low_risk",
+    "table_006.Methodology": "low_risk",
+    "table_006.Multiple": "low_risk",
+    "table_006.% Holding": "low_risk",
+    "table_006.Value (Rs. cr.)": "business_metric",
+    "table_006.Value Per Share (Rs.)": "business_metric",
+    "table_007.Y.E March (Rs. cr)": "low_risk",
+    "table_007.FY21A": "business_metric",
+    "table_007.FY22A": "business_metric",
+    "table_007.FY23A": "business_metric",
+    "table_007.FY24E": "business_metric",
+    "table_007.FY25E": "business_metric"
+  },
+  "column_importance": {
+    "table_001.BSE CODE: 500400": "high",
+    "table_001.NSE CODE: TATAPOWER": "high",
+    "table_002.Company Data": "high",
+    "table_002.Unnamed: 1": "low",
+    "table_002.Unnamed: 2": "low",
+    "table_002.Unnamed: 3": "high",
+    "table_003.Consolidated (cr)": "high",
+    "table_003.FY23A": "very_high",
+    "table_003.FY24E": "very_high",
+    "table_003.FY25E": "very_high",
+    "table_004.Unnamed: 0": "high",
+    "table_004.Q1FY24": "very_high",
+    "table_004.Q1FY23": "very_high",
+    "table_004.YoY Growth %": "high",
+    "table_004.Q4FY23": "high",
+    "table_004.QoQ Growth %": "high",
+    "table_005.Unnamed: 0": "high",
+    "table_005.Old estimates": "high",
+    "table_005.Unnamed: 2": "high",
+    "table_005.New estimates": "high",
+    "table_005.Unnamed: 4": "high",
+    "table_005.Change %": "medium",
+    "table_005.Unnamed: 6": "low",
+    "table_006.Particulars": "medium",
+    "table_006.Methodology": "low",
+    "table_006.Multiple": "medium",
+    "table_006.% Holding": "medium",
+    "table_006.Value (Rs. cr.)": "high",
+    "table_006.Value Per Share (Rs.)": "high",
+    "table_007.Y.E March (Rs. cr)": "high",
+    "table_007.FY21A": "very_high",
+    "table_007.FY22A": "very_high",
+    "table_007.FY23A": "very_high",
+    "table_007.FY24E": "high",
+    "table_007.FY25E": "high"
+  },
+  "column_meanings": {
+    "table_001.BSE CODE: 500400": "The BSE (Bombay Stock Exchange) code identifying Tata Power Company Limited",
+    "table_001.NSE CODE: TATAPOWER": "The NSE (National Stock Exchange) ticker symbol for Tata Power Company Limited",
+    "table_002.Company Data": "Names of financial line items for the company",
+    "table_002.Unnamed: 1": "Empty placeholder column with no data",
+    "table_002.Unnamed: 2": "Empty placeholder column with no data",
+    "table_002.Unnamed: 3": "Monetary values of the financial line items, expressed in Indian rupees",
+    "table_003.Consolidated (cr)": "Label of each financial metric row",
+    "table_003.FY23A": "Financial figures for fiscal year 2023 actual, expressed in crore rupees",
+    "table_003.FY24E": "Financial figures for fiscal year 2024 estimated, expressed in crore rupees",
+    "table_003.FY25E": "Financial figures for fiscal year 2025 estimated, expressed in crore rupees",
+    "table_004.Unnamed: 0": "Name of the financial line item",
+    "table_004.Q1FY24": "Revenue or metric value for the first quarter of fiscal year 2024",
+    "table_004.Q1FY23": "Revenue or metric value for the first quarter of fiscal year 2023",
+    "table_004.YoY Growth %": "Year\u2011over\u2011year percentage change compared with the same quarter last year",
+    "table_004.Q4FY23": "Revenue or metric value for the fourth quarter of fiscal year 2023",
+    "table_004.QoQ Growth %": "Quarter\u2011over\u2011quarter percentage change compared with the previous quarter",
+    "table_005.Unnamed: 0": "Label of each row such as Revenue or EBITDA",
+    "table_005.Old estimates": "Estimated value for the older forecast period (FY24E)",
+    "table_005.Unnamed: 2": "Estimated value for the older forecast period (FY25E)",
+    "table_005.New estimates": "Estimated value for the newer forecast period (FY24E)",
+    "table_005.Unnamed: 4": "Estimated value for the newer forecast period (FY25E)",
+    "table_005.Change %": "Percentage change between new and old estimates",
+    "table_005.Unnamed: 6": "Placeholder column with no meaningful data in the sample",
+    "table_006.Particulars": "Name of the line item or entity being described",
+    "table_006.Methodology": "Valuation method used for the item",
+    "table_006.Multiple": "Financial multiple (e.g., P/BV) applied to the item",
+    "table_006.% Holding": "Percentage ownership stake in the item",
+    "table_006.Value (Rs. cr.)": "Monetary value of the item in Indian rupees crore",
+    "table_006.Value Per Share (Rs.)": "Monetary value per share in Indian rupees",
+    "table_007.Y.E March (Rs. cr)": "Label of each financial line item (e.g., Revenue, EBITDA)",
+    "table_007.FY21A": "Actual financial figure for fiscal year 2021 (in Rs crore)",
+    "table_007.FY22A": "Actual financial figure for fiscal year 2022 (in Rs crore)",
+    "table_007.FY23A": "Actual financial figure for fiscal year 2023 (in Rs crore)",
+    "table_007.FY24E": "Estimated financial figure for fiscal year 2024 (in Rs crore)",
+    "table_007.FY25E": "Estimated financial figure for fiscal year 2025 (in Rs crore)"
+  },
+  "column_roles": {
+    "table_001.BSE CODE: 500400": "identifier",
+    "table_001.NSE CODE: TATAPOWER": "identifier",
+    "table_002.Company Data": "row_label",
+    "table_002.Unnamed: 1": "unknown",
+    "table_002.Unnamed: 2": "unknown",
+    "table_002.Unnamed: 3": "currency",
+    "table_003.Consolidated (cr)": "row_label",
+    "table_003.FY23A": "currency",
+    "table_003.FY24E": "currency",
+    "table_003.FY25E": "currency",
+    "table_004.Unnamed: 0": "row_label",
+    "table_004.Q1FY24": "currency",
+    "table_004.Q1FY23": "currency",
+    "table_004.YoY Growth %": "percentage",
+    "table_004.Q4FY23": "currency",
+    "table_004.QoQ Growth %": "percentage",
+    "table_005.Unnamed: 0": "row_label",
+    "table_005.Old estimates": "currency",
+    "table_005.Unnamed: 2": "currency",
+    "table_005.New estimates": "currency",
+    "table_005.Unnamed: 4": "currency",
+    "table_005.Change %": "percentage",
+    "table_005.Unnamed: 6": "unknown",
+    "table_006.Particulars": "row_label",
+    "table_006.Methodology": "category",
+    "table_006.Multiple": "measurement",
+    "table_006.% Holding": "percentage",
+    "table_006.Value (Rs. cr.)": "currency",
+    "table_006.Value Per Share (Rs.)": "currency",
+    "table_007.Y.E March (Rs. cr)": "row_label",
+    "table_007.FY21A": "currency",
+    "table_007.FY22A": "currency",
+    "table_007.FY23A": "currency",
+    "table_007.FY24E": "currency",
+    "table_007.FY25E": "currency"
+  },
+  "sensitivity_reasons": {
+    "table_001.BSE CODE: 500400": "Uniquely identifies a specific organization",
+    "table_001.NSE CODE: TATAPOWER": "Uniquely identifies a specific organization",
+    "table_002.Company Data": "Values represent company financial metrics",
+    "table_002.Unnamed: 1": "Contains no identifiable information",
+    "table_002.Unnamed: 2": "Contains no identifiable information",
+    "table_002.Unnamed: 3": "Represents company financial figures",
+    "table_003.Consolidated (cr)": "Only describes metric names, not personal data",
+    "table_003.FY23A": "Represents company performance metrics",
+    "table_003.FY24E": "Represents company performance metrics",
+    "table_003.FY25E": "Represents company performance metrics",
+    "table_004.Unnamed: 0": "Only describes categories of financial data",
+    "table_004.Q1FY24": "Represents company financial performance",
+    "table_004.Q1FY23": "Represents company financial performance",
+    "table_004.YoY Growth %": "Aggregated metric, not linked to individuals",
+    "table_004.Q4FY23": "Company financial figure",
+    "table_004.QoQ Growth %": "Aggregated metric, not linked to individuals",
+    "table_005.Unnamed: 0": "Aggregated financial line items are public corporate data",
+    "table_005.Old estimates": "Company forecast numbers are public business metrics",
+    "table_005.Unnamed: 2": "Company forecast numbers are public business metrics",
+    "table_005.New estimates": "Company forecast numbers are public business metrics",
+    "table_005.Unnamed: 4": "Company forecast numbers are public business metrics",
+    "table_005.Change %": "Derived public metric",
+    "table_005.Unnamed: 6": "Column appears empty or redundant",
+    "table_006.Particulars": "Only categorical labels, no personal data",
+    "table_006.Methodology": "Generic methodological label",
+    "table_006.Multiple": "Aggregated metric, not linked to individuals",
+    "table_006.% Holding": "Aggregate ownership data, not personal",
+    "table_006.Value (Rs. cr.)": "Company financial figure",
+    "table_006.Value Per Share (Rs.)": "Company financial figure",
+    "table_007.Y.E March (Rs. cr)": "Only describes line-item names, not personal data",
+    "table_007.FY21A": "Company revenue and EBITDA are business metrics",
+    "table_007.FY22A": "Company revenue and EBITDA are business metrics",
+    "table_007.FY23A": "Company revenue and EBITDA are business metrics",
+    "table_007.FY24E": "Projected company financials",
+    "table_007.FY25E": "Projected company financials"
+  },
+  "sensitivity_confidence": {
+    "table_001.BSE CODE: 500400": 0.95,
+    "table_001.NSE CODE: TATAPOWER": 0.95,
+    "table_002.Company Data": 0.9,
+    "table_002.Unnamed: 1": 0.5,
+    "table_002.Unnamed: 2": 0.5,
+    "table_002.Unnamed: 3": 0.9,
+    "table_003.Consolidated (cr)": 0.95,
+    "table_003.FY23A": 0.97,
+    "table_003.FY24E": 0.97,
+    "table_003.FY25E": 0.97,
+    "table_004.Unnamed: 0": 0.95,
+    "table_004.Q1FY24": 0.96,
+    "table_004.Q1FY23": 0.96,
+    "table_004.YoY Growth %": 0.94,
+    "table_004.Q4FY23": 0.95,
+    "table_004.QoQ Growth %": 0.94,
+    "table_005.Unnamed: 0": 0.99,
+    "table_005.Old estimates": 0.98,
+    "table_005.Unnamed: 2": 0.98,
+    "table_005.New estimates": 0.98,
+    "table_005.Unnamed: 4": 0.98,
+    "table_005.Change %": 0.97,
+    "table_005.Unnamed: 6": 0.6,
+    "table_006.Particulars": 0.9,
+    "table_006.Methodology": 0.9,
+    "table_006.Multiple": 0.9,
+    "table_006.% Holding": 0.9,
+    "table_006.Value (Rs. cr.)": 0.9,
+    "table_006.Value Per Share (Rs.)": 0.9,
+    "table_007.Y.E March (Rs. cr)": 0.95,
+    "table_007.FY21A": 0.98,
+    "table_007.FY22A": 0.98,
+    "table_007.FY23A": 0.98,
+    "table_007.FY24E": 0.95,
+    "table_007.FY25E": 0.95
+  },
+  "key_columns": {
+    "table_001": [
+      "BSE CODE: 500400",
+      "NSE CODE: TATAPOWER"
+    ],
+    "table_002": [],
+    "table_003": [],
+    "table_004": [],
+    "table_005": [],
+    "table_006": [],
+    "table_007": [],
+    "table_008": [],
+    "table_009": [],
+    "table_010": [],
+    "table_011": [],
+    "table_012": []
+  }
+}

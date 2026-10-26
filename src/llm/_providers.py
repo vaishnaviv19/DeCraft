@@ -76,9 +76,36 @@ class CloudflareImageClient:
         self.token = os.environ["CF_API_TOKEN"]
         self.model_name, self.timeout_s = model_name, timeout_s
 
-    def generate(self, prompt: str, seed: int, steps: int = 4) -> bytes:
+    def generate(self, prompt: str, seed: int, width: int | None = None, height: int | None = None,
+                 steps: int = 4) -> bytes:
         self.last_seed = seed                              # recorded only; the API does not accept it
-        r = httpx.post(self.url, json={"prompt": prompt[:2000], "steps": steps},
+        # live run 2026-10-26: the endpoint also rejects width/height (400 'unevaluated properties
+        # /width, /height') and always returns a square image, so the slot's shape is cut out here
+        body: dict = {"prompt": prompt[:2000], "steps": steps}
+        r = httpx.post(self.url, json=body,
                        timeout=self.timeout_s, headers={"Authorization": f"Bearer {self.token}"})
         r.raise_for_status()
-        return base64.b64decode(r.json()["result"]["image"])
+        image = base64.b64decode(r.json()["result"]["image"])
+        if width is not None and height is not None:
+            image = crop_to(image, int(width), int(height))
+        return image
+
+
+def crop_to(image: bytes, width: int, height: int) -> bytes:
+    """Centre-crop to the width:height aspect ratio, then resize to width x height (JPEG)."""
+    import io
+
+    from PIL import Image
+    with Image.open(io.BytesIO(image)) as img:
+        img = img.convert("RGB")
+        target = width / height
+        w, h = img.size
+        if w / h > target:                                 # too wide: trim the sides
+            new_w = round(h * target)
+            box = ((w - new_w) // 2, 0, (w - new_w) // 2 + new_w, h)
+        else:                                              # too tall: trim top and bottom
+            new_h = round(w / target)
+            box = (0, (h - new_h) // 2, w, (h - new_h) // 2 + new_h)
+        out = io.BytesIO()
+        img.crop(box).resize((width, height)).save(out, "JPEG", quality=90)
+        return out.getvalue()

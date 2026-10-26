@@ -36,6 +36,7 @@ class TitleSection(BaseModel):
 
 class TitlesOut(BaseModel):
     model_config = ConfigDict(extra="forbid")
+    dt: str = ""                       # document type named from page 1 (E-25, outline_titles v3)
     report_title: str = ""
     sections: list[TitleSection]
 
@@ -143,7 +144,8 @@ def titles_are_valid(reply: TitlesOut, outline: Outline) -> bool:
     if got != wanted:
         return False
     for section, source in zip(reply.sections, outline.sections):
-        if not section.title.strip() or len(section.title.split()) > 12:
+        limit = min(12, max(2, len((source.source_title or "").split())) + 1)   # 'tw' plus one word slack
+        if not section.title.strip() or len(section.title.split()) > limit:
             return False
         if _shared_run(source.source_title, section.title):
             return False
@@ -186,20 +188,43 @@ def _fallback_title(section: SectionPlan, index: int, used: set[str] | None = No
     return title, "Describe the developments this part of the document covers."
 
 
+def clean_doc_type(value: str) -> str:
+    """A usable 'dt': 1-6 plain words, no digits, no markup; '' otherwise (E-25)."""
+    if not value or re.search(r"\d", value):
+        return ""
+    words = re.sub(r"[^A-Za-z \-]", " ", value).split()
+    return " ".join(words).lower() if 1 <= len(words) <= 6 else ""
+
+
 def _fill_titles(outline: Outline, doc: SourceDocument, cfg: Config,
-                 gateway: LLMGateway | None) -> Outline:
+                 gateway: LLMGateway | None, domain: str = "",
+                 block_texts: dict[str, str] | None = None) -> Outline:
+    outline.domain = "" if domain in {"", "unknown"} else domain
+    block_texts = block_texts or {}
     if gateway is not None and gateway.enabled:
-        # E-25: no fixed document type; the model sees the opening words of page 1 instead
+        # E-25: no fixed document type; the model names it ('dt') from the opening words of page 1
         opening = " ".join(" ".join(doc.text_blocks).split()[:60])
-        payload = {"company": doc.entity_name or "", "dom": "", "dt": "", "p1": opening,
+
+        def role(section) -> str:          # M8.6.2: first 12 words of the section's first paragraph
+            for block_id in section.block_ids:
+                text = (block_texts.get(block_id) or "").strip()
+                if len(text.split()) >= 6:
+                    return " ".join(text.split()[:12])
+            return " ".join((section.source_title or "").split()[:12])
+
+        payload = {"company": doc.entity_name or "", "dom": outline.domain, "dt": "", "p1": opening,
                    "secs": [{"id": section.section_id, "src": section.source_title,
-                             "role": " ".join((section.source_title or "").split()[:12]),
-                             "w": len(section.block_ids) * 40}
+                             "role": role(section),
+                             # the heading box fits the source title's word count: never more
+                             "tw": max(2, len((section.source_title or "").split())),
+                             "w": sum(len((block_texts.get(b) or "").split())
+                                      for b in section.block_ids) or len(section.block_ids) * 40}
                             for section in outline.sections],
                    "facts": [key for section in outline.sections for key in section.fact_keys][:30]}
         reply = gateway.ask_json(TITLES, json.dumps(payload), TitlesOut)
         if reply is not None and titles_are_valid(reply, outline):
             outline.report_title = reply.report_title or outline.report_title
+            outline.doc_type = clean_doc_type(reply.dt)
             by_id = {section.id: section for section in reply.sections}
             for section in outline.sections:
                 section.title = by_id[section.section_id].title.strip()
@@ -286,7 +311,7 @@ def _fill_bible(outline: Outline, data: CanonicalDataset, doc: SourceDocument, c
     if gateway is not None and gateway.enabled:
         errors: list[str] = []
         for _ in range(2):
-            payload = {"company": doc.entity_name or "", "dom": "",
+            payload = {"company": doc.entity_name or "", "dt": outline.doc_type, "dom": outline.domain,
                        "outline": [{"title": section.title, "goal": section.goal}
                                    for section in outline.sections],
                        "per": periods, "avoid": sorted(avoid)[:50], "errors": errors}
@@ -303,9 +328,11 @@ def _fill_bible(outline: Outline, data: CanonicalDataset, doc: SourceDocument, c
 
 
 def plan(data: CanonicalDataset, templates, doc: SourceDocument, cfg: Config,
-         gateway: LLMGateway | None) -> tuple[Outline, StoryBible]:
-    """Outline skeleton, Titles call and Story Bible, validated in Python with deterministic fallbacks."""
+         gateway: LLMGateway | None, domain: str = "") -> tuple[Outline, StoryBible]:
+    """Outline skeleton, Titles call and Story Bible, validated in Python with deterministic fallbacks.
+    `domain` is the Annotator's domain (Inference Report); the document type comes from the Titles call."""
     outline = build_skeleton(data, templates, doc)
-    outline = _fill_titles(outline, doc, cfg, gateway)
+    block_texts = {block.block_id: block.text or "" for page in templates for block in page.blocks}
+    outline = _fill_titles(outline, doc, cfg, gateway, domain, block_texts)
     bible = _fill_bible(outline, data, doc, cfg, gateway)
     return outline, bible

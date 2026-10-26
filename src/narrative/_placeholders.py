@@ -24,14 +24,26 @@ class StrayNumber(ValueError):
     """A digit appeared in a template outside a Placeholder."""
 
 
+class TypedUnit(ValueError):
+    """A scale/unit word or currency symbol was typed next to a Placeholder (v3.3 F-03: |auto writes them)."""
+
+
 def stray_numbers(template: str) -> list[str]:
     outside = PERIOD_WORD.sub("", PLACEHOLDER.sub("", template))
     return DIGIT.findall(outside)
 
 
-def _format(fact, spec: str | None) -> str:
+def _format(fact, spec: str | None, style: str = "western") -> str:
     value, unit = fact.value, getattr(fact, "unit", None)
     parts = [p.strip() for p in (spec or "").split("|") if p.strip()]
+    if "auto" in parts and not isinstance(value, str):
+        # v3.3 F-03: currency, number, scale word and unit chosen together by Python, in the source's
+        # convention; the fact is in the table's units, so it is taken back to base units first
+        from src.narrative._autounits import format_auto
+        number = abs(float(value)) if "abs" in parts else float(value)
+        base = number * (getattr(fact, "scale", None) or 1.0)
+        places = getattr(fact, "decimals", None)
+        return format_auto(base, unit, style, 1 if places is None else max(int(places), 1))
     flags = {p for p in parts if p in {"abs", "text", "word"}}
     fmt = next((p for p in parts if p not in flags), "")
     if flags & {"text", "word"} or isinstance(value, str):
@@ -52,10 +64,15 @@ def _format(fact, spec: str | None) -> str:
     return rendered
 
 
-def resolve(template: str, facts: dict) -> str:
-    """Replace every Placeholder; raise on a stray digit or an unknown key."""
+def resolve(template: str, facts: dict, style: str = "western") -> str:
+    """Replace every Placeholder; raise on a stray digit, a typed unit/scale word or an unknown key.
+    `style` is the source's scale convention for |auto (western, western_short, indian)."""
     if stray_numbers(template):
         raise StrayNumber("template contains a digit outside a placeholder")
+    from src.narrative._autounits import unit_word_violations
+    typed = unit_word_violations(template)
+    if typed:
+        raise TypedUnit(f"unit or scale words typed next to placeholders: {typed[:5]}")
     out, position = [], 0
     for match in PLACEHOLDER.finditer(template):
         out.append(template[position:match.start()])
@@ -63,7 +80,7 @@ def resolve(template: str, facts: dict) -> str:
         fact = facts.get(key)
         if fact is None:
             raise UnknownPlaceholder(key)
-        out.append(_format(fact, spec))
+        out.append(_format(fact, spec, style))
         position = match.end()
     out.append(template[position:])
     return "".join(out)

@@ -58,3 +58,12 @@ def sales_df():
         'Region': ['North', 'South', 'North', 'East', 'South', 'West'],
         'Units': units, 'Unit Price': price, 'Revenue': revenue, 'Cost': cost,
         'Profit': [r - c for r, c in zip(revenue, cost)]})
+
+
+@pytest.fixture(autouse=True)
+def no_live_providers(monkeypatch):
+    """Tests never reach a real provider: the keys are removed for every test, so `make_gateways`
+    builds no Groq/Cloudflare client and nothing spends the daily quota (2026-10-26: a pipeline test
+    with the default config made 27 live calls). Tests that need a model use FakeLLM."""
+    for key in ("GROQ_API_KEY", "CF_ACCOUNT_ID", "CF_API_TOKEN"):
+        monkeypatch.delenv(key, raising=False)

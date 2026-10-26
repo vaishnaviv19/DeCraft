@@ -1,0 +1,181 @@
+{
+  "gates": {
+    "pages": true,
+    "placeholders": true,
+    "words": true,
+    "words_per_page": false,
+    "font_sizes_locked": true,
+    "no_source_names": true,
+    "fonts_embedded": true,
+    "text_in_boxes": true,
+    "layout_fits": true,
+    "tables_charted": true,
+    "charts_match_tables": true,
+    "roundtrip_structure": false,
+    "layout_metrics": false,
+    "chart_style_similar": true,
+    "discriminator": true,
+    "layout_agreement": true
+  },
+  "failures": [
+    "words_per_page: page 1 has 507 words, source 706",
+    "words_per_page: page 4 has 573 words, source 734",
+    "words_per_page: page 5 has 840 words, source 1197",
+    "roundtrip: p1: chart count 2 vs intended 3",
+    "roundtrip: p1: table count 4 vs intended 2",
+    "roundtrip: p2: heading count 9 vs intended 4",
+    "roundtrip: p2: chart count 2 vs intended 3",
+    "roundtrip: p2: table count 2 vs intended 3",
+    "roundtrip: p3: heading count 2 vs intended 8",
+    "roundtrip: p3: chart count 2 vs intended 4",
+    "roundtrip: p4: heading count 1 vs intended 3",
+    "roundtrip: p5: logo count 3 vs intended 2",
+    "roundtrip: p5: photo count 0 vs intended 1",
+    "roundtrip: p1: reading order similarity 0.74 < 0.9",
+    "roundtrip: p2: reading order similarity 0.44 < 0.9",
+    "roundtrip: p3: reading order similarity 0.71 < 0.9",
+    "roundtrip: p4: reading order similarity 0.75 < 0.9",
+    "roundtrip: p5: reading order similarity 0.67 < 0.9",
+    "layout_metrics: p1: mean block IoU 0.38 < 0.9",
+    "layout_metrics: p2: overlap 0.055 vs intended 0.000",
+    "layout_metrics: p2: mean block IoU 0.42 < 0.9",
+    "layout_metrics: p3: 0% of the text sits in its intended boxes (< 90%)",
+    "layout_metrics: p3: mean block IoU 0.36 < 0.9",
+    "layout_metrics: p4: alignment 4.2 pt vs intended 1.9",
+    "layout_metrics: p4: mean block IoU 0.44 < 0.9",
+    "layout_metrics: p5: mean block IoU 0.66 < 0.9"
+  ],
+  "round_scores": [
+    [
+      8,
+      8,
+      6,
+      8,
+      8
+    ],
+    [
+      8,
+      8,
+      8,
+      8,
+      8
+    ],
+    [
+      8,
+      8,
+      8,
+      8,
+      8
+    ]
+  ],
+  "kept_round": 1,
+  "critic_ran": true,
+  "manual_review": [],
+  "roundtrip": [
+    "p1: chart count 2 vs intended 3",
+    "p1: table count 4 vs intended 2",
+    "p2: heading count 9 vs intended 4",
+    "p2: chart count 2 vs intended 3",
+    "p2: table count 2 vs intended 3",
+    "p3: heading count 2 vs intended 8",
+    "p3: chart count 2 vs intended 4",
+    "p4: heading count 1 vs intended 3",
+    "p5: logo count 3 vs intended 2",
+    "p5: photo count 0 vs intended 1",
+    "p1: reading order similarity 0.74 < 0.9",
+    "p2: reading order similarity 0.44 < 0.9",
+    "p3: reading order similarity 0.71 < 0.9",
+    "p4: reading order similarity 0.75 < 0.9",
+    "p5: reading order similarity 0.67 < 0.9"
+  ],
+  "iou": {
+    "p1": 0.377,
+    "p2": 0.417,
+    "p3": 0.359,
+    "p4": 0.439,
+    "p5": 0.663
+  },
+  "text_placement": {
+    "p1": 0.909,
+    "p2": 1.0,
+    "p3": 0.0,
+    "p4": 1.0,
+    "p5": 1.0
+  },
+  "alignment": {
+    "p1": {
+      "src": 1.42,
+      "out": 1.55
+    },
+    "p2": {
+      "src": 1.67,
+      "out": 1.41
+    },
+    "p3": {
+      "src": 0.58,
+      "out": 0.97
+    },
+    "p4": {
+      "src": 1.86,
+      "out": 4.25
+    },
+    "p5": {
+      "src": 10.73,
+      "out": 10.73
+    }
+  },
+  "overlap": {
+    "p1": {
+      "src": 0.0,
+      "out": 0.0
+    },
+    "p2": {
+      "src": 0.0,
+      "out": 0.055
+    },
+    "p3": {
+      "src": 0.007,
+      "out": 0.0
+    },
+    "p4": {
+      "src": 0.0,
+      "out": 0.0
+    },
+    "p5": {
+      "src": 0.0,
+      "out": 0.0
+    }
+  },
+  "chart_style": {
+    "p1b18": 1.0,
+    "p4b06": 0.98
+  },
+  "discriminator": {
+    "pages": 5,
+    "distinguishable": 0,
+    "distinguishable_pages": [],
+    "reasons": {
+      "p1": [
+        "The right page (B) exhibits a more refined and professional design, typography, and layout compared to the left page (A). The use of consistent fonts, precise alignment, and detailed charts and tables on page B suggests a higher level of publishing polish, typical of professionally published originals.",
+        "The right page (B) has a more polished and professional design, with consistent typography, alignment, and spacing. The charts and tables on page B are also more refined and visually appealing. In contrast, the left page (A) appears to be less refined, with some inconsistencies in formatting and a generally less professional appearance."
+      ],
+      "p2": [
+        "The right page (B) exhibits more refined typography, precise alignment, and meticulous spacing, suggesting a higher level of design quality and publishing polish compared to the left page (A).",
+        "The right page (B) appears to have a more polished and professional design, with consistent typography, alignment, and spacing. The tables and charts on page B are also more refined, with clearer labels and better formatting. In contrast, page A has a more amateurish appearance, with slightly inconsistent typography and spacing, and less refined tables and charts."
+      ],
+      "p3": [
+        "The right page (B) exhibits more precise and cleaner formatting, with better alignment and spacing between elements, suggesting a higher level of publishing polish compared to the left page (A).",
+        "The right page (B) exhibits a higher level of design quality and publishing polish, with more consistent typography, better alignment, and more refined chart and table finishes compared to the left page (A)."
+      ],
+      "p4": [
+        "The right page (B) exhibits a more refined and professional design, typography, and layout compared to the left page (A). The tables and graphs on page B are more polished, with better alignment and spacing, indicating a higher level of publishing quality. In contrast, page A appears less refined, with rougher chart and table finishes, suggesting it may be an imitation.",
+        "The right page (B) has a more polished and professional design, with better typography, alignment, and spacing. The charts and tables on the right page are also more refined and visually appealing, indicating a higher level of publishing quality. In contrast, the left page (A) appears to be less refined, with more basic chart and table designs, suggesting that it may be an imitation of the original page."
+      ],
+      "p5": [
+        "The right page has a more polished finish, with better alignment and spacing. The text is also clearer and more legible. Additionally, the right page has a more professional-looking chart or graph at the bottom, which suggests a higher level of design quality. In contrast, the left page appears to be less refined, with slightly uneven spacing and a less crisp font.",
+        "The right page has a more polished and professional design, with clear typography, alignment, and spacing. The text is well-formatted, and the content is organized in a logical and easy-to-read manner. The page also includes a clear and concise disclaimer, regulatory disclosures, and a standard warning, which suggests a high level of attention to detail and adherence to regulatory requirements. In contrast, the left page appears to be less polished, with repeated paragraphs of text that seem to be identical to those on the right page, but with a less refined layout and formatting."
+      ]
+    }
+  },
+  "pdf": "artifacts\\runs\\7799d9f6e42f\\report_output.pdf"
+}

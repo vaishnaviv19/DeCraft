@@ -1,0 +1,21 @@
+{
+  "pdf": "artifacts_llm\\runs\\7799d9f6e42f\\render\\output.pdf",
+  "html": "artifacts_llm\\runs\\7799d9f6e42f\\render\\index.html",
+  "pages": 5,
+  "pngs": [
+    "artifacts_llm\\runs\\7799d9f6e42f\\render\\pages\\p1.png",
+    "artifacts_llm\\runs\\7799d9f6e42f\\render\\pages\\p2.png",
+    "artifacts_llm\\runs\\7799d9f6e42f\\render\\pages\\p3.png",
+    "artifacts_llm\\runs\\7799d9f6e42f\\render\\pages\\p4.png",
+    "artifacts_llm\\runs\\7799d9f6e42f\\render\\pages\\p5.png"
+  ],
+  "side_by_side": [
+    "artifacts_llm\\runs\\7799d9f6e42f\\render\\pages\\side_by_side_p1.png",
+    "artifacts_llm\\runs\\7799d9f6e42f\\render\\pages\\side_by_side_p2.png",
+    "artifacts_llm\\runs\\7799d9f6e42f\\render\\pages\\side_by_side_p3.png",
+    "artifacts_llm\\runs\\7799d9f6e42f\\render\\pages\\side_by_side_p4.png",
+    "artifacts_llm\\runs\\7799d9f6e42f\\render\\pages\\side_by_side_p5.png"
+  ],
+  "decorated_pages": 5,
+  "flow_overflow": []
+}

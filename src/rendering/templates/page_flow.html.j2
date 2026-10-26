@@ -1,0 +1,13 @@
+<section class="sheet flow" style="width:{{ page.w }}pt;height:{{ page.h }}pt">
+  {% if page.decoration %}{{ page.decoration | safe }}{% endif %}
+  {% for block in page.furniture %}{% if block.html %}
+  <div class="block fixed block-{{ block.kind }} {{ block.ink }}" data-block="{{ block.id }}" style="{{ block.css }}">{{ block.html | safe }}</div>
+  {% endif %}{% endfor %}
+  {% for column in page.columns %}
+  <div class="flow-body" style="{{ column.css }}">
+  {% for block in column.blocks %}{% if block.html %}
+  <div class="block block-{{ block.kind }}" data-block="{{ block.id }}">{{ block.html | safe }}</div>
+  {% endif %}{% endfor %}
+  </div>
+  {% endfor %}
+</section>

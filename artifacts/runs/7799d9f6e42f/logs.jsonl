@@ -1,0 +1,905 @@
+{"at": "2026-10-26T10:51:08.470537+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": false, "resumed": false}
+{"at": "2026-10-26T10:51:08.475627+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T10:51:08.557605+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T10:51:09.714471+00:00", "event": "stage_done", "stage": "extract", "seconds": 1.24}
+{"at": "2026-10-26T10:51:09.714471+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T10:51:10.846491+00:00", "event": "stage_done", "stage": "infer", "seconds": 1.14}
+{"at": "2026-10-26T10:51:10.847486+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T10:51:11.062510+00:00", "event": "labels", "columns": 19, "replaced": 157, "kept": 17, "avoid_size": 260}
+{"at": "2026-10-26T10:51:11.062510+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.22}
+{"at": "2026-10-26T10:51:11.071476+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T10:51:11.752728+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.69}
+{"at": "2026-10-26T10:51:11.753260+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T10:51:12.258240+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.5}
+{"at": "2026-10-26T10:51:12.258774+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T10:51:12.655184+00:00", "event": "stage_done", "stage": "style", "seconds": 0.41}
+{"at": "2026-10-26T10:51:12.655779+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T10:51:14.789242+00:00", "event": "stage_done", "stage": "templates", "seconds": 2.12}
+{"at": "2026-10-26T10:51:14.789242+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T10:51:14.889194+00:00", "event": "stage_done", "stage": "figures", "seconds": 0.11}
+{"at": "2026-10-26T10:51:14.890661+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T10:51:15.411915+00:00", "event": "stage_done", "stage": "prepare", "seconds": 0.52}
+{"at": "2026-10-26T10:51:15.412439+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T10:51:20.440688+00:00", "event": "stage_done", "stage": "charts", "seconds": 5.03}
+{"at": "2026-10-26T10:51:20.441685+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T10:51:20.557070+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.11}
+{"at": "2026-10-26T10:51:20.557599+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T10:51:20.741066+00:00", "event": "stage_done", "stage": "write", "seconds": 0.19}
+{"at": "2026-10-26T10:51:20.742629+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T10:51:21.207159+00:00", "event": "fallback", "stage": "fit", "reason": "p1b07: cut to the last full sentence that fits"}
+{"at": "2026-10-26T10:51:21.208313+00:00", "event": "fallback", "stage": "fit", "reason": "p1b08: cut to the last full sentence that fits"}
+{"at": "2026-10-26T10:51:21.208313+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T10:51:21.208313+00:00", "event": "fallback", "stage": "fit", "reason": "p1b14: cut to the last full sentence that fits"}
+{"at": "2026-10-26T10:51:21.208313+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T10:51:21.208313+00:00", "event": "fallback", "stage": "fit", "reason": "p1b25: cut to the last full sentence that fits"}
+{"at": "2026-10-26T10:51:21.208313+00:00", "event": "fallback", "stage": "fit", "reason": "p4b17: cut to the last full sentence that fits"}
+{"at": "2026-10-26T10:51:21.208313+00:00", "event": "fallback", "stage": "fit", "reason": "p4b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T10:51:21.209843+00:00", "event": "fallback", "stage": "fit", "reason": "p4b20: cut to the last full sentence that fits"}
+{"at": "2026-10-26T10:51:21.209843+00:00", "event": "fallback", "stage": "fit", "reason": "p4b21: cut to the last full sentence that fits"}
+{"at": "2026-10-26T10:51:21.210349+00:00", "event": "fallback", "stage": "fit", "reason": "p4b22: cut to the last full sentence that fits"}
+{"at": "2026-10-26T10:51:21.210349+00:00", "event": "fallback", "stage": "fit", "reason": "p5b03: cut to the last full sentence that fits"}
+{"at": "2026-10-26T10:51:21.210349+00:00", "event": "fallback", "stage": "fit", "reason": "p5b04: cut to the last full sentence that fits"}
+{"at": "2026-10-26T10:51:21.213230+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.47}
+{"at": "2026-10-26T10:51:21.213230+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T10:51:21.551185+00:00", "event": "stage_done", "stage": "images", "seconds": 0.34}
+{"at": "2026-10-26T10:51:21.551185+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T10:51:30.952103+00:00", "event": "stage_done", "stage": "render", "seconds": 9.41}
+{"at": "2026-10-26T10:51:30.952103+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T10:51:31.653793+00:00", "event": "stage_done", "stage": "qa", "seconds": 0.7}
+{"at": "2026-10-26T10:51:32.464636+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "privacy_audit": true, "pages": true, "placeholders": true, "words": true, "words_per_page": false, "font_sizes_locked": true, "no_source_names": true, "fonts_embedded": true, "text_in_boxes": true, "layout_fits": true, "tables_charted": true, "charts_match_tables": true, "deliverables": false}}
+{"at": "2026-10-26T10:57:17.714787+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": false, "resumed": true}
+{"at": "2026-10-26T10:57:17.714787+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T10:57:17.823593+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T10:57:19.391829+00:00", "event": "stage_done", "stage": "extract", "seconds": 1.69}
+{"at": "2026-10-26T10:57:19.391829+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T10:57:21.025596+00:00", "event": "stage_done", "stage": "infer", "seconds": 1.62}
+{"at": "2026-10-26T10:57:21.025596+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T10:57:21.366867+00:00", "event": "labels", "columns": 19, "replaced": 157, "kept": 17, "avoid_size": 260}
+{"at": "2026-10-26T10:57:21.373531+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.36}
+{"at": "2026-10-26T10:57:21.373531+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T10:57:22.225527+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.84}
+{"at": "2026-10-26T10:57:22.226528+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T10:57:22.838914+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.61}
+{"at": "2026-10-26T10:57:22.840327+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T10:57:23.699207+00:00", "event": "stage_done", "stage": "style", "seconds": 0.84}
+{"at": "2026-10-26T10:57:23.699207+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T10:57:27.000041+00:00", "event": "stage_done", "stage": "templates", "seconds": 3.31}
+{"at": "2026-10-26T10:57:27.000041+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T10:57:27.175049+00:00", "event": "stage_done", "stage": "figures", "seconds": 0.17}
+{"at": "2026-10-26T10:57:27.176005+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T10:57:27.947177+00:00", "event": "stage_done", "stage": "prepare", "seconds": 0.77}
+{"at": "2026-10-26T10:57:27.949186+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T10:57:35.147906+00:00", "event": "stage_done", "stage": "charts", "seconds": 7.2}
+{"at": "2026-10-26T10:57:35.148525+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T10:57:35.275891+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.12}
+{"at": "2026-10-26T10:57:35.275891+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T10:57:35.439057+00:00", "event": "stage_done", "stage": "write", "seconds": 0.17}
+{"at": "2026-10-26T10:57:35.439562+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T10:57:35.539253+00:00", "event": "fallback", "stage": "fit", "reason": "p1b07: cut to the last full sentence that fits"}
+{"at": "2026-10-26T10:57:35.541629+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T10:57:35.541629+00:00", "event": "fallback", "stage": "fit", "reason": "p1b14: cut to the last full sentence that fits"}
+{"at": "2026-10-26T10:57:35.542634+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T10:57:35.543197+00:00", "event": "fallback", "stage": "fit", "reason": "p4b17: cut to the last full sentence that fits"}
+{"at": "2026-10-26T10:57:35.543197+00:00", "event": "fallback", "stage": "fit", "reason": "p4b20: cut to the last full sentence that fits"}
+{"at": "2026-10-26T10:57:35.543799+00:00", "event": "fallback", "stage": "fit", "reason": "p4b22: cut to the last full sentence that fits"}
+{"at": "2026-10-26T10:57:35.543799+00:00", "event": "fallback", "stage": "fit", "reason": "p5b03: cut to the last full sentence that fits"}
+{"at": "2026-10-26T10:57:35.545152+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.11}
+{"at": "2026-10-26T10:57:35.545152+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T10:57:35.827064+00:00", "event": "stage_done", "stage": "images", "seconds": 0.28}
+{"at": "2026-10-26T10:57:35.827064+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T10:57:49.160329+00:00", "event": "stage_done", "stage": "render", "seconds": 13.33}
+{"at": "2026-10-26T10:57:49.161897+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T10:57:50.104489+00:00", "event": "stage_done", "stage": "qa", "seconds": 0.94}
+{"at": "2026-10-26T10:57:50.999795+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "privacy_audit": true, "pages": true, "placeholders": true, "words": true, "words_per_page": false, "font_sizes_locked": true, "no_source_names": true, "fonts_embedded": true, "text_in_boxes": true, "layout_fits": true, "tables_charted": true, "charts_match_tables": true, "deliverables": false}}
+{"at": "2026-10-26T11:01:46.800907+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": false, "resumed": true}
+{"at": "2026-10-26T11:01:46.805480+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T11:01:46.886818+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T11:01:47.897026+00:00", "event": "stage_done", "stage": "extract", "seconds": 1.09}
+{"at": "2026-10-26T11:01:47.898033+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T11:01:49.093673+00:00", "event": "stage_done", "stage": "infer", "seconds": 1.2}
+{"at": "2026-10-26T11:01:49.096253+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T11:01:49.405289+00:00", "event": "labels", "columns": 19, "replaced": 157, "kept": 17, "avoid_size": 260}
+{"at": "2026-10-26T11:01:49.414300+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.31}
+{"at": "2026-10-26T11:01:49.415050+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T11:01:50.088707+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.67}
+{"at": "2026-10-26T11:01:50.088707+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T11:01:50.516563+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.44}
+{"at": "2026-10-26T11:01:50.517096+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T11:01:51.002455+00:00", "event": "stage_done", "stage": "style", "seconds": 0.48}
+{"at": "2026-10-26T11:01:51.003470+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T11:01:53.222018+00:00", "event": "stage_done", "stage": "templates", "seconds": 2.22}
+{"at": "2026-10-26T11:01:53.222529+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T11:01:53.366222+00:00", "event": "stage_done", "stage": "figures", "seconds": 0.14}
+{"at": "2026-10-26T11:01:53.366222+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T11:01:54.004361+00:00", "event": "stage_done", "stage": "prepare", "seconds": 0.64}
+{"at": "2026-10-26T11:01:54.005198+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T11:02:00.388975+00:00", "event": "stage_done", "stage": "charts", "seconds": 6.39}
+{"at": "2026-10-26T11:02:00.389498+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T11:02:00.488826+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.09}
+{"at": "2026-10-26T11:02:00.492843+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T11:02:00.649335+00:00", "event": "stage_done", "stage": "write", "seconds": 0.16}
+{"at": "2026-10-26T11:02:00.649335+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T11:02:00.770706+00:00", "event": "fallback", "stage": "fit", "reason": "p1b07: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:02:00.771816+00:00", "event": "fallback", "stage": "fit", "reason": "p1b08: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:02:00.771816+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:02:00.771816+00:00", "event": "fallback", "stage": "fit", "reason": "p1b14: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:02:00.771816+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:02:00.771816+00:00", "event": "fallback", "stage": "fit", "reason": "p1b25: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:02:00.771816+00:00", "event": "fallback", "stage": "fit", "reason": "p4b17: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:02:00.771816+00:00", "event": "fallback", "stage": "fit", "reason": "p4b20: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:02:00.771816+00:00", "event": "fallback", "stage": "fit", "reason": "p4b22: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:02:00.771816+00:00", "event": "fallback", "stage": "fit", "reason": "p5b03: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:02:00.771816+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.12}
+{"at": "2026-10-26T11:02:00.771816+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T11:02:01.091963+00:00", "event": "stage_done", "stage": "images", "seconds": 0.33}
+{"at": "2026-10-26T11:02:01.094034+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T11:02:13.768336+00:00", "event": "stage_done", "stage": "render", "seconds": 12.67}
+{"at": "2026-10-26T11:02:13.772500+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T11:02:14.759715+00:00", "event": "stage_done", "stage": "qa", "seconds": 0.98}
+{"at": "2026-10-26T11:02:15.709477+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "privacy_audit": true, "pages": true, "placeholders": true, "words": true, "words_per_page": false, "font_sizes_locked": true, "no_source_names": true, "fonts_embedded": true, "text_in_boxes": true, "layout_fits": true, "tables_charted": true, "charts_match_tables": true, "deliverables": false}}
+{"at": "2026-10-26T11:03:48.412851+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": false, "resumed": true}
+{"at": "2026-10-26T11:03:48.416751+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T11:03:48.518585+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T11:03:49.666609+00:00", "event": "stage_done", "stage": "extract", "seconds": 1.25}
+{"at": "2026-10-26T11:03:49.666609+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T11:03:50.879188+00:00", "event": "stage_done", "stage": "infer", "seconds": 1.22}
+{"at": "2026-10-26T11:03:50.879694+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T11:03:51.133142+00:00", "event": "labels", "columns": 19, "replaced": 157, "kept": 17, "avoid_size": 260}
+{"at": "2026-10-26T11:03:51.137189+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.27}
+{"at": "2026-10-26T11:03:51.137703+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T11:03:51.865316+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.72}
+{"at": "2026-10-26T11:03:51.865870+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T11:03:52.411518+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.55}
+{"at": "2026-10-26T11:03:52.412467+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T11:03:52.744853+00:00", "event": "stage_done", "stage": "style", "seconds": 0.33}
+{"at": "2026-10-26T11:03:52.744853+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T11:03:55.039288+00:00", "event": "stage_done", "stage": "templates", "seconds": 2.3}
+{"at": "2026-10-26T11:03:55.039288+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T11:03:55.139904+00:00", "event": "stage_done", "stage": "figures", "seconds": 0.11}
+{"at": "2026-10-26T11:03:55.139904+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T11:03:55.662688+00:00", "event": "stage_done", "stage": "prepare", "seconds": 0.52}
+{"at": "2026-10-26T11:03:55.664206+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T11:04:01.032172+00:00", "event": "stage_done", "stage": "charts", "seconds": 5.38}
+{"at": "2026-10-26T11:04:01.032777+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T11:04:01.155792+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.12}
+{"at": "2026-10-26T11:04:01.156376+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T11:04:01.423126+00:00", "event": "stage_done", "stage": "write", "seconds": 0.27}
+{"at": "2026-10-26T11:04:01.423126+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T11:04:01.540102+00:00", "event": "fallback", "stage": "fit", "reason": "p1b07: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:04:01.540102+00:00", "event": "fallback", "stage": "fit", "reason": "p1b08: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:04:01.540102+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:04:01.540102+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:04:01.540102+00:00", "event": "fallback", "stage": "fit", "reason": "p4b17: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:04:01.540102+00:00", "event": "fallback", "stage": "fit", "reason": "p4b20: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:04:01.540102+00:00", "event": "fallback", "stage": "fit", "reason": "p4b22: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:04:01.540102+00:00", "event": "fallback", "stage": "fit", "reason": "p5b03: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:04:01.543106+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.11}
+{"at": "2026-10-26T11:04:01.543106+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T11:04:01.774171+00:00", "event": "stage_done", "stage": "images", "seconds": 0.23}
+{"at": "2026-10-26T11:04:01.775172+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T11:04:11.699039+00:00", "event": "stage_done", "stage": "render", "seconds": 9.92}
+{"at": "2026-10-26T11:04:11.699573+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T11:04:12.341181+00:00", "event": "stage_done", "stage": "qa", "seconds": 0.66}
+{"at": "2026-10-26T11:04:13.024192+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "privacy_audit": true, "pages": true, "placeholders": true, "words": true, "words_per_page": false, "font_sizes_locked": true, "no_source_names": true, "fonts_embedded": true, "text_in_boxes": true, "layout_fits": true, "tables_charted": true, "charts_match_tables": true, "deliverables": false}}
+{"at": "2026-10-26T11:04:52.389677+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": false, "resumed": true}
+{"at": "2026-10-26T11:04:52.389677+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T11:04:52.556566+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T11:04:53.479982+00:00", "event": "stage_done", "stage": "extract", "seconds": 1.08}
+{"at": "2026-10-26T11:04:53.480970+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T11:04:54.615195+00:00", "event": "stage_done", "stage": "infer", "seconds": 1.12}
+{"at": "2026-10-26T11:04:54.615195+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T11:04:54.880400+00:00", "event": "labels", "columns": 19, "replaced": 157, "kept": 17, "avoid_size": 260}
+{"at": "2026-10-26T11:04:54.884624+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.26}
+{"at": "2026-10-26T11:04:54.884624+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T11:04:55.565999+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.69}
+{"at": "2026-10-26T11:04:55.565999+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T11:04:56.130600+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.56}
+{"at": "2026-10-26T11:04:56.132319+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T11:04:56.501470+00:00", "event": "stage_done", "stage": "style", "seconds": 0.38}
+{"at": "2026-10-26T11:04:56.501994+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T11:04:58.932242+00:00", "event": "stage_done", "stage": "templates", "seconds": 2.42}
+{"at": "2026-10-26T11:04:58.932242+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T11:04:59.048030+00:00", "event": "stage_done", "stage": "figures", "seconds": 0.12}
+{"at": "2026-10-26T11:04:59.049051+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T11:04:59.628058+00:00", "event": "stage_done", "stage": "prepare", "seconds": 0.58}
+{"at": "2026-10-26T11:04:59.628058+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T11:05:04.862079+00:00", "event": "stage_done", "stage": "charts", "seconds": 5.24}
+{"at": "2026-10-26T11:05:04.862554+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T11:05:04.987557+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.12}
+{"at": "2026-10-26T11:05:04.988632+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T11:05:05.156365+00:00", "event": "stage_done", "stage": "write", "seconds": 0.17}
+{"at": "2026-10-26T11:05:05.157089+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T11:05:05.260415+00:00", "event": "fallback", "stage": "fit", "reason": "p1b07: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:05:05.261140+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:05:05.261140+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:05:05.261140+00:00", "event": "fallback", "stage": "fit", "reason": "p4b17: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:05:05.261140+00:00", "event": "fallback", "stage": "fit", "reason": "p4b20: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:05:05.261140+00:00", "event": "fallback", "stage": "fit", "reason": "p4b22: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:05:05.262282+00:00", "event": "fallback", "stage": "fit", "reason": "p5b03: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:05:05.264632+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.11}
+{"at": "2026-10-26T11:05:05.264632+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T11:05:05.531464+00:00", "event": "stage_done", "stage": "images", "seconds": 0.27}
+{"at": "2026-10-26T11:05:05.531464+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T11:05:15.110179+00:00", "event": "stage_done", "stage": "render", "seconds": 9.58}
+{"at": "2026-10-26T11:05:15.110968+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T11:05:16.020579+00:00", "event": "stage_done", "stage": "qa", "seconds": 0.91}
+{"at": "2026-10-26T11:05:16.662361+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "privacy_audit": true, "pages": true, "placeholders": true, "words": true, "words_per_page": false, "font_sizes_locked": true, "no_source_names": true, "fonts_embedded": true, "text_in_boxes": true, "layout_fits": true, "tables_charted": true, "charts_match_tables": true, "deliverables": false}}
+{"at": "2026-10-26T11:55:31.229007+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": false, "resumed": true}
+{"at": "2026-10-26T11:55:31.649180+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T11:55:31.713043+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T11:55:32.503705+00:00", "event": "stage_done", "stage": "extract", "seconds": 0.86}
+{"at": "2026-10-26T11:55:32.504230+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T11:55:33.438444+00:00", "event": "stage_done", "stage": "infer", "seconds": 0.94}
+{"at": "2026-10-26T11:55:33.439453+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T11:55:33.681298+00:00", "event": "labels", "columns": 19, "replaced": 157, "kept": 17, "avoid_size": 260}
+{"at": "2026-10-26T11:55:33.686308+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.25}
+{"at": "2026-10-26T11:55:33.687310+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T11:55:34.379067+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.69}
+{"at": "2026-10-26T11:55:34.379067+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T11:55:34.864759+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.49}
+{"at": "2026-10-26T11:55:34.865766+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T11:55:35.240937+00:00", "event": "stage_done", "stage": "style", "seconds": 0.38}
+{"at": "2026-10-26T11:55:35.241937+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T11:55:45.902406+00:00", "event": "stage_done", "stage": "templates", "seconds": 10.66}
+{"at": "2026-10-26T11:55:45.902406+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T11:55:45.971985+00:00", "event": "stage_done", "stage": "figures", "seconds": 0.08}
+{"at": "2026-10-26T11:55:45.972995+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T11:55:46.320190+00:00", "event": "stage_done", "stage": "prepare", "seconds": 0.34}
+{"at": "2026-10-26T11:55:46.320697+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T11:55:49.079404+00:00", "event": "stage_done", "stage": "charts", "seconds": 2.77}
+{"at": "2026-10-26T11:55:49.080385+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T11:55:49.149435+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.06}
+{"at": "2026-10-26T11:55:49.149435+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T11:55:49.288456+00:00", "event": "fallback", "stage": "write", "reason": "repeats: 371 found, 0 fixed, 50 dropped, 263 flagged"}
+{"at": "2026-10-26T11:55:49.290963+00:00", "event": "stage_done", "stage": "write", "seconds": 0.14}
+{"at": "2026-10-26T11:55:49.290963+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T11:55:49.339442+00:00", "event": "fallback", "stage": "fit", "reason": "repeats: 371 found, 0 fixed, 50 dropped, 263 flagged"}
+{"at": "2026-10-26T11:55:49.340850+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:55:49.340850+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:55:49.341706+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.06}
+{"at": "2026-10-26T11:55:49.341706+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T11:55:49.515983+00:00", "event": "stage_done", "stage": "images", "seconds": 0.17}
+{"at": "2026-10-26T11:55:49.515983+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T11:55:58.181223+00:00", "event": "stage_done", "stage": "render", "seconds": 8.66}
+{"at": "2026-10-26T11:55:58.181223+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T11:55:58.944163+00:00", "event": "stage_done", "stage": "qa", "seconds": 0.77}
+{"at": "2026-10-26T11:55:58.944163+00:00", "event": "stage_start", "stage": "package"}
+{"at": "2026-10-26T11:55:59.520378+00:00", "event": "stage_done", "stage": "package", "seconds": 0.58}
+{"at": "2026-10-26T11:56:00.177252+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "privacy_audit": true, "data_valid": true, "periods_shifted": true, "every_table_has_chart": true, "charts_match_tables": true, "no_unresolved_placeholders": true, "no_illegal_digits": true, "bible_consistent": true, "same_sections_new_titles": true, "min_1000_words": true, "layout_fits": true, "fonts_embedded": true, "font_sizes_locked": true, "labels_fabricated": true, "no_source_names": true, "no_fixed_doc_type": true, "entity_and_branding": true, "metadata_clean": true, "critic_not_worse": true, "no_source_copy": true, "deliverables": true, "share_distance": true, "dcr": true, "no_typed_units": true, "ocr_coverage": true, "layout_agreement": true, "chart_style_similar": false, "vector_recovery_exact": true, "roundtrip_structure": false, "layout_metrics": false, "no_cross_section_repeats": false}}
+{"at": "2026-10-26T11:59:08.603141+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": false, "resumed": true}
+{"at": "2026-10-26T11:59:08.833609+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T11:59:08.908415+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T11:59:09.579522+00:00", "event": "stage_done", "stage": "extract", "seconds": 0.75}
+{"at": "2026-10-26T11:59:09.579522+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T11:59:10.211264+00:00", "event": "stage_done", "stage": "infer", "seconds": 0.62}
+{"at": "2026-10-26T11:59:10.211264+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T11:59:10.369326+00:00", "event": "labels", "columns": 19, "replaced": 157, "kept": 17, "avoid_size": 260}
+{"at": "2026-10-26T11:59:10.373325+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.17}
+{"at": "2026-10-26T11:59:10.373325+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T11:59:10.860978+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.49}
+{"at": "2026-10-26T11:59:10.861970+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T11:59:11.180865+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.31}
+{"at": "2026-10-26T11:59:11.181781+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T11:59:11.429895+00:00", "event": "stage_done", "stage": "style", "seconds": 0.25}
+{"at": "2026-10-26T11:59:11.429895+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T11:59:22.680080+00:00", "event": "stage_done", "stage": "templates", "seconds": 11.25}
+{"at": "2026-10-26T11:59:22.680080+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T11:59:22.766869+00:00", "event": "stage_done", "stage": "figures", "seconds": 0.09}
+{"at": "2026-10-26T11:59:22.768032+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T11:59:23.130066+00:00", "event": "stage_done", "stage": "prepare", "seconds": 0.36}
+{"at": "2026-10-26T11:59:23.130066+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T11:59:25.836819+00:00", "event": "stage_done", "stage": "charts", "seconds": 2.7}
+{"at": "2026-10-26T11:59:25.836819+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T11:59:25.941031+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.11}
+{"at": "2026-10-26T11:59:25.941031+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T11:59:26.125294+00:00", "event": "fallback", "stage": "write", "reason": "repeats: 371 found, 0 fixed, 50 dropped, 263 flagged"}
+{"at": "2026-10-26T11:59:26.128292+00:00", "event": "stage_done", "stage": "write", "seconds": 0.19}
+{"at": "2026-10-26T11:59:26.128292+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T11:59:26.175971+00:00", "event": "fallback", "stage": "fit", "reason": "repeats: 371 found, 0 fixed, 50 dropped, 263 flagged"}
+{"at": "2026-10-26T11:59:26.177173+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:59:26.177173+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T11:59:26.180136+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.05}
+{"at": "2026-10-26T11:59:26.180136+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T11:59:26.370375+00:00", "event": "stage_done", "stage": "images", "seconds": 0.19}
+{"at": "2026-10-26T11:59:26.371382+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T11:59:32.999351+00:00", "event": "stage_done", "stage": "render", "seconds": 6.64}
+{"at": "2026-10-26T11:59:32.999351+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T11:59:33.780766+00:00", "event": "stage_done", "stage": "qa", "seconds": 0.78}
+{"at": "2026-10-26T11:59:33.781831+00:00", "event": "stage_start", "stage": "package"}
+{"at": "2026-10-26T11:59:34.367269+00:00", "event": "stage_done", "stage": "package", "seconds": 0.58}
+{"at": "2026-10-26T11:59:34.918041+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "privacy_audit": true, "data_valid": true, "periods_shifted": true, "every_table_has_chart": true, "charts_match_tables": true, "no_unresolved_placeholders": true, "no_illegal_digits": true, "bible_consistent": true, "same_sections_new_titles": true, "min_1000_words": true, "layout_fits": true, "fonts_embedded": true, "font_sizes_locked": true, "labels_fabricated": true, "no_source_names": true, "no_fixed_doc_type": true, "entity_and_branding": true, "metadata_clean": true, "critic_not_worse": true, "no_source_copy": true, "deliverables": true, "share_distance": true, "dcr": true, "no_typed_units": true, "ocr_coverage": true, "layout_agreement": true, "chart_style_similar": true, "vector_recovery_exact": true, "roundtrip_structure": false, "layout_metrics": false}}
+{"at": "2026-10-26T12:00:32.057572+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": false, "resumed": true}
+{"at": "2026-10-26T12:00:32.298742+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T12:00:32.370316+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T12:00:33.058824+00:00", "event": "stage_done", "stage": "extract", "seconds": 0.75}
+{"at": "2026-10-26T12:00:33.058824+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T12:00:33.682323+00:00", "event": "stage_done", "stage": "infer", "seconds": 0.62}
+{"at": "2026-10-26T12:00:33.682323+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T12:00:33.832038+00:00", "event": "labels", "columns": 19, "replaced": 157, "kept": 17, "avoid_size": 260}
+{"at": "2026-10-26T12:00:33.834535+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.16}
+{"at": "2026-10-26T12:00:33.835546+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T12:00:34.231974+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.41}
+{"at": "2026-10-26T12:00:34.232497+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T12:00:34.527325+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.28}
+{"at": "2026-10-26T12:00:34.527716+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T12:00:34.740979+00:00", "event": "stage_done", "stage": "style", "seconds": 0.22}
+{"at": "2026-10-26T12:00:34.749342+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T12:00:42.818680+00:00", "event": "stage_done", "stage": "templates", "seconds": 8.06}
+{"at": "2026-10-26T12:00:42.818680+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T12:00:42.890409+00:00", "event": "stage_done", "stage": "figures", "seconds": 0.08}
+{"at": "2026-10-26T12:00:42.890409+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T12:00:43.223252+00:00", "event": "stage_done", "stage": "prepare", "seconds": 0.33}
+{"at": "2026-10-26T12:00:43.223252+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T12:00:45.924589+00:00", "event": "stage_done", "stage": "charts", "seconds": 2.7}
+{"at": "2026-10-26T12:00:45.925510+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T12:00:45.995757+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.06}
+{"at": "2026-10-26T12:00:45.995757+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T12:00:46.127597+00:00", "event": "fallback", "stage": "write", "reason": "repeats: 371 found, 0 fixed, 50 dropped, 263 flagged"}
+{"at": "2026-10-26T12:00:46.130305+00:00", "event": "stage_done", "stage": "write", "seconds": 0.14}
+{"at": "2026-10-26T12:00:46.131318+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T12:00:46.172699+00:00", "event": "fallback", "stage": "fit", "reason": "repeats: 371 found, 0 fixed, 50 dropped, 263 flagged"}
+{"at": "2026-10-26T12:00:46.173701+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T12:00:46.173701+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T12:00:46.175695+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.05}
+{"at": "2026-10-26T12:00:46.176690+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T12:00:46.362639+00:00", "event": "stage_done", "stage": "images", "seconds": 0.19}
+{"at": "2026-10-26T12:00:46.362639+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T12:00:53.162601+00:00", "event": "stage_done", "stage": "render", "seconds": 6.8}
+{"at": "2026-10-26T12:00:53.163604+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T12:00:54.339031+00:00", "event": "stage_done", "stage": "qa", "seconds": 1.17}
+{"at": "2026-10-26T12:00:54.339031+00:00", "event": "stage_start", "stage": "package"}
+{"at": "2026-10-26T12:00:54.906586+00:00", "event": "stage_done", "stage": "package", "seconds": 0.58}
+{"at": "2026-10-26T12:00:55.490110+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "privacy_audit": true, "data_valid": true, "periods_shifted": true, "every_table_has_chart": true, "charts_match_tables": true, "no_unresolved_placeholders": true, "no_illegal_digits": true, "bible_consistent": true, "same_sections_new_titles": true, "min_1000_words": true, "layout_fits": true, "fonts_embedded": true, "font_sizes_locked": true, "labels_fabricated": true, "no_source_names": true, "no_fixed_doc_type": true, "entity_and_branding": true, "metadata_clean": true, "critic_not_worse": true, "no_source_copy": true, "deliverables": true, "share_distance": true, "dcr": true, "no_typed_units": true, "ocr_coverage": true, "layout_agreement": true, "chart_style_similar": true, "vector_recovery_exact": true, "roundtrip_structure": false, "layout_metrics": false}}
+{"at": "2026-10-26T12:01:32.610628+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": false, "resumed": true}
+{"at": "2026-10-26T12:01:32.847614+00:00", "event": "stage_reused", "stage": "extract"}
+{"at": "2026-10-26T12:01:32.850851+00:00", "event": "stage_reused", "stage": "infer"}
+{"at": "2026-10-26T12:01:32.851787+00:00", "event": "stage_reused", "stage": "privacy_plan"}
+{"at": "2026-10-26T12:01:32.852782+00:00", "event": "stage_reused", "stage": "generate"}
+{"at": "2026-10-26T12:01:32.852782+00:00", "event": "stage_reused", "stage": "privacy_audit"}
+{"at": "2026-10-26T12:01:32.854052+00:00", "event": "stage_reused", "stage": "style"}
+{"at": "2026-10-26T12:01:32.854052+00:00", "event": "stage_reused", "stage": "templates"}
+{"at": "2026-10-26T12:01:32.855534+00:00", "event": "stage_reused", "stage": "figures"}
+{"at": "2026-10-26T12:01:32.856685+00:00", "event": "stage_reused", "stage": "prepare"}
+{"at": "2026-10-26T12:01:32.857692+00:00", "event": "stage_reused", "stage": "charts"}
+{"at": "2026-10-26T12:01:32.858741+00:00", "event": "stage_reused", "stage": "plan"}
+{"at": "2026-10-26T12:01:32.859691+00:00", "event": "stage_reused", "stage": "write"}
+{"at": "2026-10-26T12:01:32.860740+00:00", "event": "stage_reused", "stage": "fit"}
+{"at": "2026-10-26T12:01:32.861692+00:00", "event": "stage_reused", "stage": "images"}
+{"at": "2026-10-26T12:01:32.862809+00:00", "event": "stage_reused", "stage": "render"}
+{"at": "2026-10-26T12:01:32.863133+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T12:01:34.271057+00:00", "event": "stage_done", "stage": "qa", "seconds": 1.41}
+{"at": "2026-10-26T12:01:34.272102+00:00", "event": "stage_start", "stage": "package"}
+{"at": "2026-10-26T12:01:34.708189+00:00", "event": "stage_done", "stage": "package", "seconds": 0.44}
+{"at": "2026-10-26T12:01:35.187353+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "privacy_audit": true, "data_valid": true, "periods_shifted": true, "every_table_has_chart": true, "charts_match_tables": true, "no_unresolved_placeholders": true, "no_illegal_digits": true, "bible_consistent": true, "same_sections_new_titles": true, "min_1000_words": true, "layout_fits": true, "fonts_embedded": true, "font_sizes_locked": true, "labels_fabricated": true, "no_source_names": true, "no_fixed_doc_type": true, "entity_and_branding": true, "metadata_clean": true, "critic_not_worse": true, "no_source_copy": true, "deliverables": true, "share_distance": true, "dcr": true, "no_typed_units": true, "ocr_coverage": true, "layout_agreement": true, "chart_style_similar": true, "vector_recovery_exact": true, "roundtrip_structure": false, "layout_metrics": false}}
+{"at": "2026-10-26T12:01:52.007098+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": false, "resumed": true}
+{"at": "2026-10-26T12:01:52.283631+00:00", "event": "stage_reused", "stage": "extract"}
+{"at": "2026-10-26T12:01:52.285209+00:00", "event": "stage_reused", "stage": "infer"}
+{"at": "2026-10-26T12:01:52.287240+00:00", "event": "stage_reused", "stage": "privacy_plan"}
+{"at": "2026-10-26T12:01:52.287240+00:00", "event": "stage_reused", "stage": "generate"}
+{"at": "2026-10-26T12:01:52.288216+00:00", "event": "stage_reused", "stage": "privacy_audit"}
+{"at": "2026-10-26T12:01:52.289215+00:00", "event": "stage_reused", "stage": "style"}
+{"at": "2026-10-26T12:01:52.290214+00:00", "event": "stage_reused", "stage": "templates"}
+{"at": "2026-10-26T12:01:52.291215+00:00", "event": "stage_reused", "stage": "figures"}
+{"at": "2026-10-26T12:01:52.291215+00:00", "event": "stage_reused", "stage": "prepare"}
+{"at": "2026-10-26T12:01:52.292215+00:00", "event": "stage_reused", "stage": "charts"}
+{"at": "2026-10-26T12:01:52.293240+00:00", "event": "stage_reused", "stage": "plan"}
+{"at": "2026-10-26T12:01:52.293240+00:00", "event": "stage_reused", "stage": "write"}
+{"at": "2026-10-26T12:01:52.293240+00:00", "event": "stage_reused", "stage": "fit"}
+{"at": "2026-10-26T12:01:52.297318+00:00", "event": "stage_reused", "stage": "images"}
+{"at": "2026-10-26T12:01:52.297318+00:00", "event": "stage_reused", "stage": "render"}
+{"at": "2026-10-26T12:01:52.297318+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T12:01:53.627007+00:00", "event": "stage_done", "stage": "qa", "seconds": 1.33}
+{"at": "2026-10-26T12:01:53.627579+00:00", "event": "stage_start", "stage": "package"}
+{"at": "2026-10-26T12:01:54.131436+00:00", "event": "stage_done", "stage": "package", "seconds": 0.5}
+{"at": "2026-10-26T12:01:54.535922+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "privacy_audit": true, "data_valid": true, "periods_shifted": true, "every_table_has_chart": true, "charts_match_tables": true, "no_unresolved_placeholders": true, "no_illegal_digits": true, "bible_consistent": true, "same_sections_new_titles": true, "min_1000_words": true, "layout_fits": true, "fonts_embedded": true, "font_sizes_locked": true, "labels_fabricated": true, "no_source_names": true, "no_fixed_doc_type": true, "entity_and_branding": true, "metadata_clean": true, "critic_not_worse": true, "no_source_copy": true, "deliverables": true, "share_distance": true, "dcr": true, "no_typed_units": true, "ocr_coverage": true, "layout_agreement": true, "chart_style_similar": true, "vector_recovery_exact": true, "roundtrip_structure": false, "layout_metrics": false}}
+{"at": "2026-10-26T12:02:19.442826+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": false, "resumed": true}
+{"at": "2026-10-26T12:02:19.996475+00:00", "event": "stage_reused", "stage": "extract"}
+{"at": "2026-10-26T12:02:20.000944+00:00", "event": "stage_reused", "stage": "infer"}
+{"at": "2026-10-26T12:02:20.003806+00:00", "event": "stage_reused", "stage": "privacy_plan"}
+{"at": "2026-10-26T12:02:20.005087+00:00", "event": "stage_reused", "stage": "generate"}
+{"at": "2026-10-26T12:02:20.006573+00:00", "event": "stage_reused", "stage": "privacy_audit"}
+{"at": "2026-10-26T12:02:20.007835+00:00", "event": "stage_reused", "stage": "style"}
+{"at": "2026-10-26T12:02:20.011218+00:00", "event": "stage_reused", "stage": "templates"}
+{"at": "2026-10-26T12:02:20.013339+00:00", "event": "stage_reused", "stage": "figures"}
+{"at": "2026-10-26T12:02:20.014865+00:00", "event": "stage_reused", "stage": "prepare"}
+{"at": "2026-10-26T12:02:20.017872+00:00", "event": "stage_reused", "stage": "charts"}
+{"at": "2026-10-26T12:02:20.019378+00:00", "event": "stage_reused", "stage": "plan"}
+{"at": "2026-10-26T12:02:20.022076+00:00", "event": "stage_reused", "stage": "write"}
+{"at": "2026-10-26T12:02:20.027549+00:00", "event": "stage_reused", "stage": "fit"}
+{"at": "2026-10-26T12:02:20.028550+00:00", "event": "stage_reused", "stage": "images"}
+{"at": "2026-10-26T12:02:20.030549+00:00", "event": "stage_reused", "stage": "render"}
+{"at": "2026-10-26T12:02:20.031553+00:00", "event": "stage_reused", "stage": "qa"}
+{"at": "2026-10-26T12:02:20.032761+00:00", "event": "stage_reused", "stage": "package"}
+{"at": "2026-10-26T12:02:20.810169+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "privacy_audit": true, "data_valid": true, "periods_shifted": true, "every_table_has_chart": true, "charts_match_tables": true, "no_unresolved_placeholders": true, "no_illegal_digits": true, "bible_consistent": true, "same_sections_new_titles": true, "min_1000_words": true, "layout_fits": true, "fonts_embedded": true, "font_sizes_locked": true, "labels_fabricated": true, "no_source_names": true, "no_fixed_doc_type": true, "entity_and_branding": true, "metadata_clean": true, "critic_not_worse": true, "no_source_copy": true, "deliverables": true, "share_distance": true, "dcr": true, "no_typed_units": true, "ocr_coverage": true, "layout_agreement": true, "chart_style_similar": true, "vector_recovery_exact": true, "roundtrip_structure": false, "layout_metrics": false}}
+{"at": "2026-10-26T12:13:55.378826+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": false, "resumed": true}
+{"at": "2026-10-26T12:14:19.319631+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": true, "resumed": true}
+{"at": "2026-10-26T12:14:19.921144+00:00", "event": "stage_reused", "stage": "extract"}
+{"at": "2026-10-26T12:14:19.922144+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T12:15:21.781378+00:00", "event": "stage_done", "stage": "infer", "seconds": 61.86}
+{"at": "2026-10-26T12:15:21.783379+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T12:15:21.984732+00:00", "event": "labels", "columns": 20, "replaced": 158, "kept": 17, "avoid_size": 260}
+{"at": "2026-10-26T12:15:21.989107+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.2}
+{"at": "2026-10-26T12:15:21.990137+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T12:15:22.440287+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.45}
+{"at": "2026-10-26T12:15:22.442060+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T12:15:22.855506+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.41}
+{"at": "2026-10-26T12:15:22.856504+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T12:15:23.207960+00:00", "event": "stage_done", "stage": "style", "seconds": 0.34}
+{"at": "2026-10-26T12:15:23.211486+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T12:15:34.656944+00:00", "event": "stage_done", "stage": "templates", "seconds": 11.45}
+{"at": "2026-10-26T12:15:34.657929+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T12:26:18.964489+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": true, "resumed": true}
+{"at": "2026-10-26T12:26:19.616794+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T12:26:19.707483+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T12:26:20.726788+00:00", "event": "stage_done", "stage": "extract", "seconds": 1.11}
+{"at": "2026-10-26T12:26:20.728794+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T12:26:24.414668+00:00", "event": "stage_done", "stage": "infer", "seconds": 3.69}
+{"at": "2026-10-26T12:26:24.414668+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T12:26:24.650597+00:00", "event": "labels", "columns": 20, "replaced": 158, "kept": 17, "avoid_size": 260}
+{"at": "2026-10-26T12:26:24.664535+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.25}
+{"at": "2026-10-26T12:26:24.666286+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T12:26:25.450044+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.8}
+{"at": "2026-10-26T12:26:25.451051+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T12:26:25.898051+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.44}
+{"at": "2026-10-26T12:26:25.901885+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T12:26:26.368212+00:00", "event": "stage_done", "stage": "style", "seconds": 0.47}
+{"at": "2026-10-26T12:26:26.368212+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T12:26:42.654258+00:00", "event": "stage_done", "stage": "templates", "seconds": 16.3}
+{"at": "2026-10-26T12:26:42.655255+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T12:29:40.532129+00:00", "event": "stage_done", "stage": "figures", "seconds": 177.88}
+{"at": "2026-10-26T12:29:40.533141+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T12:29:40.925539+00:00", "event": "stage_done", "stage": "prepare", "seconds": 0.39}
+{"at": "2026-10-26T12:29:40.925539+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T12:29:44.332030+00:00", "event": "stage_done", "stage": "charts", "seconds": 3.41}
+{"at": "2026-10-26T12:29:44.332550+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T12:29:44.414672+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.08}
+{"at": "2026-10-26T12:29:44.414672+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T12:29:44.581455+00:00", "event": "fallback", "stage": "write", "reason": "repeats: 371 found, 0 fixed, 50 dropped, 263 flagged"}
+{"at": "2026-10-26T12:29:44.581455+00:00", "event": "stage_done", "stage": "write", "seconds": 0.17}
+{"at": "2026-10-26T12:29:44.581455+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T12:29:44.644122+00:00", "event": "fallback", "stage": "fit", "reason": "repeats: 371 found, 0 fixed, 50 dropped, 263 flagged"}
+{"at": "2026-10-26T12:29:44.644122+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T12:29:44.645121+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T12:29:44.647659+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.06}
+{"at": "2026-10-26T12:29:44.648166+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T12:29:44.924132+00:00", "event": "stage_done", "stage": "images", "seconds": 0.28}
+{"at": "2026-10-26T12:29:44.924132+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T12:29:52.138057+00:00", "event": "stage_done", "stage": "render", "seconds": 7.22}
+{"at": "2026-10-26T12:29:52.153273+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T12:31:43.414695+00:00", "event": "run_partial", "stage": "qa", "message": "qa: LLMBudgetExceeded: stage budget 200000 tokens exhausted"}
+{"at": "2026-10-26T12:44:38.227488+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": true, "resumed": true}
+{"at": "2026-10-26T12:44:38.714552+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T12:44:38.779485+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T12:44:59.614514+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": true, "resumed": true}
+{"at": "2026-10-26T12:44:59.956952+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T12:45:00.029815+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T12:49:44.886820+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": true, "resumed": true}
+{"at": "2026-10-26T12:49:45.401248+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T12:49:45.476560+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T12:49:46.044595+00:00", "event": "stage_done", "stage": "extract", "seconds": 0.66}
+{"at": "2026-10-26T12:49:46.044595+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T12:50:47.347176+00:00", "event": "stage_done", "stage": "infer", "seconds": 61.3}
+{"at": "2026-10-26T12:50:47.347176+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T12:50:47.516547+00:00", "event": "labels", "columns": 20, "replaced": 158, "kept": 17, "avoid_size": 260}
+{"at": "2026-10-26T12:50:47.519780+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.17}
+{"at": "2026-10-26T12:50:47.521529+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T12:50:47.995299+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.47}
+{"at": "2026-10-26T12:50:47.995299+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T12:50:48.416651+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.42}
+{"at": "2026-10-26T12:50:48.416651+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T12:50:48.643521+00:00", "event": "stage_done", "stage": "style", "seconds": 0.23}
+{"at": "2026-10-26T12:50:48.643521+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T12:50:58.719991+00:00", "event": "stage_done", "stage": "templates", "seconds": 10.08}
+{"at": "2026-10-26T12:50:58.719991+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T12:50:59.294148+00:00", "event": "stage_done", "stage": "figures", "seconds": 0.58}
+{"at": "2026-10-26T12:50:59.294148+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T12:50:59.641887+00:00", "event": "stage_done", "stage": "prepare", "seconds": 0.34}
+{"at": "2026-10-26T12:50:59.641887+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T12:51:02.636076+00:00", "event": "stage_done", "stage": "charts", "seconds": 2.98}
+{"at": "2026-10-26T12:51:02.636076+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T12:51:02.720929+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.09}
+{"at": "2026-10-26T12:51:02.720929+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T12:51:02.842764+00:00", "event": "fallback", "stage": "write", "reason": "repeats: 309 found, 0 fixed, 48 dropped, 223 flagged"}
+{"at": "2026-10-26T12:51:02.852598+00:00", "event": "stage_done", "stage": "write", "seconds": 0.12}
+{"at": "2026-10-26T12:51:02.852598+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T12:51:02.886074+00:00", "event": "fallback", "stage": "fit", "reason": "repeats: 309 found, 0 fixed, 48 dropped, 223 flagged"}
+{"at": "2026-10-26T12:51:02.886074+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T12:51:02.886074+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T12:51:02.886074+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.03}
+{"at": "2026-10-26T12:51:02.886074+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T12:51:03.085934+00:00", "event": "stage_done", "stage": "images", "seconds": 0.2}
+{"at": "2026-10-26T12:51:03.085934+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T12:51:09.725047+00:00", "event": "stage_done", "stage": "render", "seconds": 6.64}
+{"at": "2026-10-26T12:51:09.725047+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T12:57:29.720522+00:00", "event": "run_partial", "stage": "qa", "message": "qa: LLMBudgetExceeded: stage budget 200000 tokens exhausted"}
+{"at": "2026-10-26T13:07:55.435048+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": false, "resumed": true}
+{"at": "2026-10-26T13:07:55.854444+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T13:07:55.944852+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T13:07:56.779362+00:00", "event": "stage_done", "stage": "extract", "seconds": 0.94}
+{"at": "2026-10-26T13:07:56.779362+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T13:07:58.002118+00:00", "event": "stage_done", "stage": "infer", "seconds": 1.22}
+{"at": "2026-10-26T13:07:58.003139+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T13:07:58.290368+00:00", "event": "labels", "columns": 19, "replaced": 157, "kept": 17, "avoid_size": 260}
+{"at": "2026-10-26T13:07:58.292381+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.28}
+{"at": "2026-10-26T13:07:58.297667+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T13:07:59.076926+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.78}
+{"at": "2026-10-26T13:07:59.078520+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T13:07:59.585945+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.5}
+{"at": "2026-10-26T13:07:59.586717+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T13:07:59.957210+00:00", "event": "stage_done", "stage": "style", "seconds": 0.38}
+{"at": "2026-10-26T13:07:59.957210+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T13:08:14.778715+00:00", "event": "stage_done", "stage": "templates", "seconds": 14.83}
+{"at": "2026-10-26T13:08:14.780291+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T13:08:14.898679+00:00", "event": "stage_done", "stage": "figures", "seconds": 0.11}
+{"at": "2026-10-26T13:08:14.898679+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T13:08:15.437814+00:00", "event": "stage_done", "stage": "prepare", "seconds": 0.55}
+{"at": "2026-10-26T13:08:15.437814+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T13:08:18.113238+00:00", "event": "stage_done", "stage": "charts", "seconds": 2.67}
+{"at": "2026-10-26T13:08:18.113238+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T13:08:18.183005+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.06}
+{"at": "2026-10-26T13:08:18.183005+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T13:08:18.319072+00:00", "event": "fallback", "stage": "write", "reason": "repeats: 371 found, 0 fixed, 50 dropped, 263 flagged"}
+{"at": "2026-10-26T13:08:18.320690+00:00", "event": "stage_done", "stage": "write", "seconds": 0.14}
+{"at": "2026-10-26T13:08:18.320690+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T13:08:18.365288+00:00", "event": "fallback", "stage": "fit", "reason": "repeats: 371 found, 0 fixed, 50 dropped, 263 flagged"}
+{"at": "2026-10-26T13:08:18.365288+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:08:18.365288+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:08:18.365288+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.05}
+{"at": "2026-10-26T13:08:18.365288+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T13:08:18.567321+00:00", "event": "stage_done", "stage": "images", "seconds": 0.2}
+{"at": "2026-10-26T13:08:18.567321+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T13:08:28.583828+00:00", "event": "stage_done", "stage": "render", "seconds": 10.02}
+{"at": "2026-10-26T13:08:28.583828+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T13:08:29.949084+00:00", "event": "stage_done", "stage": "qa", "seconds": 1.36}
+{"at": "2026-10-26T13:08:31.263633+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "privacy_audit": true, "data_valid": true, "periods_shifted": true, "every_table_has_chart": true, "charts_match_tables": true, "no_unresolved_placeholders": true, "no_illegal_digits": true, "bible_consistent": true, "same_sections_new_titles": true, "min_1000_words": true, "layout_fits": true, "fonts_embedded": true, "font_sizes_locked": true, "labels_fabricated": true, "no_source_names": true, "no_fixed_doc_type": true, "entity_and_branding": true, "metadata_clean": true, "critic_not_worse": true, "no_source_copy": true, "deliverables": false, "share_distance": true, "dcr": true, "no_typed_units": true, "ocr_coverage": true, "layout_agreement": true, "chart_style_similar": true, "vector_recovery_exact": true, "roundtrip_structure": false, "layout_metrics": false}}
+{"at": "2026-10-26T13:25:19.840403+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": false, "resumed": true}
+{"at": "2026-10-26T13:25:20.057319+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T13:25:20.096101+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T13:25:20.627250+00:00", "event": "stage_done", "stage": "extract", "seconds": 0.58}
+{"at": "2026-10-26T13:25:20.627250+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T13:25:21.273276+00:00", "event": "stage_done", "stage": "infer", "seconds": 0.64}
+{"at": "2026-10-26T13:25:21.275286+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T13:25:21.463332+00:00", "event": "labels", "columns": 19, "replaced": 157, "kept": 17, "avoid_size": 260}
+{"at": "2026-10-26T13:25:21.477693+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.2}
+{"at": "2026-10-26T13:25:21.479256+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T13:25:22.052719+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.58}
+{"at": "2026-10-26T13:25:22.052719+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T13:25:22.401737+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.34}
+{"at": "2026-10-26T13:25:22.401737+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T13:25:22.711674+00:00", "event": "stage_done", "stage": "style", "seconds": 0.31}
+{"at": "2026-10-26T13:25:22.711674+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T13:25:31.432618+00:00", "event": "stage_done", "stage": "templates", "seconds": 8.72}
+{"at": "2026-10-26T13:25:31.432618+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T13:25:31.510657+00:00", "event": "stage_done", "stage": "figures", "seconds": 0.08}
+{"at": "2026-10-26T13:25:31.511177+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T13:25:31.853554+00:00", "event": "stage_done", "stage": "prepare", "seconds": 0.34}
+{"at": "2026-10-26T13:25:31.853554+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T13:25:34.827251+00:00", "event": "stage_done", "stage": "charts", "seconds": 2.99}
+{"at": "2026-10-26T13:25:34.827251+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T13:25:34.906615+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.08}
+{"at": "2026-10-26T13:25:34.906615+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T13:25:35.052423+00:00", "event": "fallback", "stage": "write", "reason": "repeats: 371 found, 0 fixed, 50 dropped, 263 flagged"}
+{"at": "2026-10-26T13:25:35.052423+00:00", "event": "stage_done", "stage": "write", "seconds": 0.14}
+{"at": "2026-10-26T13:25:35.052423+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T13:25:35.093831+00:00", "event": "fallback", "stage": "fit", "reason": "repeats: 371 found, 0 fixed, 50 dropped, 263 flagged"}
+{"at": "2026-10-26T13:25:35.093831+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:25:35.093831+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:25:35.102272+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.05}
+{"at": "2026-10-26T13:25:35.102787+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T13:25:35.291120+00:00", "event": "stage_done", "stage": "images", "seconds": 0.19}
+{"at": "2026-10-26T13:25:35.291120+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T13:25:42.540699+00:00", "event": "stage_done", "stage": "render", "seconds": 7.25}
+{"at": "2026-10-26T13:25:42.540699+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T13:25:43.336026+00:00", "event": "stage_done", "stage": "qa", "seconds": 0.8}
+{"at": "2026-10-26T13:25:43.336026+00:00", "event": "stage_start", "stage": "package"}
+{"at": "2026-10-26T13:25:43.852763+00:00", "event": "stage_done", "stage": "package", "seconds": 0.51}
+{"at": "2026-10-26T13:25:44.852073+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "privacy_audit": true, "data_valid": true, "periods_shifted": true, "every_table_has_chart": true, "charts_match_tables": true, "no_unresolved_placeholders": true, "no_illegal_digits": true, "bible_consistent": true, "same_sections_new_titles": true, "min_1000_words": true, "layout_fits": true, "fonts_embedded": true, "font_sizes_locked": true, "labels_fabricated": true, "no_source_names": true, "no_fixed_doc_type": true, "entity_and_branding": true, "metadata_clean": true, "critic_not_worse": true, "no_source_copy": true, "deliverables": true, "share_distance": true, "dcr": true, "no_typed_units": true, "ocr_coverage": true, "layout_agreement": true, "chart_style_similar": true, "vector_recovery_exact": true, "roundtrip_structure": false, "layout_metrics": false}}
+{"at": "2026-10-26T13:30:19.215031+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": true, "resumed": true}
+{"at": "2026-10-26T13:30:19.722716+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T13:30:19.827217+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T13:30:20.826936+00:00", "event": "stage_done", "stage": "extract", "seconds": 1.11}
+{"at": "2026-10-26T13:30:20.826936+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T13:32:35.027673+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": true, "resumed": true}
+{"at": "2026-10-26T13:32:35.332049+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T13:32:35.393312+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T13:32:36.077325+00:00", "event": "stage_done", "stage": "extract", "seconds": 0.75}
+{"at": "2026-10-26T13:32:36.077325+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T13:32:37.393505+00:00", "event": "stage_done", "stage": "infer", "seconds": 1.31}
+{"at": "2026-10-26T13:32:38.243818+00:00", "event": "run_end", "status": "failed", "gates": {"validation": false, "privacy_audit": false, "data_valid": false, "periods_shifted": false, "every_table_has_chart": false, "charts_match_tables": false, "no_unresolved_placeholders": false, "no_illegal_digits": true, "bible_consistent": true, "same_sections_new_titles": false, "words_per_page": false, "min_1000_words": false, "layout_fits": false, "fonts_embedded": false, "font_sizes_locked": false, "labels_fabricated": true, "no_source_names": false, "no_fixed_doc_type": true, "entity_and_branding": false, "metadata_clean": false, "critic_not_worse": true, "no_source_copy": true, "deliverables": false, "share_distance": true, "dcr": true, "no_typed_units": true, "ocr_coverage": true, "layout_agreement": true, "chart_style_similar": true, "vector_recovery_exact": true, "roundtrip_structure": false, "layout_metrics": false, "no_cross_section_repeats": true}}
+{"at": "2026-10-26T13:33:38.154432+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": true, "resumed": true}
+{"at": "2026-10-26T13:33:38.488956+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T13:33:38.567365+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T13:33:39.288123+00:00", "event": "stage_done", "stage": "extract", "seconds": 0.8}
+{"at": "2026-10-26T13:33:39.288123+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T13:33:40.736043+00:00", "event": "stage_done", "stage": "infer", "seconds": 1.45}
+{"at": "2026-10-26T13:33:40.736799+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T13:33:40.953428+00:00", "event": "labels", "columns": 20, "replaced": 130, "kept": 45, "avoid_size": 235}
+{"at": "2026-10-26T13:33:40.963049+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.22}
+{"at": "2026-10-26T13:33:40.963049+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T13:33:41.481943+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.53}
+{"at": "2026-10-26T13:33:41.481943+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T13:33:42.114927+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.62}
+{"at": "2026-10-26T13:33:42.122880+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T13:33:42.371759+00:00", "event": "stage_done", "stage": "style", "seconds": 0.25}
+{"at": "2026-10-26T13:33:42.373821+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T13:33:53.311490+00:00", "event": "stage_done", "stage": "templates", "seconds": 10.94}
+{"at": "2026-10-26T13:33:53.311490+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T13:33:54.133995+00:00", "event": "stage_done", "stage": "figures", "seconds": 0.81}
+{"at": "2026-10-26T13:33:54.134574+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T13:33:54.725938+00:00", "event": "stage_done", "stage": "prepare", "seconds": 0.59}
+{"at": "2026-10-26T13:33:54.726461+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T13:33:58.767037+00:00", "event": "stage_done", "stage": "charts", "seconds": 4.05}
+{"at": "2026-10-26T13:33:58.767037+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T13:33:58.834626+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.06}
+{"at": "2026-10-26T13:33:58.834626+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T13:33:59.008585+00:00", "event": "fallback", "stage": "write", "reason": "repeats: 309 found, 0 fixed, 48 dropped, 223 flagged"}
+{"at": "2026-10-26T13:33:59.008585+00:00", "event": "stage_done", "stage": "write", "seconds": 0.17}
+{"at": "2026-10-26T13:33:59.008585+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T13:33:59.071508+00:00", "event": "fallback", "stage": "fit", "reason": "repeats: 309 found, 0 fixed, 48 dropped, 223 flagged"}
+{"at": "2026-10-26T13:33:59.071508+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:33:59.071508+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:33:59.077208+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.08}
+{"at": "2026-10-26T13:33:59.079218+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T13:33:59.514979+00:00", "event": "run_error", "error": "HTTPStatusError: Client error '400 Bad Request' for url 'https://api.cloudflare.com/client/v4/accounts/682d155466c36b4d9eb1b471fbd276a3/ai/run/@cf/black-forest-labs/flux-1-schnell'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400"}
+{"at": "2026-10-26T13:36:07.529208+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": true, "resumed": true}
+{"at": "2026-10-26T13:36:07.824474+00:00", "event": "stage_reused", "stage": "extract"}
+{"at": "2026-10-26T13:36:07.827993+00:00", "event": "stage_reused", "stage": "infer"}
+{"at": "2026-10-26T13:36:07.827993+00:00", "event": "stage_reused", "stage": "privacy_plan"}
+{"at": "2026-10-26T13:36:07.827993+00:00", "event": "stage_reused", "stage": "generate"}
+{"at": "2026-10-26T13:36:07.827993+00:00", "event": "stage_reused", "stage": "privacy_audit"}
+{"at": "2026-10-26T13:36:07.827993+00:00", "event": "stage_reused", "stage": "style"}
+{"at": "2026-10-26T13:36:07.827993+00:00", "event": "stage_reused", "stage": "templates"}
+{"at": "2026-10-26T13:36:07.827993+00:00", "event": "stage_reused", "stage": "figures"}
+{"at": "2026-10-26T13:36:07.827993+00:00", "event": "stage_reused", "stage": "prepare"}
+{"at": "2026-10-26T13:36:07.827993+00:00", "event": "stage_reused", "stage": "charts"}
+{"at": "2026-10-26T13:36:07.842678+00:00", "event": "stage_reused", "stage": "plan"}
+{"at": "2026-10-26T13:36:07.842678+00:00", "event": "stage_reused", "stage": "write"}
+{"at": "2026-10-26T13:36:07.842678+00:00", "event": "stage_reused", "stage": "fit"}
+{"at": "2026-10-26T13:36:07.842678+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T13:36:26.531237+00:00", "event": "stage_done", "stage": "images", "seconds": 18.69}
+{"at": "2026-10-26T13:36:26.531237+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T13:36:39.153377+00:00", "event": "stage_done", "stage": "render", "seconds": 12.62}
+{"at": "2026-10-26T13:36:39.156995+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T13:36:54.731443+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": true, "resumed": true}
+{"at": "2026-10-26T13:36:55.030025+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T13:36:55.121748+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T13:36:55.877052+00:00", "event": "stage_done", "stage": "extract", "seconds": 0.84}
+{"at": "2026-10-26T13:36:55.877052+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T13:36:59.615848+00:00", "event": "stage_done", "stage": "infer", "seconds": 3.74}
+{"at": "2026-10-26T13:36:59.615848+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T13:36:59.812257+00:00", "event": "labels", "columns": 20, "replaced": 130, "kept": 45, "avoid_size": 235}
+{"at": "2026-10-26T13:36:59.815027+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.2}
+{"at": "2026-10-26T13:36:59.815027+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T13:37:00.348733+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.53}
+{"at": "2026-10-26T13:37:00.348733+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T13:37:01.049941+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.7}
+{"at": "2026-10-26T13:37:01.049941+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T13:37:01.380644+00:00", "event": "stage_done", "stage": "style", "seconds": 0.33}
+{"at": "2026-10-26T13:37:01.380644+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T13:37:17.822343+00:00", "event": "stage_done", "stage": "templates", "seconds": 16.44}
+{"at": "2026-10-26T13:37:17.824872+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T13:37:18.551174+00:00", "event": "stage_done", "stage": "figures", "seconds": 0.72}
+{"at": "2026-10-26T13:37:18.551174+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T13:37:19.189012+00:00", "event": "stage_done", "stage": "prepare", "seconds": 0.64}
+{"at": "2026-10-26T13:37:19.191732+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T13:37:24.421527+00:00", "event": "stage_done", "stage": "charts", "seconds": 5.23}
+{"at": "2026-10-26T13:37:24.422753+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T13:37:24.560615+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.14}
+{"at": "2026-10-26T13:37:24.562335+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T13:37:24.947155+00:00", "event": "fallback", "stage": "write", "reason": "repeats: 357 found, 0 fixed, 54 dropped, 236 flagged"}
+{"at": "2026-10-26T13:37:24.952126+00:00", "event": "stage_done", "stage": "write", "seconds": 0.39}
+{"at": "2026-10-26T13:37:24.952126+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T13:37:25.016892+00:00", "event": "fallback", "stage": "fit", "reason": "repeats: 357 found, 0 fixed, 54 dropped, 236 flagged"}
+{"at": "2026-10-26T13:37:25.018413+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:37:25.018989+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:37:25.018989+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.06}
+{"at": "2026-10-26T13:37:25.018989+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T13:37:46.897263+00:00", "event": "stage_done", "stage": "images", "seconds": 21.88}
+{"at": "2026-10-26T13:37:46.897263+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T13:38:03.110823+00:00", "event": "stage_done", "stage": "render", "seconds": 16.22}
+{"at": "2026-10-26T13:38:03.110823+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T13:40:21.833149+00:00", "event": "stage_done", "stage": "qa", "seconds": 222.67}
+{"at": "2026-10-26T13:40:21.841592+00:00", "event": "stage_start", "stage": "package"}
+{"at": "2026-10-26T13:40:22.895286+00:00", "event": "stage_done", "stage": "package", "seconds": 1.05}
+{"at": "2026-10-26T13:40:24.272663+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "privacy_audit": true, "data_valid": true, "periods_shifted": true, "every_table_has_chart": true, "charts_match_tables": false, "no_unresolved_placeholders": true, "no_illegal_digits": true, "bible_consistent": true, "same_sections_new_titles": true, "words_per_page": false, "min_1000_words": true, "layout_fits": true, "fonts_embedded": true, "font_sizes_locked": true, "labels_fabricated": true, "no_source_names": true, "no_fixed_doc_type": true, "entity_and_branding": true, "metadata_clean": true, "critic_not_worse": true, "no_source_copy": true, "deliverables": true, "share_distance": true, "dcr": true, "no_typed_units": true, "ocr_coverage": true, "layout_agreement": true, "chart_style_similar": true, "vector_recovery_exact": true, "roundtrip_structure": false, "layout_metrics": false, "discriminator": true, "no_cross_section_repeats": false}}
+{"at": "2026-10-26T13:40:32.858233+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": false, "resumed": true}
+{"at": "2026-10-26T13:40:33.245406+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T13:40:33.404788+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T13:40:34.191328+00:00", "event": "stage_done", "stage": "extract", "seconds": 0.95}
+{"at": "2026-10-26T13:40:34.192391+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T13:40:35.364165+00:00", "event": "stage_done", "stage": "infer", "seconds": 1.17}
+{"at": "2026-10-26T13:40:35.365204+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T13:40:35.638354+00:00", "event": "labels", "columns": 19, "replaced": 129, "kept": 45, "avoid_size": 235}
+{"at": "2026-10-26T13:40:35.644481+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.28}
+{"at": "2026-10-26T13:40:35.644481+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T13:40:36.500583+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.86}
+{"at": "2026-10-26T13:40:36.500583+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T13:40:37.015114+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.52}
+{"at": "2026-10-26T13:40:37.017208+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T13:40:37.432262+00:00", "event": "stage_done", "stage": "style", "seconds": 0.41}
+{"at": "2026-10-26T13:40:37.432262+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T13:40:52.644509+00:00", "event": "stage_done", "stage": "templates", "seconds": 15.22}
+{"at": "2026-10-26T13:40:52.645890+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T13:40:52.758573+00:00", "event": "stage_done", "stage": "figures", "seconds": 0.11}
+{"at": "2026-10-26T13:40:52.758573+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T13:40:53.216603+00:00", "event": "stage_done", "stage": "prepare", "seconds": 0.47}
+{"at": "2026-10-26T13:40:53.216603+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T13:40:56.910945+00:00", "event": "stage_done", "stage": "charts", "seconds": 3.69}
+{"at": "2026-10-26T13:40:56.910945+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T13:40:57.029340+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.12}
+{"at": "2026-10-26T13:40:57.029340+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T13:40:57.251349+00:00", "event": "fallback", "stage": "write", "reason": "repeats: 371 found, 0 fixed, 50 dropped, 263 flagged"}
+{"at": "2026-10-26T13:40:57.252858+00:00", "event": "stage_done", "stage": "write", "seconds": 0.22}
+{"at": "2026-10-26T13:40:57.255206+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T13:40:57.322067+00:00", "event": "fallback", "stage": "fit", "reason": "repeats: 371 found, 0 fixed, 50 dropped, 263 flagged"}
+{"at": "2026-10-26T13:40:57.322067+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:40:57.322067+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:40:57.324531+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.06}
+{"at": "2026-10-26T13:40:57.324531+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T13:40:57.616461+00:00", "event": "stage_done", "stage": "images", "seconds": 0.3}
+{"at": "2026-10-26T13:40:57.616461+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T13:41:07.277997+00:00", "event": "stage_done", "stage": "render", "seconds": 9.67}
+{"at": "2026-10-26T13:41:07.277997+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T13:41:08.377831+00:00", "event": "stage_done", "stage": "qa", "seconds": 1.09}
+{"at": "2026-10-26T13:41:08.379869+00:00", "event": "stage_start", "stage": "package"}
+{"at": "2026-10-26T13:41:09.176719+00:00", "event": "stage_done", "stage": "package", "seconds": 0.8}
+{"at": "2026-10-26T13:41:10.772713+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "privacy_audit": true, "data_valid": true, "periods_shifted": true, "every_table_has_chart": true, "charts_match_tables": true, "no_unresolved_placeholders": true, "no_illegal_digits": true, "bible_consistent": true, "same_sections_new_titles": true, "min_1000_words": true, "layout_fits": true, "fonts_embedded": true, "font_sizes_locked": true, "labels_fabricated": true, "no_source_names": true, "no_fixed_doc_type": true, "entity_and_branding": true, "metadata_clean": true, "critic_not_worse": true, "no_source_copy": true, "deliverables": true, "share_distance": true, "dcr": true, "no_typed_units": true, "ocr_coverage": true, "layout_agreement": true, "chart_style_similar": true, "vector_recovery_exact": true, "roundtrip_structure": false, "layout_metrics": false}}
+{"at": "2026-10-26T13:41:26.141859+00:00", "event": "stage_done", "stage": "qa", "seconds": 203.03}
+{"at": "2026-10-26T13:41:26.154382+00:00", "event": "stage_start", "stage": "package"}
+{"at": "2026-10-26T13:41:27.154782+00:00", "event": "stage_done", "stage": "package", "seconds": 1.0}
+{"at": "2026-10-26T13:41:27.724452+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "privacy_audit": true, "data_valid": true, "periods_shifted": true, "every_table_has_chart": true, "charts_match_tables": true, "no_unresolved_placeholders": true, "no_illegal_digits": true, "bible_consistent": true, "same_sections_new_titles": true, "words_per_page": false, "min_1000_words": true, "layout_fits": true, "fonts_embedded": true, "font_sizes_locked": true, "labels_fabricated": true, "no_source_names": true, "no_fixed_doc_type": true, "entity_and_branding": true, "metadata_clean": true, "critic_not_worse": true, "no_source_copy": true, "deliverables": true, "share_distance": true, "dcr": true, "no_typed_units": true, "ocr_coverage": true, "layout_agreement": true, "chart_style_similar": true, "vector_recovery_exact": true, "roundtrip_structure": false, "layout_metrics": false, "discriminator": true, "no_cross_section_repeats": false}}
+{"at": "2026-10-26T13:43:08.627403+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": false, "resumed": true}
+{"at": "2026-10-26T13:43:09.283201+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T13:43:09.432951+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T13:43:11.117871+00:00", "event": "stage_done", "stage": "extract", "seconds": 1.83}
+{"at": "2026-10-26T13:43:11.117871+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T13:43:13.143931+00:00", "event": "stage_done", "stage": "infer", "seconds": 2.03}
+{"at": "2026-10-26T13:43:13.144984+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T13:43:13.649519+00:00", "event": "labels", "columns": 19, "replaced": 120, "kept": 54, "avoid_size": 229}
+{"at": "2026-10-26T13:43:13.659801+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.52}
+{"at": "2026-10-26T13:43:13.660475+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T13:43:14.936539+00:00", "event": "stage_done", "stage": "generate", "seconds": 1.28}
+{"at": "2026-10-26T13:43:14.937315+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T13:43:15.964976+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 1.02}
+{"at": "2026-10-26T13:43:15.965543+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T13:43:16.746369+00:00", "event": "stage_done", "stage": "style", "seconds": 0.77}
+{"at": "2026-10-26T13:43:16.746369+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T13:43:42.770693+00:00", "event": "stage_done", "stage": "templates", "seconds": 26.03}
+{"at": "2026-10-26T13:43:42.772706+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T13:43:42.899594+00:00", "event": "stage_done", "stage": "figures", "seconds": 0.12}
+{"at": "2026-10-26T13:43:42.899594+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T13:43:43.501548+00:00", "event": "stage_done", "stage": "prepare", "seconds": 0.61}
+{"at": "2026-10-26T13:43:43.501548+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T13:43:49.369732+00:00", "event": "stage_done", "stage": "charts", "seconds": 5.86}
+{"at": "2026-10-26T13:43:49.371742+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T13:43:49.517832+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.14}
+{"at": "2026-10-26T13:43:49.519978+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T13:43:49.758399+00:00", "event": "fallback", "stage": "write", "reason": "repeats: 378 found, 0 fixed, 51 dropped, 262 flagged"}
+{"at": "2026-10-26T13:43:49.763588+00:00", "event": "stage_done", "stage": "write", "seconds": 0.25}
+{"at": "2026-10-26T13:43:49.764116+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T13:43:49.858645+00:00", "event": "fallback", "stage": "fit", "reason": "repeats: 378 found, 0 fixed, 51 dropped, 262 flagged"}
+{"at": "2026-10-26T13:43:49.870074+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:43:49.870074+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:43:49.876147+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.11}
+{"at": "2026-10-26T13:43:49.877664+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T13:43:50.639782+00:00", "event": "stage_done", "stage": "images", "seconds": 0.77}
+{"at": "2026-10-26T13:43:50.639782+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T13:44:10.462604+00:00", "event": "stage_done", "stage": "render", "seconds": 19.81}
+{"at": "2026-10-26T13:44:10.469271+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T13:44:11.617525+00:00", "event": "run_error", "error": "PermissionError: [Errno 13] Permission denied: 'artifacts\\\\runs\\\\7799d9f6e42f\\\\report_output.pdf'"}
+{"at": "2026-10-26T13:46:21.139394+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": false, "resumed": true}
+{"at": "2026-10-26T13:46:21.642405+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T13:46:21.745600+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T13:46:22.597724+00:00", "event": "stage_done", "stage": "extract", "seconds": 0.95}
+{"at": "2026-10-26T13:46:22.597724+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T13:46:23.478239+00:00", "event": "stage_done", "stage": "infer", "seconds": 0.88}
+{"at": "2026-10-26T13:46:23.478239+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T13:46:23.680836+00:00", "event": "labels", "columns": 18, "replaced": 113, "kept": 61, "avoid_size": 224}
+{"at": "2026-10-26T13:46:23.683372+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.2}
+{"at": "2026-10-26T13:46:23.683372+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T13:46:24.295190+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.62}
+{"at": "2026-10-26T13:46:24.295190+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T13:46:24.862803+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.56}
+{"at": "2026-10-26T13:46:24.865057+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T13:46:25.175601+00:00", "event": "stage_done", "stage": "style", "seconds": 0.31}
+{"at": "2026-10-26T13:46:25.176288+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T13:46:41.227332+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": true, "resumed": true}
+{"at": "2026-10-26T13:46:41.574075+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T13:46:41.689894+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T13:46:42.459262+00:00", "event": "stage_done", "stage": "extract", "seconds": 0.89}
+{"at": "2026-10-26T13:46:42.461360+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T13:46:43.937295+00:00", "event": "stage_done", "stage": "infer", "seconds": 1.48}
+{"at": "2026-10-26T13:46:43.937295+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T13:46:44.135006+00:00", "event": "labels", "columns": 19, "replaced": 114, "kept": 61, "avoid_size": 224}
+{"at": "2026-10-26T13:46:44.140226+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.2}
+{"at": "2026-10-26T13:46:44.140754+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T13:46:44.678825+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.53}
+{"at": "2026-10-26T13:46:44.678825+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T13:46:45.319206+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.64}
+{"at": "2026-10-26T13:46:45.321214+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T13:46:45.681095+00:00", "event": "stage_done", "stage": "style", "seconds": 0.36}
+{"at": "2026-10-26T13:46:45.681095+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T13:46:49.239468+00:00", "event": "stage_done", "stage": "templates", "seconds": 24.06}
+{"at": "2026-10-26T13:46:49.239468+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T13:46:49.434695+00:00", "event": "stage_done", "stage": "figures", "seconds": 0.2}
+{"at": "2026-10-26T13:46:49.434695+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T13:46:50.665998+00:00", "event": "stage_done", "stage": "prepare", "seconds": 1.22}
+{"at": "2026-10-26T13:46:50.666547+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T13:46:57.945593+00:00", "event": "stage_done", "stage": "charts", "seconds": 7.28}
+{"at": "2026-10-26T13:46:57.952836+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T13:46:58.062723+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.11}
+{"at": "2026-10-26T13:46:58.062723+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T13:46:58.270747+00:00", "event": "fallback", "stage": "write", "reason": "repeats: 309 found, 0 fixed, 48 dropped, 223 flagged"}
+{"at": "2026-10-26T13:46:58.273880+00:00", "event": "stage_done", "stage": "write", "seconds": 0.2}
+{"at": "2026-10-26T13:46:58.273880+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T13:46:58.336151+00:00", "event": "fallback", "stage": "fit", "reason": "repeats: 309 found, 0 fixed, 48 dropped, 223 flagged"}
+{"at": "2026-10-26T13:46:58.336151+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:46:58.337146+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:46:58.339491+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.06}
+{"at": "2026-10-26T13:46:58.340882+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T13:46:58.627329+00:00", "event": "stage_done", "stage": "images", "seconds": 0.28}
+{"at": "2026-10-26T13:46:58.627329+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T13:47:01.755416+00:00", "event": "stage_done", "stage": "templates", "seconds": 16.08}
+{"at": "2026-10-26T13:47:01.759018+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T13:47:02.736847+00:00", "event": "stage_done", "stage": "figures", "seconds": 0.99}
+{"at": "2026-10-26T13:47:02.737846+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T13:47:03.177300+00:00", "event": "stage_done", "stage": "prepare", "seconds": 0.44}
+{"at": "2026-10-26T13:47:03.177807+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T13:47:06.852172+00:00", "event": "stage_done", "stage": "charts", "seconds": 3.67}
+{"at": "2026-10-26T13:47:06.854803+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T13:47:07.064129+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.22}
+{"at": "2026-10-26T13:47:07.066648+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T13:47:07.386381+00:00", "event": "fallback", "stage": "write", "reason": "repeats: 357 found, 0 fixed, 54 dropped, 236 flagged"}
+{"at": "2026-10-26T13:47:07.391746+00:00", "event": "stage_done", "stage": "write", "seconds": 0.33}
+{"at": "2026-10-26T13:47:07.391746+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T13:47:07.479792+00:00", "event": "fallback", "stage": "fit", "reason": "repeats: 357 found, 0 fixed, 54 dropped, 236 flagged"}
+{"at": "2026-10-26T13:47:07.480798+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:47:07.480798+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:47:07.483792+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.09}
+{"at": "2026-10-26T13:47:07.484793+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T13:47:08.751115+00:00", "event": "stage_done", "stage": "render", "seconds": 10.12}
+{"at": "2026-10-26T13:47:08.755157+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T13:47:09.127611+00:00", "event": "stage_done", "stage": "images", "seconds": 1.64}
+{"at": "2026-10-26T13:47:09.128624+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T13:47:09.913734+00:00", "event": "run_error", "error": "PermissionError: [Errno 13] Permission denied: 'artifacts\\\\runs\\\\7799d9f6e42f\\\\report_output.pdf'"}
+{"at": "2026-10-26T13:47:18.735774+00:00", "event": "stage_done", "stage": "render", "seconds": 9.61}
+{"at": "2026-10-26T13:47:18.737429+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T13:53:00.253566+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": true, "resumed": true}
+{"at": "2026-10-26T13:53:00.767427+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T13:53:00.874053+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T13:53:01.765571+00:00", "event": "stage_done", "stage": "extract", "seconds": 1.0}
+{"at": "2026-10-26T13:53:01.769924+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T13:53:06.186449+00:00", "event": "stage_done", "stage": "infer", "seconds": 4.42}
+{"at": "2026-10-26T13:53:06.186449+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T13:53:06.328798+00:00", "event": "labels", "columns": 15, "replaced": 96, "kept": 79, "avoid_size": 213}
+{"at": "2026-10-26T13:53:06.328798+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.14}
+{"at": "2026-10-26T13:53:06.328798+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T13:53:06.865330+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.53}
+{"at": "2026-10-26T13:53:06.868554+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T13:53:07.427699+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.56}
+{"at": "2026-10-26T13:53:07.427699+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T13:53:07.651000+00:00", "event": "stage_done", "stage": "style", "seconds": 0.22}
+{"at": "2026-10-26T13:53:07.664847+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T13:53:24.504236+00:00", "event": "stage_done", "stage": "templates", "seconds": 16.84}
+{"at": "2026-10-26T13:53:24.510370+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T13:53:25.550898+00:00", "event": "stage_done", "stage": "figures", "seconds": 1.05}
+{"at": "2026-10-26T13:53:25.550898+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T13:53:26.271071+00:00", "event": "stage_done", "stage": "prepare", "seconds": 0.72}
+{"at": "2026-10-26T13:53:26.271071+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T13:53:31.106042+00:00", "event": "stage_done", "stage": "charts", "seconds": 4.84}
+{"at": "2026-10-26T13:53:31.108061+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T13:53:31.237606+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.12}
+{"at": "2026-10-26T13:53:31.238906+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T13:53:31.454632+00:00", "event": "fallback", "stage": "write", "reason": "repeats: 357 found, 0 fixed, 54 dropped, 236 flagged"}
+{"at": "2026-10-26T13:53:31.460482+00:00", "event": "stage_done", "stage": "write", "seconds": 0.22}
+{"at": "2026-10-26T13:53:31.461057+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T13:53:31.540340+00:00", "event": "fallback", "stage": "fit", "reason": "repeats: 357 found, 0 fixed, 54 dropped, 236 flagged"}
+{"at": "2026-10-26T13:53:31.540340+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:53:31.540340+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:53:31.548976+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.09}
+{"at": "2026-10-26T13:53:31.549715+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T13:53:32.653045+00:00", "event": "stage_done", "stage": "images", "seconds": 1.11}
+{"at": "2026-10-26T13:53:32.653045+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T13:53:44.564863+00:00", "event": "stage_done", "stage": "render", "seconds": 11.91}
+{"at": "2026-10-26T13:53:44.628358+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T13:54:09.991419+00:00", "event": "run_error", "error": "PermissionError: [Errno 13] Permission denied: 'artifacts\\\\runs\\\\7799d9f6e42f\\\\report_output.pdf'"}

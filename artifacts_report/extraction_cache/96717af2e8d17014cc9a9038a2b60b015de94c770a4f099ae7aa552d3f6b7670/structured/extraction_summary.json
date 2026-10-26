@@ -1,0 +1,18 @@
+{
+  "source_pdf": "injected.pdf",
+  "conversion_status": "pymupdf",
+  "table_count": 1,
+  "tables": [
+    {
+      "table_number": 1,
+      "rows": 6,
+      "columns": 3,
+      "csv_path": "table_001.csv"
+    }
+  ],
+  "detected_figure_count": 0,
+  "saved_figures": [],
+  "method": "pymupdf",
+  "warnings": [],
+  "source_sha256": "96717af2e8d17014cc9a9038a2b60b015de94c770a4f099ae7aa552d3f6b7670"
+}

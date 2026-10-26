@@ -1,0 +1,300 @@
+{
+  "page_width_pt": 595.3200073242188,
+  "page_height_pt": 841.9199829101562,
+  "margins_pt": [
+    70.92,
+    19.35,
+    65.56,
+    22.44
+  ],
+  "fonts": [
+    {
+      "font_id": "F1",
+      "source_name": "Cambria",
+      "family": "Cambria",
+      "bold": false,
+      "italic": false,
+      "file": "runs/7799d9f6e42f/style/fonts/F1-Cambria.ttf",
+      "fallback": "Caladea"
+    },
+    {
+      "font_id": "F2",
+      "source_name": "Cambria-Bold",
+      "family": "Cambria",
+      "bold": true,
+      "italic": false,
+      "file": "runs/7799d9f6e42f/style/fonts/F2-Cambria.ttf",
+      "fallback": "Caladea"
+    },
+    {
+      "font_id": "F3",
+      "source_name": "Cambria-BoldItalic",
+      "family": "Cambria",
+      "bold": true,
+      "italic": true,
+      "file": "runs/7799d9f6e42f/style/fonts/F3-Cambria.ttf",
+      "fallback": "Caladea"
+    },
+    {
+      "font_id": "F4",
+      "source_name": "BookAntiqua",
+      "family": "Book Antiqua",
+      "bold": false,
+      "italic": false,
+      "file": "runs/7799d9f6e42f/style/fonts/F4-Book_Antiqua.ttf",
+      "fallback": "Liberation Serif"
+    },
+    {
+      "font_id": "F5",
+      "source_name": "SymbolMT",
+      "family": "Symbol",
+      "bold": false,
+      "italic": false,
+      "file": null,
+      "fallback": "Liberation Sans"
+    },
+    {
+      "font_id": "F6",
+      "source_name": "Cambria-Italic",
+      "family": "Cambria",
+      "bold": false,
+      "italic": true,
+      "file": "runs/7799d9f6e42f/style/fonts/F6-Cambria.ttf",
+      "fallback": "Caladea"
+    },
+    {
+      "font_id": "F7",
+      "source_name": "BookAntiqua-Bold",
+      "family": "Book Antiqua",
+      "bold": true,
+      "italic": false,
+      "file": "runs/7799d9f6e42f/style/fonts/F7-Book_Antiqua.ttf",
+      "fallback": "Liberation Serif"
+    },
+    {
+      "font_id": "F8",
+      "source_name": "MyriadPro-Regular",
+      "family": "Myriad",
+      "bold": false,
+      "italic": false,
+      "file": null,
+      "fallback": "Liberation Sans"
+    }
+  ],
+  "text_styles": [
+    {
+      "style_id": "T1",
+      "font_id": "F1",
+      "size_pt": 8.0,
+      "color": "#000000",
+      "line_height": 1.17,
+      "align": "left"
+    },
+    {
+      "style_id": "T2",
+      "font_id": "F1",
+      "size_pt": 9.0,
+      "color": "#000000",
+      "line_height": 1.17,
+      "align": "left"
+    },
+    {
+      "style_id": "T3",
+      "font_id": "F2",
+      "size_pt": 9.0,
+      "color": "#000000",
+      "line_height": 1.17,
+      "align": "left"
+    },
+    {
+      "style_id": "T4",
+      "font_id": "F4",
+      "size_pt": 8.0,
+      "color": "#000000",
+      "line_height": 1.24,
+      "align": "left"
+    },
+    {
+      "style_id": "T5",
+      "font_id": "F2",
+      "size_pt": 8.0,
+      "color": "#000000",
+      "line_height": 1.31,
+      "align": "left"
+    },
+    {
+      "style_id": "T6",
+      "font_id": "F7",
+      "size_pt": 8.0,
+      "color": "#000000",
+      "line_height": 1.24,
+      "align": "left"
+    },
+    {
+      "style_id": "T7",
+      "font_id": "F2",
+      "size_pt": 8.0,
+      "color": "#FFFFFF",
+      "line_height": 1.2,
+      "align": "left"
+    },
+    {
+      "style_id": "T8",
+      "font_id": "F2",
+      "size_pt": 9.0,
+      "color": "#FFFFFF",
+      "line_height": 1.2,
+      "align": "left"
+    },
+    {
+      "style_id": "T9",
+      "font_id": "F6",
+      "size_pt": 9.0,
+      "color": "#000000",
+      "line_height": 1.47,
+      "align": "left"
+    },
+    {
+      "style_id": "T10",
+      "font_id": "F3",
+      "size_pt": 11.0,
+      "color": "#FFFFFF",
+      "line_height": 1.2,
+      "align": "left"
+    },
+    {
+      "style_id": "T11",
+      "font_id": "F1",
+      "size_pt": 10.0,
+      "color": "#000000",
+      "line_height": 1.18,
+      "align": "left"
+    },
+    {
+      "style_id": "T12",
+      "font_id": "F2",
+      "size_pt": 11.0,
+      "color": "#07877B",
+      "line_height": 1.2,
+      "align": "left"
+    },
+    {
+      "style_id": "T13",
+      "font_id": "F1",
+      "size_pt": 9.0,
+      "color": "#FFFFFF",
+      "line_height": 1.2,
+      "align": "left"
+    },
+    {
+      "style_id": "T14",
+      "font_id": "F2",
+      "size_pt": 10.0,
+      "color": "#07877B",
+      "line_height": 1.2,
+      "align": "left"
+    },
+    {
+      "style_id": "T15",
+      "font_id": "F1",
+      "size_pt": 8.0,
+      "color": "#FFFFFF",
+      "line_height": 2.74,
+      "align": "left"
+    },
+    {
+      "style_id": "T16",
+      "font_id": "F4",
+      "size_pt": 10.0,
+      "color": "#FFFFFF",
+      "line_height": 1.2,
+      "align": "left"
+    },
+    {
+      "style_id": "T17",
+      "font_id": "F2",
+      "size_pt": 11.0,
+      "color": "#000000",
+      "line_height": 1.2,
+      "align": "left"
+    },
+    {
+      "style_id": "T18",
+      "font_id": "F8",
+      "size_pt": 5.0,
+      "color": "#000000",
+      "line_height": 1.17,
+      "align": "left"
+    },
+    {
+      "style_id": "T19",
+      "font_id": "F1",
+      "size_pt": 8.0,
+      "color": "#595959",
+      "line_height": 1.2,
+      "align": "left"
+    },
+    {
+      "style_id": "T20",
+      "font_id": "F1",
+      "size_pt": 9.0,
+      "color": "#595959",
+      "line_height": 1.2,
+      "align": "left"
+    },
+    {
+      "style_id": "T21",
+      "font_id": "F2",
+      "size_pt": 7.0,
+      "color": "#000000",
+      "line_height": 1.2,
+      "align": "left"
+    },
+    {
+      "style_id": "T22",
+      "font_id": "F6",
+      "size_pt": 8.0,
+      "color": "#000000",
+      "line_height": 1.2,
+      "align": "left"
+    },
+    {
+      "style_id": "T23",
+      "font_id": "F2",
+      "size_pt": 14.0,
+      "color": "#07877B",
+      "line_height": 1.2,
+      "align": "left"
+    },
+    {
+      "style_id": "T24",
+      "font_id": "F6",
+      "size_pt": 7.0,
+      "color": "#000000",
+      "line_height": 1.2,
+      "align": "left"
+    },
+    {
+      "style_id": "T25",
+      "font_id": "F7",
+      "size_pt": 10.0,
+      "color": "#07877B",
+      "line_height": 1.2,
+      "align": "left"
+    }
+  ],
+  "palette": [
+    "#07877B",
+    "#EEECE1",
+    "#D7D5CB",
+    "#F2F2F2",
+    "#D9D9D9",
+    "#595959",
+    "#558ED5",
+    "#0D7576"
+  ],
+  "table_border_pt": 0.75,
+  "table_header_fill": null,
+  "header_text": "11 th September 2023 Q1FY24 RESULTS UPDATE",
+  "footer_text": "www.geojit.com"
+}

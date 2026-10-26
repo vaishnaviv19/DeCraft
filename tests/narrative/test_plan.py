@@ -192,3 +192,29 @@ def test_fallback_titles_come_from_the_figures_and_are_never_numbered_repeats():
         SectionPlan(section_id="x", source_title="", title="", goal="", block_ids=[],
                     fact_keys=["t.row:Revenue.latest"]), 0)[1]
     assert not any(t[-1].isdigit() for t in titles)
+
+
+def test_document_type_comes_from_the_titles_call_and_reaches_the_bible(tmp_path, gateway_for):
+    """E-25: 'dt' is named by the Titles call from page 1 and 'dom' is the Annotator's domain; both
+    are passed on (before outline_titles v3 every payload carried an empty 'dt')."""
+    doc, data, templates = prepared(two_section_pdf(tmp_path / "dt.pdf"))
+    skeleton, _ = plan(data, templates, doc, CFG, None)
+    reply = json.dumps({"dt": "Results update", "report_title": "Acme at a Glance",
+                        "sections": [{"id": section.section_id, "title": f"New Heading {i + 1}",
+                                      "goal": f"Goal {i + 1}"}
+                                     for i, section in enumerate(skeleton.sections)]})
+    llm = FakeLLM([reply, "{}"])
+    outline, _ = plan(data, templates, doc, CFG, gateway_for(llm), domain="utilities")
+    assert outline.doc_type == "results update" and outline.domain == "utilities"
+    titles_payload, bible_payload = llm.calls[0][1], llm.calls[1][1]
+    assert '"dom": "utilities"' in titles_payload
+    assert '"dt": "results update"' in bible_payload and '"dom": "utilities"' in bible_payload
+    roles = json.loads(titles_payload[titles_payload.index("{"):titles_payload.rindex("}") + 1])["secs"]
+    assert any("body text" in item["role"] for item in roles)       # first paragraph, not the title
+
+
+def test_a_doc_type_with_digits_or_too_many_words_is_ignored():
+    from src.narrative._plan import clean_doc_type
+    assert clean_doc_type("Annual Report 2024") == ""
+    assert clean_doc_type("a b c d e f g") == ""
+    assert clean_doc_type("Equity Research Note") == "equity research note"

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="202.101572pt" height="232.333984pt" viewBox="0 0 202.101572 232.333984" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-10-26T19:18:56.868869</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 232.333984 
+L 202.101572 232.333984 
+L 202.101572 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 102.622595 73.473961 
+C 102.622595 73.473961 102.622595 73.473961 102.622595 73.473961 
+L 102.622595 122.278331 
+z
+" style="fill: #07877b"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 150.679316 113.768448 
+C 148.680162 102.478897 142.765323 92.247039 133.979787 84.880564 
+C 125.194252 77.514089 114.087785 73.473961 102.622595 73.473961 
+L 102.622595 122.278331 
+z
+" style="fill: #595959"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 133.839375 159.793385 
+C 140.454955 154.288472 145.498159 147.130344 148.455396 139.047973 
+C 151.412633 130.965602 152.179988 122.242995 150.679316 113.768448 
+L 102.622595 122.278331 
+z
+" style="fill: #558ed5"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 128.43532 163.697768 
+C 129.379166 163.109561 130.30263 162.489263 131.204095 161.837962 
+C 132.105561 161.186661 132.9845 160.504737 133.839375 159.793385 
+L 102.622595 122.278331 
+z
+" style="fill: #0d7576"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 88.784182 169.079666 
+C 95.398197 171.035325 102.352264 171.566903 109.186682 170.639259 
+C 116.021101 169.711615 122.581881 167.345651 128.43532 163.697768 
+L 102.622595 122.278331 
+z
+" style="fill: #045149"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 74.461951 162.138646 
+C 76.639349 163.676941 78.939136 165.03424 81.33822 166.196914 
+C 83.737303 167.359588 86.227626 168.323733 88.784182 169.079666 
+L 102.622595 122.278331 
+z
+" style="fill: #09b6a6"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 59.001723 100.390297 
+C 53.764774 110.827061 52.443502 122.8045 55.279579 134.131828 
+C 58.115656 145.459156 64.92494 155.400908 74.461951 162.138646 
+L 102.622595 122.278331 
+z
+" style="fill: #07877b"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 102.622595 73.473961 
+C 93.571672 73.473961 84.696703 75.991744 76.994146 80.744621 
+C 69.291589 85.497497 63.060927 92.300669 59.001723 100.390297 
+L 102.622595 122.278331 
+z
+" style="fill: #595959"/>
+   </g>
+   <g id="matplotlib.axis_1"/>
+   <g id="matplotlib.axis_2"/>
+   <g id="text_1">
+    <text style="font-size: 8px; font-family: 'Cambria', 'DejaVu Sans'; text-anchor: start" x="102.622595" y="70.816181" transform="rotate(-0 102.622595 70.816181)">Particulars A</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 8px; font-family: 'Cambria', 'DejaVu Sans'; text-anchor: start" x="137.115507" y="83.363443" transform="rotate(-0 137.115507 83.363443)">- Particulars B</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 8px; font-family: 'Cambria', 'DejaVu Sans'; text-anchor: start" x="153.038676" y="142.947593" transform="rotate(-0 153.038676 142.947593)">- Particulars C</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 8px; font-family: 'Cambria', 'DejaVu Sans'; text-anchor: start" x="134.062245" y="168.016581" transform="rotate(-0 134.062245 168.016581)">- Particulars D</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 8px; font-family: 'Cambria', 'DejaVu Sans'; text-anchor: start" x="109.843091" y="177.698008" transform="rotate(-0 109.843091 177.698008)">- Particulars E</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 8px; font-family: 'Cambria', 'DejaVu Sans'; text-anchor: end" x="79.209782" y="172.811429" transform="rotate(-0 79.209782 172.811429)">- Particulars F</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 8px; font-family: 'Cambria', 'DejaVu Sans'; text-anchor: end" x="50.545277" y="137.539834" transform="rotate(-0 50.545277 137.539834)">- Particulars G</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 8px; font-family: 'Cambria', 'DejaVu Sans'; text-anchor: end" x="74.431301" y="78.813906" transform="rotate(-0 74.431301 78.813906)">- Particulars H</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 8px; font-family: 'Cambria', 'DejaVu Sans'; text-anchor: middle" x="102.622837" y="9.422656" transform="rotate(-0 102.622837 9.422656)">Value (Rs. cr.) by Particulars</text>
+   </g>
+  </g>
+ </g>
+</svg>

@@ -111,8 +111,9 @@ def test_a_low_confidence_recovery_is_rejected(tmp_path, gateway_for):
 
 
 def test_the_real_sample_gets_rule_labels_without_a_gateway():
+    """v3.3 F-07: the sample's two vector price charts are recovered from geometry, no model needed."""
     style = extract_style(SAMPLE, CFG)
     templates = build_templates(SAMPLE, None, style, CFG)
     figures, recovered = analyse_figures(SAMPLE, templates, CFG, None)
-    assert figures and recovered == []
+    assert figures and len(recovered) == 2 and all(chart.confidence >= 0.9 for chart in recovered)
     assert all(figure.kind in {"photo", "logo", "chart", "icon", "other"} for figure in figures)

@@ -1,0 +1,21 @@
+{
+  "stages": {
+    "extract": "done",
+    "infer": "done",
+    "privacy_plan": "done",
+    "generate": "done",
+    "privacy_audit": "done",
+    "style": "done",
+    "templates": "done",
+    "figures": "done",
+    "prepare": "done",
+    "charts": "done",
+    "plan": "done",
+    "write": "done",
+    "fit": "done",
+    "images": "done",
+    "render": "done",
+    "qa": "done",
+    "package": "done"
+  }
+}

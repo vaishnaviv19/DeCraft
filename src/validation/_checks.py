@@ -342,6 +342,29 @@ def check_source_distance(data: CanonicalDataset, report, cfg,
     return out
 
 
+def check_dcr(data: CanonicalDataset, report, cfg, frames: dict[str, pd.DataFrame]) -> list[Violation]:
+    """v3.3 F-02: Distance to Closest Record over the ROOT numeric columns (formula outputs, aggregate
+    columns and identifiers are exempt, as for Value Distance) plus text label columns. A generated row
+    closer than `dcr_min` to any source row is a near-duplicate."""
+    from src.core.dcr import dcr_violations
+    out = []
+    derived = {f"{r.table_id}.{r.formula.output}" for r in report.rules
+               if r.kind is RuleKind.FORMULA and r.formula is not None}
+    identifiers = {f"{t}.{c}" for t, cols in data.key_columns.items() for c in cols}
+    for table_id, source in frames.items():
+        synthetic = data.tables.get(table_id)
+        if synthetic is None or not len(source) or not len(synthetic):
+            continue
+        numeric = [str(c) for c in source.columns if c in synthetic.columns
+                   and pd.api.types.is_numeric_dtype(source[c]) and f"{table_id}.{c}" not in derived | identifiers]
+        labels = [str(c) for c in source.columns if c in synthetic.columns and str(c) not in numeric
+                  and not pd.api.types.is_numeric_dtype(source[c]) and f"{table_id}.{c}" not in identifiers]
+        if numeric:
+            out += dcr_violations(table_id, source, synthetic, numeric, labels, cfg.thresholds.dcr_min,
+                                  cfg.thresholds.min_value_distance)
+    return out
+
+
 def check_ranges(data: CanonicalDataset, report, frames: dict[str, pd.DataFrame]) -> list[Violation]:
     out = []
     derived = {f"{r.table_id}.{r.formula.output}" for r in report.rules

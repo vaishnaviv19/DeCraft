@@ -4,6 +4,7 @@ tokens/day BEFORE a call is sent, so the provider never returns 429. Windows are
 `clock` and `sleep` are injectable so tests run instantly."""
 from __future__ import annotations
 
+import threading
 import time
 from collections import deque
 from dataclasses import dataclass, field
@@ -27,6 +28,8 @@ class RateLimiter:
     max_wait_s: float = 600.0
     _minute: deque = field(default_factory=deque)   # (t, tokens)
     _day: deque = field(default_factory=deque)
+    # parallel writers share one limiter (live run 2026-10-26: 'deque mutated during iteration')
+    _lock: threading.Lock = field(default_factory=threading.Lock, repr=False, compare=False)
 
     def _trim(self, now: float) -> None:
         while self._minute and now - self._minute[0][0] >= 60:
@@ -42,17 +45,18 @@ class RateLimiter:
             raise LLMBudgetExceeded(f"one call needs {tokens} tokens > tpm {self.limits.tpm}; shrink the prompt")
         waited = 0.0
         while True:
-            now = self.clock()
-            self._trim(now)
-            day_req, day_tok = len(self._day), sum(t for _, t in self._day)
-            if day_req + 1 > self.limits.rpd or day_tok + tokens > self.limits.tpd:
-                raise LLMBudgetExceeded("daily quota reached; stop and resume tomorrow from cache")
-            min_req, min_tok = len(self._minute), sum(t for _, t in self._minute)
-            if min_req + 1 <= self.limits.rpm and min_tok + tokens <= self.limits.tpm:
-                self._minute.append((now, tokens))
-                self._day.append((now, tokens))
-                return waited
-            wait = 60 - (now - self._minute[0][0]) + 0.05
+            with self._lock:                         # check and book atomically; sleep outside the lock
+                now = self.clock()
+                self._trim(now)
+                day_req, day_tok = len(self._day), sum(t for _, t in self._day)
+                if day_req + 1 > self.limits.rpd or day_tok + tokens > self.limits.tpd:
+                    raise LLMBudgetExceeded("daily quota reached; stop and resume tomorrow from cache")
+                min_req, min_tok = len(self._minute), sum(t for _, t in self._minute)
+                if min_req + 1 <= self.limits.rpm and min_tok + tokens <= self.limits.tpm:
+                    self._minute.append((now, tokens))
+                    self._day.append((now, tokens))
+                    return waited
+                wait = 60 - (now - self._minute[0][0]) + 0.05
             if waited + wait > self.max_wait_s:
                 raise LLMBudgetExceeded("rate-limit wait exceeded max_wait_s")
             self.sleep(wait)
@@ -60,7 +64,8 @@ class RateLimiter:
 
     def record_actual(self, estimated: int, actual: int) -> None:
         """Replace the newest estimate with the provider-reported usage (keeps the windows honest)."""
-        for q in (self._minute, self._day):
-            if q and q[-1][1] == estimated:
-                t, _ = q.pop()
-                q.append((t, actual))
+        with self._lock:
+            for q in (self._minute, self._day):
+                if q and q[-1][1] == estimated:
+                    t, _ = q.pop()
+                    q.append((t, actual))

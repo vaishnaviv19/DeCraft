@@ -1,8 +1,10 @@
 {
-  "charts": {},
+  "charts": {
+    "bar": 2
+  },
   "photos": 3,
   "logos": 8,
-  "figures": 11,
+  "figures": 13,
   "items": [
     {
       "figure_id": "p1b03",
@@ -13,7 +15,15 @@
       "description": ""
     },
     {
-      "figure_id": "p1b26",
+      "figure_id": "p1b18",
+      "kind": "chart",
+      "chart_kind": "bar",
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p1b27",
       "kind": "logo",
       "chart_kind": null,
       "has_legend": false,
@@ -29,7 +39,7 @@
       "description": ""
     },
     {
-      "figure_id": "p2b13",
+      "figure_id": "p2b10",
       "kind": "logo",
       "chart_kind": null,
       "has_legend": false,
@@ -45,7 +55,7 @@
       "description": ""
     },
     {
-      "figure_id": "p3b90",
+      "figure_id": "p3b15",
       "kind": "logo",
       "chart_kind": null,
       "has_legend": false,
@@ -61,7 +71,15 @@
       "description": ""
     },
     {
-      "figure_id": "p4b35",
+      "figure_id": "p4b06",
+      "kind": "chart",
+      "chart_kind": "bar",
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p4b23",
       "kind": "logo",
       "chart_kind": null,
       "has_legend": false,
@@ -93,7 +111,6 @@
       "description": ""
     }
   ],
-  "recovered": [],
   "recovered_items": [],
   "llm_calls": 0
 }

@@ -50,6 +50,7 @@ class Thresholds(BaseModel):
     jitter_high: float = Field(1.60, gt=0)
     min_value_distance: float = Field(0.05, ge=0, lt=1)
     min_headline_distance: float = Field(0.10, ge=0, lt=1)
+    dcr_min: float = Field(0.05, ge=0, lt=1)          # v3.3 F-02: Distance to Closest Record
     k_anonymity_min_rows: int = Field(20, ge=1)
     k_anonymity_k: int = Field(3, ge=2)
     # utility gate
@@ -107,7 +108,7 @@ class Providers(BaseModel):
     text: ProviderSettings = Field(default_factory=lambda: ProviderSettings(
         fallback="ollama", fallback_model="llama3.1"))                    # E-33
     vision: ProviderSettings = Field(default_factory=lambda: ProviderSettings(
-        kind="cloudflare", model="@cf/meta/llama-3.2-11b-vision-instruct", max_concurrency=1,
+        kind="cloudflare", model="@cf/meta/llama-4-scout-17b-16e-instruct", max_concurrency=1,
         limits=ProviderLimits(rpm=10, tpm=100_000, rpd=80, tpd=400_000)))
     image: ImageProviderSettings = Field(default_factory=ImageProviderSettings)
 
@@ -138,6 +139,37 @@ class ExtractionSettings(BaseModel):
     timeout_seconds: float = Field(1800, gt=0)        # docling needs minutes on CPU
 
 
+class StyleSettings(BaseModel):
+    """v3.3 F-04 (OCR), F-05 (layout model second opinion), F-07 (geometry chart recovery)."""
+    model_config = ConfigDict(extra="forbid", frozen=True)
+    ocr_min_chars: int = Field(50, ge=0)
+    ocr_min_image_cover: float = Field(0.5, ge=0, le=1)
+    ocr_min_confidence: float = Field(0.6, ge=0, le=1)
+    layout_model: Literal["doclayout_yolo", "none"] = "doclayout_yolo"
+    # local weights file (scripts/fetch_layout_model.py downloads it once); the pipeline never downloads
+    layout_model_weights: str = "artifacts/models/doclayout_yolo_docstructbench_imgsz1024.pt"
+    layout_min_agreement: float = Field(0.7, ge=0, le=1)
+    chart_recovery_min_conf: float = Field(0.9, ge=0, le=1)
+
+
+class NarrativeSettings(BaseModel):
+    """v3.3 F-03 (scale style) and F-11 (repetition)."""
+    model_config = ConfigDict(extra="forbid", frozen=True)
+    scale_style: Literal["auto", "western", "western_short", "indian"] = "auto"
+    repeat_threshold: float = Field(0.5, ge=0, le=1)
+
+
+class QASettings(BaseModel):
+    """v3.3 gates F-06, F-08, F-09."""
+    model_config = ConfigDict(extra="forbid", frozen=True)
+    chart_style_min: float = Field(0.85, ge=0, le=1)
+    roundtrip_min_order_sim: float = Field(0.9, ge=0, le=1)
+    min_block_iou: float = Field(0.9, ge=0, le=1)
+    max_alignment_worse_pt: float = Field(2.0, ge=0)
+    max_overlap_worse: float = Field(0.01, ge=0)
+    max_distinguishable_share: float = Field(0.30, ge=0, le=1)
+
+
 class Config(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
     config_version: str = "2.0"
@@ -149,6 +181,9 @@ class Config(BaseModel):
     providers: Providers = Field(default_factory=Providers)
     report: ReportSettings = Field(default_factory=ReportSettings)
     extraction: ExtractionSettings = Field(default_factory=ExtractionSettings)
+    style: StyleSettings = Field(default_factory=StyleSettings)
+    narrative: NarrativeSettings = Field(default_factory=NarrativeSettings)
+    qa: QASettings = Field(default_factory=QASettings)
 
     def config_hash(self) -> str:
         """sha256 of the canonical JSON form; recorded in every RunManifest."""

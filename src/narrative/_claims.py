@@ -22,6 +22,7 @@ class Claim:
     entity: str                  # bible id, or the temporary id of a NEW entity
     attr: str                    # 'name' | 'year' | 'location' | 'role' | ...
     value: str
+    block: str | None = None     # the block the claim came from (reconciler context)
 
 
 @dataclass(frozen=True)

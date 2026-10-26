@@ -1,0 +1,1623 @@
+{
+  "charts": 10,
+  "templates": [
+    {
+      "page": 1,
+      "mode": "mirror",
+      "reason": "columns (mirrored, E-48)",
+      "blocks": [
+        {
+          "block_id": "p1b01",
+          "kind": "decoration",
+          "bbox": [
+            -15.0,
+            0.5999755859375,
+            597.5999755859375,
+            840.3303833007812
+          ],
+          "text": null,
+          "style_id": null,
+          "source_words": 0,
+          "section_id": "S0",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b02",
+          "kind": "header",
+          "bbox": [
+            500.5,
+            32.802001953125,
+            594.2088012695312,
+            51.584869384765625
+          ],
+          "text": "11 th  September 2023  Q1FY24 RESULTS UPDATE",
+          "style_id": "T1",
+          "source_words": 7,
+          "section_id": "S0",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b03",
+          "kind": "logo",
+          "bbox": [
+            15.75,
+            32.999977111816406,
+            104.25,
+            59.3499755859375
+          ],
+          "text": null,
+          "style_id": null,
+          "source_words": 0,
+          "section_id": "S0",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b04",
+          "kind": "heading",
+          "bbox": [
+            36.0,
+            70.92000579833984,
+            284.3299865722656,
+            106.13595581054688
+          ],
+          "text": "Retail Equity Research  Tata Power Company Limited",
+          "style_id": "T23",
+          "source_words": 7,
+          "section_id": "S1",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b05",
+          "kind": "heading",
+          "bbox": [
+            484.8999938964844,
+            87.96199035644531,
+            514.98876953125,
+            104.4168701171875
+          ],
+          "text": "BUY",
+          "style_id": "T23",
+          "source_words": 1,
+          "section_id": "S1",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b06",
+          "kind": "heading",
+          "bbox": [
+            36.0,
+            110.01200103759766,
+            113.44879913330078,
+            122.95088195800781
+          ],
+          "text": "Electric Utilities",
+          "style_id": "T10",
+          "source_words": 2,
+          "section_id": "S1",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b07",
+          "kind": "text",
+          "bbox": [
+            358.510009765625,
+            117.5419921875,
+            563.4688110351562,
+            149.35107421875
+          ],
+          "text": "12 Months Investment Period            Rating as per Large Cap  CMP Rs. 272        TARGET Rs. 301        RETURN 11%  (Closing: 11-09-23)",
+          "style_id": "T7",
+          "source_words": 19,
+          "section_id": "S1",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b08",
+          "kind": "text",
+          "bbox": [
+            36.0,
+            128.86997985839844,
+            278.1500244140625,
+            139.41798400878906
+          ],
+          "text": "BSE CODE: 500400  NSE CODE: TATAPOWER",
+          "style_id": "T8",
+          "source_words": 6,
+          "section_id": "S1",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b09",
+          "kind": "text",
+          "bbox": [
+            36.0,
+            143.50999450683594,
+            243.70999145507812,
+            154.05799865722656
+          ],
+          "text": "Bloomberg CODE: TPWR:IN   SENSEX: 67,127",
+          "style_id": "T8",
+          "source_words": 5,
+          "section_id": "S1",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b10",
+          "kind": "heading",
+          "bbox": [
+            36.0,
+            169.17196655273438,
+            553.3287963867188,
+            182.11085510253906
+          ],
+          "text": "KEY CHANGES:                             TARGET                                                    RATING                                                 EARNINGS",
+          "style_id": "T10",
+          "source_words": 5,
+          "section_id": "S2",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b11",
+          "kind": "table",
+          "bbox": [
+            376.989990234375,
+            196.7899627685547,
+            565.1488037109375,
+            350.34490966796875
+          ],
+          "text": "Company Data  Market Cap (cr)  Rs. 86,856  Enterprise Value (cr)  Rs. 131,339  Outstanding Shares (cr)  319.6  Free Float  53.0%  Dividend Yield  0.7%  52 week high  Rs. 277  52 week low  Rs. 182  6m average volume   816,497  Beta  1.0  Face value  Rs. 1  Shareholding %  Q3FY23  Q4FY23  Q1FY24  Promoters  46.9  46.9  46.9  FII\u2019s  9.6  9.5  9.8  MFs/Insti  14.7  14.5  14.9  Public  28.0  28.5  27.8  Others  0.8  0.7  0.7  Total  100.0  100.0  100.0  Promoters\u2019 pledge  1.4  1.4  1.4  Price Performance 3 Month  6 Month  1 Year  Absolute Return  21.9%  27.3%  9.8%  Absolute Sensex  6.0%  10.4%  11.6%  Relative Return*  15.9%  16.9%  -1.8%",
+          "style_id": "T1",
+          "source_words": 99,
+          "section_id": "S2",
+          "table_id": "table_002",
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b12",
+          "kind": "heading",
+          "bbox": [
+            43.560001373291016,
+            204.12196350097656,
+            276.4988098144531,
+            220.57684326171875
+          ],
+          "text": "Margins expand on lower input cost",
+          "style_id": "T23",
+          "source_words": 6,
+          "section_id": "S3",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b13",
+          "kind": "text",
+          "bbox": [
+            43.560001373291016,
+            222.58995056152344,
+            356.77001953125,
+            373.8079833984375
+          ],
+          "text": "Tata Power Company Limited generates and supplies electricity. It  constructs and operates independent power plants, as well as specialises in  transmission and distribution of electricity.   \u2022 In Q1FY24, consolidated revenue increased 5.0% YoY to Rs. 15,213cr,  supported by moderate growth in the transmission and distribution  business.  \u2022 EBITDA margin rose 850 bps YoY to 21.1%, driven by a decrease in  prices of solar cells, modules and wafers. As a result, reported PAT grew  22.4% YoY to Rs. 973cr.  \u2022 Capacity expansions, improvement in execution capabilities, and  corrections in input prices make the business prospects for the  company look promising. Hence, we expect margin improvement to  continue, and upgrade our rating on the stock to BUY with a revised  target price of Rs. 301 based on SOTP valuation.",
+          "style_id": "T2",
+          "source_words": 127,
+          "section_id": "S3",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b14",
+          "kind": "text",
+          "bbox": [
+            36.0,
+            386.8279724121094,
+            366.6100158691406,
+            495.3879699707031
+          ],
+          "text": "Moderate growth in revenue   Consolidated revenue grew 5.0% YoY to Rs. 15,213cr in Q1FY24, led by growth of 3.6%  YoY in the transmission and distribution business. The Odisha business stabilised on  the back of various restoration and field activities to overcome uncertain weather  conditions.  The generation business grew a significant 67.5% on a QoQ basis due to  improved cost control and better efficiency. The Mundra plant aided performance  during the quarter and will continue to operate until 30 September 2023. Its  operations may be extended due to heat conditions. In the electric vehicle (EV)  business, the company added 4,400 public chargers and 50,000 home chargers and  plans to add about 1,200 bus chargers across various cities.",
+          "style_id": "T2",
+          "source_words": 116,
+          "section_id": "S3",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b15",
+          "kind": "caption",
+          "bbox": [
+            377.1099853515625,
+            460.5979919433594,
+            535.6311645507812,
+            468.7550964355469
+          ],
+          "text": "*over or under performance to benchmark index",
+          "style_id": "T21",
+          "source_words": 7,
+          "section_id": "S3",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b16",
+          "kind": "text",
+          "bbox": [
+            427.6300048828125,
+            479.6819763183594,
+            552.577880859375,
+            489.1048583984375
+          ],
+          "text": "TATAPOWER Sensex Rebased",
+          "style_id": "T19",
+          "source_words": 3,
+          "section_id": "S3",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b17",
+          "kind": "decoration",
+          "bbox": [
+            374.57000732421875,
+            481.58197021484375,
+            387.90411376953125,
+            491.0048522949219
+          ],
+          "text": "280",
+          "style_id": "T19",
+          "source_words": 1,
+          "section_id": "S3",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b18",
+          "kind": "chart",
+          "bbox": [
+            374.57000732421875,
+            481.58197021484375,
+            556.48291015625,
+            558.704833984375
+          ],
+          "text": null,
+          "style_id": null,
+          "source_words": 0,
+          "section_id": "S3",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b19",
+          "kind": "text",
+          "bbox": [
+            36.0,
+            501.4479675292969,
+            366.5920715332031,
+            557.3079833984375
+          ],
+          "text": "Strong improvement in margins  EBITDA surged 76.0% YoY to Rs. 3,215cr in Q1FY24 on account of a drastic reduction  in prices of solar cells, modules and wafers. Hence, EBITDA margin expanded 850 bps  YoY to 21.1%. Consolidated PAT grew 22.4% YoY to Rs. 973cr, supported by income  from exceptional items (Rs. 235cr).",
+          "style_id": "T2",
+          "source_words": 52,
+          "section_id": "S3",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b20",
+          "kind": "decoration",
+          "bbox": [
+            374.57000732421875,
+            510.38201904296875,
+            387.90411376953125,
+            519.8048706054688
+          ],
+          "text": "230",
+          "style_id": "T19",
+          "source_words": 1,
+          "section_id": "S3",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b21",
+          "kind": "decoration",
+          "bbox": [
+            374.57000732421875,
+            539.1819458007812,
+            387.90411376953125,
+            548.6047973632812
+          ],
+          "text": "180",
+          "style_id": "T19",
+          "source_words": 1,
+          "section_id": "S3",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b22",
+          "kind": "decoration",
+          "bbox": [
+            385.1300048828125,
+            549.281982421875,
+            556.48291015625,
+            558.704833984375
+          ],
+          "text": "Sep-22 Dec-22 Mar-23 Jun-23 Sep-23",
+          "style_id": "T19",
+          "source_words": 5,
+          "section_id": "S3",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b23",
+          "kind": "heading",
+          "bbox": [
+            36.0,
+            562.4080200195312,
+            103.731201171875,
+            574.0811157226562
+          ],
+          "text": "Key highlights",
+          "style_id": "T14",
+          "source_words": 2,
+          "section_id": "S4",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b24",
+          "kind": "table",
+          "bbox": [
+            376.989990234375,
+            567.3519897460938,
+            565.1488037109375,
+            666.2715698242188
+          ],
+          "text": "Consolidated (cr)  FY23A  FY24E  FY25E  Sales 55,109 59,518 64,577 Growth (%)  28.7  8.0  8.5  EBITDA 9,144 10,192 11,520 EBITDA Margin (%)  16.6  17.1  17.8  Adj. PAT 3,336 3,345 3,707 Growth (%)  76.4  0.3  10.8  Adj. EPS 10.4 10.5 11.6 Growth (%)  65.2  0.3  16.8  P/E  18.0  26.0  23.4  P/B  2.1  2.8  2.5  EV/EBITDA  11.5  12.9  11.6  ROE (%)  13.2  12.2  13.0  D/E  1.5  1.3  1.1",
+          "style_id": "T1",
+          "source_words": 65,
+          "section_id": "S4",
+          "table_id": "table_003",
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b25",
+          "kind": "text",
+          "bbox": [
+            36.0,
+            579.0249633789062,
+            366.6100158691406,
+            664.9779663085938
+          ],
+          "text": "\u2022 In Q1FY24, a capacity addition of 5.8 GW brought the total installed capacity to  ~422GW, of which 77% was attributable to renewable energy.  \u2022 The company signed a Memorandum of Understanding with the Maharashtra  government of Rs. 13,000cr for pumped hydro storage projects. This project will  support green energy landscape and generate employment for over 6,000 people.  \u2022 Tata Power Renewable Energy Limited signed power purchase agreements for  commissioning two solar projects (200MW and 150MW) to provide clean and  sustainable electricity to MSEDCL.",
+          "style_id": "T2",
+          "source_words": 84,
+          "section_id": "S4",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b26",
+          "kind": "text",
+          "bbox": [
+            36.0,
+            671.0380249023438,
+            366.6039733886719,
+            758.573974609375
+          ],
+          "text": "Valuation  Owing to extreme weather conditions in the country, consumption of power was lower  than expected in the quarter. However, the company recorded healthy performance on  account of lower input costs. Capacity additions in the renewable energy segment,  corrections in polysilicon and thermal coal prices, strong execution of business, and  large capex will aid the company in achieving robust operational and financial  performance. Thus, we upgrade our rating on the stock to BUY with a revised target  price of Rs. 301 based on SOTP valuation.",
+          "style_id": "T2",
+          "source_words": 85,
+          "section_id": "S4",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b27",
+          "kind": "logo",
+          "bbox": [
+            11.25,
+            799.0809936523438,
+            57.70000076293945,
+            831.2979736328125
+          ],
+          "text": null,
+          "style_id": null,
+          "source_words": 0,
+          "section_id": "S4",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b28",
+          "kind": "footer",
+          "bbox": [
+            471.70001220703125,
+            809.3029174804688,
+            544.6669921875,
+            821.3046875
+          ],
+          "text": "www.geojit.com",
+          "style_id": "T16",
+          "source_words": 1,
+          "section_id": "S4",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b11c",
+          "kind": "chart",
+          "bbox": [
+            376.989990234375,
+            356.34490966796875,
+            565.1488037109375,
+            457.7148742675781
+          ],
+          "text": null,
+          "style_id": "T1",
+          "source_words": 0,
+          "section_id": "S2",
+          "table_id": "table_002",
+          "figure_id": null
+        },
+        {
+          "block_id": "p1b24c",
+          "kind": "chart",
+          "bbox": [
+            376.989990234375,
+            672.2715698242188,
+            565.1488037109375,
+            737.2179565429688
+          ],
+          "text": null,
+          "style_id": "T1",
+          "source_words": 0,
+          "section_id": "S4",
+          "table_id": "table_003",
+          "figure_id": null
+        }
+      ]
+    },
+    {
+      "page": 2,
+      "mode": "mirror",
+      "reason": "",
+      "blocks": [
+        {
+          "block_id": "p2b01",
+          "kind": "decoration",
+          "bbox": [
+            0.0,
+            0.04998779296875,
+            597.5999755859375,
+            840.3303833007812
+          ],
+          "text": null,
+          "style_id": null,
+          "source_words": 0,
+          "section_id": "S4",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p2b02",
+          "kind": "logo",
+          "bbox": [
+            430.5,
+            9.75,
+            585.0,
+            62.25
+          ],
+          "text": null,
+          "style_id": null,
+          "source_words": 0,
+          "section_id": "S4",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p2b03",
+          "kind": "heading",
+          "bbox": [
+            36.0,
+            76.51200103759766,
+            219.55880737304688,
+            89.45088195800781
+          ],
+          "text": "Quarterly Financials (Consolidated)",
+          "style_id": "T12",
+          "source_words": 3,
+          "section_id": "S5",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p2b04",
+          "kind": "heading",
+          "bbox": [
+            36.0,
+            95.37198638916016,
+            146.4488067626953,
+            108.31086730957031
+          ],
+          "text": "Profit & Loss Account",
+          "style_id": "T17",
+          "source_words": 4,
+          "section_id": "S5",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p2b05",
+          "kind": "table",
+          "bbox": [
+            36.0,
+            117.83000183105469,
+            345.8719970703125,
+            381.2210998535156
+          ],
+          "text": "Q1FY24  Q1FY23  YoY Growth %  Q4FY23  QoQ Growth %\nRevenue  15,213  14,495  5.0  12,454  22.2  EBITDA  3,215  1,827  76.0  2,799  14.9  EBITDA margins  21.1  12.6  850bps  22.5  (140bps)  Depreciation  893  822  8.7  926  (3.5)  EBIT  2,322  1,005  131.1  1,873  24.0  Interest  1,221  1,026  19.0  1,196  2.2  Other Income  25  280  (91.2)  302  (91.8)  Exceptional Items  235  -  n.m.  -  n.m.  Share of profit from Associate 351 803 (56.3)  179 95.8  PBT 1,476 1,062 38.9 1,158 27.4 Tax  335  179  87.4  219  52.6  Reported PAT 1,141  884  29 939  22\nMinority Interest 168 89 89.4  161 4.6  PAT att. to shareholders 972 795 22.4  778 25.0  Adjustments (235) - n.m.  - n.m.  Adj. PAT 737 795 (7.2)  778 (5.2) No. of shares  319.6 319.6 - 319.6 - Adj. EPS (Rs.)  2.3  2.5  (7.2) 2.4  (5.2)",
+          "style_id": "T8",
+          "source_words": 134,
+          "section_id": "S5",
+          "table_id": "table_004",
+          "figure_id": null
+        },
+        {
+          "block_id": "p2b06",
+          "kind": "heading",
+          "bbox": [
+            36.0,
+            387.1219787597656,
+            139.8488006591797,
+            400.06085205078125
+          ],
+          "text": "Change in Estimates",
+          "style_id": "T12",
+          "source_words": 3,
+          "section_id": "S6",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p2b07",
+          "kind": "table",
+          "bbox": [
+            36.0,
+            407.5400085449219,
+            336.94399414062497,
+            518.3079833984375
+          ],
+          "text": "Old estimates                      New estimates Change % Year / Rs. cr  FY24E  FY25E  FY24E  FY25E  FY24E  FY25E  Revenue  58,416  63,673  59,518  64,577  1.9  1.4 EBITDA  9,842  11,251  10,192  11,520  3.6  2.4 Margins (%)  16.8  17.7  17.1  17.8  30bps  10bps Adj. PAT  3,566  4,008  3,345  3,707  (6.2)  (7.5) Adj. EPS  11.2  12.5  10.5  11.6  (6.5)  (7.2)",
+          "style_id": "T2",
+          "source_words": 54,
+          "section_id": "S6",
+          "table_id": "table_005",
+          "figure_id": null
+        },
+        {
+          "block_id": "p2b08",
+          "kind": "heading",
+          "bbox": [
+            36.0,
+            524.302001953125,
+            176.08880615234375,
+            537.2408447265625
+          ],
+          "text": "Sum-of-the-Parts Valuation",
+          "style_id": "T10",
+          "source_words": 2,
+          "section_id": "S7",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p2b09",
+          "kind": "table",
+          "bbox": [
+            41.400001525878906,
+            543.760009765625,
+            346.55235900878904,
+            776.093994140625
+          ],
+          "text": "Particulars  Methodology  Multiple  % Holding  Value (Rs. cr.)  Value Per Share\n(Rs.)  Regulated Equity - Mumbai Operations  P/BV  3.5x  100.0%  13,926  51  - Jojobera  P/BV  2.5x  100.0%  1,370  4  - Delhi Discom  P/BV  2.5x  51.0%  2,480  8  - Odisha Discoms  P/BV  2.5x  51.0%  2,342  7  - Maithon Power  P/BV  2.5x  74.0%  3,115  10  - Industrial Energy  P/BV  2.0x  74.0%  1,436  4  - Powerlinks Transmission  P/BV  2.0x  51.0%  936  3  Other Operations - Renewables  P/E  36.0x  32,196  104  - Coal Operations  EV/EBITDA  5.0x  24,478  77  - Mundra UMPP  EV/EBITDA  4.0x  -653  -2  - Tata Power Trading  P/E  8.0x  187  1  - Other investments  P/BV  1.7x  9,470  30  - Cash  11,207  35  10% holding discount to investments  (29)  Target Price  301",
+          "style_id": "T8",
+          "source_words": 119,
+          "section_id": "S7",
+          "table_id": "table_006",
+          "figure_id": null
+        },
+        {
+          "block_id": "p2b10",
+          "kind": "logo",
+          "bbox": [
+            9.75,
+            798.3309936523438,
+            56.20000076293945,
+            830.5479736328125
+          ],
+          "text": null,
+          "style_id": null,
+          "source_words": 0,
+          "section_id": "S7",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p2b11",
+          "kind": "footer",
+          "bbox": [
+            486.1000061035156,
+            809.3029174804688,
+            559.0670166015625,
+            821.3046875
+          ],
+          "text": "www.geojit.com",
+          "style_id": "T16",
+          "source_words": 1,
+          "section_id": "S7",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p2b05c",
+          "kind": "chart",
+          "bbox": [
+            353.8719970703125,
+            117.83000183105469,
+            559.1199951171875,
+            381.2210998535156
+          ],
+          "text": null,
+          "style_id": "T8",
+          "source_words": 0,
+          "section_id": "S5",
+          "table_id": "table_004",
+          "figure_id": null
+        },
+        {
+          "block_id": "p2b07c",
+          "kind": "chart",
+          "bbox": [
+            344.94399414062497,
+            407.5400085449219,
+            544.239990234375,
+            518.3079833984375
+          ],
+          "text": null,
+          "style_id": "T2",
+          "source_words": 0,
+          "section_id": "S6",
+          "table_id": "table_005",
+          "figure_id": null
+        },
+        {
+          "block_id": "p2b09c",
+          "kind": "chart",
+          "bbox": [
+            354.55235900878904,
+            543.760009765625,
+            556.6539306640625,
+            776.093994140625
+          ],
+          "text": null,
+          "style_id": "T8",
+          "source_words": 0,
+          "section_id": "S7",
+          "table_id": "table_006",
+          "figure_id": null
+        }
+      ]
+    },
+    {
+      "page": 3,
+      "mode": "mirror",
+      "reason": "",
+      "blocks": [
+        {
+          "block_id": "p3b01",
+          "kind": "decoration",
+          "bbox": [
+            0.0,
+            0.04998779296875,
+            597.5999755859375,
+            840.3303833007812
+          ],
+          "text": null,
+          "style_id": null,
+          "source_words": 0,
+          "section_id": "S7",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p3b02",
+          "kind": "logo",
+          "bbox": [
+            430.5,
+            9.75,
+            585.0,
+            62.25
+          ],
+          "text": null,
+          "style_id": null,
+          "source_words": 0,
+          "section_id": "S7",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p3b03",
+          "kind": "heading",
+          "bbox": [
+            22.440000534057617,
+            76.51200103759766,
+            103.96880340576172,
+            89.45088195800781
+          ],
+          "text": "PROFIT & LOSS",
+          "style_id": "T17",
+          "source_words": 3,
+          "section_id": "S8",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p3b04",
+          "kind": "heading",
+          "bbox": [
+            297.6499938964844,
+            76.51200103759766,
+            385.77880859375,
+            89.45088195800781
+          ],
+          "text": "BALANCE SHEET",
+          "style_id": "T17",
+          "source_words": 2,
+          "section_id": "S8",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p3b05",
+          "kind": "table",
+          "bbox": [
+            25.440000534057617,
+            98.82196044921875,
+            286.45880126953125,
+            281.1734375
+          ],
+          "text": "Y.E March (Rs. cr)  FY21A  FY22A  FY23A  FY24E  FY25E\nRevenue  32,703  42,816  55,109  59,518  64,577\n% change  12.2  30.9  28.7  8.0  8.5\nEBITDA  7,442  8,431  9,144  10,192  11,520\n% change  (13.4)  12.1  7.6  11.6  13.0\nDepreciation  2,745  3,122  3,439  3,590  3,713\nEBIT  4,697  5,309  5,705  6,603  7,807\nInterest  4,010  3,859  4,372  4,212  4,148\nOther Income  1,300  1,553  4,124  2,720  2,312\nPBT  1,987  3,003  5,457  5,111  5,970\n% change  (16.1)  51.2  81.7  (6.3)  16.8\nTax  502  380  1,647  1,288  1,505\nTax Rate (%)  25.3  12.6  30.2  25.2  25.2\nReported PAT  1,439  2,156  3,810  3,823  4,466  PAT att. to common  shareholders 1,127 1,741 3,336 3,345 3,707\nAdj* 109 150 - - -\nAdj PAT 1,237 1,892 3,336 3,345 3,707\n% change  56.3  53.0  76.4  0.3  10.8\nNo. of shares (cr) 319.6 319.6 319.6 319.6 319.6\nAdj EPS (Rs.) 3.9 5.9 10.4 10.5 11.6\n% change  20.2  49.0  65.2  0.3  16.8\nDPS (Rs.)  1.6  1.8  2.0  2.1  2.3",
+          "style_id": "T7",
+          "source_words": 155,
+          "section_id": "S8",
+          "table_id": "table_007",
+          "figure_id": null
+        },
+        {
+          "block_id": "p3b06",
+          "kind": "table",
+          "bbox": [
+            300.6499938964844,
+            98.82196044921875,
+            575.9688110351562,
+            285.5654418945312
+          ],
+          "text": "Y.E March (Rs. cr)  FY21A  FY22A  FY23A  FY24E  FY25E\nCash  5,871  6,641  11,207  9,429  5,395\nAccounts Receivable  5,200  5,980  6,952  7,142  8,718\nInventories  1,886  4,232  3,943  4,744  5,560\nOther Cur. Assets  12,653  14,591  17,423  17,373  17,337\nInvestments  12,650  13,750  15,520  14,598  12,904\nGross Fixed Assets  70,388  78,331  85,936  98,137  105,887\nNet Fixed Assets  49,039  54,165  58,507  67,757  72,470\nCWIP  3,270  4,635  5,376  5,108  4,852\nIntangible Assets  3,140  3,224  3,240  3,255  3,270\nDef. Tax (Net)  184  335  253  198  231\nOther Assets  4,946  5,333  5,928  5,877  5,828\nTotal Assets  98,839 112,885 128,349 135,480 136,565\nCurrent Liabilities  18,270  24,508  27,062  33,417  33,036\nProvisions  667  1,218  1,420  1,448  1,477\nDebt Funds  44,542  48,747  50,385  48,017  45,768\nOther Liabilities  10,110  12,383  15,278  15,240  15,202\nEquity Capital  320  320  320  320  320\nReserves & Surplus  22,003  22,122  28,468  31,144  34,109\nShareholder\u2019s Fund  22,322  22,442  28,787  31,463  34,429\nMinority Interest 2,927 3,587 5,417 5,895 6,654\nTotal Liabilities  98,839 112,885 128,349 135,480 136,565\nBVPS (Rs.)  70  70  90  98  108",
+          "style_id": "T7",
+          "source_words": 163,
+          "section_id": "S8",
+          "table_id": "table_009",
+          "figure_id": null
+        },
+        {
+          "block_id": "p3b07",
+          "kind": "heading",
+          "bbox": [
+            297.6499938964844,
+            426.72198486328125,
+            340.5387878417969,
+            439.6608581542969
+          ],
+          "text": "RATIOS",
+          "style_id": "T17",
+          "source_words": 1,
+          "section_id": "S9",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p3b08",
+          "kind": "heading",
+          "bbox": [
+            22.440000534057617,
+            432.84197998046875,
+            84.7728042602539,
+            445.7808532714844
+          ],
+          "text": "CASH FLOW",
+          "style_id": "T17",
+          "source_words": 2,
+          "section_id": "S9",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p3b09",
+          "kind": "table",
+          "bbox": [
+            300.6499938964844,
+            449.1319885253906,
+            575.9688110351562,
+            635.8130493164062
+          ],
+          "text": "Y.E March  FY21A  FY22A  FY23A  FY24E  FY25E\nEBITDA margin (%)  22.8  19.7  16.6  17.1  17.8\nEBIT margin (%)  14.4  12.4  10.4  11.1  12.1\nNet profit mgn.(%)  3.4  4.1  6.1  5.6  5.7\nROE (%)  6.4  9.6  13.2  12.2  13.0\nROCE (%)  6.7  7.1  6.7  7.7  9.0\nReceivables (days)  58.0  51.0  46.0  43.8  49.3\nInventory (days)  34.3  58.0  39.1  45.6  49.3\nPayables (days)  130.0  143.4  73.5  127.8  109.5\nCurrent ratio (x)  0.8  0.8  0.9  0.7  0.7\nQuick ratio (x)  0.4  0.3  0.4  0.3  0.3\nGross asset T.O (x)  0.5  0.6  0.7  0.6  0.6\nTotal asset T.O (x)  0.3  0.4  0.5  0.5  0.5\nInt. coverage ratio (x)  1.2  1.4  1.3  1.6  1.9\nAdj. debt/equity (x)  1.8  1.9  1.5  1.3  1.1\nEV/Sales (x)  2.3  2.8  1.9  2.2  2.1\nEV/EBITDA (x)  10.0  14.5  11.5  12.9  11.6\nP/E (x)  26.7  40.3  18.0  26.0  23.4\nP/BV (x)  1.5  3.4  2.1  2.8  2.5",
+          "style_id": "T7",
+          "source_words": 145,
+          "section_id": "S9",
+          "table_id": "table_010",
+          "figure_id": null
+        },
+        {
+          "block_id": "p3b10",
+          "kind": "table",
+          "bbox": [
+            26.639999389648438,
+            455.1319885253906,
+            287.4187927246094,
+            586.2314575195312
+          ],
+          "text": "Y.E March (Rs. cr)  FY21A  FY22A  FY23A  FY24E  FY25E\nNet inc. + Depn.  4,033  5,017  6,894  7,028  7,741\nNon-cash adj.  3,800  1,650  4,044  2,174  2,489\nChanges in W.C  513  26  (3,779)  4,886  (3,321)\nC.F. Operation  8,345  6,693  7,159  14,088  6,909\nCapital exp.  (1,787)  (7,233)  (7,606) (12,201)  (7,749)\nChange in inv.  678  (1,128)  (3,549)  (57)  (60)\nOther invest.CF  1,776  2,085  3,780  3,972  4,353\nC.F \u2013 Investment  668  (6,277)  (7,375)  (8,287)  (3,457)\nIssue of equity  3,151  758  5,461  -  -\nIssue/repay debt  (5,973)  4,157  1,169  (2,368)  (2,249)\nDividends paid  (526)  (559)  (787)  (669)  (741)\nOther finance.CF  (4,254)  (5,539)  (4,502)  (4,542)  (4,496)\nC.F \u2013 Finance  (7,603)  (1,183)  1,341  (7,579)  (7,486)\nChg. in cash  1,410  (767)  1,125  (1,778)  (4,034)\nClosing cash  5,871  6,641  11,207  9,429  5,395",
+          "style_id": "T7",
+          "source_words": 122,
+          "section_id": "S9",
+          "table_id": "table_008",
+          "figure_id": null
+        },
+        {
+          "block_id": "p3b11",
+          "kind": "heading",
+          "bbox": [
+            300.6499938964844,
+            463.6519775390625,
+            369.7587890625,
+            473.0748596191406
+          ],
+          "text": "Profitab. & Return",
+          "style_id": "T1",
+          "source_words": 3,
+          "section_id": "S10",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p3b12",
+          "kind": "heading",
+          "bbox": [
+            300.6499938964844,
+            543.2319946289062,
+            359.4388122558594,
+            552.6548461914062
+          ],
+          "text": "W.C & Liquidity",
+          "style_id": "T1",
+          "source_words": 3,
+          "section_id": "S10",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p3b13",
+          "kind": "heading",
+          "bbox": [
+            300.6499938964844,
+            622.6719970703125,
+            380.5588073730469,
+            632.0948486328125
+          ],
+          "text": "Turnover & Leverage",
+          "style_id": "T1",
+          "source_words": 3,
+          "section_id": "S10",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p3b14",
+          "kind": "heading",
+          "bbox": [
+            300.6499938964844,
+            688.9419555664062,
+            339.8787841796875,
+            698.3648071289062
+          ],
+          "text": "Valuation",
+          "style_id": "T1",
+          "source_words": 1,
+          "section_id": "S10",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p3b15",
+          "kind": "logo",
+          "bbox": [
+            9.75,
+            798.3309936523438,
+            56.20000076293945,
+            830.5479736328125
+          ],
+          "text": null,
+          "style_id": null,
+          "source_words": 0,
+          "section_id": "S10",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p3b16",
+          "kind": "footer",
+          "bbox": [
+            486.1000061035156,
+            809.3029174804688,
+            559.0670166015625,
+            821.3046875
+          ],
+          "text": "www.geojit.com",
+          "style_id": "T16",
+          "source_words": 1,
+          "section_id": "S10",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p3b05c",
+          "kind": "chart",
+          "bbox": [
+            25.440000534057617,
+            287.1734375,
+            286.45880126953125,
+            407.7410888671875
+          ],
+          "text": null,
+          "style_id": "T7",
+          "source_words": 0,
+          "section_id": "S8",
+          "table_id": "table_007",
+          "figure_id": null
+        },
+        {
+          "block_id": "p3b06c",
+          "kind": "chart",
+          "bbox": [
+            300.6499938964844,
+            291.5654418945312,
+            575.9688110351562,
+            415.06109619140625
+          ],
+          "text": null,
+          "style_id": "T7",
+          "source_words": 0,
+          "section_id": "S8",
+          "table_id": "table_009",
+          "figure_id": null
+        },
+        {
+          "block_id": "p3b09c",
+          "kind": "chart",
+          "bbox": [
+            300.6499938964844,
+            641.8130493164062,
+            575.9688110351562,
+            765.26708984375
+          ],
+          "text": null,
+          "style_id": "T7",
+          "source_words": 0,
+          "section_id": "S9",
+          "table_id": "table_010",
+          "figure_id": null
+        },
+        {
+          "block_id": "p3b10c",
+          "kind": "chart",
+          "bbox": [
+            26.639999389648438,
+            592.2314575195312,
+            287.4187927246094,
+            678.631103515625
+          ],
+          "text": null,
+          "style_id": "T7",
+          "source_words": 0,
+          "section_id": "S9",
+          "table_id": "table_008",
+          "figure_id": null
+        }
+      ]
+    },
+    {
+      "page": 4,
+      "mode": "mirror",
+      "reason": "",
+      "blocks": [
+        {
+          "block_id": "p4b01",
+          "kind": "decoration",
+          "bbox": [
+            -1.3200000524520874,
+            0.04998779296875,
+            597.5999755859375,
+            840.3303833007812
+          ],
+          "text": null,
+          "style_id": null,
+          "source_words": 0,
+          "section_id": "S10",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b02",
+          "kind": "logo",
+          "bbox": [
+            430.5,
+            9.75,
+            585.0,
+            62.25
+          ],
+          "text": null,
+          "style_id": null,
+          "source_words": 0,
+          "section_id": "S10",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b03",
+          "kind": "heading",
+          "bbox": [
+            36.0,
+            76.51200103759766,
+            251.23880004882812,
+            89.45088195800781
+          ],
+          "text": "Recommendation Summary (Last 3 Years)",
+          "style_id": "T12",
+          "source_words": 5,
+          "section_id": "S11",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b04",
+          "kind": "table",
+          "bbox": [
+            324.7509765625,
+            80.29801177978516,
+            451.9231201171875,
+            212.52487182617188
+          ],
+          "text": "120\nDates  Rating  Target\n14-May-21  BUY  120\n10-Aug-21  BUY  161\n17-Feb-22  BUY  263\n18-May-22  HOLD  255\n2-Aug-22  HOLD  246\n20-Feb-23  HOLD  223\n15-May-23  HOLD  224\n11-Sep-23  BUY  301",
+          "style_id": "T20",
+          "source_words": 28,
+          "section_id": "S11",
+          "table_id": "table_011",
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b05",
+          "kind": "decoration",
+          "bbox": [
+            55.41600036621094,
+            98.62998962402344,
+            70.35599517822266,
+            109.17799377441406
+          ],
+          "text": "320",
+          "style_id": "T20",
+          "source_words": 1,
+          "section_id": "S11",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b06",
+          "kind": "chart",
+          "bbox": [
+            55.41600036621094,
+            98.62998962402344,
+            322.7509765625,
+            208.89796447753906
+          ],
+          "text": null,
+          "style_id": null,
+          "source_words": 0,
+          "section_id": "S11",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b07",
+          "kind": "decoration",
+          "bbox": [
+            55.41600036621094,
+            113.34996032714844,
+            70.35599517822266,
+            123.89796447753906
+          ],
+          "text": "270",
+          "style_id": "T20",
+          "source_words": 1,
+          "section_id": "S11",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b08",
+          "kind": "decoration",
+          "bbox": [
+            55.41600036621094,
+            128.0800018310547,
+            70.35599517822266,
+            138.6280059814453
+          ],
+          "text": "220",
+          "style_id": "T20",
+          "source_words": 1,
+          "section_id": "S11",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b09",
+          "kind": "decoration",
+          "bbox": [
+            55.41600036621094,
+            142.8199920654297,
+            70.35599517822266,
+            153.3679962158203
+          ],
+          "text": "170",
+          "style_id": "T20",
+          "source_words": 1,
+          "section_id": "S11",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b10",
+          "kind": "decoration",
+          "bbox": [
+            60.40800094604492,
+            172.27000427246094,
+            70.43399810791016,
+            182.81800842285156
+          ],
+          "text": "70",
+          "style_id": "T20",
+          "source_words": 1,
+          "section_id": "S11",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b11",
+          "kind": "decoration",
+          "bbox": [
+            60.40800094604492,
+            186.99998474121094,
+            70.43399810791016,
+            197.54798889160156
+          ],
+          "text": "20",
+          "style_id": "T20",
+          "source_words": 1,
+          "section_id": "S11",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b12",
+          "kind": "decoration",
+          "bbox": [
+            65.20800018310547,
+            198.34996032714844,
+            322.7509765625,
+            208.89796447753906
+          ],
+          "text": "Sep-20 Mar-21 Sep-21 Mar-22 Sep-22 Mar-23 Sep-23",
+          "style_id": "T20",
+          "source_words": 7,
+          "section_id": "S11",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b13",
+          "kind": "text",
+          "bbox": [
+            36.0,
+            215.88800048828125,
+            163.3100128173828,
+            239.17938232421875
+          ],
+          "text": "Source: Bloomberg, Geojit research  Investment Rating Criteria",
+          "style_id": "T21",
+          "source_words": 7,
+          "section_id": "S11",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b14",
+          "kind": "table",
+          "bbox": [
+            41.400001525878906,
+            243.6390838623047,
+            546.9100341796875,
+            305.30059814453125
+          ],
+          "text": "Ratings  Large caps  Midcaps  Small Caps\nBuy  Upside is above 10%  Upside is above 15%  Upside is above 20%\nAccumulate  -  Upside is between 10%-15%  Upside is between 10%-20%\nHold  Upside is between 0% - 10%  Upside is between 0%-10%  Upside is between 0%-10%\nReduce/sell  Downside is more than 0%  Downside is more than 0%  Downside is more than 0%",
+          "style_id": "T1",
+          "source_words": 60,
+          "section_id": "S11",
+          "table_id": "table_012",
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b15",
+          "kind": "text",
+          "bbox": [
+            36.0,
+            308.4690246582031,
+            561.3234252929688,
+            462.3972473144531
+          ],
+          "text": "Not rated/Neutral  Definition: Buy:  Acquire at Current Market Price (CMP), with the target mentioned in the research note.  Accumulate:  Partial buying or to accumulate as CMP dips in the future.  Hold:  Hold the stock with the expected target mentioned in the note.  Reduce:  Reduce your exposure to the stock due to limited upside.  Sell:  Exit from the stock.  Not rated/Neutral:  The analyst has no investment opinion on the stock.  To satisfy regulatory requirements, we attribute \u2018Accumulate\u2019 as Buy and \u2018Reduce\u2019 as Sell.    The recommendations are based on 12 month horizon, unless otherwise specified. The investment ratings are on absolute positive/negative return  basis. It is possible that due to volatile price fluctuation in the near to medium term, there could be a temporary mismatch to rating. For reasons of  valuations/ return/lack of clarity/event we may revisit rating at appropriate time. Please note that the stock always carries the risk of being upgraded  to BUY or downgraded to a HOLD, REDUCE or SELL.",
+          "style_id": "T1",
+          "source_words": 161,
+          "section_id": "S11",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b16",
+          "kind": "heading",
+          "bbox": [
+            36.0,
+            468.5019836425781,
+            223.15879821777344,
+            493.32086181640625
+          ],
+          "text": "General Disclosures and Disclaimers  CERTIFICATION",
+          "style_id": "T12",
+          "source_words": 5,
+          "section_id": "S12",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b17",
+          "kind": "text",
+          "bbox": [
+            36.0,
+            503.9919738769531,
+            560.3507080078125,
+            524.21484375
+          ],
+          "text": "I, Vinod T P, author of this Report, hereby certify that all the views expressed in this research report reflect our personal views about any or all of the  subject issuer or securities. This report has been prepared by the Research Team of Geojit Financial Services Limited, hereinafter referred to as Geojit.",
+          "style_id": "T1",
+          "source_words": 52,
+          "section_id": "S12",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b18",
+          "kind": "heading",
+          "bbox": [
+            36.0,
+            535.6719970703125,
+            117.58879852294922,
+            545.0948486328125
+          ],
+          "text": "COMPANY OVERVIEW",
+          "style_id": "T1",
+          "source_words": 2,
+          "section_id": "S13",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b19",
+          "kind": "text",
+          "bbox": [
+            36.0,
+            548.3919677734375,
+            560.6273803710938,
+            600.8948364257812
+          ],
+          "text": "Geojit, a publically listed company, is engaged in services of retail broking, depository services, portfolio management and marketing investment products  including mutual funds, insurance and properties. GEOJIT is a SEBI registered Research Entity and as such prepares and shares research data and reports  periodically with clients, investors, stake holders and general public in compliance with Securities and Exchange Board of India Act, 1992, Securities And  Exchange Board Of India (Research Analysts) Regulations, 2014 and/or any other applicable directives, instructions or guidelines issued by the Regulators  from time to time.",
+          "style_id": "T1",
+          "source_words": 89,
+          "section_id": "S13",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b20",
+          "kind": "text",
+          "bbox": [
+            36.0,
+            612.2319946289062,
+            560.6184692382812,
+            632.454833984375
+          ],
+          "text": "DISTRIBUTION OF REPORTS:  This document is not for public distribution and has been furnished to you solely for your information and must not be  reproduced or redistributed to any other person. GEOJIT will not treat the recipients of this report as clients by virtue of their receiving this report.",
+          "style_id": "T1",
+          "source_words": 49,
+          "section_id": "S13",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b21",
+          "kind": "text",
+          "bbox": [
+            36.0,
+            643.9119873046875,
+            560.6310424804688,
+            718.0448608398438
+          ],
+          "text": "GENERAL REPRESENTATION : The research reports do not constitute an offer or solicitation for the purchase or sale of any financial instruments,  inducements, promise, guarantee, warranty, or as an official confirmation of any transaction or contractual obligations of any kind. This report is provided  for assistance only and is not intended to be and must not alone be taken as the basis for an investment decision. The information contained herein is from  publicly available data or other sources believed to be reliable, but we do not represent that it is accurate or complete and it should not be relied on as  such. We have also reviewed the research report for any untrue statements of material facts or any false or misleading information. While we endeavor to  update on a reasonable basis the information discussed in this material, there may be regulatory, compliance, or other reasons that prevent us from doing  so.",
+          "style_id": "T1",
+          "source_words": 151,
+          "section_id": "S13",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b22",
+          "kind": "text",
+          "bbox": [
+            36.0,
+            729.3819580078125,
+            561.1887817382812,
+            776.36083984375
+          ],
+          "text": "RISK DISCLOSURE : GEOJIT and/or its Affiliates and its officers, directors and employees including the analyst/authors shall not be in any way be  responsible for any loss or damage that may arise to any person from any inadvertent error in the information contained in this report. Investors may lose  his/her entire investment under certain market conditions so before acting on any advice or recommendation in these material, investors should consider  whether it is suitable for their particular circumstances and, if necessary, seek professional advice. This report does not take into account the specific  investment objectives, financial situation/circumstances and the particular needs of any specific person who may receive this document. The user assumes",
+          "style_id": "T1",
+          "source_words": 113,
+          "section_id": "S13",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b23",
+          "kind": "logo",
+          "bbox": [
+            9.75,
+            798.3309936523438,
+            56.20000076293945,
+            830.5479736328125
+          ],
+          "text": null,
+          "style_id": null,
+          "source_words": 0,
+          "section_id": "S13",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b24",
+          "kind": "footer",
+          "bbox": [
+            486.1000061035156,
+            809.3029174804688,
+            559.0670166015625,
+            821.3046875
+          ],
+          "text": "www.geojit.com",
+          "style_id": "T16",
+          "source_words": 1,
+          "section_id": "S13",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p4b04c",
+          "kind": "chart",
+          "bbox": [
+            459.9231201171875,
+            80.29801177978516,
+            543.3712158203125,
+            212.52487182617188
+          ],
+          "text": null,
+          "style_id": "T20",
+          "source_words": 0,
+          "section_id": "S11",
+          "table_id": "table_011",
+          "figure_id": null
+        }
+      ]
+    },
+    {
+      "page": 5,
+      "mode": "mirror",
+      "reason": "",
+      "blocks": [
+        {
+          "block_id": "p5b01",
+          "kind": "decoration",
+          "bbox": [
+            0.0,
+            0.04998779296875,
+            597.5999755859375,
+            840.3303833007812
+          ],
+          "text": null,
+          "style_id": null,
+          "source_words": 0,
+          "section_id": "S13",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p5b02",
+          "kind": "logo",
+          "bbox": [
+            430.5,
+            9.75,
+            585.0,
+            62.25
+          ],
+          "text": null,
+          "style_id": null,
+          "source_words": 0,
+          "section_id": "S13",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p5b03",
+          "kind": "text",
+          "bbox": [
+            36.0,
+            76.48199462890625,
+            561.0902099609375,
+            104.64486694335938
+          ],
+          "text": "the entire risk of any use made of this information. Each recipient of this report should make such investigation as it deems necessary to arrive at an  independent evaluation of an investment in the securities of companies referred to in this report (including the merits and risks involved). The price,  volume and income of the investments referred to in this report may fluctuate and investors may realize losses that may exceed their original capital.",
+          "style_id": "T1",
+          "source_words": 74,
+          "section_id": "S13",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p5b04",
+          "kind": "text",
+          "bbox": [
+            36.0,
+            110.58197021484375,
+            561.17138671875,
+            492.8948669433594
+          ],
+          "text": "FUNDAMENTAL DISCLAIMER:  We have prepared this report based on information believed to be reliable. The recommendations herein are based on 12  month horizon, unless otherwise specified. The investment ratings are on absolute positive/negative return basis. It is possible that due to volatile price  fluctuation in the near to medium term, there could be a temporary mismatch to rating. For reasons of valuations/return/lack of clarity/event we may  revisit rating at appropriate time. The stocks always carry the risk of being upgraded to buy or downgraded to a hold, reduce or sell. The opinions expressed  are subject to change but we have no obligation to tell our clients when our opinions or recommendations change. This report is non-inclusive and does  not consider all the information that the recipients may consider material to investments. This report is issued by GEOJIT without any  liability/undertaking/commitment on the part of itself or any of its entities. We may have issued or may issue on the companies covered herein, reports,  recommendations or information which is contrary to those contained in this report. The projections and forecasts described in this report should be  evaluated keeping in mind the fact that these are based on estimates and assumptions and will vary from actual results over a period of time. The actual  performance of the companies represented in the report may vary from those projected. These are not scientifically proven to guarantee certain intended  results and hence, are not published as a warranty and do not carry any evidentiary value whatsoever. These are not to be relied on in or as contractual,  legal or tax advice. Prospective investors and others are cautioned that any forward-looking statements are not predictions and may be subject to change  without notice.   CRISIL has provided research support in preparation of this research report and the investment rational contained herein along with financial forecast.  The target price and recommendation provided in the report are strictly Geojit\u2019s views and are NOT PROVIDED by CRISIL. Further, CRISIL expresses no  opinion on valuation and the associated recommendations. CRISIL has no financial liability whatsoever, to the subscribers / users of this report.   JURISDICTION : The securities described herein may not be eligible for sale in all jurisdictions or to all categories of investors. The countries in which the  companies mentioned in this report are organized may have restrictions on investments, voting rights or dealings in securities by nationals of other  countries. Distributing/taking/sending/dispatching/transmitting this document in certain foreign jurisdictions may be restricted by law, and persons into  whose possession this document comes should inform themselves about, and observe any such restrictions. Failure to comply with this restriction may  constitute a violation of any foreign jurisdiction laws. Foreign currencies denominated securities are subject to fluctuations in exchange rates that could  have an adverse effect on the value or price of or income derived from the investment. Investors in securities such as ADRs, the value of which are influenced  by foreign currencies effectively assume currency risk.   REGULATORY DISCLOSURES:  Group companies of Geojit Financial Services Limited are Geojit Technologies Private Limited (Software Solutions  provider), Geojit Credits Private Limited (NBFC), Geojit Investment Limited (financial Services Company (yet to start operations)), Geojit Techloan Private  Ltd( P2P lending (yet to start operations)), Geojit IFSC Ltd (a company incorporated under IFSC Regulations( yet to start operations)), Qurum Business  Group Geojit Securities LLC (a joint venture in Oman engaged in Financial Services),  Barjeel Geojit Financial Services LLC (a joint venture in UAE engaged  in Financial Services), Aloula Geojit Capital Company (a joint venture in Saudi Arabia (Under Liquidation)) and BBK Geojit Securities Co. K.S.C.C (a subsidiary  in Kuwait-engaged in Financial services).In the context of the SEBI Regulations on Research Analysts (2014), GEOJIT affirms that we are a SEBI registered  Research Entity and in the course of our business as a stock market intermediary, we issue research reports /research analysis etc that are prepared by  our Research Analysts. We also affirm and undertake that no disciplinary action has been taken against us or our Analysts in connection with our business  activities.   In compliance with the above mentioned SEBI Regulations, the following additional disclosures are also provided which may be considered by the reader  before making an investment decision:   1.  Disclosures regarding Ownership:    GEOJIT confirms that:  It/its associates have no financial interest or any other material conflict in relation to the subject company (ies) covered herein.  It/its associates have no actual beneficial ownership of  1% or more  in relation to the subject company (ies) covered herein.  Further, the Analyst confirms that:  (i) He, his associates and his relatives have no financial interest in the subject company (ies) covered herein, and they have no other material conflict in",
+          "style_id": "T1",
+          "source_words": 776,
+          "section_id": "S13",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p5b05",
+          "kind": "text",
+          "bbox": [
+            36.0,
+            492.83197021484375,
+            562.322021484375,
+            703.8848266601562
+          ],
+          "text": "the subject company.  (ii) He, his associates and his relatives have no actual/beneficial ownership of 1% or more in the subject company covered.  2.  Disclosures regarding Compensation:    During the past 12 months, GEOJIT or its Associates:  (a) Have not received any compensation from the subject company; (b) Have not managed or co-managed public offering of securities for the subject  company  (c) Have not received any compensation for investment banking or merchant banking or brokerage services from the subject company (d) Have  not received any compensation for products or services other than investment banking or merchant banking or brokerage services from the subject  company. (e) Have not received any compensation or other benefits from the subject company or third party in connection with the research report (f)   The subject company is / was not a client during twelve months preceding the date of distribution of the research report.    3. Disclosure by GEOJIT regarding the compensation paid to its Research Analyst:  GEOJIT hereby confirms that no part of the compensation paid to the persons employed by it as Research Analysts is based on any specific brokerage  services or transactions pertaining to trading in securities of companies contained in the Research Reports.  4.  Disclosure regarding the Research Analyst\u2019s connection with the subject company:  It is affirmed that I, Vinod T P, Research Analyst(s) of GEOJIT have not served as an officer, director or employee of the subject company   5.  Disclosure regarding Market Making activity:  Neither GEOJIT/its Analysts have engaged in market making activities for the subject company.   Please ensure that you have read the \u201cRisk Disclosure Documents for Capital Market and Derivatives Segments\u201d as prescribed by the Securities and  Exchange Board of India before investing.  6.  Standard Warning: \u201cInvestment in securities market are subject to market risks. Read all the related documents carefully  before investing.\u201d  7. \u201cRegistration granted by SEBI, membership of BASL (in case of IAs) and certification from NISM in no way guarantee performance of the intermediary  or provide any assurance of returns to investors.\u201d",
+          "style_id": "T1",
+          "source_words": 334,
+          "section_id": "S13",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p5b06",
+          "kind": "photo",
+          "bbox": [
+            36.0,
+            703.8519897460938,
+            558.8499755859375,
+            778.1519775390625
+          ],
+          "text": null,
+          "style_id": null,
+          "source_words": 0,
+          "section_id": "S13",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p5b07",
+          "kind": "logo",
+          "bbox": [
+            9.75,
+            798.3309936523438,
+            56.20000076293945,
+            830.5479736328125
+          ],
+          "text": null,
+          "style_id": null,
+          "source_words": 0,
+          "section_id": "S13",
+          "table_id": null,
+          "figure_id": null
+        },
+        {
+          "block_id": "p5b08",
+          "kind": "footer",
+          "bbox": [
+            486.1000061035156,
+            809.3029174804688,
+            559.0670166015625,
+            821.3046875
+          ],
+          "text": "www.geojit.com",
+          "style_id": "T16",
+          "source_words": 1,
+          "section_id": "S13",
+          "table_id": null,
+          "figure_id": null
+        }
+      ]
+    }
+  ],
+  "capped_rows": {
+    "table_002": 8,
+    "table_003": 6,
+    "table_004": 17,
+    "table_006": 8,
+    "table_007": 12,
+    "table_009": 12,
+    "table_010": 13,
+    "table_008": 8
+  },
+  "kinds": {
+    "table_006": "pie",
+    "table_011": "bar",
+    "table_007": "line",
+    "table_003": "line",
+    "table_008": "line",
+    "table_004": "line",
+    "table_009": "line",
+    "table_010": "line",
+    "table_002": "bar",
+    "table_005": "bar"
+  },
+  "sidecars_match": true,
+  "mismatched": [],
+  "every_displayed_table": true,
+  "hidden": [],
+  "unchartable": [
+    "table_001",
+    "table_012"
+  ],
+  "contact_sheet": "artifacts_llm\\runs\\7799d9f6e42f\\charts\\contact_charts.png"
+}

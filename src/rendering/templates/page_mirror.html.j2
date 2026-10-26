@@ -1,0 +1,8 @@
+<section class="sheet" style="width:{{ page.w }}pt;height:{{ page.h }}pt">
+  {% if page.decoration %}{{ page.decoration | safe }}{% endif %}
+  {% for block in page.blocks %}
+  {% if block.html %}
+  <div class="block block-{{ block.kind }} {{ block.ink }}" data-block="{{ block.id }}" style="{{ block.css }}">{{ block.html | safe }}</div>
+  {% endif %}
+  {% endfor %}
+</section>

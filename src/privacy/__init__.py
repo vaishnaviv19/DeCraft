@@ -40,7 +40,7 @@ STRUCTURAL_LABELS = ("total", "subtotal", "sub total", "grand total")   # kept b
 STRUCTURAL_NUMBERS = {"100", "100.0", "100.00", "100%", "100.0%"}        # a share total is not data
 
 CHECKS_RUN = ["identifier_reuse", "label_reuse", "text_number_reuse", "value_distance", "value_distance_displayed",
-              "quasi_identifier_match", "rare_combination", "headline_distance"]
+              "quasi_identifier_match", "rare_combination", "headline_distance", "dcr", "identical_match"]
 
 
 def _profiles_by_table(report) -> dict[str, list]:
@@ -346,6 +346,19 @@ def audit_privacy(doc: SourceDocument, data: CanonicalDataset, plan: PrivacyPlan
                  if d.risk is SensitivityClass.QUASI_IDENTIFIER
                  and c in source.columns and c in synthetic.columns]
         violations += quasi_row_matches(table.table_id, source, synthetic, quasi)
+        # v3.3 F-02: no generated row may be a near-duplicate of a source row (DCR, with shares), and
+        # no row may be an identical copy (identical match share 0)
+        labels = [c for c, d in table_decisions.items() if c in source.columns and c in synthetic.columns
+                  and not pd.api.types.is_numeric_dtype(source[c]) and c not in numeric]
+        from src.privacy._dcr import dcr_violations, identical_match_share
+        violations += [v.model_copy(update={"rows": [r for r in v.rows if r not in computed]})
+                       for v in dcr_violations(table.table_id, source, synthetic, numeric, labels, th.dcr_min,
+                                               th.min_value_distance)
+                       if [r for r in v.rows if r not in computed]]
+        if numeric and identical_match_share(source, synthetic, numeric + labels) > 0:
+            violations.append(Violation(check="identical_match", severity=Severity.ERROR,
+                                        table_id=table.table_id, repairable=True,
+                                        message="a generated row is an exact copy of a source row"))
         violations += rare_combination_violations(table.table_id, synthetic, quasi, th)
 
     # Headline Distance: the SAME fact definitions on both sides (core.facts), level facts only -

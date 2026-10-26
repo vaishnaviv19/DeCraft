@@ -13,7 +13,7 @@ import logging
 from pathlib import Path
 
 import pymupdf
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from src.config import Config
 from src.contracts import SourceTable
@@ -24,6 +24,8 @@ from src.style._prompts import CHART_DATA, FIGURES
 MAX_PX = 1024
 MIN_CONFIDENCE = 0.4
 FIGURE_KINDS = {"chart", "photo", "logo", "icon", "other"}
+# kinds the vision model uses that are not in the prompt's list (live run 2026-10-26: "table")
+KIND_ALIASES = {"table": "other", "diagram": "other", "image": "photo", "graph": "chart"}
 
 log = logging.getLogger("decraft.style")
 
@@ -36,6 +38,14 @@ class FigureOut(BaseModel):
     has_legend: bool = False
     has_data_labels: bool = False
     description: str = ""
+
+    @model_validator(mode="before")
+    @classmethod
+    def _nulls_mean_default(cls, data):
+        # Llama 4 Scout answers null for "no description" / "unknown legend" (live check 2026-10-26)
+        if isinstance(data, dict):
+            return {k: v for k, v in data.items() if v is not None or k == "chart_kind"}
+        return data
 
 
 class FiguresOut(BaseModel):
@@ -80,6 +90,9 @@ def fallback_label(block_kind: str) -> tuple[str, str | None]:
     return "photo", None
 
 
+MIN_GEOMETRY_CONFIDENCE = 0.9         # v3.3 F-07 (style.chart_recovery_min_conf)
+
+
 def analyse_figures(pdf_path: Path, templates: list[PageTemplate], cfg: Config,
                     gateway: LLMGateway | None) -> tuple[list[FigureInfo], list[RecoveredChart]]:
     """Label every source figure and recover data for the lone charts."""
@@ -104,6 +117,8 @@ def analyse_figures(pdf_path: Path, templates: list[PageTemplate], cfg: Config,
                             log.warning("figure_analyst answered %s twice; keeping the first",
                                         item.figure_id)
                             continue
+                        if item.kind in KIND_ALIASES:
+                            item = item.model_copy(update={"kind": KIND_ALIASES[item.kind]})
                         if item.kind not in FIGURE_KINDS:
                             log.warning("figure_analyst gave %s an unknown kind %r",
                                         item.figure_id, item.kind)
@@ -127,13 +142,22 @@ def analyse_figures(pdf_path: Path, templates: list[PageTemplate], cfg: Config,
                         has_legend=label.has_legend, has_data_labels=label.has_data_labels,
                         description=label.description))
 
-            # Lone charts: the section holds no table block.
-            sections_with_table = {b.section_id for b in template.blocks if b.kind == "table"}
+            # Lone charts: a chart block not linked to a table on its page (style.link_charts). v3.3 F-07:
+            # a vector chart's data is read from its geometry first (exact, no model call); the vision
+            # model is only asked when that fails (raster charts, unlabelled or log axes).
+            from src.style._chart_geometry import recover_chart
             for block in blocks:
                 figure = next(f for f in figures if f.figure_id == block.block_id)
-                if figure.kind != "chart" or block.section_id in sections_with_table:
+                if figure.kind != "chart" or block.table_id:
+                    continue
+                chart = (recover_chart(page, block.block_id, block.bbox, MIN_GEOMETRY_CONFIDENCE)
+                         if block.kind == "chart" else None)          # vector chart: exact geometry
+                if chart is not None:
+                    recovered.append(chart)
                     continue
                 if gateway is None or not gateway.enabled:
+                    log.warning("chart %s: no geometry recovery and no vision model; flagged for QA",
+                                block.block_id)
                     continue
                 chart = _recover_chart(page, block.block_id, block.bbox, gateway)
                 if chart is None:

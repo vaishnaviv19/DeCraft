@@ -41,9 +41,11 @@ def summable(profile, column: str) -> bool:
 
 
 def _num(key, value, source, profile=None, column="", unit=None):
+    scale = getattr(profile, "scale", None)
     return Fact(key=key, value=float(value), kind="number", source=source,
                 unit=unit if unit is not None else unit_of(profile, column),
-                decimals=getattr(profile, "decimals", None))
+                decimals=getattr(profile, "decimals", None),
+                scale=float(scale) if scale not in (None, 0, 1, 1.0) else None)
 
 
 def _text(key, value, source):

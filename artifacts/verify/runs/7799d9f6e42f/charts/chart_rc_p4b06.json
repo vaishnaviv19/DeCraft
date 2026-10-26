@@ -1,0 +1,37 @@
+{
+  "chart_id": "chart_rc_p4b06",
+  "table_id": "rc_p4b06",
+  "label_column": "Category",
+  "kind": "line",
+  "orientation": "columns",
+  "columns": [],
+  "labels": [
+    "Sep-21",
+    "Mar-22",
+    "Sep-22",
+    "Mar-23",
+    "Sep-23",
+    "Mar-24",
+    "Sep-24"
+  ],
+  "series": {
+    "Series 1": [
+      71.6,
+      153.3,
+      109.1,
+      254.7,
+      154.3,
+      293.1,
+      317.1
+    ],
+    "Series 2": [
+      79.9,
+      147.4,
+      238.7,
+      360.7,
+      194.7,
+      236.6,
+      143.3
+    ]
+  }
+}

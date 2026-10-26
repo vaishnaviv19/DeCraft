@@ -4,6 +4,7 @@ from __future__ import annotations
 import concurrent.futures as cf
 import hashlib
 import json
+import threading
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Protocol, TypeVar
@@ -66,7 +67,10 @@ class LLMGateway:
     limiter: object | None = None           # src.llm._limiter.RateLimiter (one per provider)
     cache_only: bool = False                # notebook re-run without keys: cache miss -> CacheMiss
     log_path: Path | None = None            # JSONL prompt log consumed by scripts/build_prompt_log.py
+    disabled_reason: str = ""                # why the gateway switched itself off during a run
+    backoff_scale: float = 1.0              # tests set 0 so retries after a 429 do not sleep
     _tokens_used: int = 0
+    _budget_lock: threading.Lock = field(default_factory=threading.Lock, repr=False, compare=False)
 
     def start_stage(self, stage: str) -> None:
         """Open a new Pipeline Stage: each Stage gets its own token budget (M9.1)."""
@@ -109,8 +113,24 @@ class LLMGateway:
                     if status in (401, 403):           # the key is not accepted: stop asking this provider
                         self.enabled = False
                         return None
+                    body = error.response.text.lower()
+                    if status == 429 and ("per day" in body or "tokens per day" in body or "(tpd)" in body
+                                          or "(rpd)" in body or "daily free allocation" in body):
+                        # Cloudflare: "you have used up your daily free allocation of 10,000 neurons"
+                        # live run 2026-10-26: the daily token quota (TPD) was used up and each call was
+                        # retried 3 times; a daily limit will not lift within this run - stop asking
+                        self.enabled = False
+                        self.disabled_reason = "daily quota used up"
+                        self._write_log(prompt, attempt, False, "daily quota used up: provider disabled", False)
+                        return None
                     if status == 429 or status >= 500:
-                        continue                       # busy or broken right now: try again
+                        # busy or broken right now: wait, then try again (another process may share the quota)
+                        import time
+                        retry_after = error.response.headers.get("retry-after", "")
+                        wait = float(retry_after) if retry_after.replace(".", "", 1).isdigit() \
+                            else min(5.0 * 2 ** (attempt - 1), 30.0)
+                        time.sleep(min(wait, 60.0) * self.backoff_scale)
+                        continue
                     return None                        # the request itself is wrong: no point repeating it
                 if isinstance(error, httpx.TransportError):
                     error = LLMUnavailable(str(error))
@@ -147,11 +167,12 @@ class LLMGateway:
         if in_tok > prompt.max_input_tokens:
             raise LLMBudgetExceeded(f"{prompt.name}: {in_tok} input tokens > cap {prompt.max_input_tokens}")
         est = in_tok + prompt.max_output_tokens
-        if self._tokens_used + est > self.stage_token_budget:
-            raise LLMBudgetExceeded(f"stage budget {self.stage_token_budget} tokens exhausted")
+        with self._budget_lock:                      # parallel writers: check and reserve together
+            if self._tokens_used + est > self.stage_token_budget:
+                raise LLMBudgetExceeded(f"stage budget {self.stage_token_budget} tokens exhausted")
+            self._tokens_used += est
         if self.limiter is not None:
             self.limiter.acquire(est)
-        self._tokens_used += est
         ex = cf.ThreadPoolExecutor(max_workers=1)
         fut = ex.submit(self.client.complete, prompt.system, user, prompt.temperature, prompt.max_output_tokens,
                         images=images, reasoning_effort=prompt.reasoning_effort)
@@ -159,8 +180,18 @@ class LLMGateway:
             reply = fut.result(timeout=self.timeout_s)
         except cf.TimeoutError as e:
             raise TimeoutError from e
+        except Exception:
+            # the provider refused or failed before answering: no tokens were spent, so give the
+            # reservation back (live run 2026-10-26: 26 refused 429s used up the 200k QA budget)
+            with self._budget_lock:
+                self._tokens_used -= est
+            raise
         finally:
             ex.shutdown(wait=False, cancel_futures=True)   # never block the pipeline on a hung call
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps({"reply": reply}), encoding="utf-8")
+        # Keep the real payload with the reply so M10.1 can show one real user prompt per agent
+        # (E-02 allows source data in the cache; keys are never written here).
+        path.write_text(json.dumps({"reply": reply, "prompt": prompt.name,
+                                    "version": prompt.version,
+                                    "payload": user[:8000]}), encoding="utf-8")
         return reply, False

@@ -1,0 +1,117 @@
+{
+  "charts": {
+    "line": 2,
+    "other": 1
+  },
+  "photos": 1,
+  "logos": 5,
+  "figures": 13,
+  "items": [
+    {
+      "figure_id": "p1b03",
+      "kind": "chart",
+      "chart_kind": "line",
+      "has_legend": true,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p1b18",
+      "kind": "other",
+      "chart_kind": null,
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p1b27",
+      "kind": "logo",
+      "chart_kind": null,
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p2b02",
+      "kind": "logo",
+      "chart_kind": null,
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p2b10",
+      "kind": "icon",
+      "chart_kind": null,
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p3b02",
+      "kind": "chart",
+      "chart_kind": "other",
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p3b15",
+      "kind": "logo",
+      "chart_kind": null,
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p4b02",
+      "kind": "chart",
+      "chart_kind": "line",
+      "has_legend": true,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p4b06",
+      "kind": "other",
+      "chart_kind": null,
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p4b23",
+      "kind": "logo",
+      "chart_kind": null,
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p5b02",
+      "kind": "logo",
+      "chart_kind": null,
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    },
+    {
+      "figure_id": "p5b06",
+      "kind": "photo",
+      "chart_kind": null,
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": "A graph or chart, likely related to financial data, with a formal and professional setting, and a neutral mood."
+    },
+    {
+      "figure_id": "p5b07",
+      "kind": "icon",
+      "chart_kind": null,
+      "has_legend": false,
+      "has_data_labels": false,
+      "description": ""
+    }
+  ],
+  "recovered_items": [],
+  "llm_calls": 8
+}

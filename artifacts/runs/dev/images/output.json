@@ -1,0 +1,159 @@
+{
+  "photos": 3,
+  "slots": 3,
+  "generated": 0,
+  "checks_passed": 0,
+  "captions_simplified": 0,
+  "skipped_slots": 0,
+  "skipped": true,
+  "reason": "no image gateway",
+  "logos": [
+    {
+      "block_id": "p1b03",
+      "page": 1,
+      "file": "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\images\\logo_0.png"
+    },
+    {
+      "block_id": "p1b27",
+      "page": 1,
+      "file": "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\images\\logo_1.png"
+    },
+    {
+      "block_id": "p2b10",
+      "page": 2,
+      "file": "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\images\\logo_2.png"
+    },
+    {
+      "block_id": "p3b15",
+      "page": 3,
+      "file": "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\images\\logo_3.png"
+    },
+    {
+      "block_id": "p4b02",
+      "page": 4,
+      "file": "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\images\\logo_4.png"
+    },
+    {
+      "block_id": "p4b23",
+      "page": 4,
+      "file": "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\images\\logo_5.png"
+    },
+    {
+      "block_id": "p5b02",
+      "page": 5,
+      "file": "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\images\\logo_6.png"
+    },
+    {
+      "block_id": "p5b07",
+      "page": 5,
+      "file": "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\images\\logo_7.png"
+    }
+  ],
+  "items": [
+    {
+      "slot": {
+        "index": 0,
+        "page": 2,
+        "block_id": "p2b02",
+        "figure_id": "p2b02",
+        "bbox": [
+          430.5,
+          9.75,
+          585.0,
+          62.25
+        ],
+        "caption_block_id": null,
+        "caption": "",
+        "description": ""
+      },
+      "checks": 0,
+      "passed": false,
+      "missing": [],
+      "caption": "",
+      "simplified": false
+    },
+    {
+      "slot": {
+        "index": 1,
+        "page": 3,
+        "block_id": "p3b02",
+        "figure_id": "p3b02",
+        "bbox": [
+          430.5,
+          9.75,
+          585.0,
+          62.25
+        ],
+        "caption_block_id": null,
+        "caption": "",
+        "description": ""
+      },
+      "checks": 0,
+      "passed": false,
+      "missing": [],
+      "caption": "",
+      "simplified": false
+    },
+    {
+      "slot": {
+        "index": 2,
+        "page": 5,
+        "block_id": "p5b06",
+        "figure_id": "p5b06",
+        "bbox": [
+          36.0,
+          703.8519897460938,
+          558.8499755859375,
+          778.1519775390625
+        ],
+        "caption_block_id": null,
+        "caption": "",
+        "description": ""
+      },
+      "checks": 0,
+      "passed": false,
+      "missing": [],
+      "caption": "",
+      "simplified": false
+    }
+  ],
+  "blocks": {
+    "p1b07": "The board reviewed these results against the plan set",
+    "p1b08": "",
+    "p1b09": "",
+    "p1b13": "The narrative below highlights the items that moved most during the period. Efficiency measures introduced earlier began to show in the results. Management continues to track these indicators on a regular basis. Management attributes the result to steady execution across the portfolio. The mix of activities remained broadly consistent with earlier reporting periods. Working capital and cost discipline stayed in focus throughout the year. The figures below set out the main components behind these movements. Comparisons are made on the same basis as in the prior presentation. Operating conditions were mixed, with some segments advancing faster than others. Capital allocation continued to favour projects with clear returns. The board reviewed these results against the plan set at the start of the period. Seasonal effects are reflected in the timing of several line items.",
+    "p1b14": "Further detail on each component is provided in the accompanying table. Risk management practices were applied consistently across reporting units. The outlook takes into account current demand and the pipeline of commitments. Pricing and volume both contributed to the movements described here. Overheads were monitored closely against the approved budget. These results are presented after the usual internal review and reconciliation. Investment in capacity is expected to support the next phase of growth. The relationship between revenue and costs is discussed alongside the table.",
+    "p1b15": "",
+    "p1b16": "",
+    "p1b19": "Each figure is shown on the same basis as the related table.",
+    "p1b25": "Over the period from FY24A to FY26E, Sales rose by 17.9% to reach 87,627.1. EBITDA ended FY26E at 15,882.1, having risen by 24.3% since FY24A. Adj. PAT rose by 10.9% between FY24A and FY26E, closing at 5,143.5. Over the period from FY24A to FY26E, Adj. EPS rose by 13.3% to reach 16.2. P/E ended FY26E at 31.2, having risen by 28.9% since FY24A. P/B rose by 21.4% between FY24A and FY26E, closing at 3.4.",
+    "p1b26": "D/E ended FY26E at 1.5, having fallen by 28.6% since FY24A.",
+    "p4b13": "",
+    "p4b15": "Among all items, BUY stood out with Target of 394. The board reviewed these results against the plan set at the start of the period. That item accounted for 19.0% of the total. Seasonal effects are reflected in the timing of several line items. Across the table, Target amounted to 2,070. Further detail on each component is provided in the accompanying table. Risk management practices were applied consistently across reporting units. The outlook takes into account current demand and the pipeline of commitments. Pricing and volume both contributed to the movements described here. Overheads were monitored closely against the approved budget. These results are presented after the usual internal review and reconciliation. Investment in capacity is expected to support the next phase of growth. The relationship between revenue and costs is discussed alongside the table. Exposure to external factors was managed within the agreed limits. The performance of individual items is summarised in the chart that follows.",
+    "p4b17": "Pricing and volume both contributed to the movements described here. Overheads were monitored closely against the approved budget.",
+    "p4b19": "Liquidity remained adequate to meet the commitments of the period. Each figure is shown on the same basis as the related table. The narrative below highlights the items that moved most during the period. Efficiency measures introduced earlier began to show in the results. Management continues to track these indicators on a regular basis. Management attributes the result to steady execution across the portfolio. The mix of activities remained broadly consistent with earlier reporting periods. Working capital and cost discipline stayed in focus throughout the year.",
+    "p4b20": "Comparisons are made on the same basis as in the prior presentation.",
+    "p4b21": "Seasonal effects are reflected in the timing of several line items. Further detail on each component is provided in the accompanying table. Risk management practices were applied consistently across reporting units. The outlook takes into account current demand and the pipeline of commitments. Pricing and volume both contributed to the movements described here. Overheads were monitored closely against the approved budget. These results are presented after the usual internal review and reconciliation. Investment in capacity is expected to support the next phase of growth. The relationship between revenue and costs is discussed alongside the table. Exposure to external factors was managed within the agreed limits. The performance of individual items is summarised in the chart that follows.",
+    "p4b22": "",
+    "p5b03": "",
+    "p5b04": "",
+    "p5b05": ""
+  },
+  "captions": [
+    {
+      "slot": 0,
+      "block_id": null,
+      "caption": ""
+    },
+    {
+      "slot": 1,
+      "block_id": null,
+      "caption": ""
+    },
+    {
+      "slot": 2,
+      "block_id": null,
+      "caption": ""
+    }
+  ]
+}

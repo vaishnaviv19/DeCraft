@@ -31,6 +31,7 @@ def validate(data: CanonicalDataset, report, cfg: Config,
     violations += _checks.check_patterns(data, report, cfg, frames)
     if frames is not None:
         violations += _checks.check_source_distance(data, report, cfg, frames)
+        violations += _checks.check_dcr(data, report, cfg, frames)          # v3.3 F-02
         violations += _checks.check_ranges(data, report, frames)
         violations += _checks.check_utility(data, report, cfg, frames)
     return ValidationReport(

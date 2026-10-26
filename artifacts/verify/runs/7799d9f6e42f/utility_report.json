@@ -1,0 +1,74 @@
+{
+  "warnings": [
+    {
+      "check": "utility_category_share",
+      "rule_id": null,
+      "severity": "warning",
+      "table_id": "table_003",
+      "column": "Consolidated (cr)",
+      "rows": [],
+      "message": "category share drift up to 0.15",
+      "repairable": false
+    },
+    {
+      "check": "utility_category_share",
+      "rule_id": null,
+      "severity": "warning",
+      "table_id": "table_006",
+      "column": "Methodology",
+      "rows": [],
+      "message": "category share drift up to 0.17",
+      "repairable": false
+    },
+    {
+      "check": "utility_category_share",
+      "rule_id": null,
+      "severity": "warning",
+      "table_id": "table_007",
+      "column": "Y.E March (Rs. cr)",
+      "rows": [],
+      "message": "category share drift up to 0.24",
+      "repairable": false
+    },
+    {
+      "check": "utility_range",
+      "rule_id": null,
+      "severity": "warning",
+      "table_id": "table_009",
+      "column": "FY21A",
+      "rows": [],
+      "message": "generated values outside the widened source range",
+      "repairable": false
+    },
+    {
+      "check": "utility_range",
+      "rule_id": null,
+      "severity": "warning",
+      "table_id": "table_009",
+      "column": "FY22A",
+      "rows": [],
+      "message": "generated values outside the widened source range",
+      "repairable": false
+    },
+    {
+      "check": "utility_range",
+      "rule_id": null,
+      "severity": "warning",
+      "table_id": "table_009",
+      "column": "FY23A",
+      "rows": [],
+      "message": "generated values outside the widened source range",
+      "repairable": false
+    },
+    {
+      "check": "utility_range",
+      "rule_id": null,
+      "severity": "warning",
+      "table_id": "table_009",
+      "column": "FY25E",
+      "rows": [],
+      "message": "generated values outside the widened source range",
+      "repairable": false
+    }
+  ]
+}

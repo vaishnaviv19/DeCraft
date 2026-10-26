@@ -1,0 +1,73 @@
+{
+  "gates": {
+    "pages": true,
+    "placeholders": true,
+    "words": true,
+    "words_per_page": false,
+    "font_sizes_locked": true,
+    "no_source_names": true,
+    "fonts_embedded": true,
+    "text_in_boxes": true,
+    "layout_fits": true,
+    "tables_charted": true,
+    "charts_match_tables": true,
+    "roundtrip_structure": false,
+    "layout_metrics": false,
+    "chart_style_similar": true,
+    "discriminator": true,
+    "layout_agreement": true
+  },
+  "failures": [
+    "words_per_page: page 1 has 507 words, source 706",
+    "words_per_page: page 4 has 573 words, source 734",
+    "words_per_page: page 5 has 840 words, source 1197",
+    "roundtrip: p1: chart count 2 vs intended 3",
+    "roundtrip: p1: table count 4 vs intended 2",
+    "roundtrip: p2: heading count 9 vs intended 4",
+    "roundtrip: p2: chart count 2 vs intended 3",
+    "roundtrip: p2: table count 2 vs intended 3",
+    "roundtrip: p3: heading count 2 vs intended 8",
+    "roundtrip: p3: chart count 2 vs intended 4",
+    "roundtrip: p4: heading count 1 vs intended 3",
+    "roundtrip: p5: logo count 3 vs intended 2",
+    "roundtrip: p5: photo count 0 vs intended 1",
+    "roundtrip: p1: reading order similarity 0.74 < 0.9",
+    "roundtrip: p2: reading order similarity 0.44 < 0.9",
+    "roundtrip: p3: reading order similarity 0.71 < 0.9",
+    "roundtrip: p4: reading order similarity 0.75 < 0.9",
+    "roundtrip: p5: reading order similarity 0.67 < 0.9",
+    "layout_metrics: p1: mean block IoU 0.38 < 0.9",
+    "layout_metrics: p2: overlap 0.055 vs intended 0.000",
+    "layout_metrics: p2: mean block IoU 0.42 < 0.9",
+    "layout_metrics: p3: 0% of the text sits in its intended boxes (< 90%)",
+    "layout_metrics: p3: mean block IoU 0.36 < 0.9",
+    "layout_metrics: p4: alignment 4.2 pt vs intended 1.9",
+    "layout_metrics: p4: mean block IoU 0.44 < 0.9",
+    "layout_metrics: p5: mean block IoU 0.66 < 0.9"
+  ],
+  "round_scores": [
+    [
+      8,
+      8,
+      6,
+      8,
+      8
+    ],
+    [
+      8,
+      8,
+      8,
+      8,
+      8
+    ],
+    [
+      8,
+      8,
+      8,
+      8,
+      8
+    ]
+  ],
+  "kept_round": 1,
+  "manual_review_required": []
+}

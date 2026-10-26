@@ -1,0 +1,44 @@
+{
+  "chart_id": "chart_plan_007",
+  "table_id": "table_007",
+  "label_column": "Y.E March (Rs. cr)",
+  "kind": "line",
+  "orientation": "rows",
+  "columns": [
+    "FY22A",
+    "FY23A",
+    "FY24A",
+    "FY25E",
+    "FY26E"
+  ],
+  "labels": [
+    "FY22A",
+    "FY23A",
+    "FY24A",
+    "FY25E",
+    "FY26E"
+  ],
+  "series": {
+    "Revenue": [
+      6239.0,
+      6698.0,
+      7261.0,
+      8466.0,
+      10158.0
+    ],
+    "Depreciation": [
+      5055.0,
+      4917.0,
+      5835.0,
+      5441.0,
+      5359.0
+    ],
+    "EBIT": [
+      1562.0,
+      2421.0,
+      4348.0,
+      4219.0,
+      4815.0
+    ]
+  }
+}

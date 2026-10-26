@@ -61,7 +61,8 @@ def test_a_rotated_page_flows(tmp_path):
     assert page_template.mode == "flow" and page_template.reason == "rotated"
 
 
-def test_many_columns_flow(tmp_path):
+def test_many_columns_stay_mirrored(tmp_path):
+    """E-48 (owner decision): the source layout is kept; a many-column page is mirrored, reason recorded."""
     document = pymupdf.open()
     page = document.new_page(width=595, height=842)
     for n, (x0, x1) in enumerate(((36, 160), (170, 290), (300, 420), (430, 560))):
@@ -72,7 +73,7 @@ def test_many_columns_flow(tmp_path):
     document.save(path)
     document.close()
     page_template = template_for(path)[0]
-    assert page_template.mode == "flow" and page_template.reason == "columns"
+    assert page_template.mode == "mirror" and page_template.reason.startswith("columns")
 
 
 def test_overlap_helper():
@@ -114,3 +115,28 @@ def test_the_real_sample_has_a_template_per_page_and_every_block_owned():
             assert block.section_id is not None
     kinds = {block.kind for page in pages for block in page.blocks}
     assert {"text", "heading"} <= kinds
+
+
+def test_borderless_table_rows_become_one_table_block_not_writer_text(tmp_path):
+    """Live run 2026-10-26: 105 of 132 'text' boxes were table rows or axis labels."""
+    import pymupdf
+    from src.config import load_config
+    from src.style import build_templates, extract_style
+    path = tmp_path / "rows.pdf"
+    doc = pymupdf.open()
+    page = doc.new_page(width=595, height=842)
+    page.insert_textbox(pymupdf.Rect(72, 80, 520, 160), "Revenue rose this year as demand improved across "
+                        "every region, and the margin held steady despite higher input costs.", fontsize=10)
+    for i, (label, a, b, c) in enumerate([("Revenue", "32,703", "42,816", "55,109"), ("EBITDA", "7,442", "8,431", "9,144"),
+                                          ("Tax", "1,051", "1,203", "1,388")]):
+        y = 200 + i * 14
+        for x, cell in ((72, label), (220, a), (320, b), (420, c)):
+            page.insert_text((x, y), cell, fontsize=9)
+    page.insert_text((72, 320), "280", fontsize=8)                       # a chart axis label
+    doc.save(path)
+    doc.close()
+    cfg = load_config(llm_enabled=False)
+    pages = build_templates(path, None, extract_style(path, cfg), cfg)
+    kinds = [b.kind for b in pages[0].blocks]
+    assert kinds.count("text") == 1 and kinds.count("table") == 1        # three rows -> one table region
+    assert "decoration" in kinds

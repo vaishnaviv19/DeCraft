@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="181.912903pt" height="77.122864pt" viewBox="0 0 181.912903 77.122864" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-10-26T19:23:29.433267</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 77.122864 
+L 181.912903 77.122864 
+L 181.912903 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 23.16 58.922864 
+L 172.577903 58.922864 
+L 172.577903 20.622656 
+L 23.16 20.622656 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <defs>
+       <path id="m8a4aeaacba" d="M 0 0 
+L 0 3.5 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m8a4aeaacba" x="29.951723" y="58.922864" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 8px; font-family: 'Cambria', 'DejaVu Sans'; text-anchor: end" x="29.951723" y="72.14552" transform="rotate(-0 29.951723 72.14552)">Sep-23</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <g>
+       <use xlink:href="#m8a4aeaacba" x="63.910337" y="58.922864" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 8px; font-family: 'Cambria', 'DejaVu Sans'; text-anchor: end" x="63.910337" y="72.14552" transform="rotate(-0 63.910337 72.14552)">Dec-23</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3">
+      <g>
+       <use xlink:href="#m8a4aeaacba" x="97.868951" y="58.922864" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 8px; font-family: 'Cambria', 'DejaVu Sans'; text-anchor: end" x="97.868951" y="72.14552" transform="rotate(-0 97.868951 72.14552)">Mar-24</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m8a4aeaacba" x="131.827565" y="58.922864" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 8px; font-family: 'Cambria', 'DejaVu Sans'; text-anchor: end" x="131.827565" y="72.14552" transform="rotate(-0 131.827565 72.14552)">Jun-24</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5">
+      <g>
+       <use xlink:href="#m8a4aeaacba" x="165.78618" y="58.922864" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 8px; font-family: 'Cambria', 'DejaVu Sans'; text-anchor: end" x="165.78618" y="72.14552" transform="rotate(-0 165.78618 72.14552)">Sep-24</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_6">
+      <defs>
+       <path id="m9f389ec299" d="M 0 0 
+L -3.5 0 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m9f389ec299" x="23.16" y="57.562613" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 8px; font-family: 'Cambria', 'DejaVu Sans'; text-anchor: end" x="16.16" y="60.673941" transform="rotate(-0 16.16 60.673941)">150</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_7">
+      <g>
+       <use xlink:href="#m9f389ec299" x="23.16" y="38.529247" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 8px; font-family: 'Cambria', 'DejaVu Sans'; text-anchor: end" x="16.16" y="41.640575" transform="rotate(-0 16.16 41.640575)">300</text>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_8">
+    <path d="M 29.951723 34.379973 
+L 63.910337 36.308687 
+L 97.868951 42.741965 
+L 131.827565 57.181945 
+L 165.78618 22.363575 
+" clip-path="url(#pa7d6143477)" style="fill: none; stroke: #07877b; stroke-width: 1.5; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_9">
+    <path d="M 29.951723 34.621062 
+L 63.910337 32.375125 
+L 97.868951 54.656852 
+L 131.827565 42.80541 
+L 165.78618 23.987755 
+" clip-path="url(#pa7d6143477)" style="fill: none; stroke: #558ed5; stroke-width: 1.5; stroke-linecap: square"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 23.16 58.922864 
+L 23.16 20.622656 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 23.16 58.922864 
+L 172.577903 58.922864 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 8px; font-family: 'Cambria', 'DejaVu Sans'; text-anchor: middle" x="97.868951" y="9.422656" transform="rotate(-0 97.868951 9.422656)"> </text>
+   </g>
+   <g id="legend_1">
+    <g id="line2d_10">
+     <path d="M 27.96 11.245313 
+L 33.56 11.245313 
+L 39.16 11.245313 
+" style="fill: none; stroke: #07877b; stroke-width: 1.5; stroke-linecap: square"/>
+    </g>
+    <g id="text_9">
+     <text style="font-size: 8px; font-family: 'Cambria', 'DejaVu Sans'; text-anchor: start" x="45.56" y="14.045313" transform="rotate(-0 45.56 14.045313)">TATAPOWER</text>
+    </g>
+    <g id="line2d_11">
+     <path d="M 97.9525 11.245313 
+L 103.5525 11.245313 
+L 109.1525 11.245313 
+" style="fill: none; stroke: #558ed5; stroke-width: 1.5; stroke-linecap: square"/>
+    </g>
+    <g id="text_10">
+     <text style="font-size: 8px; font-family: 'Cambria', 'DejaVu Sans'; text-anchor: start" x="115.5525" y="14.045313" transform="rotate(-0 115.5525 14.045313)">Sensex Rebased</text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pa7d6143477">
+   <rect x="23.16" y="20.622656" width="149.417903" height="38.300208"/>
+  </clipPath>
+ </defs>
+</svg>

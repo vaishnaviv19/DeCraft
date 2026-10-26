@@ -33,7 +33,8 @@ from src.generation._copula import generate_correlated
 from src.generation._distributions import sample_numeric
 from src.generation._graph import Step
 from src.generation._keys import fresh_key_values
-from src.generation._tiny import jitter_cells, perturb_text_numbers, safe_level_factor, scale_cells
+from src.generation._tiny import (jitter_cells, jitter_cells_by_cell, perturb_text_numbers,
+                                  safe_level_factor, scale_cells)
 from src.generation._trend import generate_with_segments, generate_with_shape
 
 
@@ -253,8 +254,10 @@ def _sample_column(ctx: GenerationContext, table: str, column: str, tiny: bool, 
         # a policy-only series with no detected pattern: one safe level factor plus a small wobble
         sampled = jitter_cells(values, rng, 1 - noise, 1 + noise, th.min_value_distance)
     elif tiny:
-        # small tables keep each row's own scale: one safe factor per column plus a small wobble
-        sampled = jitter_cells(values, rng, th.jitter_low, th.jitter_high, th.min_value_distance)
+        # small tables: an independent safe factor per cell, so every row's SHARE also moves >= 10%
+        # (v3.3 F-01; one factor per column kept the source proportions)
+        sampled = jitter_cells_by_cell(values, rng, th.jitter_low, th.jitter_high, th.min_value_distance,
+                                       th.min_headline_distance)
     else:
         sampled = sample_numeric(values, n, rng, th.min_value_distance, noise=noise)
     # Headline Distance (D-13): the largest value and the column total must differ >= 10% from source.

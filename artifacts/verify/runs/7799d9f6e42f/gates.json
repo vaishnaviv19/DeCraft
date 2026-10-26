@@ -1,0 +1,47 @@
+{
+  "gates": {
+    "data_valid": true,
+    "periods_shifted": true,
+    "every_table_has_chart": true,
+    "charts_match_tables": true,
+    "no_unresolved_placeholders": true,
+    "no_illegal_digits": true,
+    "bible_consistent": true,
+    "same_sections_new_titles": true,
+    "min_1000_words": true,
+    "layout_fits": true,
+    "fonts_embedded": true,
+    "font_sizes_locked": true,
+    "labels_fabricated": true,
+    "no_source_names": true,
+    "no_fixed_doc_type": true,
+    "entity_and_branding": true,
+    "metadata_clean": true,
+    "critic_not_worse": true,
+    "no_source_copy": true,
+    "deliverables": true,
+    "share_distance": true,
+    "dcr": true,
+    "no_typed_units": true,
+    "ocr_coverage": true,
+    "layout_agreement": true,
+    "chart_style_similar": true,
+    "vector_recovery_exact": true,
+    "roundtrip_structure": false,
+    "layout_metrics": false
+  },
+  "notes": {
+    "no_illegal_digits": "writer replies are checked before acceptance (E-10); resolved blocks scanned",
+    "metadata_clean": "E-32 replaces v3.2 metadata_synthetic: no synthetic marker in the PDF",
+    "critic_not_worse": "critic did not run (no vision model)",
+    "no_typed_units": "accepted writer replies are rejected on typed units (F-03)",
+    "layout_agreement": "layout model not run: weights not found at D:\\Acalvio\\DeCraft\\artifacts\\models\\doclayout_yolo_docstructbench_imgsz1024.pt (scripts/fetch_layout_model.py)",
+    "discriminator": "skipped: no vision model",
+    "words_per_page": "skipped (llm disabled)",
+    "no_cross_section_repeats": "skipped (llm disabled)"
+  },
+  "skipped": [
+    "words_per_page",
+    "no_cross_section_repeats"
+  ]
+}

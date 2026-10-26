@@ -1,18 +1,18 @@
-% Holding,Methodology,Multiple,Particulars,Value (Rs. cr.),Value Per Share (Rs.)
-,,,Regulated Equity,,
-36.4%,EV/EBITDA,9.7,- Kalyan Operations,168855625940.0,603461742.0
-75.0%,P/BV,1.9,- Chandrapur,15823157522.0,49496575.0
-53.8%,P/BV,2.2,- Jaipur Discom,28887267802.0,99336963.0
-72.2%,P/E,0.6,- Gujarat Discoms,27372019707.0,87311520.0
-37.3%,P/BV,3.1,- Narmada Power,36434482206.0,123439188.0
-54.6%,P/BV,1.6,- Apex Energy,17125417325.0,49310064.0
-55.6%,P/BV,2.3,- Gridlink Transmission,11059178425.0,36683578.0
-,,,Other Operations,,
-,EV/EBITDA,3.3,- Solaris Renewables,371988321356.0,1282025260.0
-,P/BV,0.8,- Ember Coal Operations,288472608196.0,913093983.0
-,EV/EBITDA,1.1,- Saurashtra UMPP,-7765442516.0,-30000000.0
-,EV/EBITDA,19.4,- Zenith Trading,2167557271.0,20000000.0
-,P/BV,1.2,- Other investments,114706458606.0,371529784.0
-,,,- Cash,129505815598.0,423400168.0
-53.4%,,,,,-349177905.0
-,,,Target Price,,3679946236.0
+Particulars,Methodology,Multiple,% Holding,Value (Rs. cr.),Value Per Share (Rs.)
+Regulated Equity,,,,,
+- Kalyan Operations,EV/EBITDA,9.7,36.4%,16886.0,60.0
+- Chandrapur,P/BV,1.9,75.0%,1582.0,5.0
+- Jaipur Discom,P/BV,2.2,53.8%,2889.0,10.0
+- Gujarat Discoms,P/E,0.6,72.2%,2737.0,9.0
+- Narmada Power,P/BV,3.1,37.3%,3643.0,12.0
+- Apex Energy,P/BV,1.6,54.6%,1713.0,5.0
+- Gridlink Transmission,P/BV,2.3,55.6%,1106.0,4.0
+Other Operations,,,,,
+- Solaris Renewables,EV/EBITDA,3.3,,37199.0,128.0
+- Ember Coal Operations,P/BV,0.8,,28847.0,91.0
+- Saurashtra UMPP,EV/EBITDA,1.1,,-777.0,-3.0
+- Zenith Trading,EV/EBITDA,19.4,,217.0,2.0
+- Other investments,P/BV,1.2,,11471.0,37.0
+- Cash,,,,12951.0,42.0
+,,,53.4%,,-35.0
+Target Price,,,,,368.0

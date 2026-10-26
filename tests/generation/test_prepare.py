@@ -142,3 +142,45 @@ def test_a_source_label_nobody_decided_goes_through_the_same_fabricator(tmp_path
     labels = list(prepared.tables["t_pl"]["Particulars"])
     assert labels[0] == "Depreciation" and labels[2] == "Revenue"
     assert labels[1] == "- Particulars A"                      # LLM off: the spec fallback, prefix kept
+
+
+def test_prepared_display_tables_and_facts_are_in_source_units(tmp_path):
+    """Live run 2026-10-26: 'Rs cr' figures came out 10 million times too large after prepare."""
+    table = SourceTable(table_id="t_cr", page=1, caption="Results (Rs. cr)", header=["Particulars", "FY23", "FY24"],
+                        raw_cells=[["Revenue", "55,109", "59,518"], ["EBITDA", "9,144", "10,192"],
+                                   ["Tax", "3,336", "3,345"], ["Cash", "3,100", "3,400"]])   # generic: kept with LLM off
+    document, report, data = run([table])
+    scaled = [p for p in report.profiles if p.table_id == "t_cr" and p.scale not in (None, 1)]
+    cfg = CFG.model_copy(update={"artifacts_dir": str(tmp_path)})
+    prepared = prepare_for_report(data, report, [], [], [], cfg, np.random.default_rng(1), gateway=None, doc=document)
+    sales = [f for k, f in prepared.facts.items() if k.endswith("row:Revenue.latest")]
+    if scaled:                                              # the column was read as 'Rs cr'
+        assert sales and sales[0].value < 1_000_000
+
+
+def test_period_labels_inside_cells_shift_like_headers(tmp_path):
+    """Live run 2026-10-26: a stacked sub-header row kept 'Q1FY24' while the page header said Q1FY25."""
+    table = SourceTable(table_id="t_stack", page=1, header=["Company Data", "Unnamed: 1", "Unnamed: 2", "Unnamed: 3"],
+                        raw_cells=[["Beta", "", "", "1.0"],
+                                   ["Face value", "", "", "Rs. 1"],
+                                   ["Shareholding %", "Q3FY23", "Q4FY23", "Q1FY24"],
+                                   ["Promoters", "46.9", "46.9", "46.9"],
+                                   ["Public", "28.0", "28.5", "27.8"]])
+    document, report, data = run([table])
+    cfg = CFG.model_copy(update={"artifacts_dir": str(tmp_path)})
+    prepared = prepare_for_report(data, report, [], [], [], cfg,
+                                  np.random.default_rng(cfg.seed), gateway=None, doc=document)
+    cells = [str(v) for v in prepared.tables["t_stack"].astype(str).to_numpy().ravel()]
+    assert [c for c in cells if c.startswith("Q")] == ["Q3FY24", "Q4FY24", "Q1FY25"]
+
+
+def test_tables_keep_the_source_column_order(tmp_path):
+    """Live run 2026-10-26: the label column came out last ('FY22A ... | Y.E March')."""
+    table = SourceTable(table_id="t_order", page=1, header=["Item", "FY22", "FY23"],
+                        raw_cells=[[f"Line {i}", str(100 + i), str(110 + i)] for i in range(8)])
+    document, report, data = run([table])
+    cfg = CFG.model_copy(update={"artifacts_dir": str(tmp_path)})
+    prepared = prepare_for_report(data, report, [], [], [], cfg,
+                                  np.random.default_rng(cfg.seed), gateway=None, doc=document)
+    assert list(prepared.display["t_order"].columns)[0] == "Item"
+    assert list(prepared.tables["t_order"].columns)[0] == "Item"

@@ -8,12 +8,14 @@ from src.config import Config
 from src.contracts import NarrativeDoc, NarrativeSection
 from src.contracts.dataset import CanonicalDataset
 from src.llm import LLMGateway
-from src.narrative._placeholders import StrayNumber, UnknownPlaceholder, resolve
+from src.narrative._placeholders import StrayNumber, UnknownPlaceholder, placeholder_keys, resolve
 from src.narrative._plan import plan
+from src.narrative._prompts import SHORTEN
 from src.narrative._templates import section_template
+from src.narrative._tokens import illegal_digits
 from src.narrative._writer import write_section
 
-__all__ = ["write", "plan"]
+__all__ = ["write", "plan", "placeholder_keys", "illegal_digits", "SHORTEN"]
 
 
 def write(data: CanonicalDataset, plan, cfg: Config,

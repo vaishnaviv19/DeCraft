@@ -62,3 +62,13 @@ def test_batching_respects_cap():
     items = [{'t': 'x' * 700} for _ in range(5)]        # ~200 tokens each
     batches = batch_items(items, max_tokens=450)
     assert [len(b) for b in batches] == [2, 2, 1]
+
+
+def test_the_limiter_is_safe_with_parallel_callers():
+    """Live run 2026-10-26: two writer threads crashed it with 'deque mutated during iteration'."""
+    from concurrent.futures import ThreadPoolExecutor
+    from src.llm import Limits, RateLimiter
+    limiter = RateLimiter(Limits(rpm=10_000, tpm=10_000_000, rpd=10_000_000, tpd=10_000_000_000))
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        list(pool.map(lambda _: limiter.acquire(10), range(4000)))
+    assert len(limiter._minute) == 4000 and len(limiter._day) == 4000

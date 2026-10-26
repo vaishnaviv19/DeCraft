@@ -138,6 +138,27 @@ def repair_dataset(data: CanonicalDataset, report, cfg, inference=None, rng=None
                         actions.append(f"re-linked {len(violation.rows)} foreign keys in {column}")
 
     if frames:
+        for violation in report.violations:            # v3.3 F-02: a near-duplicate row moves as a whole
+            if violation.check != "dcr" or not violation.table_id:
+                continue
+            frame, source = tables.get(violation.table_id), frames.get(violation.table_id)
+            if frame is None or source is None:
+                continue
+            derived = {r.formula.output for r in (inference.rules if inference else [])
+                       if r.table_id == violation.table_id and r.formula is not None}
+            columns = [c for c in source.columns if c in frame.columns and c not in derived
+                       and pd.api.types.is_numeric_dtype(source[c])]
+            for i in violation.rows:
+                if i >= len(frame):
+                    continue
+                for column in columns:
+                    value = pd.to_numeric(frame[column], errors="coerce").iloc[i]
+                    if pd.isna(value) or value == 0:
+                        continue
+                    step = float(rng.uniform(0.10, 0.25)) * (1.0 if rng.random() < 0.5 else -1.0)
+                    frame.iloc[i, frame.columns.get_loc(column)] = float(value) * (1 + step)
+                touched += 1
+            actions.append(f"moved {len(violation.rows)} near-duplicate rows (DCR) away from the source")
         for violation in report.violations:
             if violation.check != "value_distance" or not violation.table_id:
                 continue

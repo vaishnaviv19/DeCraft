@@ -144,3 +144,25 @@ def time_order(values) -> list[int]:
         keys = [None if pd.isna(t) else t.value for t in stamps]
     known = sorted((k, i) for i, k in enumerate(keys) if k is not None)
     return [i for _, i in known] + [i for i, k in enumerate(keys) if k is None]
+
+
+# ---------------------------------------------------------------- shifting periods inside free text
+_FY_TOKEN = re.compile(r"\b(Q[1-4]|H[12])?(FY ?)(\d{2}|\d{4})([AE])?\b", re.I)
+_YEAR_TOKEN = re.compile(r"(?<!FY)(?<!FY )(?<!fy)(?<!fy )(?<![\d,.])((?:19|20)\d{2})(?![\d,])")   # FY years: _FY_TOKEN
+_MONTH_YY = re.compile(r"\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)([a-z]*[-' ])(\d{2})\b", re.I)
+
+
+def shift_text_periods(text: str, years: int) -> str:
+    """Move every year and period label in a line of text forward by `years` (E-16), keeping its
+    spelling: '11th September 2023 Q1FY24 RESULTS UPDATE' -> '11th September 2024 Q1FY25 RESULTS UPDATE'."""
+    if not text or not years:
+        return text
+
+    def fy(m):
+        digits = m.group(3)
+        shifted = (int(digits) + years) % (100 if len(digits) == 2 else 10000)
+        return f"{m.group(1) or ''}{m.group(2)}{shifted:0{len(digits)}d}{m.group(4) or ''}"
+
+    out = _FY_TOKEN.sub(fy, text)
+    out = _YEAR_TOKEN.sub(lambda m: str(int(m.group(1)) + years), out)
+    return _MONTH_YY.sub(lambda m: f"{m.group(1)}{m.group(2)}{(int(m.group(3)) + years) % 100:02d}", out)

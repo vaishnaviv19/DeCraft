@@ -14,7 +14,7 @@ from src.contracts import (ChartSpec, Enforcement, SourceDocument, SourceTable, 
 from src.contracts.dataset import CanonicalDataset
 from src.core.facts import compute_facts
 from src.core.hierarchy import total_row_links
-from src.core.periods import format_like, parse_period, shift_period
+from src.core.periods import format_like, parse_period, shift_period, shift_text_periods
 from src.errors import HardConstraintError
 from src.llm import LLMGateway
 from src.core.originality import name_words, source_proper_nouns
@@ -39,6 +39,7 @@ def prepare_for_report(data: CanonicalDataset, report, figures, recovered, templ
     data = _enforce_row_counts(data, report, cfg, rng)
     data = _add_recovered(data, report, recovered, cfg, rng)
     data.display = _display_tables(data, report)
+    _source_column_order(data, doc)
     _bands_and_owners(data, templates)
     result = validate(data, report, cfg, source=doc)
     if not result.ok:
@@ -72,6 +73,24 @@ def _shift_periods(data: CanonicalDataset, report, cfg: Config,
                 if new != str(column):
                     rename[str(column)] = new
                     labels.update({str(column), new})
+        # period labels sitting in CELLS of other columns (a stacked sub-header row such as
+        # 'Shareholding % | Q3FY23 | Q4FY23 | Q1FY24'), shifted in their own spelling. Live run
+        # 2026-10-26: the header said Q1FY25 while this row still said Q1FY24.
+        period_columns = {p.column for p in report.profiles
+                          if p.table_id == table_id and p.physical_type == "period"}
+        for column in list(frame.columns):
+            if column in period_columns or pd.api.types.is_numeric_dtype(frame[column]):   # pandas 3: text is 'str', not object
+                continue
+
+            def cell_label(value):
+                text = value.strip() if isinstance(value, str) else ""
+                if not text or len(text) > 24 or not re.search(r"[A-Za-z]", text)                         or parse_period(text) is None:
+                    return value
+                new = shift_text_periods(text, years)
+                if new != text:
+                    labels.update({text, new})
+                return new
+            frame[column] = frame[column].map(cell_label)
         for profile in [p for p in report.profiles if p.table_id == table_id]:
             if profile.physical_type == "period" and profile.column in frame.columns:
                 def shifted(value):
@@ -232,32 +251,52 @@ def _enforce_row_counts(data: CanonicalDataset, report, cfg: Config, rng) -> Can
 # ---------------------------------------------------------------- recovered charts
 def _add_recovered(data: CanonicalDataset, report, recovered, cfg: Config,
                    rng) -> CanonicalDataset:
+    """E-19 / E-47: a recovered source chart becomes a HIDDEN table ('rc_<figure_id>'): its categories
+    are the source's axis labels with periods shifted forward (E-16), and every value is the recovered
+    value times an independent Safe Factor per cell (v3.3 F-01), so nothing plotted is the real figure.
+    Before, the generic generator turned the date axis into NaN and multiplied the values ~1e9 (it read
+    the main document's 'Rs cr' scale); the chart printed 'nan' labels and 1e11 ticks (2026-10-26)."""
     if not recovered:
         return data
-    from src.generation import generate
-    from src.inference import infer
-    from src.privacy import plan_privacy
-    from src.core.recovered import recovered_to_source_table
+    from src.core.periods import shift_text_periods
+    from src.generation._tiny import jitter_cells_by_cell
 
+    th = cfg.thresholds
     for chart in recovered:
-        table = recovered_to_source_table(chart)
-        document = SourceDocument(document_sha256=report.source_sha256, tables=[table],
-                                  text_blocks=[])
-        sub_report = infer(document, cfg, None)
-        sub_plan = plan_privacy(document, sub_report, cfg)
-        sub_data = generate(document, sub_report, sub_plan, cfg, rng)
-        for table_id, frame in sub_data.tables.items():
-            data.tables[table_id] = frame
-            data.display[table_id] = sub_data.display[table_id]
-            series = [str(c) for c in frame.columns if str(c) != "Category"]
-            data.charts[f"chart_{chart.figure_id}"] = ChartSpec(
-                chart_id=f"chart_{chart.figure_id}", table_id=table_id, label_column="Category",
-                series_columns=series or [str(frame.columns[-1])], title=f"Recovered: {chart.figure_id}",
-                display=False)
+        table_id = f"rc_{chart.figure_id}"
+        columns = {"Category": [shift_text_periods(str(c), cfg.report.period_shift_years)
+                                for c in chart.categories]}
+        for series in chart.series:
+            values = jitter_cells_by_cell([float(v) for v in series.values], rng, th.jitter_low,
+                                          th.jitter_high, th.min_value_distance, 0.0)
+            columns[series.name] = [round(v, 1) for v in values]
+        frame = pd.DataFrame(columns)
+        data.tables[table_id] = frame
+        data.display[table_id] = frame.copy()
+        series_names = [s.name for s in chart.series]
+        data.charts[f"chart_{chart.figure_id}"] = ChartSpec(
+            chart_id=f"chart_{chart.figure_id}", table_id=table_id, label_column="Category",
+            series_columns=series_names, title=" and ".join(series_names),   # never an internal id
+            kind="line" if len(chart.categories) > 2 else "bar", display=False)
     return data
 
 
 # ---------------------------------------------------------------- display and facts
+def _source_column_order(data: CanonicalDataset, doc: SourceDocument | None) -> None:
+    """Tables keep the SOURCE's column order (E-17: same columns as the source). Generation puts the
+    label column last; the rendered tables printed 'FY22A ... | Y.E March' with the row labels on the
+    right (live run 2026-10-26). Unknown columns keep their place after the source ones."""
+    if doc is None:
+        return
+    headers = {table.table_id: [str(h) for h in table.header] for table in doc.tables}
+    for frames in (data.tables, data.display):
+        for table_id, frame in list(frames.items()):
+            order = [h for h in headers.get(table_id, []) if h in frame.columns]
+            if not order:
+                continue
+            frames[table_id] = frame[order + [c for c in frame.columns if c not in order]]
+
+
 def _display_tables(data: CanonicalDataset, report) -> dict[str, pd.DataFrame]:
     from src.core.rounding import build_display_df
 
@@ -268,8 +307,11 @@ def _display_tables(data: CanonicalDataset, report) -> dict[str, pd.DataFrame]:
         label = next((p.column for p in profiles if p.physical_type == "text"), None)
         links = total_row_links(frame, label)
         additive = any(p.additive for p in profiles)
+        # display in SOURCE units: a 'Rs cr' column is divided back by its scale (live run 2026-10-26:
+        # facts read 876,271,442,312 instead of 87,627.1 and the prose printed base-unit figures)
+        scales = {p.column: p.scale for p in profiles if p.scale not in (None, 0, 1)}
         display[table_id] = build_display_df(
-            frame, decimals, links, "sum_of_displayed" if additive else "true_total")
+            frame, decimals, links, "sum_of_displayed" if additive else "true_total", scales=scales)
     return display
 
 

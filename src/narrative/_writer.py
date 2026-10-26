@@ -284,8 +284,23 @@ class ClaimOut(BaseModel):
     e: str
     a: str = ""
     v: str = ""
-    p: int = 0
+    p: int | str = 0       # paragraph index; the model sometimes sends the sentence (fixed by locate_claims)
     b: str = ""
+
+
+def locate_claims(reply) -> None:
+    """Live run 2026-10-26: 4 of 21 writer replies put the sentence into 'p' instead of the paragraph
+    index. Python finds that sentence in the claimed block and stores its paragraph index (0 if absent)."""
+    texts = {block.id: block.text for block in reply.blocks}
+    for claim in reply.claims:
+        if isinstance(claim.p, int):
+            continue
+        if str(claim.p).strip().isdigit():
+            claim.p = int(str(claim.p).strip())
+            continue
+        probe = str(claim.p).strip()[:40].lower()
+        paragraphs = [p for p in texts.get(claim.b, "").split("\n\n")]
+        claim.p = next((i for i, p in enumerate(paragraphs) if probe and probe in p.lower()), 0)
 
 
 class NewEntityOut(BaseModel):
@@ -304,8 +319,11 @@ class WriterOut(BaseModel):
 
 
 def _word_range(source_words: int) -> tuple[int, int]:
+    """[min, max] words for a box. The MAX is the source box's own word count: that text fits the box at
+    the locked font size (E-29), so a writer that stays at or under it never overflows (owner request
+    2026-10-26: the model is told the number of words it must not exceed)."""
     words = max(1, int(source_words))
-    return max(1, round(words * 0.85)), max(1, round(words * 1.15))
+    return max(1, round(words * 0.85)), words
 
 
 def _label_for(key: str) -> str:
@@ -323,9 +341,28 @@ def section_avoid(section, blocks: dict, avoid: list[str] | set[str] | None) -> 
     return (near + [n for n in names if n not in near])[:MAX_AVOID]
 
 
+MAX_RETRY_ERRORS, MAX_ERROR_CHARS = 8, 200
+
+
+def retry_payload(section, outline, bible, facts: dict, periods: list[str], cap: int, blocks: dict,
+                  errors: list[str], **kwargs) -> str:
+    """The retry message (payload + the errors to fix) inside the same input cap: the errors are
+    shortened and the payload is rebuilt with less room, so optional fields go first. Live run
+    2026-10-26: the retry was 3,666 tokens against a 3,200 cap and stopped the stage."""
+    from src.llm import estimate_tokens
+    err = [str(e)[:MAX_ERROR_CHARS] for e in errors[:MAX_RETRY_ERRORS]]
+    room = cap - estimate_tokens(json.dumps({"payload": {}, "err": err})) - 20
+    try:
+        payload, _ = build_writer_payload(section, outline, bible, facts, periods, max(room, 1), blocks, **kwargs)
+    except ValueError:                         # even the required part no longer fits next to the errors
+        payload, _ = build_writer_payload(section, outline, bible, facts, periods, cap, blocks, **kwargs)
+        err = err[:2]
+    return json.dumps({"payload": json.loads(payload), "err": err})
+
+
 def build_writer_payload(section, outline, bible, facts: dict, periods: list[str], cap: int,
                          blocks: dict, tone: dict | None = None, avoid=None, dt: str = "",
-                         dom: str = "") -> tuple[str, list[str]]:
+                         dom: str = "", rep: list[str] | None = None) -> tuple[str, list[str]]:
     """Writer payload (E-12/E-05): required dt/dom/tone/sid/t/g/bl/f/per/avoid (spec M8.7.1; E-26 tone,
     E-28 avoid); optional bi, ol, else in that priority."""
     from src.llm import fit_payload
@@ -342,6 +379,8 @@ def build_writer_payload(section, outline, bible, facts: dict, periods: list[str
     required = {"dt": dt, "dom": dom, "tone": tone or {}, "sid": section.section_id, "t": section.title,
                 "g": section.goal, "bl": block_items, "f": fact_items, "per": list(periods),
                 "avoid": section_avoid(section, blocks, avoid)}
+    if rep:                                  # v3.3 F-11: sentences other sections already say
+        required["rep"] = list(rep)[:6]
     entities = [{"id": entity.id, "kind": entity.kind, "name": entity.name, "attrs": entity.attrs}
                 for entity in bible.entities]
     others = [other for other in outline.sections if other.section_id != section.section_id]
@@ -397,8 +436,11 @@ def check_section(reply: WriterOut, section, facts: dict, bible, periods: list[s
     for block in reply.blocks:
         low, high = _word_range(blocks[block.id].source_words) if block.id in blocks else (1, 10 ** 6)
         words = len(block.text.split())
-        if words < low * 0.8 or words > high * 1.2:
-            errors.append(f"{block.id}: {words} words outside the allowed range {low}-{high}")
+        if words > high:                                  # a hard limit: the box holds no more
+            errors.append(f"{block.id}: {words} words, more than the maximum {high}; shorten it to at most "
+                          f"{high} words")
+        elif words < low * 0.8:
+            errors.append(f"{block.id}: {words} words, fewer than the minimum {low}")
         bad = illegal_digits(block.text, allowed)
         if bad:
             errors.append(f"{block.id}: digits not allowed outside placeholders/period tokens: {bad[:5]}")
@@ -407,6 +449,11 @@ def check_section(reply: WriterOut, section, facts: dict, bible, periods: list[s
                 errors.append(f"{block.id}: unknown placeholder key {key!r}")
         if block.text.count("{{") != block.text.count("}}"):
             errors.append(f"{block.id}: unclosed placeholder")
+        from src.narrative._autounits import unit_word_violations
+        typed = unit_word_violations(block.text)          # v3.3 F-03: |auto writes scale and currency
+        if typed:
+            errors.append(f"{block.id}: do not type unit, scale or currency words next to a placeholder; "
+                          f"write the placeholder as key|auto instead: {typed[:5]}")
     known_entities = {entity.id for entity in bible.entities} | {entity.id for entity in reply.new}
     for claim in reply.claims:
         if claim.e not in known_entities:
@@ -426,9 +473,21 @@ def _fallback_section(section, facts: dict, max_words: int = 180, index: int = 0
     tables = list(dict.fromkeys(key.split(".", 1)[0] for key in section.fact_keys))
     own = {key: fact for key, fact in facts.items() if key.split(".", 1)[0] in tables} or facts
     if not tables:
-        words = max(30, min(max_words, 60))
-        return " ".join(f"This part of the document covers {section.title.lower() or 'the period'}."
-                        .split()[:words])
+        # no figures of its own: general sentences, varied per section, up to the section's word budget
+        # (one repeated sentence per section left an LLM-off run at 489 words, below the 1,000 minimum)
+        from src.narrative._templates import COMMENTARY
+        sentences, words, k = [], 0, 0
+        # Cycle the pool until the section's body budget is met. Stopping at one pass left long
+        # sections (e.g. a disclaimer page) with too little text, so later boxes stayed empty and the
+        # per-page word gate failed (M8.9/M8.12).
+        while words < max_words:
+            sentence = COMMENTARY[(index * 7 + k) % len(COMMENTARY)]
+            sentences.append(sentence)
+            words += len(sentence.split())
+            k += 1
+            if k > 10 * len(COMMENTARY):
+                break
+        return "\n\n".join(" ".join(sentences[i:i + 3]) for i in range(0, len(sentences), 3))
     try:
         text = resolve(section_template({"title": section.title,
                                          "tables": [{"table_id": t} for t in tables],
@@ -441,6 +500,62 @@ def _fallback_section(section, facts: dict, max_words: int = 180, index: int = 0
         if "." in text:
             text = text[: text.rfind(".") + 1]
     return text
+
+
+BODY_KINDS = {"text", "caption"}       # headings show the section titles; furniture keeps its own text
+
+# A tiny source box (a 3-7 word caption or label-sized Text block) cannot take any whole sentence from the
+# fallback narrative. Leaving it empty makes the page look unfinished and lowers its word count, so use a
+# short generic sentence that fits instead; the skipped sentence stays available for the next box.
+SHORT_FILLER = {
+    "caption": ("The figure is shown below in detail.", "The figures are shown below.",
+                "The figure is shown below.", "The chart appears below.", "The visual is illustrative."),
+    "text": ("The result was broadly stable.", "The figures are shown below in detail.",
+             "The figures are shown below.", "The period was mixed.", "The trend continued.",
+             "Details follow."),
+}
+
+
+def _short_filler(kind: str, budget: float, block_id: str) -> str:
+    pool = SHORT_FILLER.get(kind, SHORT_FILLER["text"])
+    fit = [phrase for phrase in pool if len(phrase.split()) <= budget * 1.15]
+    if not fit:
+        return pool[-1]
+    start = sum(ord(character) for character in block_id) % len(fit)
+    return fit[start]
+
+
+
+def _split_for_blocks(section, text: str, blocks: dict) -> dict[str, str]:
+    """Spread deterministic text over the section's body boxes (text, caption) by their source word
+    budgets, whole sentences only and without overshooting a box by more than 15% (E-13). Before, a
+    5-word box took a 15-word sentence, later boxes got nothing, and heading boxes took body text
+    that was then replaced by the section title."""
+    ids = [block_id for block_id in section.block_ids
+           if block_id in blocks and blocks[block_id].kind in BODY_KINDS]
+    if not ids:
+        return {}
+    sentences = [part for part in re.split(r"(?<=[.!?])\s+", text) if part.strip()]
+    out: dict[str, str] = {}
+    index = 0
+    for position, block_id in enumerate(ids):
+        budget = max(1, int(blocks[block_id].source_words or 1))
+        chunk: list[str] = []
+        words = 0
+        while index < len(sentences):
+            size = len(sentences[index].split())
+            last = position == len(ids) - 1
+            if chunk and words + size > budget * 1.15 and not last:
+                break
+            if not chunk and size > budget * 1.15 and not last:
+                break                                   # too small for any sentence: stays empty
+            chunk.append(sentences[index])
+            words += size
+            index += 1
+            if words >= budget and not last:
+                break
+        out[block_id] = " ".join(chunk).strip()
+    return out
 
 
 def write_blocks(data, outline, bible, templates, style, cfg: Config,
@@ -463,6 +578,8 @@ def write_blocks(data, outline, bible, templates, style, cfg: Config,
     cap = max(200, WRITER.max_input_tokens - estimate_tokens(WRITER.system))
     source_text = " ".join(block.text or "" for block in blocks.values() if block.text)
     tone = tone_profile([block.text for block in blocks.values() if block.kind == "text" and block.text])
+    from src.narrative._autounits import detect_scale_style
+    scale_style = detect_scale_style(source_text)           # v3.3 F-03: once per document
     if avoid is None:
         avoid = source_proper_nouns(source_text, keep={outline.report_title} if outline.report_title else set())
     shown = [str(v) for frame in list(data.display.values()) + list(data.tables.values())
@@ -472,43 +589,74 @@ def write_blocks(data, outline, bible, templates, style, cfg: Config,
     avoid = drop_shown(avoid, shown + [str(c) for frame in data.display.values() for c in frame.columns])
     order = {section.section_id: i for i, section in enumerate(outline.sections)}
 
-    def one(section):
-        limit = max(60, min(600, sum(blocks[block_id].source_words
-                                     for block_id in section.block_ids if block_id in blocks) or 120))
+    def one(section, rep=None):
+        from src.narrative._claims import Claim, Entity
+        from src.narrative._consistency import rename_new
+
+        # the section's BODY budget (text and caption boxes; headings show the title instead)
+        limit = max(60, sum(blocks[block_id].source_words for block_id in section.block_ids
+                            if block_id in blocks and blocks[block_id].kind in BODY_KINDS) or 120)
         index = order.get(section.section_id, 0)       # varies the template sentences per section
 
         def fallback():
             return _fallback_section(section, data.facts, limit, index)
+
+        def fallback_result(attempts, dropped_list, cap=False):
+            text = fallback()
+            return (section, text, attempts, False,
+                    ["payload exceeds cap"] if cap else dropped_list,
+                    _split_for_blocks(section, text, blocks), [], [])
+
         try:
             payload, dropped = build_writer_payload(section, outline, bible, data.facts, periods,
-                                                    cap, blocks, tone=tone, avoid=avoid, dt=dt, dom=dom)
+                                                    cap, blocks, tone=tone, avoid=avoid, dt=dt, dom=dom,
+                                                    rep=rep)
         except ValueError:                     # required payload over the cap: the caller splits it
-            return section, fallback(), 0, False, ["payload exceeds cap"]
+            return fallback_result(0, [], cap=True)
         if gateway is None or not gateway.enabled:
-            return section, fallback(), 0, False, dropped
+            return fallback_result(0, dropped)
+        from src.errors import LLMBudgetExceeded
+
         errors: list[str] = []
         for attempt in range(1, 1 + max(0, cfg.report.writer_retries) + 1):
-            user = payload if not errors else json.dumps(
-                {"payload": json.loads(payload), "err": errors})
-            reply = gateway.ask_json(WRITER, user, WriterOut)
+            user = payload if not errors else retry_payload(
+                section, outline, bible, data.facts, periods, cap, blocks, errors,
+                tone=tone, avoid=avoid, dt=dt, dom=dom, rep=rep)
+            try:
+                reply = gateway.ask_json(WRITER, user, WriterOut)
+            except LLMBudgetExceeded:              # over the cap or the stage budget: this section only
+                return fallback_result(attempt, dropped)
             if reply is None:
-                return section, fallback(), attempt, False, dropped
+                return fallback_result(attempt, dropped)
             for block in reply.blocks:                 # 'EBITDA\ Margin' inside placeholders (live run)
                 block.text = unescape_keys(block.text)
+            locate_claims(reply)
             errors = check_section(reply, section, data.facts, bible, periods, source_text,
                                    blocks, cfg, avoid=avoid)
             if not errors:
-                text = "\n\n".join(resolve(block.text, data.facts) for block in reply.blocks)
-                return section, text, attempt, True, dropped
-        return section, fallback(), cfg.report.writer_retries + 1, False, dropped
+                block_texts = {block.id: resolve(block.text, data.facts, scale_style)
+                               for block in reply.blocks}
+                text = "\n\n".join(block_texts.values())
+                claims = [Claim(section=section.section_id, paragraph=claim.p, entity=claim.e,
+                                attr=claim.a, value=claim.v, block=claim.b)
+                          for claim in reply.claims]
+                new_entities = rename_new(section.section_id, [
+                    Entity(id=item.id, kind=item.kind, name=item.name, attrs=dict(item.attrs))
+                    for item in reply.new])
+                return section, text, attempt, True, dropped, block_texts, claims, new_entities
+        return fallback_result(cfg.report.writer_retries + 1, dropped)
 
     concurrency = max(1, cfg.providers.text.max_concurrency)
     with ThreadPoolExecutor(max_workers=concurrency) as pool:
         results = list(pool.map(one, outline.sections))
     sections, flags, used = [], [], False
-    for section, text, attempts, ok, dropped in results:
+    all_claims, all_new, texts = [], [], {}
+    for section, text, attempts, ok, dropped, block_texts, claims, new_entities in results:
         sections.append(NarrativeSection(section_id=section.section_id, title=section.title,
                                          text=text))
+        texts.update(block_texts)
+        all_claims.extend(claims)
+        all_new.extend(new_entities)
         used = used or ok
         llm_on = gateway is not None and gateway.enabled
         if not ok and llm_on:
@@ -516,8 +664,92 @@ def write_blocks(data, outline, bible, templates, style, cfg: Config,
         if llm_on:
             for name in dropped:
                 flags.append(f"{section.section_id}: dropped optional field {name}")
+
+    stats = {"claims": len(all_claims), "new_entities": len(all_new), "conflicts": 0,
+             "resolved": 0, "dropped": 0, "unknown_refs": 0}
+    if all_claims or all_new:
+        from src.narrative._consistency import (_capitalised_names, drop_sentences, merge,
+                                                reconcile)
+        entities, conflicts, unknown = merge(bible, all_claims, all_new)
+        stats["unknown_refs"] = len(unknown)
+        for claim in unknown:                       # a failed claim: drop its sentence (E-08)
+            if claim.block and claim.block in texts:
+                texts[claim.block], count = drop_sentences(texts[claim.block], (claim.value,))
+                stats["dropped"] += count
+        stats["conflicts"] = len(conflicts)
+        if conflicts:
+            allowed = {entity.name for entity in bible.entities} | _capitalised_names(source_text)
+            entities, texts, outcome = reconcile(entities, conflicts, texts, cfg, gateway, periods,
+                                                 data.facts, allowed)
+            stats["conflicts"] = outcome.get("conflicts_initial", stats["conflicts"])
+            stats["resolved"] = outcome.get("resolved", 0)
+            stats["dropped"] += outcome.get("dropped", 0)
+            flags.append(f"conflicts: {stats['conflicts']} initial, {stats['resolved']} resolved, "
+                         f"{stats['dropped']} sentences dropped")
+        for index, section in enumerate(sections):
+            ids = [block_id for block_id in outline.sections[index].block_ids if block_id in texts]
+            if ids:
+                sections[index].text = "\n\n".join(texts[block_id] for block_id in ids)
+
+    # v3.3 F-11: sentences repeated across sections written in parallel. The later section is rewritten
+    # once with 'rep'; a repeat that survives is dropped when its box keeps its minimum length, else flagged.
+    repeats = _resolve_repeats(sections, outline, texts, blocks, cfg, gateway, one)
+    if repeats["found"]:
+        flags.append(f"repeats: {repeats['found']} found, {repeats['fixed']} fixed, "
+                     f"{repeats['dropped']} dropped, {repeats['flagged']} flagged")
     doc = NarrativeDoc(sections=sections,
                        word_count=sum(len(section.text.split()) for section in sections),
-                       llm_used=used)
+                       llm_used=used, claims=stats["claims"],
+                       new_entities=stats["new_entities"], conflicts=stats["conflicts"],
+                       resolved=stats["resolved"], dropped=stats["dropped"],
+                       unknown_refs=stats["unknown_refs"])
+    doc.blocks = texts
     doc.flags = flags
+    doc.repeats = repeats
     return doc
+
+
+def _section_texts(outline, texts: dict) -> dict[str, str]:
+    return {section.section_id: " ".join(texts.get(block_id, "") for block_id in section.block_ids)
+            for section in outline.sections}
+
+
+def _resolve_repeats(sections, outline, texts: dict, blocks: dict, cfg, gateway, one) -> dict:
+    from src.narrative._repeats import cross_section_repeats, drop_sentence
+    order = {section.section_id: i for i, section in enumerate(outline.sections)}
+    threshold = cfg.narrative.repeat_threshold
+    hits = cross_section_repeats(_section_texts(outline, texts), threshold)
+    stats = {"found": len(hits), "fixed": 0, "dropped": 0, "flagged": 0, "flagged_sentences": []}
+    if not hits:
+        return stats
+    later: dict[str, list[str]] = {}
+    for a, sentence_a, b, sentence_b, _ in hits:
+        sid, keep = (b, sentence_a) if order.get(b, 0) > order.get(a, 0) else (a, sentence_b)
+        later.setdefault(sid, []).append(keep)
+    by_id = {section.section_id: section for section in outline.sections}
+    if gateway is not None and gateway.enabled:
+        for sid, avoid_sentences in later.items():
+            result = one(by_id[sid], rep=avoid_sentences)      # one retry, the repeats listed in 'rep'
+            if result[3]:                                       # ok
+                texts.update(result[5])
+    remaining = cross_section_repeats(_section_texts(outline, texts), threshold)
+    stats["fixed"] = max(0, len(hits) - len(remaining))
+    for a, sentence_a, b, sentence_b, _ in remaining:
+        sid, sentence = (b, sentence_b) if order.get(b, 0) > order.get(a, 0) else (a, sentence_a)
+        block_id = next((block_id for block_id in by_id[sid].block_ids
+                         if sentence in texts.get(block_id, "")), None)
+        if block_id is None:
+            continue
+        shorter = drop_sentence(texts[block_id], sentence)
+        low, _ = _word_range(blocks[block_id].source_words) if block_id in blocks else (1, 0)
+        if len(shorter.split()) >= low * 0.8:
+            texts[block_id] = shorter
+            stats["dropped"] += 1
+        else:
+            stats["flagged"] += 1
+            stats["flagged_sentences"].append(sentence[:120])
+    for index, section in enumerate(sections):
+        ids = [block_id for block_id in outline.sections[index].block_ids if block_id in texts]
+        if ids:
+            sections[index].text = "\n\n".join(texts[block_id] for block_id in ids)
+    return stats

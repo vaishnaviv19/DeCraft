@@ -1,313 +1,148 @@
 {
-  "words": 3970,
+  "words": 1809,
   "llm_used": false,
   "flags": [],
+  "claims": 0,
+  "new_entities": 0,
+  "conflicts": 0,
+  "unknown_refs": 0,
+  "resolved": 0,
+  "dropped": 0,
+  "conflicts_initial": 0,
+  "unresolved_dropped": 0,
+  "final_conflicts": 0,
+  "blocks": {
+    "p1b07": "The board reviewed these results against the plan set at the start of the period.",
+    "p1b08": "",
+    "p1b09": "Seasonal effects are reflected in the timing of several line items. Further detail on each component is provided in the accompanying table. Risk management practices were applied consistently across reporting units. The outlook takes into account current demand and the pipeline of commitments. Pricing and volume both contributed to the movements described here.",
+    "p1b13": "The narrative below highlights the items that moved most during the period. Efficiency measures introduced earlier began to show in the results. Management continues to track these indicators on a regular basis. Management attributes the result to steady execution across the portfolio. The mix of activities remained broadly consistent with earlier reporting periods. Working capital and cost discipline stayed in focus throughout the year. The figures below set out the main components behind these movements. Comparisons are made on the same basis as in the prior presentation. Operating conditions were mixed, with some segments advancing faster than others. Capital allocation continued to favour projects with clear returns. The board reviewed these results against the plan set at the start of the period. Seasonal effects are reflected in the timing of several line items.",
+    "p1b14": "Further detail on each component is provided in the accompanying table. Risk management practices were applied consistently across reporting units. The outlook takes into account current demand and the pipeline of commitments. Pricing and volume both contributed to the movements described here. Overheads were monitored closely against the approved budget. These results are presented after the usual internal review and reconciliation. Investment in capacity is expected to support the next phase of growth. The relationship between revenue and costs is discussed alongside the table. Exposure to external factors was managed within the agreed limits. The performance of individual items is summarised in the chart that follows. Liquidity remained adequate to meet the commitments of the period.",
+    "p1b15": "",
+    "p1b16": "",
+    "p1b19": "Each figure is shown on the same basis as the related table.",
+    "p1b25": "Over the period from FY24A to FY26E, Sales rose by 17.9% to reach 87,627.1. EBITDA ended FY26E at 15,882.1, having risen by 24.3% since FY24A. Adj. PAT rose by 10.9% between FY24A and FY26E, closing at 5,143.5. Over the period from FY24A to FY26E, Adj. EPS rose by 13.3% to reach 16.2. P/E ended FY26E at 31.2, having risen by 28.9% since FY24A. P/B rose by 21.4% between FY24A and FY26E, closing at 3.4. Over the period from FY24A to FY26E, EV/EBITDA rose by 1.2% to reach 16.2.",
+    "p1b26": "D/E ended FY26E at 1.5, having fallen by 28.6% since FY24A.",
+    "p4b13": "",
+    "p4b15": "Among all items, BUY stood out with Target of 394. The board reviewed these results against the plan set at the start of the period. That item accounted for 19.0% of the total. Seasonal effects are reflected in the timing of several line items. Across the table, Target amounted to 2,070. Further detail on each component is provided in the accompanying table. Risk management practices were applied consistently across reporting units. The outlook takes into account current demand and the pipeline of commitments. Pricing and volume both contributed to the movements described here. Overheads were monitored closely against the approved budget. These results are presented after the usual internal review and reconciliation. Investment in capacity is expected to support the next phase of growth. The relationship between revenue and costs is discussed alongside the table. Exposure to external factors was managed within the agreed limits. The performance of individual items is summarised in the chart that follows.",
+    "p4b17": "Pricing and volume both contributed to the movements described here. Overheads were monitored closely against the approved budget. These results are presented after the usual internal review and reconciliation. Investment in capacity is expected to support the next phase of growth. The relationship between revenue and costs is discussed alongside the table. Exposure to external factors was managed within the agreed limits.",
+    "p4b19": "Liquidity remained adequate to meet the commitments of the period. Each figure is shown on the same basis as the related table. The narrative below highlights the items that moved most during the period. Efficiency measures introduced earlier began to show in the results. Management continues to track these indicators on a regular basis. Management attributes the result to steady execution across the portfolio. The mix of activities remained broadly consistent with earlier reporting periods. Working capital and cost discipline stayed in focus throughout the year. The figures below set out the main components behind these movements.",
+    "p4b20": "Comparisons are made on the same basis as in the prior presentation. Operating conditions were mixed, with some segments advancing faster than others. Capital allocation continued to favour projects with clear returns. The board reviewed these results against the plan set at the start of the period.",
+    "p4b21": "Seasonal effects are reflected in the timing of several line items. Further detail on each component is provided in the accompanying table. Risk management practices were applied consistently across reporting units. The outlook takes into account current demand and the pipeline of commitments. Pricing and volume both contributed to the movements described here. Overheads were monitored closely against the approved budget. These results are presented after the usual internal review and reconciliation. Investment in capacity is expected to support the next phase of growth. The relationship between revenue and costs is discussed alongside the table. Exposure to external factors was managed within the agreed limits. The performance of individual items is summarised in the chart that follows.",
+    "p4b22": "",
+    "p5b03": "",
+    "p5b04": "",
+    "p5b05": ""
+  },
   "sections": [
     {
       "sid": "S0",
-      "title": "Year in Review",
-      "words": 114,
+      "title": "Overview",
+      "text": "Management attributes the result to steady execution across the portfolio. The mix of activities remained broadly consistent with earlier reporting periods. Working capital and cost discipline stayed in focus throughout the year.\n\nThe figures below set out the main components behind these movements. Comparisons are made on the same basis as in the prior presentation. Operating conditions were mixed, with some segments advancing faster than others.\n\nCapital allocation continued to favour projects with clear returns. The board reviewed these results against the plan set at the start of the period. Seasonal effects are reflected in the timing of several line items.\n\nFurther detail on each component is provided in the accompanying table. Risk management practices were applied consistently across reporting units.",
+      "words": 121,
       "ok": true,
       "flags": []
     },
     {
       "sid": "S1",
-      "title": "Performance in Focus",
-      "words": 60,
+      "title": "Highlights",
+      "text": "The board reviewed these results against the plan set at the start of the period. Seasonal effects are reflected in the timing of several line items. Further detail on each component is provided in the accompanying table.\n\nRisk management practices were applied consistently across reporting units. The outlook takes into account current demand and the pipeline of commitments. Pricing and volume both contributed to the movements described here.",
+      "words": 68,
       "ok": true,
       "flags": []
     },
     {
       "sid": "S2",
-      "title": "Operating Highlights",
-      "words": 60,
+      "title": "Context",
+      "text": "Risk management practices were applied consistently across reporting units. The outlook takes into account current demand and the pipeline of commitments. Pricing and volume both contributed to the movements described here. Overheads were monitored closely against the approved budget. These results are presented after the usual internal review and reconciliation. Investment in capacity is expected to support the next phase of growth. The relationship between revenue and costs is discussed alongside the table. Exposure to external factors was managed within the agreed limits. The performance of individual items is summarised in the chart that follows. Liquidity remained adequate to meet the commitments of the period. Each figure is shown on the same basis as the related table.",
+      "words": 117,
       "ok": true,
       "flags": []
     },
     {
       "sid": "S3",
-      "title": "Building for the Future",
-      "words": 60,
+      "title": "Developments",
+      "text": "The narrative below highlights the items that moved most during the period. Efficiency measures introduced earlier began to show in the results. Management continues to track these indicators on a regular basis.\n\nManagement attributes the result to steady execution across the portfolio. The mix of activities remained broadly consistent with earlier reporting periods. Working capital and cost discipline stayed in focus throughout the year.\n\nThe figures below set out the main components behind these movements. Comparisons are made on the same basis as in the prior presentation. Operating conditions were mixed, with some segments advancing faster than others.\n\nCapital allocation continued to favour projects with clear returns. The board reviewed these results against the plan set at the start of the period. Seasonal effects are reflected in the timing of several line items.\n\nFurther detail on each component is provided in the accompanying table. Risk management practices were applied consistently across reporting units. The outlook takes into account current demand and the pipeline of commitments.\n\nPricing and volume both contributed to the movements described here. Overheads were monitored closely against the approved budget. These results are presented after the usual internal review and reconciliation.\n\nInvestment in capacity is expected to support the next phase of growth. The relationship between revenue and costs is discussed alongside the table. Exposure to external factors was managed within the agreed limits.\n\nThe performance of individual items is summarised in the chart that follows. Liquidity remained adequate to meet the commitments of the period. Each figure is shown on the same basis as the related table.",
+      "words": 261,
       "ok": true,
       "flags": []
     },
     {
       "sid": "S4",
-      "title": "The Year at a Glance",
+      "title": "Sales, EBITDA and Adj. PAT",
+      "text": "Over the period from FY24A to FY26E, Sales rose by 17.9% to reach 87,627.1. EBITDA ended FY26E at 15,882.1, having risen by 24.3% since FY24A. Adj. PAT rose by 10.9% between FY24A and FY26E, closing at 5,143.5. Over the period from FY24A to FY26E, Adj. EPS rose by 13.3% to reach 16.2.\n\nP/E ended FY26E at 31.2, having risen by 28.9% since FY24A. P/B rose by 21.4% between FY24A and FY26E, closing at 3.4. Over the period from FY24A to FY26E, EV/EBITDA rose by 1.2% to reach 16.2. D/E ended FY26E at 1.5, having fallen by 28.6% since FY24A.",
       "words": 99,
       "ok": true,
       "flags": []
     },
     {
       "sid": "S5",
-      "title": "Looking Ahead",
-      "words": 315,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S6",
-      "title": "Year in Review 2",
-      "words": 236,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S7",
-      "title": "Performance in Focus 2",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S8",
-      "title": "Operating Highlights 2",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S9",
-      "title": "Building for the Future 2",
-      "words": 133,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S10",
-      "title": "The Year at a Glance 2",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S11",
-      "title": "Looking Ahead 2",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S12",
-      "title": "Year in Review 3",
+      "title": "Revenue, EBITDA and EBITDA margins",
+      "text": "Revenue ended Q1FY25 at 22,478, having risen by 6.3% since Q1FY24. EBITDA rose by 79.2% between Q1FY24 and Q1FY25, closing at 4,675. Over the period from Q1FY24 to Q1FY25, EBITDA margins rose by 57.9% to reach 30. Depreciation ended Q1FY25 at 1,271, having risen by 6.4% since Q1FY24. EBIT rose by 138.4% between Q1FY24 and Q1FY25, closing at 3,469. Over the period from Q1FY24 to Q1FY25, Interest rose by 20.1% to reach 1,776. Other Income ended Q1FY25 at 36, having fallen by 91.3% since Q1FY24. Share of profit from Associate fell by 55.8% between Q1FY24 and Q1FY25, closing at 514. Over the period from Q1FY24 to Q1FY25, PBT rose by 39.7% to reach 2,111.",
       "words": 114,
       "ok": true,
       "flags": []
     },
     {
+      "sid": "S6",
+      "title": "Review",
+      "text": "Capital allocation continued to favour projects with clear returns. The board reviewed these results against the plan set at the start of the period. Seasonal effects are reflected in the timing of several line items. Further detail on each component is provided in the accompanying table. Risk management practices were applied consistently across reporting units. The outlook takes into account current demand and the pipeline of commitments. Pricing and volume both contributed to the movements described here. Overheads were monitored closely against the approved budget. These results are presented after the usual internal review and reconciliation. Investment in capacity is expected to support the next phase of growth. The relationship between revenue and costs is discussed alongside the table.",
+      "words": 119,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S7",
+      "title": "Value, Multiple and Value Per Share",
+      "text": "The largest Multiple was reported for - Zenith Trading, amounting to 19.4. The outlook takes into account current demand and the pipeline of commitments. The typical level of Multiple was 3.9. - Solaris Renewables recorded the highest Value (Rs. cr.), at \u20b937,199.\n\nThat item accounted for 30.9% of the total. Taken together, Value (Rs. cr.) reached \u20b9120,464. Target Price recorded the highest Value Per Share (Rs.), at \u20b9368. On average, Value Per Share (Rs.) stood at \u20b949.",
+      "words": 77,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S8",
+      "title": "Revenue, EBITDA and Depreciation",
+      "text": "Revenue ended FY26E at 84,469, having risen by 101.9% since FY22A. EBITDA rose by 55.8% between FY22A and FY26E, closing at 15,025. Over the period from FY22A to FY26E, Depreciation rose by 33.4% to reach 4,676. EBIT ended FY26E at 10,101, having risen by 67.1% since FY22A. Interest rose by 6.3% between FY22A and FY26E, closing at 5,487. Over the period from FY22A to FY26E, Other Income rose by 77.5% to reach 2,963. PBT ended FY26E at 7,726, having risen by 201.9% since FY22A. Tax rose by 200.0% between FY22A and FY26E, closing at 1,929. Over the period from FY22A to FY26E, Reported PAT rose by 207.8% to reach 5,892. PAT att.",
+      "words": 112,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S9",
+      "title": "Net inc. + Depn., Non-cash adj. and OmegaFlow Operations",
+      "text": "Net inc. + Depn. rose by 89.1% between FY22A and FY26E, closing at 5,343. Over the period from FY22A to FY26E, Non-cash adj. fell by 33.0% to reach 1,725. OmegaFlow Operations ended FY26E at 4,691, having fallen by 16.7% since FY22A. NovaCap Expenditures rose by 334.7% between FY22A and FY26E, closing at -5,308. Over the period from FY22A to FY26E, Quantum InvestCash rose by 140.1% to reach 3,009. Y.E March (Rs. cr) D ended FY26E at 3,817, having risen by 70.3% since FY22A. Issue/repay debt fell by 62.4% between FY22A and FY26E, closing at -1,574. Over the period from FY22A to FY26E, Dividends paid rose by 44.2% to reach -512. Other finance.CF ended FY26E at -3,104, having risen by 8.",
+      "words": 120,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S10",
+      "title": "Outlook",
+      "text": "Efficiency measures introduced earlier began to show in the results. Management continues to track these indicators on a regular basis. Management attributes the result to steady execution across the portfolio.\n\nThe mix of activities remained broadly consistent with earlier reporting periods. Working capital and cost discipline stayed in focus throughout the year. The figures below set out the main components behind these movements.\n\nComparisons are made on the same basis as in the prior presentation. Operating conditions were mixed, with some segments advancing faster than others. Capital allocation continued to favour projects with clear returns.\n\nThe board reviewed these results against the plan set at the start of the period. Seasonal effects are reflected in the timing of several line items.",
+      "words": 121,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S11",
+      "title": "Target",
+      "text": "Among all items, BUY stood out with Target of 394. The board reviewed these results against the plan set at the start of the period. That item accounted for 19.0% of the total. Seasonal effects are reflected in the timing of several line items.\n\nAcross the table, Target amounted to 2,070. Further detail on each component is provided in the accompanying table. Risk management practices were applied consistently across reporting units. The outlook takes into account current demand and the pipeline of commitments.\n\nPricing and volume both contributed to the movements described here. Overheads were monitored closely against the approved budget. These results are presented after the usual internal review and reconciliation. Investment in capacity is expected to support the next phase of growth.\n\nThe relationship between revenue and costs is discussed alongside the table. Exposure to external factors was managed within the agreed limits. The performance of individual items is summarised in the chart that follows.",
+      "words": 157,
+      "ok": true,
+      "flags": []
+    },
+    {
+      "sid": "S12",
+      "title": "Background",
+      "text": "Pricing and volume both contributed to the movements described here. Overheads were monitored closely against the approved budget. These results are presented after the usual internal review and reconciliation.\n\nInvestment in capacity is expected to support the next phase of growth. The relationship between revenue and costs is discussed alongside the table. Exposure to external factors was managed within the agreed limits.",
+      "words": 62,
+      "ok": true,
+      "flags": []
+    },
+    {
       "sid": "S13",
-      "title": "Performance in Focus 3",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S14",
-      "title": "Operating Highlights 3",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S15",
-      "title": "Building for the Future 3",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S16",
-      "title": "The Year at a Glance 3",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S17",
-      "title": "Looking Ahead 3",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S18",
-      "title": "Year in Review 4",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S19",
-      "title": "Performance in Focus 4",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S20",
-      "title": "Operating Highlights 4",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S21",
-      "title": "Building for the Future 4",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S22",
-      "title": "The Year at a Glance 4",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S23",
-      "title": "Looking Ahead 4",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S24",
-      "title": "Year in Review 5",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S25",
-      "title": "Performance in Focus 5",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S26",
-      "title": "Operating Highlights 5",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S27",
-      "title": "Building for the Future 5",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S28",
-      "title": "The Year at a Glance 5",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S29",
-      "title": "Looking Ahead 5",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S30",
-      "title": "Year in Review 6",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S31",
-      "title": "Performance in Focus 6",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S32",
-      "title": "Operating Highlights 6",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S33",
-      "title": "Building for the Future 6",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S34",
-      "title": "The Year at a Glance 6",
-      "words": 63,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S35",
-      "title": "Looking Ahead 6",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S36",
-      "title": "Year in Review 7",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S37",
-      "title": "Performance in Focus 7",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S38",
-      "title": "Operating Highlights 7",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S39",
-      "title": "Building for the Future 7",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S40",
-      "title": "The Year at a Glance 7",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S41",
-      "title": "Looking Ahead 7",
-      "words": 199,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S42",
-      "title": "Year in Review 8",
-      "words": 60,
-      "ok": true,
-      "flags": []
-    },
-    {
-      "sid": "S43",
-      "title": "Performance in Focus 8",
-      "words": 597,
+      "title": "Key points",
+      "text": "Liquidity remained adequate to meet the commitments of the period. Each figure is shown on the same basis as the related table. The narrative below highlights the items that moved most during the period.\n\nEfficiency measures introduced earlier began to show in the results. Management continues to track these indicators on a regular basis. Management attributes the result to steady execution across the portfolio.\n\nThe mix of activities remained broadly consistent with earlier reporting periods. Working capital and cost discipline stayed in focus throughout the year. The figures below set out the main components behind these movements.\n\nComparisons are made on the same basis as in the prior presentation. Operating conditions were mixed, with some segments advancing faster than others. Capital allocation continued to favour projects with clear returns.\n\nThe board reviewed these results against the plan set at the start of the period. Seasonal effects are reflected in the timing of several line items. Further detail on each component is provided in the accompanying table.\n\nRisk management practices were applied consistently across reporting units. The outlook takes into account current demand and the pipeline of commitments. Pricing and volume both contributed to the movements described here.\n\nOverheads were monitored closely against the approved budget. These results are presented after the usual internal review and reconciliation. Investment in capacity is expected to support the next phase of growth.\n\nThe relationship between revenue and costs is discussed alongside the table. Exposure to external factors was managed within the agreed limits. The performance of individual items is summarised in the chart that follows.",
+      "words": 261,
       "ok": true,
       "flags": []
     }

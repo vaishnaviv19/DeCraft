@@ -107,6 +107,77 @@ def test_provider_http_errors_fall_back_instead_of_crashing(tmp_path, status, en
             raise httpx.HTTPStatusError("x", request=request, response=httpx.Response(status, request=request))
 
     client = Refusing()
-    gateway = LLMGateway(client=client, cache_dir=tmp_path, enabled=True, retries=3, timeout_s=5)
+    gateway = LLMGateway(client=client, cache_dir=tmp_path, enabled=True, retries=3, timeout_s=5,
+                         backoff_scale=0.0)
     assert gateway.ask_json(PromptSpec("p", "v1", "Return JSON"), "u", Ok) is None
     assert gateway.enabled is enabled_after and client.n == calls
+
+
+def test_a_used_up_daily_quota_switches_the_provider_off_at_once(tmp_path):
+    import httpx
+    from pydantic import BaseModel
+    from src.llm import LLMGateway, PromptSpec
+
+    class Ok(BaseModel):
+        ok: int
+
+    class OutOfQuota:
+        model_name = "m"
+        n = 0
+
+        def complete(self, *args, **kwargs):
+            self.n += 1
+            request = httpx.Request("POST", "https://example.invalid")
+            text = ('{"error":{"message":"Rate limit reached for model on tokens per day (TPD): '
+                    'Limit 200000, Used 198254, Requested 2681."}}')
+            raise httpx.HTTPStatusError("x", request=request, response=httpx.Response(429, request=request, text=text))
+
+    client = OutOfQuota()
+    gateway = LLMGateway(client=client, cache_dir=tmp_path, enabled=True, retries=3, timeout_s=5, backoff_scale=0.0)
+    assert gateway.ask_json(PromptSpec("p", "v1", "Return JSON"), "u", Ok) is None
+    assert client.n == 1 and gateway.enabled is False and gateway.disabled_reason == "daily quota used up"
+
+
+def _refusing_client(status: int, text: str):
+    import httpx
+
+    class Refusing:
+        model_name = "m"
+        n = 0
+
+        def complete(self, *args, **kwargs):
+            self.n += 1
+            request = httpx.Request("POST", "https://example.invalid")
+            raise httpx.HTTPStatusError("x", request=request,
+                                        response=httpx.Response(status, request=request, text=text))
+    return Refusing()
+
+
+def test_cloudflare_used_up_neurons_switch_the_provider_off_at_once(tmp_path):
+    from pydantic import BaseModel
+    from src.llm import LLMGateway, PromptSpec
+
+    class Ok(BaseModel):
+        ok: int
+
+    client = _refusing_client(429, '{"errors":[{"message":"AiError: AiError: you have used up your daily free '
+                                   'allocation of 10,000 neurons, please upgrade","code":4006}]}')
+    gateway = LLMGateway(client=client, cache_dir=tmp_path, enabled=True, retries=3, timeout_s=5, backoff_scale=0.0)
+    assert gateway.ask_json(PromptSpec("p", "v1", "Return JSON"), "u", Ok) is None
+    assert client.n == 1 and gateway.enabled is False and gateway.disabled_reason == "daily quota used up"
+
+
+def test_refused_calls_do_not_use_up_the_stage_budget(tmp_path):
+    from pydantic import BaseModel
+    from src.llm import LLMGateway, PromptSpec
+
+    class Ok(BaseModel):
+        ok: int
+
+    # a busy provider (429, not a daily limit): every attempt is refused and retried
+    client = _refusing_client(429, '{"error":"busy"}')
+    gateway = LLMGateway(client=client, cache_dir=tmp_path, enabled=True, retries=3, timeout_s=5,
+                         backoff_scale=0.0, stage_token_budget=5000)
+    for _ in range(10):                  # 30 refused attempts; each reserves ~4k tokens of a 5k budget
+        assert gateway.ask_json(PromptSpec("p", "v1", "Return JSON"), "u", Ok) is None
+    assert client.n == 30 and gateway._tokens_used == 0

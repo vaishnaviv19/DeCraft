@@ -16,16 +16,92 @@ LINE_ITEMS = {'revenue', 'revenues', 'total', 'subtotal', 'grand total', 'net in
               'operating profit', 'operating income', 'ebitda', 'ebit', 'cost of sales', 'cost of goods sold',
               'expenses', 'operating expenses', 'other income', 'tax', 'taxes', 'assets', 'liabilities', 'equity',
               'cash', 'debt', 'capex', 'headcount', 'employees', 'margin', 'units', 'volume', 'price', 'growth',
-              'male', 'female', 'urban', 'rural', 'total population', 'households'}
-GENERIC = MONTHS | CONTINENTS | LINE_ITEMS
+              'male', 'female', 'urban', 'rural', 'total population', 'households',
+              # E-27 model-off path: standard line items of a financial statement. The LLM keeps these;
+              # without one, the deterministic list must, or the income statement becomes 'Item D' ...
+              'depreciation', 'amortisation', 'amortization', 'depreciation and amortisation',
+              'depreciation and amortization', 'interest', 'interest expense', 'interest income',
+              'finance costs', 'finance cost', 'borrowing costs', 'other expenses', 'other operating expenses',
+              'employee benefits expense', 'employee benefit expense', 'employee costs', 'employee cost',
+              'cost of materials consumed', 'cost of raw materials', 'purchases', 'changes in inventories',
+              'power and fuel', 'freight and forwarding', 'repairs and maintenance', 'manufacturing expenses',
+              'total income', 'total expenses', 'total revenue', 'revenue from operations', 'income from operations',
+              'pbt', 'profit before tax', 'profit before exceptional items', 'pat', 'profit after tax',
+              'reported pat', 'profit attributable to shareholders', 'minority interest',
+              'non-controlling interest', 'share of profit from associate', 'share of profit from associates',
+              'share of associates', 'adjustments', 'exceptional items', 'exceptional income',
+              'exceptional expense', 'tax expense', 'current tax', 'deferred tax', 'impairment', 'provisions',
+              'ebitda margin', 'ebitda margins', 'ebit margin', 'ebit margins', 'gross margin', 'operating margin',
+              'net margin', 'contribution margin', 'eps', 'earnings per share', 'basic eps', 'diluted eps',
+              'dividend', 'dividend per share', 'dps', 'net worth', 'net debt', 'book value', 'capital employed',
+              'working capital', 'return on equity', 'roe', 'return on capital employed', 'roce',
+              'return on assets', 'roa', 'current ratio', 'debt to equity', 'debt-equity ratio',
+              'interest coverage', 'interest coverage ratio', 'trade receivables', 'trade payables',
+              'receivables', 'payables', 'inventory', 'inventories', 'borrowings', 'fixed assets',
+              'property plant and equipment', 'intangible assets', 'goodwill', 'operating cash flow',
+              'cash flow from operations', 'free cash flow', 'net cash flow', 'other comprehensive income',
+              'oci', 'comprehensive income', 'segment revenue', 'segment result', 'segment ebitda',
+              'installed capacity', 'capacity utilisation', 'capacity utilization', 'plant load factor', 'plf',
+              'units sold', 'sales volume', 'volumes', 'realisation', 'realization', 'average realisation',
+              'market share', 'order book', 'customer base', 'attrition', 'attrition rate', 'generation',
+              'transmission', 'distribution', 'trading', 'retail', 'wholesale', 'yoy', 'qoq',
+              'yoy growth', 'qoq growth', 'per unit', 'per employee',
+              'adj pat', 'adj. pat', 'adj eps', 'adj. eps', 'adjusted pat', 'adjusted eps',
+              'consolidated', 'standalone', 'company data', 'year', 'years', 'period', 'periods',
+              'quarter', 'quarters', 'month', 'months', 'date', 'dates', 'particulars', 'description',
+              'item', 'items', 'category', 'categories', 'segment', 'segments', 'business', 'businesses',
+              'product', 'products', 'region', 'regions', 'country', 'countries', 'metric', 'metrics',
+              'parameter', 'parameters', 'note', 'notes', 'year / rs. cr', 'year / rs cr',
+              'margins', 'market cap', 'market capitalisation', 'market capitalization',
+              'enterprise value', 'outstanding shares', 'free float', 'share price', 'stock price',
+              'face value', 'dividend yield', 'price to earnings', 'p/e', 'ev/ebitda', 'net sales',
+              'net revenue'}
+
+# Market-data rows and period stubs. They are the standard vocabulary of a financial-facts table,
+# not names of the organisation (a similar list to the model's own "keep" instruction in E-35).
+MARKET_METRICS = {'52 week high', '52 week low', '52-week high', '52-week low', 'week high', 'week low',
+                  'average volume', '6m average volume', 'volume', 'beta', 'shareholding',
+                  'shareholding %', 'shareholding pattern', 'promoters', 'promoter', 'fii', 'fiis',
+                  "fii's", 'mf', 'mfs', 'insti', 'institutions', 'public', 'pledge', 'promoters pledge',
+                  "promoters' pledge", 'price performance', 'absolute return', 'relative return',
+                  'absolute sensex', 'sensex', 'nifty', 'index', 'benchmark', 'return', 'returns',
+                  'no. of shares', 'number of shares', 'shares', '1 week', '1 month', '3 month',
+                  '3 months', '6 month', '6 months', '1 year', '12 month', 'ytd', 'high', 'low',
+                  'mfs insti', 'mf insti', 'fii insti'}
+GENERIC = MONTHS | CONTINENTS | LINE_ITEMS | MARKET_METRICS
+
+# Qualifiers that may follow a generic line item without turning it into a name ("EBITDA margins",
+# "PAT att. to shareholders", "Revenue growth %").
+QUALIFIERS = {'margin', 'margins', 'growth', 'growth %', 'rate', 'rates', 'ratio', 'ratios', '%', 'bps',
+              '(bps)', '(%)', 'per share', 'before tax', 'after tax', 'before exceptional items',
+              'after exceptional items', 'att. to shareholders', 'attributable to shareholders',
+              'from associate', 'from associates', 'net', 'gross', 'reported', 'adjusted', 'total', 'average',
+              'per unit', 'per employee', 'per annum', 'year on year', 'quarter on quarter', 'yoy', 'qoq',
+              'pat', 'eps', 'rs cr', 'rs. cr', 'cr', 'rs', 'inr cr', 'usd mn', 'value', 'values',
+              'amount', 'amounts'}
+UNIT_TAIL_RE = re.compile(r'\s*(\((?:%|bps|x|cr|mn|bn|rs\.?|inr|usd|\$)\)|%)\s*$', re.I)
 PROPER_RE = re.compile(r"\b(?:[A-Z][\w&'\-]+)(?:\s+(?:(?:of|and|&|for|de|la)\s+)?[A-Z][\w&'\-]*)*\b")
 STOP = {'The', 'A', 'An', 'In', 'On', 'Our', 'We', 'This', 'That', 'These', 'Those', 'It', 'For', 'With', 'As',
         'At', 'By', 'Of', 'And', 'To', 'From', 'During', 'Total', 'Note', 'Notes', 'Figure', 'Table', 'Chart'}
 
 
 def is_generic_label(label: str) -> bool:
-    t = re.sub(r'\s+', ' ', str(label).strip().lower())
-    return t in GENERIC or bool(re.fullmatch(r'(q[1-4]|h[12]|fy)?\s?\d{2,4}', t))
+    t = re.sub(r'\s+', ' ', str(label).strip().strip(' -').lower()).replace('/', ' ')
+    t = re.sub(r'\s+', ' ', t).strip()
+    if t in GENERIC or bool(re.fullmatch(r'(q[1-4]|h[12]|fy)?\s?\d{2,4}[eap]?', t)):
+        return True
+    if re.fullmatch(r'\d{1,2}\s?(day|days|week|weeks|month|months|year|years|yr|yrs|m|w|d)', t):
+        return True                                  # a column stub such as '3 Month' or '1 Year'
+    core = UNIT_TAIL_RE.sub('', t).strip()
+    if core in GENERIC:
+        return True
+    words = core.split()
+    for n in (3, 2, 1):
+        head = ' '.join(words[:n])
+        rest = ' '.join(words[n:])
+        if head in GENERIC and (not rest or rest in QUALIFIERS):
+            return True
+    return False
 
 
 def source_proper_nouns(text: str, keep: set[str]) -> set[str]:

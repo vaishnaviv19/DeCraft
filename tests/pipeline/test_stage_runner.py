@@ -76,6 +76,6 @@ def test_the_stage_script_uses_only_a_run_of_the_given_pdf(tmp_path):
         (d / "manifest.json").write_text(_json.dumps({"source_sha256": sha256_file(pdf)}))
         os.utime(d / "manifest.json", (1_000_000 - age, 1_000_000 - age))
     cfg = load_config(artifacts_dir=str(tmp_path / "artifacts"))
-    assert stage_cli._latest_run(cfg, mine).name == "run_mine"
+    assert stage_cli.latest_run(cfg, mine).name == "run_mine"
     with _pytest.raises(FileNotFoundError):
-        stage_cli._latest_run(cfg, tmp_path / "third.pdf") if (tmp_path / "third.pdf").write_bytes(b"x") else None
+        stage_cli.latest_run(cfg, tmp_path / "third.pdf") if (tmp_path / "third.pdf").write_bytes(b"x") else None

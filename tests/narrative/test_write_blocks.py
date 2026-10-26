@@ -17,7 +17,7 @@ from tests.conftest import FakeLLM
 CFG = load_config(llm_enabled=False)
 
 
-def fixtures(section_blocks=("p1b01",), source_words=5, facts=None, second_section=False):
+def fixtures(section_blocks=("p1b01",), source_words=9, facts=None, second_section=False):
     data = empty_dataset()
     data.allowed_periods = ["FY25", "FY2025"]
     data.facts = facts or {"rev": Fact(key="rev", value=1234.0, kind="number", unit="USD",
@@ -160,3 +160,132 @@ def test_fallback_text_is_built_from_each_sections_own_tables():
     two = _fallback_section(section("S2", "costs"), data.facts, 150, 1)
     assert "Units" in one and "Cost" not in one         # each section talks about its own table
     assert "Cost" in two and "Units" not in two
+
+
+def test_a_sentence_in_the_claim_paragraph_field_is_turned_into_its_index():
+    from src.narrative._writer import locate_claims
+    out = WriterOut.model_validate({
+        "blocks": [{"id": "p1b01", "text": "First paragraph.\n\nThe Chief Executive confirmed the plan in FY25."}],
+        "claims": [{"e": "E1", "a": "role", "v": "CEO", "p": "The Chief Executive confirmed the plan", "b": "p1b01"},
+                   {"e": "E1", "a": "year", "v": "FY25", "p": "1", "b": "p1b01"},
+                   {"e": "E1", "a": "x", "v": "y", "p": "not there", "b": "p1b01"}]})
+    locate_claims(out)
+    assert [c.p for c in out.claims] == [1, 1, 0]
+
+
+def test_writer_claims_are_merged_without_a_conflict(gateway_for):
+    data, outline, bible, templates, blocks = fixtures()
+    payload = json.dumps({"blocks": [{"id": "p1b01",
+                                      "text": "Revenue reached {{ rev|:0 }} in FY25."}],
+                          "claims": [{"e": "E1", "a": "year", "v": "FY25", "p": 0, "b": "p1b01"}]})
+    doc = write_blocks(data, outline, bible, templates, None, CFG, gateway_for(FakeLLM([payload])))
+    assert doc.claims == 1 and doc.new_entities == 0
+    assert doc.unknown_refs == 0 and doc.conflicts == 0
+
+
+def test_two_writers_disagreeing_are_reconciled(gateway_for):
+    data, _, _, _, _ = fixtures()
+    data.allowed_periods = ["FY24", "FY25"]
+    blocks = {"p1b01": Block(block_id="p1b01", kind="text", bbox=(0, 0, 200, 20),
+                             text="Source one.", source_words=9),
+              "p2b01": Block(block_id="p2b01", kind="text", bbox=(0, 0, 200, 20),
+                             text="Source two.", source_words=9)}
+    templates = [PageTemplate(page=1, mode="mirror", reason="", blocks=list(blocks.values()))]
+    outline = Outline(report_title="Acme", sections=[
+        SectionPlan(section_id="S1", source_title="One", title="One", goal="g",
+                    block_ids=["p1b01"], fact_keys=["rev"]),
+        SectionPlan(section_id="S2", source_title="Two", title="Two", goal="g",
+                    block_ids=["p2b01"], fact_keys=["rev"])])
+    bible = StoryBible(version=1, entities=[BibleEntity(
+        id="E1", kind="initiative", name="Project Meridian", attrs={"year": "FY24"})])
+    reply1 = json.dumps({"blocks": [{"id": "p1b01",
+                                     "text": "Meridian launched {{ rev|:0 }} in FY24."}],
+                         "claims": [{"e": "E1", "a": "year", "v": "FY24", "p": 0, "b": "p1b01"}]})
+    reply2 = json.dumps({"blocks": [{"id": "p2b01",
+                                     "text": "Meridian launched {{ rev|:0 }} in FY25."}],
+                         "claims": [{"e": "E1", "a": "year", "v": "FY25", "p": 0, "b": "p2b01"}]})
+    fix = json.dumps({"choice": "FY25", "reason": "timeline",
+                      "rewrites": [{"block_id": "p1b01",
+                                    "text": "Meridian launched {{ rev|:0 }} in FY25."}]})
+    cfg = load_config(llm_enabled=False)
+    text = cfg.providers.text.model_copy(update={"max_concurrency": 1})
+    cfg = cfg.model_copy(update={"providers": cfg.providers.model_copy(update={"text": text})})
+    doc = write_blocks(data, outline, bible, templates, None, cfg,
+                       gateway_for(FakeLLM([reply1, reply2, fix])))
+    assert doc.conflicts == 1 and doc.resolved == 1
+    assert "FY24" not in doc.sections[0].text and "FY25" in doc.sections[0].text
+
+
+def test_a_section_without_figures_still_fills_its_word_budget_with_varied_text():
+    from src.narrative._writer import _fallback_section
+    empty = SectionPlan(section_id="S9", source_title="x", title="Outlook", goal="g", block_ids=[], fact_keys=[])
+    one, two = _fallback_section(empty, {}, 80, 0), _fallback_section(empty, {}, 80, 1)
+    assert len(one.split()) >= 80 * 0.8 and one != two
+    assert not any(ch.isdigit() for ch in one)                 # no invented figures
+
+
+def test_the_retry_message_stays_inside_the_input_cap():
+    from src.narrative._writer import retry_payload
+    data, outline, bible, templates, blocks = fixtures()
+    first, _ = build_writer_payload(outline.sections[0], outline, bible, data.facts, data.allowed_periods,
+                                    10 ** 6, blocks)
+    cap = estimate_tokens(first) + 150
+    errors = [f"p1b01: a very long complaint number {i} " + "x" * 400 for i in range(30)]
+    retry = retry_payload(outline.sections[0], outline, bible, data.facts, data.allowed_periods, cap, blocks, errors)
+    assert estimate_tokens(retry) <= cap
+    assert len(json.loads(retry)["err"]) <= 8
+
+
+def test_a_section_over_the_cap_falls_back_instead_of_stopping_the_stage(gateway_for):
+    from src.errors import LLMBudgetExceeded
+    data, outline, bible, templates, blocks = fixtures()
+
+    class OverCap:
+        enabled = True
+
+        def ask_json(self, *args, **kwargs):
+            raise LLMBudgetExceeded("section_writer: 3666 input tokens > cap 3200")
+
+    doc = write_blocks(data, outline, bible, templates, None, CFG, OverCap())
+    assert doc.sections and doc.sections[0].text and not doc.llm_used
+
+
+def _two_sections(words=9):
+    data, _, _, _, _ = fixtures()
+    blocks = {"p1b01": Block(block_id="p1b01", kind="text", bbox=(0, 0, 200, 20), text="Source one.",
+                             source_words=words),
+              "p2b01": Block(block_id="p2b01", kind="text", bbox=(0, 0, 200, 20), text="Source two.",
+                             source_words=words)}
+    templates = [PageTemplate(page=1, mode="mirror", reason="", blocks=list(blocks.values()))]
+    outline = Outline(report_title="Acme", sections=[
+        SectionPlan(section_id="S1", source_title="One", title="One", goal="g", block_ids=["p1b01"],
+                    fact_keys=["rev"]),
+        SectionPlan(section_id="S2", source_title="Two", title="Two", goal="g", block_ids=["p2b01"],
+                    fact_keys=["rev"])])
+    bible = StoryBible(version=1, entities=[])
+    return data, outline, bible, templates
+
+
+SAME = "Demand stayed firm across every region during the period."
+
+
+def test_a_repeated_sentence_is_rewritten_once_with_rep(gateway_for):
+    """v3.3 F-11: the later section is retried with the repeated sentence listed in 'rep'."""
+    data, outline, bible, templates = _two_sections()
+    first = json.dumps({"blocks": [{"id": "p1b01", "text": SAME}]})
+    second = json.dumps({"blocks": [{"id": "p2b01", "text": SAME}]})
+    fixed = json.dumps({"blocks": [{"id": "p2b01", "text": "Costs were held below the agreed budget lines."}]})
+    llm = FakeLLM([first, second, fixed])
+    data.facts = {"rev": data.facts["rev"]}
+    cfg = CFG.model_copy(update={"providers": CFG.providers.model_copy(
+        update={"text": CFG.providers.text.model_copy(update={"max_concurrency": 1})})})
+    doc = write_blocks(data, outline, bible, templates, None, cfg, gateway_for(llm))
+    assert doc.repeats["found"] == 1 and doc.repeats["fixed"] == 1
+    assert '"rep"' in llm.calls[-1][1] and SAME not in doc.blocks["p2b01"]
+
+
+def test_a_repeat_without_a_model_is_dropped_or_flagged():
+    from src.narrative._repeats import cross_section_repeats, drop_sentence
+    text = SAME + " Costs were held below the agreed budget lines for the year."
+    assert cross_section_repeats({"S1": SAME, "S2": text})
+    assert drop_sentence(text, SAME) == "Costs were held below the agreed budget lines for the year."

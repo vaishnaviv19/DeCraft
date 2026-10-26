@@ -421,6 +421,7 @@ class Fact(Strict):
     band: str | None = None                      # qualitative label shown to writers (E-10)
     owner: str | None = None                     # the one section allowed to cite it first
     decimals: int | None = None                  # displayed decimals of the column it comes from
+    scale: float | None = None                   # the column's multiplier to base units ('Rs cr' = 1e7), F-03
 
 
 class ChartSpec(Strict):
@@ -439,6 +440,11 @@ class ChartSpec(Strict):
     # 'rows' (statements): one series per line item in series_rows, x = series_columns (periods)
     orientation: Literal["columns", "rows"] = "columns"
     series_rows: list[str] = []
+    # axis labels for a 'rows' chart whose period columns have no names ('Unnamed: 1'): the cells of
+    # the table's own sub-header row ('Q3FY24', 'Q4FY24', 'Q1FY25'); empty = the column names
+    x_labels: list[str] = []
+    colors: list[str] = []               # v3.3 F-06: the SOURCE chart's own series colours, when it had one
+    markers: bool = True                 # F-06: False when the source chart drew plain lines
 
 
 class NarrativeSection(Strict):
@@ -453,6 +459,13 @@ class NarrativeDoc(Strict):
     llm_used: bool = False
     blocks: dict[str, str] = {}          # block_id -> resolved text (M8.7)
     flags: list[str] = []                # fallbacks and dropped optional payload fields
+    claims: int = 0                      # claims merged from the writers (M8.8)
+    new_entities: int = 0
+    conflicts: int = 0
+    resolved: int = 0
+    dropped: int = 0
+    unknown_refs: int = 0
+    repeats: dict = {}                   # v3.3 F-11: {found, fixed, dropped, flagged, flagged_sentences}
 
 
 class RenderResult(Strict):

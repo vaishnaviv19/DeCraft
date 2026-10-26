@@ -1,0 +1,160 @@
+{
+  "run_id": "7799d9f6e42f",
+  "started_at": "2026-10-26T13:53:00.177104Z",
+  "finished_at": "2026-10-26T13:54:09.991419Z",
+  "status": "failed",
+  "source_sha256": "7799d9f6e42f0328ffac454e8f7ace813e009093a70f9860811334c69930bc59",
+  "blueprint_sha256": null,
+  "plan_sha256": null,
+  "seed": 42,
+  "config_hash": "0a7600c2b980eebee86054bbf751773148a851fc0ff2579b67ad891d00665121",
+  "config_snapshot": {
+    "config_version": "2.0",
+    "seed": 42,
+    "llm_enabled": true,
+    "artifacts_dir": "artifacts",
+    "thresholds": {
+      "min_rows_rule": 5,
+      "formula_strong_match": 0.95,
+      "formula_hypothesis_match": 0.8,
+      "contradicted_match": 0.5,
+      "rel_tol_default": 0.005,
+      "min_rows_corr": 8,
+      "corr_tolerance_small_n": 0.25,
+      "trend_min_points": 5,
+      "trend_tau_min": 0.5,
+      "trend_p_max": 0.1,
+      "break_min_points": 6,
+      "break_min_persist": 2,
+      "break_size_mult": 3.0,
+      "break_bic_margin": 10.0,
+      "break_p_max": 0.05,
+      "flat_pct": 0.05,
+      "llm_retries": 3,
+      "llm_confidence_escalate": 0.7,
+      "llm_override_confidence": 0.9,
+      "max_repairs": 3,
+      "max_generation_tries": 50,
+      "ngram_overlap_max": 8,
+      "tiny_table_max_rows": 4,
+      "jitter_low": 0.6,
+      "jitter_high": 1.6,
+      "min_value_distance": 0.05,
+      "min_headline_distance": 0.1,
+      "dcr_min": 0.05,
+      "k_anonymity_min_rows": 20,
+      "k_anonymity_k": 3,
+      "utility_range_widen": 0.6,
+      "utility_category_share_tol": 0.15,
+      "utility_strong_corr": 0.5
+    },
+    "budgets": {
+      "llm_timeout_seconds": 45.0,
+      "llm_max_output_tokens": 4000,
+      "llm_max_concurrency": 2,
+      "stage_token_budget": 200000,
+      "stage_timeout_seconds": 600.0
+    },
+    "providers": {
+      "text": {
+        "kind": "groq",
+        "model": "openai/gpt-oss-120b",
+        "max_concurrency": 2,
+        "fallback": "ollama",
+        "fallback_model": "llama3.1",
+        "limits": {
+          "rpm": 30,
+          "tpm": 8000,
+          "rpd": 1000,
+          "tpd": 200000
+        }
+      },
+      "vision": {
+        "kind": "cloudflare",
+        "model": "@cf/meta/llama-4-scout-17b-16e-instruct",
+        "max_concurrency": 1,
+        "fallback": null,
+        "fallback_model": null,
+        "limits": {
+          "rpm": 10,
+          "tpm": 100000,
+          "rpd": 80,
+          "tpd": 400000
+        }
+      },
+      "image": {
+        "kind": "cloudflare",
+        "model": "@cf/black-forest-labs/flux-1-schnell",
+        "images_per_day": 20,
+        "steps": 4
+      }
+    },
+    "report": {
+      "period_shift_years": 1,
+      "word_tolerance": 0.15,
+      "min_total_words": 1000,
+      "row_tolerance": 0.2,
+      "row_padding_compress_max": 0.15,
+      "critic_rounds": 2,
+      "critic_param_range": 0.2,
+      "image_retries": 2,
+      "shorten_retries": 2,
+      "reconcile_rounds": 2,
+      "writer_retries": 2,
+      "render_dpi": 110,
+      "image_max_px": 1024
+    },
+    "extraction": {
+      "method": "auto",
+      "cache_dir": "artifacts/extraction_cache",
+      "models_dir": null,
+      "timeout_seconds": 1800.0
+    },
+    "style": {
+      "ocr_min_chars": 50,
+      "ocr_min_image_cover": 0.5,
+      "ocr_min_confidence": 0.6,
+      "layout_model": "doclayout_yolo",
+      "layout_model_weights": "artifacts/models/doclayout_yolo_docstructbench_imgsz1024.pt",
+      "layout_min_agreement": 0.7,
+      "chart_recovery_min_conf": 0.9
+    },
+    "narrative": {
+      "scale_style": "auto",
+      "repeat_threshold": 0.5
+    },
+    "qa": {
+      "chart_style_min": 0.85,
+      "roundtrip_min_order_sim": 0.9,
+      "min_block_iou": 0.9,
+      "max_alignment_worse_pt": 2.0,
+      "max_overlap_worse": 0.01,
+      "max_distinguishable_share": 0.3
+    }
+  },
+  "python_version": "3.12.3",
+  "packages": {
+    "pydantic": "2.14.1",
+    "pandas": "3.1.0",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "networkx": "3.7",
+    "pyyaml": "6.0.3",
+    "pymupdf": "2.0",
+    "jinja2": "3.1.6",
+    "weasyprint": "70.0",
+    "matplotlib": "3.11.2",
+    "faker": "40.43.0",
+    "docling": "2.142.1"
+  },
+  "llm": {
+    "enabled": true,
+    "prompt_versions": {}
+  },
+  "synthetic": true,
+  "outputs": {},
+  "gates": {},
+  "limitations": [
+    "Run failed: PermissionError"
+  ]
+}

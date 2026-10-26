@@ -1,0 +1,26 @@
+{
+  "pdf": "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\render\\output.pdf",
+  "html": "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\render\\index.html",
+  "pages": 5,
+  "pngs": [
+    "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\render\\pages\\p1.png",
+    "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\render\\pages\\p2.png",
+    "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\render\\pages\\p3.png",
+    "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\render\\pages\\p4.png",
+    "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\render\\pages\\p5.png"
+  ],
+  "side_by_side": [
+    "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\render\\pages\\side_by_side_p1.png",
+    "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\render\\pages\\side_by_side_p2.png",
+    "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\render\\pages\\side_by_side_p3.png",
+    "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\render\\pages\\side_by_side_p4.png",
+    "D:\\Acalvio\\DeCraft\\artifacts\\runs\\dev\\render\\pages\\side_by_side_p5.png"
+  ],
+  "decorated_pages": 5,
+  "flow_overflow": [
+    "p1b24",
+    "p1b24c",
+    "p1b25",
+    "p1b26"
+  ]
+}

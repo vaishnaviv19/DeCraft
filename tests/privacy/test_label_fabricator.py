@@ -57,9 +57,20 @@ def test_one_label_in_two_tables_gets_one_fake(gateway_for):
 
 
 def test_llm_off_keeps_only_the_spec_list_and_fallbacks_keep_units():
-    made = fabricate_labels([seg("Revenue", "Tax Rate (%)", "- Mundra UMPP")], None, set(), set(), NAMES)
-    assert made.kept["seg.Segment"] == ["Revenue"]
-    assert made.maps["seg.Segment"] == {"Tax Rate (%)": "Segment A (%)", "- Mundra UMPP": "- Segment B"}
+    """Updated for E-27: 'Tax Rate (%)' is a measure of the field, so the deterministic path keeps it
+    instead of numbering it. The fallback still keeps a '- ' prefix and a unit suffix."""
+    made = fabricate_labels([seg("Revenue", "Tax Rate (%)", "- Mundra UMPP (cr)")], None, set(), set(), NAMES)
+    assert made.kept["seg.Segment"] == ["Revenue", "Tax Rate (%)"]
+    assert made.maps["seg.Segment"] == {"- Mundra UMPP (cr)": "- Segment A (cr)"}
+
+
+def test_llm_off_keeps_financial_line_items_instead_of_numbering_them():
+    """Regression: the sample run replaced Depreciation/Interest/Adjustments with 'Item D' ... 'Item N'.
+    They are standard line items of the field, so the deterministic path must keep them (E-27)."""
+    made = fabricate_labels([seg("Depreciation", "Interest", "Adjustments", "Minority Interest",
+                                 "- Mundra UMPP")], None, set(), set(), NAMES)
+    assert made.kept["seg.Segment"] == ["Depreciation", "Interest", "Adjustments", "Minority Interest"]
+    assert made.maps["seg.Segment"] == {"- Mundra UMPP": "- Segment A"}
 
 
 def test_the_entity_name_is_never_sent_or_replaced(gateway_for):

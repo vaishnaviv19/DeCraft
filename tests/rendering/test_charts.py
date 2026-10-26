@@ -8,8 +8,8 @@ from src.contracts import ChartSpec, SourceDocument, SourceTable
 from src.generation import generate
 from src.inference import infer
 from src.privacy import plan_privacy
-from src.rendering._charts import (assert_chart_matches_table, chart_labels, chart_series,
-                                   draw_svg, write_sidecar)
+from src.rendering._charts import (assert_chart_matches_table, assert_sidecar_matches_display,
+                                   chart_labels, chart_series, draw_svg, write_sidecar)
 
 
 def dataset(cfg):
@@ -51,3 +51,40 @@ def test_a_series_missing_from_the_display_table_raises(cfg):
                                   series_columns=["Ghost"])
     with pytest.raises(KeyError):
         chart_series(data, "c2")
+
+
+def test_a_rows_sidecar_is_checked_against_its_line_items():
+    import pandas as pd
+
+    display = pd.DataFrame({"Consolidated (cr)": ["Sales", "EBITDA"],
+                            "FY24A": [10.0, 2.0], "FY25E": [12.0, 3.0]})
+    payload = {"orientation": "rows", "label_column": "Consolidated (cr)",
+               "labels": ["FY24A", "FY25E"],
+               "series": {"Sales": [10.0, 12.0], "EBITDA": [2.0, 3.0]}}
+    assert assert_sidecar_matches_display(payload, display)
+    payload["series"]["Sales"] = [10.0, 99.0]
+    with pytest.raises(AssertionError):
+        assert_sidecar_matches_display(payload, display)
+
+
+def test_a_rows_sidecar_naming_an_unknown_line_item_fails_the_gate():
+    import pandas as pd
+
+    display = pd.DataFrame({"Consolidated (cr)": ["Sales"], "FY24A": [10.0]})
+    payload = {"orientation": "rows", "label_column": "Consolidated (cr)",
+               "labels": ["FY24A"], "series": {"Ghost": [10.0]}}
+    with pytest.raises(AssertionError):
+        assert_sidecar_matches_display(payload, display)
+
+
+def test_a_text_number_table_gets_a_chart_with_its_sub_header_as_axis_labels():
+    """Live run 2026-10-26: the shareholding chart's axis read 'Unnamed: 1/2/3'."""
+    import pandas as pd
+    from src.generation._charts import text_number_chart
+    frame = pd.DataFrame({"Company Data": ["Beta", "Shareholding %", "Promoters", "Public", "Others"],
+                          "Unnamed: 1": ["", "Q3FY24", "49.4", "30.0", "0.9"],
+                          "Unnamed: 2": ["", "Q4FY24", "58.7", "35.9", "0.9"],
+                          "Unnamed: 3": ["1.3", "Q1FY25", "59.9", "35.3", "0.9"]})
+    spec = text_number_chart("c", "t", frame, "Company Data")
+    assert spec.series_rows == ["Promoters", "Public", "Others"]
+    assert spec.x_labels == ["Q3FY24", "Q4FY24", "Q1FY25"]

@@ -32,3 +32,15 @@ def test_every_prompt_has_a_rationale_for_the_log():
 
 def test_every_prompt_demands_json_only():
     assert all('ONLY JSON' in p.system or 'ONLY one JSON' in p.system for p in PROMPTS)
+
+
+@pytest.mark.parametrize('p', [p for p in PROMPTS if p.role == 'vision'], ids=lambda p: p.name)
+def test_every_vision_prompt_fits_at_least_one_full_size_image(p):
+    """E-40: one 1024 px image costs ~6,600 tokens on the vision model (measured 2026-10-26); a smaller
+    cap would refuse every call."""
+    import io
+    from PIL import Image
+    from src.llm._payload import image_tokens
+    buffer = io.BytesIO()
+    Image.new("RGB", (1024, 1024), "white").save(buffer, format="JPEG")
+    assert p.max_input_tokens >= image_tokens(buffer.getvalue()) + estimate_tokens(p.system)

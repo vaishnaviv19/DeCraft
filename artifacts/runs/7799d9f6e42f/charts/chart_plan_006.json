@@ -1,0 +1,30 @@
+{
+  "chart_id": "chart_plan_006",
+  "table_id": "table_006",
+  "label_column": "Particulars",
+  "kind": "pie",
+  "orientation": "columns",
+  "columns": [],
+  "labels": [
+    "Particulars A",
+    "- Particulars B",
+    "- Particulars C",
+    "- Particulars D",
+    "- Particulars E",
+    "- Particulars F",
+    "- Particulars G",
+    "- Particulars H"
+  ],
+  "series": {
+    "Value (Rs. cr.)": [
+      null,
+      17419.0,
+      1632.0,
+      2980.0,
+      2824.0,
+      3759.0,
+      1767.0,
+      1141.0
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "chart_id": "chart_plan_011",
+  "table_id": "table_011",
+  "label_column": "Rating",
+  "kind": "bar",
+  "orientation": "columns",
+  "columns": [],
+  "labels": [
+    "Rating B",
+    "Rating B",
+    "Rating B",
+    "Rating A",
+    "Rating A",
+    "Rating A",
+    "Rating A",
+    "Rating B"
+  ],
+  "series": {
+    "Target": [
+      268.0,
+      276.0,
+      231.0,
+      337.0,
+      302.0,
+      265.0,
+      212.0,
+      214.0
+    ]
+  }
+}

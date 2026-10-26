@@ -91,11 +91,16 @@ def section_template(section: dict, facts: dict, index: int = 0) -> str:
     target = int(section.get("target_word_count") or 150)
     words = sum(len(s.split()) for s in sentences)
     k = 0
-    while words < target and k < len(COMMENTARY):
+    # A section's body budget can exceed the pool's word count (a disclaimer page has many boxes and no
+    # facts). The pool therefore cycles until the target is met, with a moving start so two long
+    # sections do not repeat the same order (M8.9, M8.12 words_per_page).
+    while words < target:
         sentence = COMMENTARY[(index * 5 + k) % len(COMMENTARY)]
         sentences.insert(min(len(sentences), 1 + 2 * k), sentence)
         words += len(sentence.split())
         k += 1
+        if k > 10 * len(COMMENTARY):                # defensive: target is finite
+            break
     paragraphs = [" ".join(sentences[i:i + 4]) for i in range(0, len(sentences), 4)]
     return "\n\n".join(paragraphs)
 

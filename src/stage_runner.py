@@ -23,6 +23,13 @@ class Stage:
     run: Callable[[dict[str, Any]], Any]
 
 
+def stage_salt(cfg, pdf: Path | str, *extra: str) -> str:
+    """What every stage's done-hash also depends on: the config hash, the source PDF's sha256 and any
+    extra markers (the generation run, a dry run). A changed config or PDF re-runs the stages (M9.1)."""
+    from src.extraction import sha256_file
+    return "|".join([cfg.config_hash(), sha256_file(Path(pdf)), *[str(e) for e in extra]])
+
+
 def _hash_inputs(cache: dict[str, Any]) -> str:
     payload = json.dumps(cache, sort_keys=True, default=str)
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()

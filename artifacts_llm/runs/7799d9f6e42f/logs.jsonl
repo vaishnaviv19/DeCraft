@@ -1,0 +1,81 @@
+{"at": "2026-10-26T13:42:11.178360+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": true, "resumed": false}
+{"at": "2026-10-26T13:42:12.026158+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T13:42:12.138193+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T13:42:13.465583+00:00", "event": "stage_done", "stage": "extract", "seconds": 1.45}
+{"at": "2026-10-26T13:42:13.465583+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T13:42:16.871358+00:00", "event": "stage_done", "stage": "infer", "seconds": 3.39}
+{"at": "2026-10-26T13:42:16.877932+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T13:42:17.335759+00:00", "event": "labels", "columns": 20, "replaced": 121, "kept": 54, "avoid_size": 229}
+{"at": "2026-10-26T13:42:17.346365+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.47}
+{"at": "2026-10-26T13:42:17.346365+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T13:42:18.638553+00:00", "event": "stage_done", "stage": "generate", "seconds": 1.3}
+{"at": "2026-10-26T13:42:18.638553+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T13:42:19.517663+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.88}
+{"at": "2026-10-26T13:42:19.518867+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T13:42:20.093815+00:00", "event": "stage_done", "stage": "style", "seconds": 0.58}
+{"at": "2026-10-26T13:42:20.094573+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T13:42:43.710485+00:00", "event": "stage_done", "stage": "templates", "seconds": 23.61}
+{"at": "2026-10-26T13:42:43.711050+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T13:42:45.264932+00:00", "event": "stage_done", "stage": "figures", "seconds": 1.56}
+{"at": "2026-10-26T13:42:45.264932+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T13:42:46.390321+00:00", "event": "stage_done", "stage": "prepare", "seconds": 1.12}
+{"at": "2026-10-26T13:42:46.390321+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T13:42:53.449408+00:00", "event": "stage_done", "stage": "charts", "seconds": 7.05}
+{"at": "2026-10-26T13:42:53.449408+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T13:42:53.715417+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.28}
+{"at": "2026-10-26T13:42:53.715417+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T13:42:54.125441+00:00", "event": "fallback", "stage": "write", "reason": "repeats: 357 found, 0 fixed, 54 dropped, 236 flagged"}
+{"at": "2026-10-26T13:42:54.158473+00:00", "event": "stage_done", "stage": "write", "seconds": 0.44}
+{"at": "2026-10-26T13:42:54.159640+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T13:42:54.268522+00:00", "event": "fallback", "stage": "fit", "reason": "repeats: 357 found, 0 fixed, 54 dropped, 236 flagged"}
+{"at": "2026-10-26T13:42:54.269566+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:42:54.269566+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T13:42:54.275196+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.11}
+{"at": "2026-10-26T13:42:54.276202+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T13:42:55.663888+00:00", "event": "stage_done", "stage": "images", "seconds": 1.39}
+{"at": "2026-10-26T13:42:55.665397+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T13:43:12.841825+00:00", "event": "stage_done", "stage": "render", "seconds": 17.19}
+{"at": "2026-10-26T13:43:12.841825+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T13:50:01.488566+00:00", "event": "run_partial", "stage": "qa", "message": "qa: LLMBudgetExceeded: stage budget 200000 tokens exhausted"}
+{"at": "2026-10-26T14:13:28.637054+00:00", "event": "run_start", "run_id": "7799d9f6e42f", "llm": true, "resumed": true}
+{"at": "2026-10-26T14:13:29.065175+00:00", "event": "stage_start", "stage": "extract"}
+{"at": "2026-10-26T14:13:29.127376+00:00", "event": "extraction", "method": "docling", "cached": true, "tables": 12, "figures": 20, "warnings": []}
+{"at": "2026-10-26T14:13:29.737083+00:00", "event": "stage_done", "stage": "extract", "seconds": 0.67}
+{"at": "2026-10-26T14:13:29.738554+00:00", "event": "stage_start", "stage": "infer"}
+{"at": "2026-10-26T14:13:33.230851+00:00", "event": "stage_done", "stage": "infer", "seconds": 3.5}
+{"at": "2026-10-26T14:13:33.230851+00:00", "event": "stage_start", "stage": "privacy_plan"}
+{"at": "2026-10-26T14:13:33.364853+00:00", "event": "labels", "columns": 15, "replaced": 96, "kept": 79, "avoid_size": 213}
+{"at": "2026-10-26T14:13:33.364853+00:00", "event": "stage_done", "stage": "privacy_plan", "seconds": 0.12}
+{"at": "2026-10-26T14:13:33.364853+00:00", "event": "stage_start", "stage": "generate"}
+{"at": "2026-10-26T14:13:33.878739+00:00", "event": "stage_done", "stage": "generate", "seconds": 0.51}
+{"at": "2026-10-26T14:13:33.879183+00:00", "event": "stage_start", "stage": "privacy_audit"}
+{"at": "2026-10-26T14:13:34.229048+00:00", "event": "stage_done", "stage": "privacy_audit", "seconds": 0.34}
+{"at": "2026-10-26T14:13:34.229048+00:00", "event": "stage_start", "stage": "style"}
+{"at": "2026-10-26T14:13:34.493656+00:00", "event": "stage_done", "stage": "style", "seconds": 0.27}
+{"at": "2026-10-26T14:13:34.493656+00:00", "event": "stage_start", "stage": "templates"}
+{"at": "2026-10-26T14:13:49.282107+00:00", "event": "stage_done", "stage": "templates", "seconds": 14.8}
+{"at": "2026-10-26T14:13:49.282735+00:00", "event": "stage_start", "stage": "figures"}
+{"at": "2026-10-26T14:13:50.315001+00:00", "event": "stage_done", "stage": "figures", "seconds": 1.03}
+{"at": "2026-10-26T14:13:50.315513+00:00", "event": "stage_start", "stage": "prepare"}
+{"at": "2026-10-26T14:13:50.900231+00:00", "event": "stage_done", "stage": "prepare", "seconds": 0.58}
+{"at": "2026-10-26T14:13:50.900231+00:00", "event": "stage_start", "stage": "charts"}
+{"at": "2026-10-26T14:13:55.316667+00:00", "event": "stage_done", "stage": "charts", "seconds": 4.42}
+{"at": "2026-10-26T14:13:55.316667+00:00", "event": "stage_start", "stage": "plan"}
+{"at": "2026-10-26T14:13:55.473304+00:00", "event": "stage_done", "stage": "plan", "seconds": 0.16}
+{"at": "2026-10-26T14:13:55.473304+00:00", "event": "stage_start", "stage": "write"}
+{"at": "2026-10-26T14:13:55.715167+00:00", "event": "fallback", "stage": "write", "reason": "repeats: 357 found, 0 fixed, 54 dropped, 236 flagged"}
+{"at": "2026-10-26T14:13:55.727528+00:00", "event": "stage_done", "stage": "write", "seconds": 0.25}
+{"at": "2026-10-26T14:13:55.727528+00:00", "event": "stage_start", "stage": "fit"}
+{"at": "2026-10-26T14:13:55.841123+00:00", "event": "fallback", "stage": "fit", "reason": "repeats: 357 found, 0 fixed, 54 dropped, 236 flagged"}
+{"at": "2026-10-26T14:13:55.841773+00:00", "event": "fallback", "stage": "fit", "reason": "p1b09: cut to the last full sentence that fits"}
+{"at": "2026-10-26T14:13:55.842419+00:00", "event": "fallback", "stage": "fit", "reason": "p1b19: cut to the last full sentence that fits"}
+{"at": "2026-10-26T14:13:55.844184+00:00", "event": "stage_done", "stage": "fit", "seconds": 0.12}
+{"at": "2026-10-26T14:13:55.844721+00:00", "event": "stage_start", "stage": "images"}
+{"at": "2026-10-26T14:13:56.696741+00:00", "event": "stage_done", "stage": "images", "seconds": 0.84}
+{"at": "2026-10-26T14:13:56.696741+00:00", "event": "stage_start", "stage": "render"}
+{"at": "2026-10-26T14:14:06.879173+00:00", "event": "stage_done", "stage": "render", "seconds": 10.19}
+{"at": "2026-10-26T14:14:06.879701+00:00", "event": "stage_start", "stage": "qa"}
+{"at": "2026-10-26T14:14:31.607077+00:00", "event": "stage_done", "stage": "qa", "seconds": 24.74}
+{"at": "2026-10-26T14:14:31.607077+00:00", "event": "stage_start", "stage": "package"}
+{"at": "2026-10-26T14:14:32.343030+00:00", "event": "stage_done", "stage": "package", "seconds": 0.73}
+{"at": "2026-10-26T14:14:33.177324+00:00", "event": "run_end", "status": "failed", "gates": {"validation": true, "privacy_audit": true, "data_valid": true, "periods_shifted": true, "every_table_has_chart": true, "charts_match_tables": true, "no_unresolved_placeholders": true, "no_illegal_digits": true, "bible_consistent": true, "same_sections_new_titles": true, "words_per_page": false, "min_1000_words": true, "layout_fits": true, "fonts_embedded": true, "font_sizes_locked": true, "labels_fabricated": true, "no_source_names": true, "no_fixed_doc_type": true, "entity_and_branding": true, "metadata_clean": true, "critic_not_worse": true, "no_source_copy": true, "deliverables": true, "share_distance": true, "dcr": true, "no_typed_units": true, "ocr_coverage": true, "layout_agreement": true, "chart_style_similar": false, "vector_recovery_exact": true, "roundtrip_structure": false, "layout_metrics": false, "discriminator": true, "no_cross_section_repeats": false}}

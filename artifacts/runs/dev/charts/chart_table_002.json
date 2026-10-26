@@ -1,0 +1,39 @@
+{
+  "chart_id": "chart_table_002",
+  "table_id": "table_002",
+  "label_column": "Company Data",
+  "kind": "bar",
+  "orientation": "rows",
+  "labels": [
+    "Unnamed: 1",
+    "Unnamed: 2",
+    "Unnamed: 3"
+  ],
+  "series": {
+    "Promoters": [
+      49.4,
+      58.7,
+      59.9
+    ],
+    "FII's": [
+      10.3,
+      11.6,
+      12.8
+    ],
+    "MFs/Insti": [
+      15.6,
+      18.4,
+      19.3
+    ],
+    "Public": [
+      30.0,
+      35.9,
+      35.3
+    ],
+    "Others": [
+      0.9,
+      0.9,
+      0.9
+    ]
+  }
+}

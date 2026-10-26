@@ -1,355 +1,117 @@
 {
   "report_title": "Tata Power Company Limited",
+  "doc_type": "",
+  "domain": "finance",
   "sections": [
     {
       "sid": "S0",
       "source_title": "Front matter",
-      "title": "Year in Review",
-      "goal": "Present the figures and developments of front matter.",
+      "title": "Overview",
+      "goal": "Describe the developments this part of the document covers.",
       "blocks": 0,
       "facts": 0
     },
     {
       "sid": "S1",
       "source_title": "Retail Equity Research  Tata Power Company Limited",
-      "title": "Performance in Focus",
-      "goal": "Present the figures and developments of retail equity research  tata power company limited.",
-      "blocks": 1,
-      "facts": 318
-    },
-    {
-      "sid": "S2",
-      "source_title": "BUY",
-      "title": "Operating Highlights",
-      "goal": "Present the figures and developments of buy.",
-      "blocks": 1,
+      "title": "Highlights",
+      "goal": "Describe the developments this part of the document covers.",
+      "blocks": 6,
       "facts": 0
     },
     {
+      "sid": "S2",
+      "source_title": "KEY CHANGES:                             TARGET                                                    RATING                                                 EARNINGS",
+      "title": "Context",
+      "goal": "Describe the developments this part of the document covers.",
+      "blocks": 1,
+      "facts": 2
+    },
+    {
       "sid": "S3",
-      "source_title": "Electric Utilities",
-      "title": "Building for the Future",
-      "goal": "Present the figures and developments of electric utilities.",
-      "blocks": 4,
+      "source_title": "Margins expand on lower input cost",
+      "title": "Developments",
+      "goal": "Describe the developments this part of the document covers.",
+      "blocks": 6,
       "facts": 0
     },
     {
       "sid": "S4",
-      "source_title": "KEY CHANGES:                             TARGET                                                    RATING                                                 EARNINGS",
-      "title": "The Year at a Glance",
-      "goal": "Present the figures and developments of key changes:                             target                                                    rating                                                 earnings.",
-      "blocks": 2,
-      "facts": 0
+      "source_title": "Key highlights",
+      "title": "Sales, EBITDA and Adj. PAT",
+      "goal": "Explain how Sales, EBITDA and Adj. PAT moved and why it matters.",
+      "blocks": 3,
+      "facts": 32
     },
     {
       "sid": "S5",
-      "source_title": "Margins expand on lower input cost",
-      "title": "Looking Ahead",
-      "goal": "Present the figures and developments of margins expand on lower input cost.",
-      "blocks": 10,
-      "facts": 0
+      "source_title": "Quarterly Financials (Consolidated)",
+      "title": "Revenue, EBITDA and EBITDA margins",
+      "goal": "Explain how Revenue, EBITDA and EBITDA margins moved and why it matters.",
+      "blocks": 2,
+      "facts": 54
     },
     {
       "sid": "S6",
-      "source_title": "Key highlights",
-      "title": "Year in Review 2",
-      "goal": "Present the figures and developments of key highlights.",
+      "source_title": "Change in Estimates",
+      "title": "Review",
+      "goal": "Describe the developments this part of the document covers.",
+      "blocks": 1,
+      "facts": 2
+    },
+    {
+      "sid": "S7",
+      "source_title": "Sum-of-the-Parts Valuation",
+      "title": "Value, Multiple and Value Per Share",
+      "goal": "Explain how Value, Multiple and Value Per Share moved and why it matters.",
+      "blocks": 1,
+      "facts": 15
+    },
+    {
+      "sid": "S8",
+      "source_title": "PROFIT & LOSS",
+      "title": "Revenue, EBITDA and Depreciation",
+      "goal": "Explain how Revenue, EBITDA and Depreciation moved and why it matters.",
+      "blocks": 2,
+      "facts": 49
+    },
+    {
+      "sid": "S9",
+      "source_title": "RATIOS",
+      "title": "Net inc. + Depn., Non-cash adj. and OmegaFlow Operations",
+      "goal": "Explain how Net inc. + Depn., Non-cash adj. and OmegaFlow Operations moved and why it matters.",
+      "blocks": 2,
+      "facts": 153
+    },
+    {
+      "sid": "S10",
+      "source_title": "Profitab. & Return",
+      "title": "Outlook",
+      "goal": "Describe the developments this part of the document covers.",
       "blocks": 4,
       "facts": 0
     },
     {
-      "sid": "S7",
-      "source_title": "Quarterly Financials (Consolidated)",
-      "title": "Performance in Focus 2",
-      "goal": "Present the figures and developments of quarterly financials (consolidated).",
-      "blocks": 1,
-      "facts": 0
-    },
-    {
-      "sid": "S8",
-      "source_title": "Profit & Loss Account",
-      "title": "Operating Highlights 2",
-      "goal": "Present the figures and developments of profit & loss account.",
-      "blocks": 1,
-      "facts": 0
-    },
-    {
-      "sid": "S9",
-      "source_title": "Q1FY24  Q1FY23  YoY Growth %  Q4FY23  QoQ Growth %",
-      "title": "Building for the Future 2",
-      "goal": "Present the figures and developments of q1fy24  q1fy23  yoy growth %  q4fy23  qoq growth %.",
-      "blocks": 3,
-      "facts": 0
-    },
-    {
-      "sid": "S10",
-      "source_title": "Change in Estimates",
-      "title": "The Year at a Glance 2",
-      "goal": "Present the figures and developments of change in estimates.",
-      "blocks": 2,
-      "facts": 0
-    },
-    {
       "sid": "S11",
-      "source_title": "Sum-of-the-Parts Valuation",
-      "title": "Looking Ahead 2",
-      "goal": "Present the figures and developments of sum-of-the-parts valuation.",
-      "blocks": 1,
-      "facts": 0
+      "source_title": "Recommendation Summary (Last 3 Years)",
+      "title": "Target",
+      "goal": "Explain how Target moved and why it matters.",
+      "blocks": 3,
+      "facts": 11
     },
     {
       "sid": "S12",
-      "source_title": "Particulars  Methodology  Multiple  % Holding  Value (Rs. cr.)  Value Per Share",
-      "title": "Year in Review 3",
-      "goal": "Present the figures and developments of particulars  methodology  multiple  % holding  value (rs. cr.)  value per share.",
+      "source_title": "General Disclosures and Disclaimers  CERTIFICATION",
+      "title": "Background",
+      "goal": "Describe the developments this part of the document covers.",
       "blocks": 2,
       "facts": 0
     },
     {
       "sid": "S13",
-      "source_title": "PROFIT & LOSS",
-      "title": "Performance in Focus 3",
-      "goal": "Present the figures and developments of profit & loss.",
-      "blocks": 1,
-      "facts": 0
-    },
-    {
-      "sid": "S14",
-      "source_title": "BALANCE SHEET",
-      "title": "Operating Highlights 3",
-      "goal": "Present the figures and developments of balance sheet.",
-      "blocks": 1,
-      "facts": 0
-    },
-    {
-      "sid": "S15",
-      "source_title": "Y.E March (Rs. cr)  FY21A  FY22A  FY23A  FY24E  FY25E",
-      "title": "Building for the Future 3",
-      "goal": "Present the figures and developments of y.e march (rs. cr)  fy21a  fy22a  fy23a  fy24e  fy25e.",
-      "blocks": 1,
-      "facts": 0
-    },
-    {
-      "sid": "S16",
-      "source_title": "Y.E March (Rs. cr)  FY21A  FY22A  FY23A  FY24E  FY25E",
-      "title": "The Year at a Glance 3",
-      "goal": "Present the figures and developments of y.e march (rs. cr)  fy21a  fy22a  fy23a  fy24e  fy25e.",
-      "blocks": 1,
-      "facts": 0
-    },
-    {
-      "sid": "S17",
-      "source_title": "Revenue  32,703  42,816  55,109  59,518  64,577",
-      "title": "Looking Ahead 3",
-      "goal": "Present the figures and developments of revenue  32,703  42,816  55,109  59,518  64,577.",
-      "blocks": 4,
-      "facts": 0
-    },
-    {
-      "sid": "S18",
-      "source_title": "EBITDA  7,442  8,431  9,144  10,192  11,520",
-      "title": "Year in Review 4",
-      "goal": "Present the figures and developments of ebitda  7,442  8,431  9,144  10,192  11,520.",
-      "blocks": 6,
-      "facts": 0
-    },
-    {
-      "sid": "S19",
-      "source_title": "EBIT  4,697  5,309  5,705  6,603  7,807",
-      "title": "Performance in Focus 4",
-      "goal": "Present the figures and developments of ebit  4,697  5,309  5,705  6,603  7,807.",
-      "blocks": 6,
-      "facts": 0
-    },
-    {
-      "sid": "S20",
-      "source_title": "PBT  1,987  3,003  5,457  5,111  5,970",
-      "title": "Operating Highlights 4",
-      "goal": "Present the figures and developments of pbt  1,987  3,003  5,457  5,111  5,970.",
-      "blocks": 7,
-      "facts": 0
-    },
-    {
-      "sid": "S21",
-      "source_title": "Total Assets  98,839 112,885 128,349 135,480 136,565",
-      "title": "Building for the Future 4",
-      "goal": "Present the figures and developments of total assets  98,839 112,885 128,349 135,480 136,565.",
-      "blocks": 7,
-      "facts": 0
-    },
-    {
-      "sid": "S22",
-      "source_title": "Adj PAT 1,237 1,892 3,336 3,345 3,707",
-      "title": "The Year at a Glance 4",
-      "goal": "Present the figures and developments of adj pat 1,237 1,892 3,336 3,345 3,707.",
-      "blocks": 6,
-      "facts": 0
-    },
-    {
-      "sid": "S23",
-      "source_title": "Adj EPS (Rs.) 3.9 5.9 10.4 10.5 11.6",
-      "title": "Looking Ahead 4",
-      "goal": "Present the figures and developments of adj eps (rs.) 3.9 5.9 10.4 10.5 11.6.",
-      "blocks": 3,
-      "facts": 0
-    },
-    {
-      "sid": "S24",
-      "source_title": "Total Liabilities  98,839 112,885 128,349 135,480 136,565",
-      "title": "Year in Review 5",
-      "goal": "Present the figures and developments of total liabilities  98,839 112,885 128,349 135,480 136,565.",
-      "blocks": 2,
-      "facts": 0
-    },
-    {
-      "sid": "S25",
-      "source_title": "BVPS (Rs.)  70  70  90  98  108",
-      "title": "Performance in Focus 5",
-      "goal": "Present the figures and developments of bvps (rs.)  70  70  90  98  108.",
-      "blocks": 1,
-      "facts": 0
-    },
-    {
-      "sid": "S26",
-      "source_title": "RATIOS",
-      "title": "Operating Highlights 5",
-      "goal": "Present the figures and developments of ratios.",
-      "blocks": 1,
-      "facts": 0
-    },
-    {
-      "sid": "S27",
-      "source_title": "CASH FLOW",
-      "title": "Building for the Future 5",
-      "goal": "Present the figures and developments of cash flow.",
-      "blocks": 1,
-      "facts": 0
-    },
-    {
-      "sid": "S28",
-      "source_title": "Y.E March  FY21A  FY22A  FY23A  FY24E  FY25E",
-      "title": "The Year at a Glance 5",
-      "goal": "Present the figures and developments of y.e march  fy21a  fy22a  fy23a  fy24e  fy25e.",
-      "blocks": 1,
-      "facts": 0
-    },
-    {
-      "sid": "S29",
-      "source_title": "Y.E March (Rs. cr)  FY21A  FY22A  FY23A  FY24E  FY25E",
-      "title": "Looking Ahead 5",
-      "goal": "Present the figures and developments of y.e march (rs. cr)  fy21a  fy22a  fy23a  fy24e  fy25e.",
-      "blocks": 1,
-      "facts": 0
-    },
-    {
-      "sid": "S30",
-      "source_title": "Profitab. & Return",
-      "title": "Year in Review 6",
-      "goal": "Present the figures and developments of profitab. & return.",
-      "blocks": 1,
-      "facts": 0
-    },
-    {
-      "sid": "S31",
-      "source_title": "Net inc. + Depn.  4,033  5,017  6,894  7,028  7,741",
-      "title": "Performance in Focus 6",
-      "goal": "Present the figures and developments of net inc. + depn.  4,033  5,017  6,894  7,028  7,741.",
-      "blocks": 6,
-      "facts": 0
-    },
-    {
-      "sid": "S32",
-      "source_title": "C.F. Operation  8,345  6,693  7,159  14,088  6,909",
-      "title": "Operating Highlights 6",
-      "goal": "Present the figures and developments of c.f. operation  8,345  6,693  7,159  14,088  6,909.",
-      "blocks": 5,
-      "facts": 0
-    },
-    {
-      "sid": "S33",
-      "source_title": "W.C & Liquidity",
-      "title": "Building for the Future 6",
-      "goal": "Present the figures and developments of w.c & liquidity.",
-      "blocks": 3,
-      "facts": 0
-    },
-    {
-      "sid": "S34",
-      "source_title": "C.F \u2013 Investment  668  (6,277)  (7,375)  (8,287)  (3,457)",
-      "title": "The Year at a Glance 6",
-      "goal": "Present the figures and developments of c.f \u2013 investment  668  (6,277)  (7,375)  (8,287)  (3,457).",
-      "blocks": 9,
-      "facts": 0
-    },
-    {
-      "sid": "S35",
-      "source_title": "Turnover & Leverage",
-      "title": "Looking Ahead 6",
-      "goal": "Present the figures and developments of turnover & leverage.",
-      "blocks": 1,
-      "facts": 0
-    },
-    {
-      "sid": "S36",
-      "source_title": "C.F \u2013 Finance  (7,603)  (1,183)  1,341  (7,579)  (7,486)",
-      "title": "Year in Review 7",
-      "goal": "Present the figures and developments of c.f \u2013 finance  (7,603)  (1,183)  1,341  (7,579)  (7,486).",
-      "blocks": 7,
-      "facts": 0
-    },
-    {
-      "sid": "S37",
-      "source_title": "Valuation",
-      "title": "Performance in Focus 7",
-      "goal": "Present the figures and developments of valuation.",
-      "blocks": 5,
-      "facts": 0
-    },
-    {
-      "sid": "S38",
-      "source_title": "Recommendation Summary (Last 3 Years)",
-      "title": "Operating Highlights 7",
-      "goal": "Present the figures and developments of recommendation summary (last 3 years).",
-      "blocks": 1,
-      "facts": 0
-    },
-    {
-      "sid": "S39",
-      "source_title": "Dates  Rating  Target",
-      "title": "Building for the Future 7",
-      "goal": "Present the figures and developments of dates  rating  target.",
-      "blocks": 17,
-      "facts": 0
-    },
-    {
-      "sid": "S40",
-      "source_title": "Ratings  Large caps  Midcaps  Small Caps",
-      "title": "The Year at a Glance 7",
-      "goal": "Present the figures and developments of ratings  large caps  midcaps  small caps.",
-      "blocks": 2,
-      "facts": 0
-    },
-    {
-      "sid": "S41",
-      "source_title": "Accumulate  -  Upside is between 10%-15%  Upside is between 10%-20%",
-      "title": "Looking Ahead 7",
-      "goal": "Present the figures and developments of accumulate  -  upside is between 10%-15%  upside is between 10%-20%.",
-      "blocks": 4,
-      "facts": 0
-    },
-    {
-      "sid": "S42",
-      "source_title": "General Disclosures and Disclaimers  CERTIFICATION",
-      "title": "Year in Review 8",
-      "goal": "Present the figures and developments of general disclosures and disclaimers  certification.",
-      "blocks": 2,
-      "facts": 0
-    },
-    {
-      "sid": "S43",
       "source_title": "COMPANY OVERVIEW",
-      "title": "Performance in Focus 8",
-      "goal": "Present the figures and developments of company overview.",
+      "title": "Key points",
+      "goal": "Describe the developments this part of the document covers.",
       "blocks": 8,
       "facts": 0
     }
@@ -372,8 +134,8 @@
     {
       "section_id": "S0",
       "source_title": "Front matter",
-      "title": "Year in Review",
-      "goal": "Present the figures and developments of front matter.",
+      "title": "Overview",
+      "goal": "Describe the developments this part of the document covers.",
       "block_ids": [],
       "fact_keys": [],
       "table_ids": []
@@ -381,14 +143,60 @@
     {
       "section_id": "S1",
       "source_title": "Retail Equity Research  Tata Power Company Limited",
-      "title": "Performance in Focus",
-      "goal": "Present the figures and developments of retail equity research  tata power company limited.",
+      "title": "Highlights",
+      "goal": "Describe the developments this part of the document covers.",
       "block_ids": [
-        "p1b04"
+        "p1b04",
+        "p1b05",
+        "p1b06",
+        "p1b07",
+        "p1b08",
+        "p1b09"
+      ],
+      "fact_keys": [],
+      "table_ids": []
+    },
+    {
+      "section_id": "S2",
+      "source_title": "KEY CHANGES:                             TARGET                                                    RATING                                                 EARNINGS",
+      "title": "Context",
+      "goal": "Describe the developments this part of the document covers.",
+      "block_ids": [
+        "p1b10"
       ],
       "fact_keys": [
         "table_001.first_label",
-        "table_001.last_label",
+        "table_001.last_label"
+      ],
+      "table_ids": []
+    },
+    {
+      "section_id": "S3",
+      "source_title": "Margins expand on lower input cost",
+      "title": "Developments",
+      "goal": "Describe the developments this part of the document covers.",
+      "block_ids": [
+        "p1b12",
+        "p1b13",
+        "p1b14",
+        "p1b15",
+        "p1b16",
+        "p1b19"
+      ],
+      "fact_keys": [],
+      "table_ids": []
+    },
+    {
+      "section_id": "S4",
+      "source_title": "Key highlights",
+      "title": "Sales, EBITDA and Adj. PAT",
+      "goal": "Explain how Sales, EBITDA and Adj. PAT moved and why it matters.",
+      "block_ids": [
+        "p1b23",
+        "p1b25",
+        "p1b26"
+      ],
+      "fact_keys": [
         "table_002.first_label",
         "table_002.last_label",
         "table_003.first_period",
@@ -420,7 +228,20 @@
         "table_003.row:ROE (%).latest",
         "table_003.row:D/E.label",
         "table_003.row:D/E.latest",
-        "table_003.row:D/E.growth",
+        "table_003.row:D/E.growth"
+      ],
+      "table_ids": []
+    },
+    {
+      "section_id": "S5",
+      "source_title": "Quarterly Financials (Consolidated)",
+      "title": "Revenue, EBITDA and EBITDA margins",
+      "goal": "Explain how Revenue, EBITDA and EBITDA margins moved and why it matters.",
+      "block_ids": [
+        "p2b03",
+        "p2b04"
+      ],
+      "fact_keys": [
         "table_004.first_period",
         "table_004.last_period",
         "table_004.row:Revenue.label",
@@ -474,9 +295,33 @@
         "table_004.row:No. of shares.growth",
         "table_004.row:Adj. EPS (Rs.).label",
         "table_004.row:Adj. EPS (Rs.).latest",
-        "table_004.row:Adj. EPS (Rs.).growth",
+        "table_004.row:Adj. EPS (Rs.).growth"
+      ],
+      "table_ids": []
+    },
+    {
+      "section_id": "S6",
+      "source_title": "Change in Estimates",
+      "title": "Review",
+      "goal": "Describe the developments this part of the document covers.",
+      "block_ids": [
+        "p2b06"
+      ],
+      "fact_keys": [
         "table_005.first_label",
-        "table_005.last_label",
+        "table_005.last_label"
+      ],
+      "table_ids": []
+    },
+    {
+      "section_id": "S7",
+      "source_title": "Sum-of-the-Parts Valuation",
+      "title": "Value, Multiple and Value Per Share",
+      "goal": "Explain how Value, Multiple and Value Per Share moved and why it matters.",
+      "block_ids": [
+        "p2b08"
+      ],
+      "fact_keys": [
         "table_006.Multiple.name",
         "table_006.Multiple.average",
         "table_006.Multiple.largest",
@@ -491,7 +336,20 @@
         "table_006.Value Per Share (Rs.).largest",
         "table_006.Value Per Share (Rs.).largest_label",
         "table_006.first_label",
-        "table_006.last_label",
+        "table_006.last_label"
+      ],
+      "table_ids": []
+    },
+    {
+      "section_id": "S8",
+      "source_title": "PROFIT & LOSS",
+      "title": "Revenue, EBITDA and Depreciation",
+      "goal": "Explain how Revenue, EBITDA and Depreciation moved and why it matters.",
+      "block_ids": [
+        "p3b03",
+        "p3b04"
+      ],
+      "fact_keys": [
         "table_007.first_period",
         "table_007.last_period",
         "table_007.row:Revenue.label",
@@ -540,7 +398,20 @@
         "table_007.row:Adj EPS (Rs.).growth",
         "table_007.row:DPS (Rs.).label",
         "table_007.row:DPS (Rs.).latest",
-        "table_007.row:DPS (Rs.).growth",
+        "table_007.row:DPS (Rs.).growth"
+      ],
+      "table_ids": []
+    },
+    {
+      "section_id": "S9",
+      "source_title": "RATIOS",
+      "title": "Net inc. + Depn., Non-cash adj. and OmegaFlow Operations",
+      "goal": "Explain how Net inc. + Depn., Non-cash adj. and OmegaFlow Operations moved and why it matters.",
+      "block_ids": [
+        "p3b07",
+        "p3b08"
+      ],
+      "fact_keys": [
         "table_008.first_period",
         "table_008.last_period",
         "table_008.row:Net inc. + Depn..label",
@@ -693,7 +564,35 @@
         "table_010.row:P/E (x).growth",
         "table_010.row:P/BV (x).label",
         "table_010.row:P/BV (x).latest",
-        "table_010.row:P/BV (x).growth",
+        "table_010.row:P/BV (x).growth"
+      ],
+      "table_ids": []
+    },
+    {
+      "section_id": "S10",
+      "source_title": "Profitab. & Return",
+      "title": "Outlook",
+      "goal": "Describe the developments this part of the document covers.",
+      "block_ids": [
+        "p3b11",
+        "p3b12",
+        "p3b13",
+        "p3b14"
+      ],
+      "fact_keys": [],
+      "table_ids": []
+    },
+    {
+      "section_id": "S11",
+      "source_title": "Recommendation Summary (Last 3 Years)",
+      "title": "Target",
+      "goal": "Explain how Target moved and why it matters.",
+      "block_ids": [
+        "p4b03",
+        "p4b13",
+        "p4b15"
+      ],
+      "fact_keys": [
         "table_011.Target.name",
         "table_011.Target.total",
         "table_011.Target.largest",
@@ -709,570 +608,28 @@
       "table_ids": []
     },
     {
-      "section_id": "S2",
-      "source_title": "BUY",
-      "title": "Operating Highlights",
-      "goal": "Present the figures and developments of buy.",
-      "block_ids": [
-        "p1b05"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S3",
-      "source_title": "Electric Utilities",
-      "title": "Building for the Future",
-      "goal": "Present the figures and developments of electric utilities.",
-      "block_ids": [
-        "p1b06",
-        "p1b07",
-        "p1b08",
-        "p1b09"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S4",
-      "source_title": "KEY CHANGES:                             TARGET                                                    RATING                                                 EARNINGS",
-      "title": "The Year at a Glance",
-      "goal": "Present the figures and developments of key changes:                             target                                                    rating                                                 earnings.",
-      "block_ids": [
-        "p1b10",
-        "p1b11"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S5",
-      "source_title": "Margins expand on lower input cost",
-      "title": "Looking Ahead",
-      "goal": "Present the figures and developments of margins expand on lower input cost.",
-      "block_ids": [
-        "p1b12",
-        "p1b13",
-        "p1b14",
-        "p1b15",
-        "p1b16",
-        "p1b17",
-        "p1b18",
-        "p1b19",
-        "p1b20",
-        "p1b21"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S6",
-      "source_title": "Key highlights",
-      "title": "Year in Review 2",
-      "goal": "Present the figures and developments of key highlights.",
-      "block_ids": [
-        "p1b22",
-        "p1b23",
-        "p1b24",
-        "p1b25"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S7",
-      "source_title": "Quarterly Financials (Consolidated)",
-      "title": "Performance in Focus 2",
-      "goal": "Present the figures and developments of quarterly financials (consolidated).",
-      "block_ids": [
-        "p2b03"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S8",
-      "source_title": "Profit & Loss Account",
-      "title": "Operating Highlights 2",
-      "goal": "Present the figures and developments of profit & loss account.",
-      "block_ids": [
-        "p2b04"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S9",
-      "source_title": "Q1FY24  Q1FY23  YoY Growth %  Q4FY23  QoQ Growth %",
-      "title": "Building for the Future 2",
-      "goal": "Present the figures and developments of q1fy24  q1fy23  yoy growth %  q4fy23  qoq growth %.",
-      "block_ids": [
-        "p2b05",
-        "p2b06",
-        "p2b07"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S10",
-      "source_title": "Change in Estimates",
-      "title": "The Year at a Glance 2",
-      "goal": "Present the figures and developments of change in estimates.",
-      "block_ids": [
-        "p2b08",
-        "p2b09"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S11",
-      "source_title": "Sum-of-the-Parts Valuation",
-      "title": "Looking Ahead 2",
-      "goal": "Present the figures and developments of sum-of-the-parts valuation.",
-      "block_ids": [
-        "p2b10"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
       "section_id": "S12",
-      "source_title": "Particulars  Methodology  Multiple  % Holding  Value (Rs. cr.)  Value Per Share",
-      "title": "Year in Review 3",
-      "goal": "Present the figures and developments of particulars  methodology  multiple  % holding  value (rs. cr.)  value per share.",
+      "source_title": "General Disclosures and Disclaimers  CERTIFICATION",
+      "title": "Background",
+      "goal": "Describe the developments this part of the document covers.",
       "block_ids": [
-        "p2b11",
-        "p2b12"
+        "p4b16",
+        "p4b17"
       ],
       "fact_keys": [],
       "table_ids": []
     },
     {
       "section_id": "S13",
-      "source_title": "PROFIT & LOSS",
-      "title": "Performance in Focus 3",
-      "goal": "Present the figures and developments of profit & loss.",
+      "source_title": "COMPANY OVERVIEW",
+      "title": "Key points",
+      "goal": "Describe the developments this part of the document covers.",
       "block_ids": [
-        "p3b03"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S14",
-      "source_title": "BALANCE SHEET",
-      "title": "Operating Highlights 3",
-      "goal": "Present the figures and developments of balance sheet.",
-      "block_ids": [
-        "p3b04"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S15",
-      "source_title": "Y.E March (Rs. cr)  FY21A  FY22A  FY23A  FY24E  FY25E",
-      "title": "Building for the Future 3",
-      "goal": "Present the figures and developments of y.e march (rs. cr)  fy21a  fy22a  fy23a  fy24e  fy25e.",
-      "block_ids": [
-        "p3b05"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S16",
-      "source_title": "Y.E March (Rs. cr)  FY21A  FY22A  FY23A  FY24E  FY25E",
-      "title": "The Year at a Glance 3",
-      "goal": "Present the figures and developments of y.e march (rs. cr)  fy21a  fy22a  fy23a  fy24e  fy25e.",
-      "block_ids": [
-        "p3b06"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S17",
-      "source_title": "Revenue  32,703  42,816  55,109  59,518  64,577",
-      "title": "Looking Ahead 3",
-      "goal": "Present the figures and developments of revenue  32,703  42,816  55,109  59,518  64,577.",
-      "block_ids": [
-        "p3b07",
-        "p3b08",
-        "p3b09",
-        "p3b10"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S18",
-      "source_title": "EBITDA  7,442  8,431  9,144  10,192  11,520",
-      "title": "Year in Review 4",
-      "goal": "Present the figures and developments of ebitda  7,442  8,431  9,144  10,192  11,520.",
-      "block_ids": [
-        "p3b11",
-        "p3b12",
-        "p3b13",
-        "p3b14",
-        "p3b15",
-        "p3b16"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S19",
-      "source_title": "EBIT  4,697  5,309  5,705  6,603  7,807",
-      "title": "Performance in Focus 4",
-      "goal": "Present the figures and developments of ebit  4,697  5,309  5,705  6,603  7,807.",
-      "block_ids": [
-        "p3b17",
-        "p3b18",
-        "p3b19",
-        "p3b20",
-        "p3b21",
-        "p3b22"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S20",
-      "source_title": "PBT  1,987  3,003  5,457  5,111  5,970",
-      "title": "Operating Highlights 4",
-      "goal": "Present the figures and developments of pbt  1,987  3,003  5,457  5,111  5,970.",
-      "block_ids": [
-        "p3b23",
-        "p3b24",
-        "p3b25",
-        "p3b26",
-        "p3b27",
-        "p3b28",
-        "p3b29"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S21",
-      "source_title": "Total Assets  98,839 112,885 128,349 135,480 136,565",
-      "title": "Building for the Future 4",
-      "goal": "Present the figures and developments of total assets  98,839 112,885 128,349 135,480 136,565.",
-      "block_ids": [
-        "p3b30",
-        "p3b31",
-        "p3b32",
-        "p3b33",
-        "p3b34",
-        "p3b35",
-        "p3b36"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S22",
-      "source_title": "Adj PAT 1,237 1,892 3,336 3,345 3,707",
-      "title": "The Year at a Glance 4",
-      "goal": "Present the figures and developments of adj pat 1,237 1,892 3,336 3,345 3,707.",
-      "block_ids": [
-        "p3b37",
-        "p3b38",
-        "p3b39",
-        "p3b40",
-        "p3b41",
-        "p3b42"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S23",
-      "source_title": "Adj EPS (Rs.) 3.9 5.9 10.4 10.5 11.6",
-      "title": "Looking Ahead 4",
-      "goal": "Present the figures and developments of adj eps (rs.) 3.9 5.9 10.4 10.5 11.6.",
-      "block_ids": [
-        "p3b43",
-        "p3b44",
-        "p3b45"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S24",
-      "source_title": "Total Liabilities  98,839 112,885 128,349 135,480 136,565",
-      "title": "Year in Review 5",
-      "goal": "Present the figures and developments of total liabilities  98,839 112,885 128,349 135,480 136,565.",
-      "block_ids": [
-        "p3b46",
-        "p3b47"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S25",
-      "source_title": "BVPS (Rs.)  70  70  90  98  108",
-      "title": "Performance in Focus 5",
-      "goal": "Present the figures and developments of bvps (rs.)  70  70  90  98  108.",
-      "block_ids": [
-        "p3b48"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S26",
-      "source_title": "RATIOS",
-      "title": "Operating Highlights 5",
-      "goal": "Present the figures and developments of ratios.",
-      "block_ids": [
-        "p3b49"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S27",
-      "source_title": "CASH FLOW",
-      "title": "Building for the Future 5",
-      "goal": "Present the figures and developments of cash flow.",
-      "block_ids": [
-        "p3b50"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S28",
-      "source_title": "Y.E March  FY21A  FY22A  FY23A  FY24E  FY25E",
-      "title": "The Year at a Glance 5",
-      "goal": "Present the figures and developments of y.e march  fy21a  fy22a  fy23a  fy24e  fy25e.",
-      "block_ids": [
-        "p3b51"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S29",
-      "source_title": "Y.E March (Rs. cr)  FY21A  FY22A  FY23A  FY24E  FY25E",
-      "title": "Looking Ahead 5",
-      "goal": "Present the figures and developments of y.e march (rs. cr)  fy21a  fy22a  fy23a  fy24e  fy25e.",
-      "block_ids": [
-        "p3b52"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S30",
-      "source_title": "Profitab. & Return",
-      "title": "Year in Review 6",
-      "goal": "Present the figures and developments of profitab. & return.",
-      "block_ids": [
-        "p3b53"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S31",
-      "source_title": "Net inc. + Depn.  4,033  5,017  6,894  7,028  7,741",
-      "title": "Performance in Focus 6",
-      "goal": "Present the figures and developments of net inc. + depn.  4,033  5,017  6,894  7,028  7,741.",
-      "block_ids": [
-        "p3b54",
-        "p3b55",
-        "p3b56",
-        "p3b57",
-        "p3b58",
-        "p3b59"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S32",
-      "source_title": "C.F. Operation  8,345  6,693  7,159  14,088  6,909",
-      "title": "Operating Highlights 6",
-      "goal": "Present the figures and developments of c.f. operation  8,345  6,693  7,159  14,088  6,909.",
-      "block_ids": [
-        "p3b60",
-        "p3b61",
-        "p3b62",
-        "p3b63",
-        "p3b64"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S33",
-      "source_title": "W.C & Liquidity",
-      "title": "Building for the Future 6",
-      "goal": "Present the figures and developments of w.c & liquidity.",
-      "block_ids": [
-        "p3b65",
-        "p3b66",
-        "p3b67"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S34",
-      "source_title": "C.F \u2013 Investment  668  (6,277)  (7,375)  (8,287)  (3,457)",
-      "title": "The Year at a Glance 6",
-      "goal": "Present the figures and developments of c.f \u2013 investment  668  (6,277)  (7,375)  (8,287)  (3,457).",
-      "block_ids": [
-        "p3b68",
-        "p3b69",
-        "p3b70",
-        "p3b71",
-        "p3b72",
-        "p3b73",
-        "p3b74",
-        "p3b75",
-        "p3b76"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S35",
-      "source_title": "Turnover & Leverage",
-      "title": "Looking Ahead 6",
-      "goal": "Present the figures and developments of turnover & leverage.",
-      "block_ids": [
-        "p3b77"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S36",
-      "source_title": "C.F \u2013 Finance  (7,603)  (1,183)  1,341  (7,579)  (7,486)",
-      "title": "Year in Review 7",
-      "goal": "Present the figures and developments of c.f \u2013 finance  (7,603)  (1,183)  1,341  (7,579)  (7,486).",
-      "block_ids": [
-        "p3b78",
-        "p3b79",
-        "p3b80",
-        "p3b81",
-        "p3b82",
-        "p3b83",
-        "p3b84"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S37",
-      "source_title": "Valuation",
-      "title": "Performance in Focus 7",
-      "goal": "Present the figures and developments of valuation.",
-      "block_ids": [
-        "p3b85",
-        "p3b86",
-        "p3b87",
-        "p3b88",
-        "p3b89"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S38",
-      "source_title": "Recommendation Summary (Last 3 Years)",
-      "title": "Operating Highlights 7",
-      "goal": "Present the figures and developments of recommendation summary (last 3 years).",
-      "block_ids": [
-        "p4b03"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S39",
-      "source_title": "Dates  Rating  Target",
-      "title": "Building for the Future 7",
-      "goal": "Present the figures and developments of dates  rating  target.",
-      "block_ids": [
-        "p4b04",
-        "p4b05",
-        "p4b06",
-        "p4b07",
-        "p4b08",
-        "p4b09",
-        "p4b10",
-        "p4b11",
-        "p4b12",
-        "p4b13",
-        "p4b14",
-        "p4b15",
-        "p4b16",
         "p4b18",
         "p4b19",
         "p4b20",
-        "p4b21"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S40",
-      "source_title": "Ratings  Large caps  Midcaps  Small Caps",
-      "title": "The Year at a Glance 7",
-      "goal": "Present the figures and developments of ratings  large caps  midcaps  small caps.",
-      "block_ids": [
+        "p4b21",
         "p4b22",
-        "p4b23"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S41",
-      "source_title": "Accumulate  -  Upside is between 10%-15%  Upside is between 10%-20%",
-      "title": "Looking Ahead 7",
-      "goal": "Present the figures and developments of accumulate  -  upside is between 10%-15%  upside is between 10%-20%.",
-      "block_ids": [
-        "p4b24",
-        "p4b25",
-        "p4b26",
-        "p4b27"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S42",
-      "source_title": "General Disclosures and Disclaimers  CERTIFICATION",
-      "title": "Year in Review 8",
-      "goal": "Present the figures and developments of general disclosures and disclaimers  certification.",
-      "block_ids": [
-        "p4b28",
-        "p4b29"
-      ],
-      "fact_keys": [],
-      "table_ids": []
-    },
-    {
-      "section_id": "S43",
-      "source_title": "COMPANY OVERVIEW",
-      "title": "Performance in Focus 8",
-      "goal": "Present the figures and developments of company overview.",
-      "block_ids": [
-        "p4b30",
-        "p4b31",
-        "p4b32",
-        "p4b33",
-        "p4b34",
         "p5b03",
         "p5b04",
         "p5b05"

@@ -1,0 +1,1 @@
+Two pages are shown, A then B. Exactly one is a page from a professionally published original; the other was produced by imitating it. Judge only design quality and publishing polish (typography, alignment, spacing, chart and table finish), not the content. Return ONLY JSON: {"original":"A"|"B","reason":str}

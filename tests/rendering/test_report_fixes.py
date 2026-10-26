@@ -61,9 +61,10 @@ def test_every_planned_chart_is_registered_with_the_right_shape(built):
     _, _, plan, data = built
     pl, sales = data.charts["c_pl"], data.charts["c_sales"]
     tax = shown(plan, "pl.Line item", "Tax Rate (%)")
-    assert tax != "Tax Rate (%)" and tax.endswith("(%)")              # fabricated, unit kept
+    assert tax == "Tax Rate (%)" and tax.endswith("(%)")   # a measure of the field keeps its unit (E-27)
     assert pl.orientation == "rows" and pl.kind == "line" and pl.series_columns == YEARS
     assert tax not in pl.series_rows and "Revenue" in pl.series_rows   # amounts only
+    assert shown(plan, "pl.Line item", "Other items") != "Other items"  # a name-like label is fabricated
     assert sales.kind == "pie" and sales.series_columns == ["Units"]          # 6 slices of an amount
     assert "by Region" in sales.title and not sales.title.startswith("c_")
 

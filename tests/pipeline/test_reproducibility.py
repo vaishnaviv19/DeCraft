@@ -18,7 +18,7 @@ def dataset_hashes(result) -> dict[str, str]:
 
 
 def test_two_runs_with_the_same_seed_have_identical_dataset_hashes(tmp_path):
-    cfg = load_config(artifacts_dir=str(tmp_path / "artifacts"))
+    cfg = load_config(artifacts_dir=str(tmp_path / "artifacts"), llm_enabled=False)
     first = run(SAMPLE, cfg)
     hashes_first = dataset_hashes(first)
     shutil.rmtree(tmp_path / "artifacts")          # force a cold second run, not a resume
