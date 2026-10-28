@@ -10,7 +10,7 @@ from pathlib import Path
 import pandas as pd
 
 from src.config import Config
-from src.contracts import (ChartSpec, Enforcement, SourceDocument, SourceTable, RuleKind)
+from src.contracts import (ChartSpec, Enforcement, SourceDocument, RuleKind)
 from src.contracts.dataset import CanonicalDataset
 from src.core.facts import compute_facts
 from src.core.hierarchy import total_row_links
@@ -38,7 +38,7 @@ def prepare_for_report(data: CanonicalDataset, report, figures, recovered, templ
                              out_dir=out_dir)
     data = _enforce_row_counts(data, report, cfg, rng)
     data = _add_recovered(data, report, recovered, cfg, rng)
-    data.display = _display_tables(data, report)
+    data.display = _display_tables(data, report, doc)
     _source_column_order(data, doc)
     _bands_and_owners(data, templates)
     result = validate(data, report, cfg, source=doc)
@@ -135,6 +135,14 @@ def _shift_periods(data: CanonicalDataset, report, cfg: Config,
         rule.params = {key: rename.get(value, value) if isinstance(value, str) else value
                        for key, value in rule.params.items()}
 
+    # dated rows (a rating history) move forward with the periods (E-16): the generated dates were
+    # drawn inside the SOURCE's date range, so the history ended a year before the report date
+    for table_id, frame in data.tables.items():
+        for profile in [p for p in report.profiles if p.table_id == table_id and p.physical_type == "date"]:
+            if profile.column in frame.columns:
+                dates = pd.to_datetime(frame[profile.column], errors="coerce")
+                if dates.notna().any():
+                    frame[profile.column] = (dates + pd.DateOffset(years=years)).where(dates.notna(), None)
     data.lineage = {_rename_node(node, renames): method for node, method in data.lineage.items()}
     data.key_columns = {table: [renames.get(table, {}).get(c, c) for c in columns]
                         for table, columns in data.key_columns.items()}
@@ -194,9 +202,12 @@ def _fabricate_labels(data: CanonicalDataset, report, cfg: Config,
                 columns.append(LabelColumn(f"{table_id}.{column}", str(column), "", labels))
     mapping: dict[str, str] = {}
     if columns:
+        from src.core.originality import lower_words
+        cells = " ".join(str(c) for t in (doc.tables if doc is not None else []) for row in t.raw_cells for c in row)
         result = fabricate_labels(columns, gateway if gateway is not None and gateway.enabled else None,
                                   source_values, avoid, name_words(text, entity), preserved,
-                                  getattr(privacy_plan, "locale", None), rng)
+                                  getattr(privacy_plan, "locale", None), rng,
+                                  lower=lower_words(text + " " + cells), organisation=entity)
         for column_map in result.maps.values():
             mapping.update(column_map)
         for frame in list(data.tables.values()) + list(data.display.values()):
@@ -297,13 +308,19 @@ def _source_column_order(data: CanonicalDataset, doc: SourceDocument | None) -> 
             frames[table_id] = frame[order + [c for c in frame.columns if c not in order]]
 
 
-def _display_tables(data: CanonicalDataset, report) -> dict[str, pd.DataFrame]:
+def _display_tables(data: CanonicalDataset, report, doc: SourceDocument | None = None) -> dict[str, pd.DataFrame]:
+    from src.core.grid import column_decimals
     from src.core.rounding import build_display_df
+    sources = {t.table_id: t for t in (doc.tables if doc is not None else [])}
 
     display: dict[str, pd.DataFrame] = {}
     for table_id, frame in data.tables.items():
         profiles = [p for p in report.profiles if p.table_id == table_id]
         decimals = {p.column: p.decimals for p in profiles if p.decimals is not None}
+        if table_id in sources:                 # E-51: a column keeps its most precise printed cell
+            for column, places in column_decimals(sources[table_id], [p.column for p in profiles]).items():
+                if column in decimals:
+                    decimals[column] = max(decimals[column], places)
         label = next((p.column for p in profiles if p.physical_type == "text"), None)
         links = total_row_links(frame, label)
         additive = any(p.additive for p in profiles)

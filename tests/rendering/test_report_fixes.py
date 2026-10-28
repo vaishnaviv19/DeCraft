@@ -1,7 +1,6 @@
 # tests/rendering/test_report_fixes.py
 """M8 fixes: charts from the plan, facts in time order and source units, text that matches the tables,
 source-like HTML with nothing saying the data is synthetic, and PDF file metadata."""
-import json
 
 import numpy as np
 import pandas as pd
@@ -64,7 +63,7 @@ def test_every_planned_chart_is_registered_with_the_right_shape(built):
     assert tax == "Tax Rate (%)" and tax.endswith("(%)")   # a measure of the field keeps its unit (E-27)
     assert pl.orientation == "rows" and pl.kind == "line" and pl.series_columns == YEARS
     assert tax not in pl.series_rows and "Revenue" in pl.series_rows   # amounts only
-    assert shown(plan, "pl.Line item", "Other items") != "Other items"  # a name-like label is fabricated
+    assert shown(plan, "pl.Line item", "Other items") == "Other items"  # standard wording stays (E-52)
     assert sales.kind == "pie" and sales.series_columns == ["Units"]          # 6 slices of an amount
     assert "by Region" in sales.title and not sales.title.startswith("c_")
 
@@ -209,7 +208,7 @@ def test_every_font_size_comes_from_the_source(built, tmp_path):
     html = build_html(data, narrative, BLUEPRINT, PLAN, doc)
     sizes = dict(re.findall(r"(body|h1|h2|h3|table|figcaption) \{[^}]*?font-size: ([\d.]+)pt", html))
     assert sizes == {"body": "8", "h1": "16", "h2": "12", "h3": "10", "table": "8", "figcaption": "8"}
-    result = render(data, narrative, BLUEPRINT, CFG, tmp_path, plan=PLAN, doc=doc)
+    render(data, narrative, BLUEPRINT, CFG, tmp_path, plan=PLAN, doc=doc)
     svg = (tmp_path / "charts" / "c_sales.svg").read_text(encoding="utf-8")
     found = set(re.findall(r"font-size:\s*([\d.]+)px", svg))
     assert found and found <= {"8", "8.0"}                                          # chart text at body size

@@ -14,7 +14,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from src.config import Config
 from src.contracts import SourceDocument
 from src.contracts.dataset import CanonicalDataset
-from src.contracts.report import (BibleEntity, Block, Outline, SectionPlan, StoryBible)
+from src.contracts.report import (BibleEntity, Outline, SectionPlan, StoryBible)
 from src.core.originality import reused_names, source_proper_nouns
 from src.llm import LLMGateway
 from src.narrative._prompts import BIBLE, TITLES

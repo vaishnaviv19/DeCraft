@@ -10,5 +10,3 @@ def rollup(links: dict[int, list[int]], leaf_values: dict[int, float]) -> dict[i
     return out
 
 
-def pct_of_total(values: list[float], total: float) -> list[float]:
-    return [100.0 * v / total if total else 0.0 for v in values]

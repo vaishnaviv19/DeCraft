@@ -13,7 +13,6 @@ from pathlib import Path
 
 from pydantic import BaseModel, ConfigDict
 
-from src.contracts.report import CriticOut
 from src.rendering._prompts import CRITIC
 
 NUMERIC = {"line_height": 1.2, "paragraph_spacing": 2.0, "chart_width": 1.0, "chart_height": 1.0,

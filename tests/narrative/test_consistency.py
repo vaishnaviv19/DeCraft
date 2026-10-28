@@ -1,7 +1,6 @@
 # tests/narrative/test_consistency.py
 import json
 
-import pytest
 
 from src.config import load_config
 from src.contracts.report import BibleEntity, StoryBible

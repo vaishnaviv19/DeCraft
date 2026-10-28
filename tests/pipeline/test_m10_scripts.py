@@ -2,7 +2,6 @@
 """M10: prompt archive/log builder and the submission builder."""
 import json
 import zipfile
-from pathlib import Path
 
 from scripts.archive_prompts import archive
 from scripts.build_prompt_log import build_prompt_log
@@ -11,7 +10,6 @@ from src.llm import PromptSpec
 
 
 def test_archive_writes_a_new_version_and_rejects_a_silent_text_change(tmp_path):
-    prompts = {"widget": PromptSpec(name="widget", version="v2", system="Widget v2 text.")}
     notes = tmp_path / "docs" / "prompts"
     notes.mkdir(parents=True)
     (notes / "widget_v1.txt").write_text("Widget v1 text.\n", encoding="utf-8")

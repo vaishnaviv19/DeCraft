@@ -4,19 +4,10 @@ import pandas as pd
 import pytest
 
 from src.contracts import Fact
-from src.generation._tiny import jitter_table, shares_far_enough
+from src.generation._tiny import shares_far_enough
 from src.narrative._autounits import detect_scale_style, format_auto, unit_word_violations
 from src.narrative._placeholders import TypedUnit, resolve
 from src.privacy._dcr import dcr_violations, identical_match_share
-
-
-def test_tiny_table_shares_move_at_least_10pct(cfg):
-    src = pd.DataFrame({"Seg": list("ABCD"), "Rev": [420.0, 310.0, 180.0, 90.0]})
-    for seed in range(20):
-        out = jitter_table(src, ["Rev"], cfg.thresholds, np.random.default_rng(seed))
-        s, g = src["Rev"] / src["Rev"].sum(), out["Rev"] / out["Rev"].sum()
-        assert ((g / s - 1).abs() >= 0.10).all(), seed
-        assert (((out["Rev"] - src["Rev"]).abs() / src["Rev"]) >= 0.05).all()
 
 
 def test_old_single_factor_design_would_leak_shares():

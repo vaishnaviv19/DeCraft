@@ -86,9 +86,5 @@ def resolve(template: str, facts: dict, style: str = "western") -> str:
     return "".join(out)
 
 
-def contains_placeholder(text: str) -> bool:
-    return "{{" in text or "}}" in text
-
-
 def placeholder_keys(template: str) -> list[str]:
     return [m.group(1).strip() for m in PLACEHOLDER.finditer(template)]

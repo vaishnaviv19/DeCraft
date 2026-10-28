@@ -6,7 +6,6 @@ import pandas as pd
 import pymupdf
 import pytest
 
-import src.extraction as extraction
 from src.config import load_config
 from src.extraction import extract_structured, sha256_file, structured_dir
 

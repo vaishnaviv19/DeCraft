@@ -3,9 +3,7 @@ import json
 
 import numpy as np
 import pandas as pd
-import pytest
 
-from src.config import load_config
 from src.contracts import SourceDocument, SourceTable, ValidationReport
 from src.contracts.dataset import CanonicalDataset
 from src.generation import generate

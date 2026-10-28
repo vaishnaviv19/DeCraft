@@ -5,13 +5,13 @@ import numpy as np
 import pandas as pd
 
 from src.config import load_config
-from src.contracts import ChartSpec, SourceDocument, SourceTable
+from src.contracts import SourceDocument, SourceTable
 from src.contracts.dataset import empty_dataset
 from src.generation import generate, register_all_charts
 from src.generation._charts import choose_chart_kind
 from src.inference import infer
 from src.privacy import plan_privacy
-from src.rendering._charts import (assert_chart_matches_table, chart_series, contact_sheet,
+from src.rendering._charts import (assert_chart_matches_table, contact_sheet,
                                    draw_png, draw_svg, write_sidecar)
 
 

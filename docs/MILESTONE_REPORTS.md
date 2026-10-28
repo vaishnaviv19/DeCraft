@@ -15,6 +15,7 @@ output, the tests added, the known gaps and the next smallest task. Terms are th
   `src/agents/`, `src/orchestrator.py`, `src/repair_tables.ipynb`). It is tracked in git, is not on
   the spec's module layout, defines its own contract types and uses `RuleKind` for Rule Tier and
   `confidence` for several different notions. It is left in place untouched; see "Known gaps".
+  (Removed on 2026-10-27, E-62: nothing in the pipeline used it.)
 
 ## M0 — Baseline, contracts, configuration, LLM gateway
 
@@ -505,7 +506,7 @@ Done in this task:
 
 | Item | File | Notes |
 | --- | --- | --- |
-| Originality guards (E-25, E-26, E-27, E-28) | `src/narrative/_originality.py`, `tests/narrative/test_originality.py` | `source_proper_nouns`, `reused_names`, `is_generic_label`, `check_label_map`, `tone_profile`; the test also fails if any prompt mentions a fixed document type ("corporate", "annual report"). |
+| Originality guards (E-25, E-26, E-27, E-28) | `src/core/originality.py`, `tests/narrative/test_originality.py` | `source_proper_nouns`, `reused_names`, `is_generic_label`, `check_label_map`, `tone_profile`; the test also fails if any prompt mentions a fixed document type ("corporate", "annual report"). |
 | v3.2 prompt specs | `src/narrative/_prompts.py`, `src/style/_prompts.py`, `src/rendering/_prompts.py` | Refreshed from Appendix S.6: document-type-free wording, measured tone, Font Lock, plus the `label_fabricator` prompt. Budget tests still pass. |
 | v3.2 contracts | `src/contracts/report.py` | Refreshed additively (tone/avoid/font-lock fields). |
 | Config (section 7) | `src/config.py`, `config/default.yaml` | `row_compress_max` renamed to `row_padding_compress_max` (v3.2); provider and report settings already in place from the v3.1 slice. |

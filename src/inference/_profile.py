@@ -10,7 +10,7 @@ import re
 from collections import Counter
 
 from src.config import Config
-from src.contracts import (CategoryStats, DateStats, Evidence, ExtractionGrade, FieldProfile,
+from src.contracts import (CategoryStats, DateStats, Evidence, FieldProfile,
                            MissingKind, NumericStats, SourceTable, TableQuality)
 from src.core.missingness import token_kind
 from src.core.periods import parse_period

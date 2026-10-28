@@ -25,6 +25,7 @@ from src.core.rows import statement_label_column
 from src.generation._charts import register_all_charts, register_charts
 from src.generation._prepare import prepare_for_report
 from src.generation._graph import build_plan
+from src.generation._grids import apply_grids, grid_label_nodes, restore_ordinals
 from src.privacy import Relabeler, document_values
 from src.validation import repair_dataset, run_bounded_repair, validate
 
@@ -109,11 +110,15 @@ def generate(doc, report, plan: PrivacyPlan, cfg: Config, rng: np.random.Generat
                     for c in [next((p.column for p in profiles.get(t, [])
                                     if p.physical_type in {"period", "date"} and p.column in f.columns), None)]
                     if c is not None},
-        keep_order=_keep_order(report, hard_rules, source, key_nodes),
+        keep_order=_keep_order(report, hard_rules, source, key_nodes) | grid_label_nodes(doc, profiles),
         cover={f"{r.params['detail']}.{r.params['group_col']}" for r in hard_rules
                if r.kind is RuleKind.AGGREGATE and 'group_col' in r.params})
     apply_steps(ctx, steps, hard_rules, rels, set(plan.tiny_tables), th, rng,
                 patterns=report.patterns)
+    # E-51: number cells of tables that keep their rows come from the grid engine (consistent totals,
+    # margins, growth and repeated figures); the generic samplers above still made the labels/keys
+    apply_grids(ctx.tables, doc, dict(profiles), rng, th.min_value_distance, ctx.relabeler)
+    restore_ordinals(ctx.tables, doc, dict(profiles), ctx.key_columns)
 
     display = {}
     for table_id, frame in ctx.tables.items():
@@ -137,8 +142,14 @@ def generate(doc, report, plan: PrivacyPlan, cfg: Config, rng: np.random.Generat
     dataset.unmet_targets = list(ctx.unmet)
     dataset.validation = dataset.validation.model_copy(update={"unmet_targets": list(ctx.unmet)})
     # Facts are computed from the Display Tables, after repair, so narrative and tables agree.
+    from src.core.grid import column_decimals
+    shown = {t.table_id: {**decimals.get(t.table_id, {}),
+                          **{c: max(d, decimals.get(t.table_id, {}).get(c, 0)) for c, d in
+                             column_decimals(t, [p.column for p in profiles.get(t.table_id, [])]).items()
+                             if c in decimals.get(t.table_id, {})}}
+             for t in doc.tables if t.table_id in decimals}
     dataset.display = {
-        table_id: build_display_df(frame, decimals[table_id], links[table_id],
+        table_id: build_display_df(frame, shown.get(table_id, decimals[table_id]), links[table_id],
                                    "sum_of_displayed" if any(p.additive for p in profiles[table_id])
                                    else "true_total",
                                    {p.column: p.scale for p in profiles[table_id]})   # source units

@@ -10,6 +10,7 @@ summary that the stage runner saves as `<root>/<stage>/output.json`. Files a sta
 from __future__ import annotations
 
 import json
+import re
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -89,6 +90,37 @@ def _display_tables(root: Path) -> dict:
         display_dir = root / "prepare" / "display"
     return ({path.stem: pd.read_csv(path) for path in sorted(display_dir.glob("*.csv"))}
             if display_dir.exists() else {})
+
+
+def chart_text_colour(pdf, templates) -> tuple[str | None, dict[str, float]]:
+    """(the colour the source's charts print their axis labels in, {chart block id: label size});
+    (None, {}) when the source has no chart text."""
+    from collections import Counter as _Counter
+    try:
+        import pymupdf
+        counts: _Counter = _Counter()
+        sizes: dict[str, float] = {}
+        with pymupdf.open(str(pdf)) as document:
+            for page in templates:
+                if page.source_page or page.page > document.page_count:
+                    continue
+                charts = [b for b in page.blocks if b.kind == "chart"]
+                if not charts:
+                    continue
+                spans = [span for block in document[page.page - 1].get_text("dict")["blocks"]
+                         for line in block.get("lines", []) for span in line["spans"] if span["text"].strip()]
+                for chart in charts:
+                    box = pymupdf.Rect(chart.bbox)
+                    inside = [span for span in spans if box.contains(pymupdf.Rect(span["bbox"]))]
+                    own = _Counter()
+                    for span in inside:
+                        counts[f"#{span['color']:06X}"] += len(span["text"].strip())
+                        own[round(span["size"], 1)] += len(span["text"].strip())
+                    if own:
+                        sizes[chart.block_id] = own.most_common(1)[0][0]
+        return (counts.most_common(1)[0][0] if counts else None), sizes
+    except Exception:
+        return None, {}
 
 
 def _chart_files(root: Path) -> tuple[dict[str, str], dict[str, Path]]:
@@ -207,6 +239,14 @@ def fit_title(title: str, block, style, artifacts_root: Path | None = None) -> s
     if not title or style is None:
         return title
     box, width = box_for(block, style), width_fn_for(block, style, artifacts_root)
+    # a list title ('Revenue, EBITDA and EBITDA margins') loses whole items first: cutting words left
+    # 'Revenue, EBITDA and EBITDA' (live run 2026-10-27)
+    items = [part.strip() for part in _re.split(r",\s*|\s+and\s+", title) if part.strip()]
+    if len(items) > 1 and not fits(title, box, width)[0]:
+        for k in range(len(items) - 1, 0, -1):
+            shorter = items[0] if k == 1 else ", ".join(items[:k - 1]) + " and " + items[k - 1]
+            if fits(shorter, box, width)[0]:
+                return shorter
     words = title.split()
     while len(words) > 1 and not fits(" ".join(words), box, width)[0]:
         words = words[:-1]
@@ -216,12 +256,15 @@ def fit_title(title: str, block, style, artifacts_root: Path | None = None) -> s
 
 
 SPARE_HEADINGS = ["Highlights", "Overview", "Key figures", "Summary", "Details", "Outlook", "Review",
-                  "Context", "Breakdown", "Notes", "Background", "Perspective"]
+                  "Context", "Breakdown", "Notes", "Background", "Perspective", "Performance", "Operations",
+                  "Financial position", "Earnings", "Cash generation", "Valuation view", "Risks", "Disclosures",
+                  "Methodology", "Basis of preparation", "Important information", "Scope", "Approach",
+                  "Commentary", "Assessment", "Position", "Developments", "Trends"]
 
 
 def _table_heading(table, used: set[str]) -> str:
-    """A heading for the box right above a table: its first line items ('Revenue, EBITDA and EBIT')."""
-    import pandas as pd
+    """A heading for the box right above a table: a run of its line items ('Revenue, EBITDA and EBIT');
+    when that is taken (the section title often is), the next run of items."""
     if table is None or not len(table.columns):
         return ""
     labels = []
@@ -229,15 +272,18 @@ def _table_heading(table, used: set[str]) -> str:
         text = str(value).strip()
         if text and text.lower() != "nan" and not any(ch.isdigit() for ch in text) and text not in labels:
             labels.append(text)
-        if len(labels) == 3:
+    for start in range(0, max(len(labels) - 1, 1)):
+        window = labels[start:start + 3]
+        if len(window) < 2:
             break
-    if len(labels) < 2:
-        return ""
-    title = f"{', '.join(labels[:-1])} and {labels[-1]}"
-    return "" if title in used else title
+        title = f"{', '.join(window[:-1])} and {window[-1]}"
+        if title not in used and not any(title.split(",")[0] in u for u in used):
+            return title
+    return ""
 
 
-def page_texts(cache: dict, templates, cfg, organisation: str, style=None, tables: dict | None = None) -> dict[str, str]:
+def page_texts(cache: dict, templates, cfg, organisation: str, style=None, tables: dict | None = None,
+               pdf=None, doc=None) -> dict[str, str]:
     """Text per block as it is printed. EVERY heading box gets a heading (E-48: same layout, only the
     wording changes): the first one of a section shows the section's NEW title; a later one shows a
     heading for the table right below it, or a generic one not used yet. Running header/footer lines keep
@@ -274,11 +320,86 @@ def page_texts(cache: dict, templates, cfg, organisation: str, style=None, table
         for block in page.blocks:
             source_text = (block.text or "").strip()
             if block.kind in {"header", "footer"}:
-                texts[block.block_id] = shift_text_periods(source_text, cfg.report.period_shift_years)
+                from src.rendering._masthead import ORDINAL_RE            # '11 th' -> '11th'
+                texts[block.block_id] = shift_text_periods(ORDINAL_RE.sub(r"", source_text),
+                                                           cfg.report.period_shift_years)
             elif organisation and organisation.lower() in source_text.lower() \
                     and block.kind in {"heading", "text"} and len(source_text) <= len(organisation) + 40:
                 texts[block.block_id] = organisation
+    # E-55: an attribution or footnote line ('Source: Bloomberg, Geojit research', '*over or under
+    # performance to benchmark index') is page furniture like the masthead, not prose: it keeps its
+    # wording (websites removed, E-45). A writer filled it with a cut-off sentence (live run 2026-10-27).
+    for page in templates:
+        for block in page.blocks:
+            source_text = " ".join((block.text or "").split())
+            if block.kind in {"text", "caption"} and ATTRIBUTION_RE.match(source_text)                     and len(source_text.split()) <= 15:
+                from src.rendering._pages import strip_websites
+                texts[block.block_id] = strip_websites(source_text)
+    if pdf is not None and doc is not None and style is not None:
+        _masthead_texts(texts, templates, cfg, style, tables or {}, pdf, doc)
     return texts
+
+
+ATTRIBUTION_RE = re.compile(r"^(?:\*|source[s]?\s*:|note[s]?\s*:|data\s*:|(?:contd|cont'd|continued)\W*$)", re.I)
+
+
+def _band_blocks(page, style, pdf):
+    """Blocks of a source page that sit in its top band (masthead) or its bottom band (footer)."""
+    from src.rendering._masthead import band_edges
+    top, bottom = band_edges(pdf, page.source_page or page.page, style.page_width_pt, style.page_height_pt)
+    for block in page.blocks:
+        loose_row = block.kind == "table" and not block.table_id          # 'CMP Rs. 272  TARGET Rs. 301'
+        # a short mostly-numeric line in the masthead ('22 May 2023') is classed like an axis label
+        # (decoration) and was dropped from the decoy; in the top band it is the dateline
+        dateline = block.kind == "decoration" and bool(top) and block.bbox[3] <= top + 1             and len((block.text or "").split()) <= 6
+        if not block.text or not (block.kind in {"text", "heading", "header", "footer", "page_number"}
+                                  or loose_row or dateline):
+            continue
+        if (top and block.bbox[3] <= top + 1) or block.bbox[1] >= bottom - 1:
+            yield block
+
+
+def _masthead_texts(texts: dict, templates, cfg, style, tables: dict, pdf, doc) -> None:
+    """E-55: boxes inside a source page's top band (masthead) or bottom band (footer: analyst line,
+    page number, publisher) keep their wording, drawn span by span, with new figures, dates moved
+    forward, people's names swapped for generated ones and e-mail addresses removed (E-45)."""
+    import zlib
+
+    import numpy as np
+
+    from src.core.grid import grids_of
+    from src.rendering._masthead import (fake_people, masthead_text, number_map, source_spans, spans_text,
+                                         transform_spans)
+
+    mapping = number_map(grids_of(doc), tables)
+    keep = {w.lower() for w in re.findall(r"[A-Za-z]+", " ".join(
+        [doc.entity_name or ""] + [b.text or "" for page in templates for b in page.blocks
+                                   if b.kind in {"header", "footer"}]))}
+    from src.core.originality import lower_words
+    vocabulary = lower_words(" ".join(doc.text_blocks))       # words the document writes in lower case
+    for page in templates:
+        source = page.source_page or page.page
+        for block in _band_blocks(page, style, pdf):
+            rng = np.random.default_rng(zlib.crc32(block.block_id.split("~")[-1].encode()) + cfg.seed)
+            spans = source_spans(pdf, source, block.bbox)
+            if not spans:
+                continue
+            texts[block.block_id] = spans_text(transform_spans(spans, lambda text: fake_people(masthead_text(
+                text, mapping, rng, cfg.report.period_shift_years, cfg.thresholds.min_value_distance), rng, keep,
+                vocabulary)))
+
+
+def masthead_names(templates, style, pdf) -> list[str]:
+    """Source wording kept on purpose (E-55): masthead and footer bands, and attribution lines - the
+    organisation's and the publisher's own names in it are branding, not leaks."""
+    out = []
+    for page in templates:
+        if page.source_page:
+            continue
+        out += [block.text for block in _band_blocks(page, style, pdf)]
+        out += [block.text for block in page.blocks if block.text and block.kind in {"text", "caption"}
+                and ATTRIBUTION_RE.match(" ".join(block.text.split()))]
+    return out
 
 
 def _image_files(cache: dict) -> dict[str, str]:
@@ -353,7 +474,9 @@ def build_report_stages(pdf: Path, cfg, root: Path, run_dir: Path | None = None,
     def templates(cache):
         from src.style import build_templates
         from src.style._overlay import write_overlays
-        pages = build_templates(pdf, document(), style_of(cache), cfg)
+        from src.rendering._table_look import docling_cells
+        pages = build_templates(pdf, document(), style_of(cache), cfg,
+                                table_cells=docling_cells(run_directory() / "outputs" / "structured"))
         overlays = write_overlays(pdf, pages, root / "templates")        # M8.2.1 debug overlay
         kinds = {f"p{page.page}": dict(Counter(block.kind for block in page.blocks)) for page in pages}
         from src.report_checks import layout_agreement
@@ -432,7 +555,6 @@ def build_report_stages(pdf: Path, cfg, root: Path, run_dir: Path | None = None,
                 "bands": dict(Counter(fact.band for fact in prepared.facts.values() if fact.band))}
 
     def charts(cache):
-        import pandas as pd
 
         from src.generation import register_all_charts
         from src.rendering._charts import (assert_chart_matches_table, contact_sheet, draw_png,
@@ -448,7 +570,8 @@ def build_report_stages(pdf: Path, cfg, root: Path, run_dir: Path | None = None,
         # rows that fit, and the charts are then registered again on the capped tables
         from src.rendering._placement import place_charts
         charted = {spec.table_id for spec in data.charts.values() if spec.display}
-        placed, caps = place_charts(templates_of(cache), charted, data.display, style_of(cache))
+        placed, caps = place_charts(templates_of(cache), charted, data.display, style_of(cache), pdf,
+                                    add_pages=cfg.report.chart_pages)
         for table_id, rows in caps.items():
             data.display[table_id] = keep_rows(data.display[table_id], rows, data.charts, table_id)
         if caps:
@@ -467,14 +590,18 @@ def build_report_stages(pdf: Path, cfg, root: Path, run_dir: Path | None = None,
                     key = block.table_id or f"rc_{block.block_id}"
                     boxes.setdefault(key, (block.bbox[2] - block.bbox[0], block.bbox[3] - block.bbox[1]))
         font, font_pt = _chart_font(profile, Path(cfg.artifacts_dir))
+        axis_ink, source_sizes = chart_text_colour(pdf, templates_of(cache))
         from src.rendering._charts import chart_colours
         colors = chart_colours(profile.palette)
         pngs, mismatched = [], []
         for chart_id, spec in data.charts.items():
             width, height = boxes.get(spec.table_id, (302.0, 302.0 * 0.62))
             # every chart text uses the body Text Style size (E-29 Font Lock: never scaled)
-            draw_svg(data, chart_id, out / f"{chart_id}.svg", colors, font, font_pt, width, height)
-            pngs.append(draw_png(data, chart_id, out / f"{chart_id}.png", colors, font, font_pt, width, height))
+            own_pt = source_sizes.get(spec.table_id[3:]) if spec.table_id.startswith("rc_") else None
+            size = own_pt or font_pt                # a redrawn source chart keeps its labels' size
+            draw_svg(data, chart_id, out / f"{chart_id}.svg", colors, font, size, width, height, axis_ink)
+            pngs.append(draw_png(data, chart_id, out / f"{chart_id}.png", colors, font, size, width, height,
+                                 axis_ink))
             sidecar = write_sidecar(data, chart_id, out / f"{chart_id}.json")
             payload = json.loads(sidecar.read_text(encoding="utf-8"))
             ok = (assert_chart_matches_table(payload["series"], data.display[spec.table_id],
@@ -632,14 +759,30 @@ def build_report_stages(pdf: Path, cfg, root: Path, run_dir: Path | None = None,
         return {"title": (cache.get("plan") or {}).get("report_title") or organisation, "author": organisation,
                 "lang": state["lang"]}
 
+    def table_extras() -> dict:
+        """E-54: docling's cell grid of each source table and the source cell strings (number formats)."""
+        if "table_extras" not in state:
+            from src.core.grid import build_grid, number_style
+            from src.rendering._table_look import docling_cells
+            doc = document()
+            formats = {}
+            for table in doc.tables:
+                grid = build_grid(table)
+                formats[table.table_id] = {"raw": [list(row) for row in table.raw_cells],
+                                           "style": number_style(grid) if grid else {}}
+            state["table_extras"] = {"table_cells": docling_cells(run_directory() / "outputs" / "structured"),
+                                     "formats": formats}
+        return state["table_extras"]
+
     def render_stage(cache):
         from src.rendering._pages import render_pages
         pages = placed_of(cache)
         texts = page_texts(cache, pages, cfg, (document().entity_name or "").strip(), style_of(cache),
-                           _display_tables(root))
+                           _display_tables(root), pdf, document())
         charts_by_table, _ = _chart_files(root)
         return render_pages(pages, texts, style_of(cache), _display_tables(root), charts_by_table,
-                            _image_files(cache), root / "render", Path(cfg.artifacts_dir), pdf, meta_of(cache))
+                            _image_files(cache), root / "render", Path(cfg.artifacts_dir), pdf, meta_of(cache),
+                            **table_extras())
 
     def qa_stage(cache):
         import shutil
@@ -652,7 +795,7 @@ def build_report_stages(pdf: Path, cfg, root: Path, run_dir: Path | None = None,
         tables = _display_tables(root)
         charts_by_table, sidecars = _chart_files(root)
         texts = page_texts(cache, pages, cfg, (document().entity_name or "").strip(), style_of(cache),
-                           _display_tables(root))
+                           _display_tables(root), pdf, document())
         images = _image_files(cache)
         meta = meta_of(cache)
         source_pages = sorted((root / "render" / "pages").glob("_source_p*.png"),
@@ -661,12 +804,15 @@ def build_report_stages(pdf: Path, cfg, root: Path, run_dir: Path | None = None,
         def render_round(adjustments=None):
             result = render_pages(pages, texts, profile, tables, charts_by_table, images,
                                   root / "render" / "critic" / f"r{len(state.setdefault('rounds', []))}",
-                                  Path(cfg.artifacts_dir), pdf, meta, adjustments=adjustments or {})
+                                  Path(cfg.artifacts_dir), pdf, meta, adjustments=adjustments or {},
+                                  **table_extras())
             state["rounds"].append(result["pdf"])
             return result["pdf"], [Path(item) for item in result["pngs"]]
 
         vision = gateway("vision")
-        report = run_qa(cache["render"]["pdf"], pages, profile, tables, sidecars, set(avoid_list()), pdf, cfg,
+        kept = " ".join(" ".join(masthead_names(pages, profile, pdf)).lower().split())   # E-55: branding stays
+        avoid = {name for name in avoid_list() if " ".join(name.lower().split()) not in kept}
+        report = run_qa(cache["render"]["pdf"], pages, profile, tables, sidecars, avoid, pdf, cfg,
                         vision, render_round if vision is not None else None, source_pages,
                         set((cache.get("charts") or {}).get("unchartable", [])))
         final = root / "report_output.pdf"

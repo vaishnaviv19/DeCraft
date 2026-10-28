@@ -2,7 +2,6 @@
 import hashlib
 import json
 
-import pytest
 
 from src.blueprint import to_source_document
 

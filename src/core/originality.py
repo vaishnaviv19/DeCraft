@@ -114,6 +114,10 @@ def source_proper_nouns(text: str, keep: set[str]) -> set[str]:
         words = name.split()
         while words and words[0] in STOP:
             words = words[1:]
+        # a table row read across ('- Industrial Energy P/BV 2.0x') ends in a one-letter fragment of
+        # the next cell; the name is the words before it
+        while len(words) > 1 and len(words[-1].strip("'-&")) <= 1:
+            words = words[:-1]
         name = ' '.join(words)
         if len(name) < 3 or name.lower() in keep_l or name.lower() in GENERIC:
             continue
@@ -129,18 +133,6 @@ def reused_names(text_or_names, source_names: set[str]) -> list[str]:
     low = hay.lower()
     return sorted(n for n in source_names
                   if re.search(r'(?<![a-z])' + re.escape(n.lower()) + r'(?![a-z])', low))
-
-
-def check_label_map(labels: list[tuple[str, str]]) -> list[str]:
-    """(src, new) pairs -> errors: a non-generic label kept unchanged, or a duplicate new label."""
-    errs, seen = [], set()
-    for src, new in labels:
-        if src.strip().lower() == new.strip().lower() and not is_generic_label(src):
-            errs.append(f'label {src!r} is company-specific and must be replaced')
-        if new.lower() in seen:
-            errs.append(f'duplicate replacement {new!r}')
-        seen.add(new.lower())
-    return errs
 
 
 def tone_profile(paragraphs: list[str]) -> dict:
@@ -196,3 +188,121 @@ def drop_shown(avoid, shown_labels) -> set[str]:
         if needle.strip() and not any(needle in h for h in hay):
             out.add(name)
     return out
+
+
+# ---------------------------------------------------------------- E-52: model-off label decisions
+ENGLISH_SUFFIXES = ('tion', 'tions', 'sion', 'sions', 'ment', 'ments', 'ness', 'ity', 'ities', 'ance', 'ances',
+                    'ence', 'ences', 'able', 'ables', 'ible', 'ive', 'ives', 'ory', 'ories', 'ary', 'aries',
+                    'ings', 'ing', 'ed', 'al', 'als', 'ial', 'ure', 'ures', 'ers', 'ors', 'ics', 'ism', 'ist',
+                    'ists', 'age', 'ages', 'ship', 'ous', 'ful', 'less', 'ant', 'ants', 'ent', 'ents', 'ise',
+                    'ize', 'ised', 'ized', 'ly', 'est')
+GENERIC_WORDS = {w for phrase in GENERIC | QUALIFIERS for w in re.findall(r"[a-z]+", phrase)}
+
+
+def _stems(word: str) -> set[str]:
+    w = word.lower()
+    out = {w}
+    if w.endswith("ies") and len(w) > 4:
+        out.add(w[:-3] + "y")
+    if w.endswith("es") and len(w) > 4:
+        out.add(w[:-2])
+    if w.endswith("s") and len(w) > 3:
+        out.add(w[:-1])
+    if w.endswith("'s"):
+        out.add(w[:-2])
+    return out
+
+
+_PLACES: set[str] | None = None
+
+
+def known_places() -> set[str]:
+    """Lower-case city / state / country names (Faker's address data for a few English locales)."""
+    global _PLACES
+    if _PLACES is None:
+        places: set[str] = set()
+        try:
+            import importlib
+            for locale in ("en_IN", "en_US", "en_GB", "en_AU", "en_CA"):
+                provider = importlib.import_module(f"faker.providers.address.{locale}").Provider
+                for attr in ("cities", "city_names", "states", "countries"):
+                    for value in getattr(provider, attr, ()) or ():
+                        for w in re.findall(r"[A-Za-z]{3,}", str(value)):
+                            places.add(w.lower())
+        except Exception:                       # Faker missing: prose evidence still works
+            pass
+        _PLACES = {w for w in places if w not in GENERIC_WORDS
+                   and not any(w.endswith(x) for x in ENGLISH_SUFFIXES)}
+    return _PLACES
+
+
+_COMMON: set[str] | None = None
+
+
+def common_words() -> set[str]:
+    """Ordinary English words (Faker's lorem, company and job vocabulary)."""
+    global _COMMON
+    if _COMMON is None:
+        words: set[str] = set()
+        try:
+            from faker.providers.company.en_US import Provider as Company
+            from faker.providers.job.en_US import Provider as Job
+            from faker.providers.lorem.en_US import Provider as Lorem
+            words |= {w.lower() for w in Lorem.word_list}
+            for group in list(Company.catch_phrase_words) + list(Company.bsWords):
+                words |= {w.lower() for phrase in group for w in re.findall(r"[A-Za-z]+", phrase)}
+            for job in Job.jobs:
+                words |= {w.lower() for w in re.findall(r"[A-Za-z]+", job)}
+        except Exception:
+            pass
+        _COMMON = words
+    return _COMMON
+
+
+def lower_words(text: str) -> set[str]:
+    """Words the source writes in lower case somewhere (ordinary vocabulary of this document)."""
+    return {w.lower() for w in _WORD.findall(text) if w[0].islower()}
+
+
+def label_names(label: str, lower: set[str], names: set[str], organisation: str | None = None,
+                statement: bool = False) -> list[str]:
+    """The words of `label` that are NAMES (E-52, model off). Evidence of a name: capitalised inside the
+    prose and never written in lower case (`names`), a known place, or - outside a statement - a
+    capitalised word the document never writes in lower case that is not an abbreviation, not the
+    field's standard vocabulary and has no English word ending ('Jojobera', 'Maithon'). The
+    organisation's own words are its branding and stay. Statement line items ('Reserves & Surplus')
+    are standard wording unless a word has prose or place evidence."""
+    org = {w.lower() for w in _WORD.findall(organisation or "")}
+    places = known_places()
+    common = common_words()
+    # prose capitalises ordinary words too ('Regulations', 'Neutral' in a disclaimer): name evidence
+    # only counts for words that are not ordinary English
+    names = {n for n in names if n not in common and n not in GENERIC_WORDS
+             and not any(n.endswith(s) for s in ENGLISH_SUFFIXES)}
+    text = str(label)
+    # a phrase ('Downside is more than 0%') is wording, not a name: only strong evidence counts
+    phrase = sum(w[0].islower() for w in re.findall(r"[A-Za-z]{2,}", text)) >= 2
+    found = []
+    for match in re.finditer(r"[A-Za-z][A-Za-z']*", text):
+        word = match.group(0).strip("'")
+        if word.lower().endswith("'s"):
+            word = word[:-2]
+        abbreviation = text[match.end():match.end() + 1] == "."
+        if len(word) < 3 or word.isupper() or abbreviation or (word.islower() and not statement):
+            continue
+        stems = _stems(word)
+        stems |= {s + "s" for s in stems}
+        if stems & org:
+            continue
+        if stems & names or (stems & places and not stems & lower):
+            found.append(word)
+            continue
+        if phrase or len(word) <= 3:              # 'Mid', 'Bn': abbreviations unless named in the prose
+            continue
+        if statement or stems & lower or stems & GENERIC_WORDS or stems & common_words() \
+                or not word[0].isupper():
+            continue
+        if any(word.lower().endswith(s) for s in ENGLISH_SUFFIXES):
+            continue
+        found.append(word)
+    return found

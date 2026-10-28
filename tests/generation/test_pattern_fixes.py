@@ -12,7 +12,7 @@ from src.config import load_config
 from src.contracts import (ColumnRef, Direction, PatternKind, PatternSpec, SegmentOut, SourceDocument,
                            SourceTable)
 from src.contracts.dataset import empty_dataset
-from src.core.periods import parse_period, time_order
+from src.core.periods import time_order
 from src.core.stats import classify_trend
 from src.generation import generate
 from src.inference import infer

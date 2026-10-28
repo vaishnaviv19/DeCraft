@@ -2,7 +2,7 @@
 import pytest
 from src.errors import LLMBudgetExceeded
 from src.llm._limiter import Limits, RateLimiter
-from src.llm._payload import batch_items, estimate_tokens, fit_payload
+from src.llm._payload import estimate_tokens, fit_payload
 
 
 class FakeClock:
@@ -56,12 +56,6 @@ def test_fit_payload_drops_lowest_priority_first():
 def test_fit_payload_refuses_oversized_required_part():
     with pytest.raises(ValueError):
         fit_payload({'t': 'x' * 2000}, [], max_tokens=100)
-
-
-def test_batching_respects_cap():
-    items = [{'t': 'x' * 700} for _ in range(5)]        # ~200 tokens each
-    batches = batch_items(items, max_tokens=450)
-    assert [len(b) for b in batches] == [2, 2, 1]
 
 
 def test_the_limiter_is_safe_with_parallel_callers():

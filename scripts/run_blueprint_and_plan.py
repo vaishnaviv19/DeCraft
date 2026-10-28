@@ -15,7 +15,7 @@ def main():
     bp = build_blueprint(pdf, project_root=root)
     print(f"[RUN] Blueprint built with {len(bp.get('text_blocks',[]))} text blocks, {len(bp.get('tables',[]))} tables")
     print(f"[RUN] Building document plan...")
-    plan = build_document_plan(bp)
+    build_document_plan(bp)
     print(f"[RUN] Done. Blueprint + Plan generated.")
 
 

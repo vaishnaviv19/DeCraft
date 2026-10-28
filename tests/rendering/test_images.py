@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 
 from src.config import load_config
-from src.contracts.report import Block, PageTemplate, StyleProfile, TextStyle
+from src.contracts.report import Block, PageTemplate, StyleProfile
 from src.rendering._images import (build_prompt, generate_slot, image_size, photo_slots,
                                    run_images, simplify_caption)
 

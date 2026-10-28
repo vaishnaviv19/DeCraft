@@ -7,12 +7,6 @@ PyMuPDF; `build_templates` and `analyse_figures` follow in M8.2 and M8.3.
 """
 from __future__ import annotations
 
-from pathlib import Path
-
-from src.config import Config
-from src.contracts import SourceDocument
-from src.contracts.report import FigureInfo, PageTemplate, RecoveredChart, StyleProfile
-from src.llm import LLMGateway
 from src.style._extract import extract_style
 from src.style._figures import analyse_figures
 from src.style._templates import build_templates, numeric_share

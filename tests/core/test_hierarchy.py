@@ -1,10 +1,6 @@
 # tests/core/test_hierarchy.py
-from src.core.hierarchy import RowMeta, indent_levels, link_totals, verify_links
-from src.core.rollup import pct_of_total, rollup
-
-
-def test_indent_levels_from_x_positions():
-    assert indent_levels([10.0, 10.4, 20.0, 20.2]) == [0, 0, 1, 1]
+from src.core.hierarchy import RowMeta, link_totals, verify_links
+from src.core.rollup import rollup
 
 
 def test_total_row_links():
@@ -25,6 +21,5 @@ def test_verify_links_match_rate_and_untestable():
     assert verify_links([1.0, None, 3.0], {2: [0, 1]}) == (None, 0)
 
 
-def test_rollup_and_pct_of_total():
+def test_rollup():
     assert rollup({2: [0, 1]}, {0: 1.0, 1: 2.0}) == {0: 1.0, 1: 2.0, 2: 3.0}
-    assert pct_of_total([1.0, 3.0], 4.0) == [25.0, 75.0]

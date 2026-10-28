@@ -7,8 +7,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from src.config import load_config
-from src.contracts import DecisionStatus, Enforcement, RuleKind, RuleTier, SourceDocument, SourceTable
+from src.contracts import DecisionStatus, Enforcement, RuleKind, SourceDocument, SourceTable
 from src.generation import generate
 from src.inference import infer, statement_labels
 from src.inference._annotator import TablePayload, build_user_prompt

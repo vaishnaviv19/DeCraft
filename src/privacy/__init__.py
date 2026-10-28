@@ -96,13 +96,17 @@ def _headline(facts: dict) -> dict[str, float]:
             if f.kind == "number" and isinstance(f.value, (int, float)) and k.endswith(HEADLINE_SUFFIXES)}
 
 
-def _as_displayed(source: pd.DataFrame, profiles: list) -> pd.DataFrame:
-    """The source table as a reader saw it: each number column divided by its Scale and rounded."""
+def _as_displayed(source: pd.DataFrame, profiles: list, table=None) -> pd.DataFrame:
+    """The source table as a reader saw it: each number column divided by its Scale and rounded to
+    its most precise printed cell (E-51: rounding the P&L column to 0 decimals turned DPS 2.3 into 2)."""
+    from src.core.grid import column_decimals
+    places = column_decimals(table, [p.column for p in profiles]) if table is not None else {}
     out = source.copy()
     for prof in profiles:
         if prof.column in out.columns and pd.api.types.is_numeric_dtype(out[prof.column]):
             values = out[prof.column] / (prof.scale or 1.0)
-            out[prof.column] = values.round(prof.decimals) if prof.decimals is not None else values
+            decimals = max(prof.decimals or 0, places.get(prof.column, 0)) if prof.decimals is not None else None
+            out[prof.column] = values.round(decimals) if decimals is not None else values
     return out
 
 
@@ -149,10 +153,6 @@ def entity_context(doc: SourceDocument, gateway=None, llm_enabled: bool = False
         found_name, found_address, locale = find_entity(" ".join(doc.text_blocks), gateway, name)
         name, address = name or found_name, address or found_address
     return [v.strip() for v in (name, address) if v and v.strip()], locale
-
-
-def protected_values(doc: SourceDocument, gateway=None, llm_enabled: bool = False) -> list[str]:
-    return entity_context(doc, gateway, llm_enabled)[0]
 
 
 def plan_privacy(doc: SourceDocument, report, cfg: Config, gateway=None) -> PrivacyPlan:
@@ -210,13 +210,17 @@ def plan_privacy(doc: SourceDocument, report, cfg: Config, gateway=None) -> Priv
         if statement_label_column(frame, label):
             warnings.append(f"{table.table_id}: statement table - numbers are scaled copies of the source "
                             "(one factor for the table), so one known real value reveals the factor")
-        label_columns += _label_columns(table.table_id, frame, table_profiles, table_decisions, report)
+        label_columns += _label_columns(table.table_id, frame, table_profiles, table_decisions, report,
+                                        statement=_is_statement(table, frame, label))
 
     # E-35: one Label Fabricator for every text label of the document
     text = " ".join(doc.text_blocks)
     avoid = source_proper_nouns(text, keep=set(preserved) | ({doc.entity_name} if doc.entity_name else set()))
+    from src.core.originality import lower_words
+    cells = " ".join(str(c) for t in doc.tables for row in t.raw_cells for c in row)
     made = fabricate_labels(label_columns, gateway if llm_on else None, forbidden, avoid,
-                            name_words(text, doc.entity_name), preserved, locale, rng)
+                            name_words(text, doc.entity_name), preserved, locale, rng,
+                            lower=lower_words(text + " " + cells), organisation=doc.entity_name)
     pools.update(made.pools)
     warnings += made.warnings
     changed = {node for node, mapping in made.maps.items() if mapping}
@@ -242,7 +246,16 @@ def is_word_label(value: str) -> bool:
             and parse_period(text) is None)
 
 
-def _label_columns(table_id, frame, profiles, decisions, report) -> list[LabelColumn]:
+def _is_statement(table, frame, label) -> bool:
+    """Line items against period columns (a number grid with period tokens) or a statement label."""
+    from src.core.grid import build_grid
+    if statement_label_column(frame, label):
+        return True
+    grid = build_grid(table)
+    return grid is not None and any(parse_period(t) is not None for t in grid.tokens.values() if t)
+
+
+def _label_columns(table_id, frame, profiles, decisions, report, statement: bool = False) -> list[LabelColumn]:
     """Every text column whose labels reach the output: not a period axis, not exempt, not preserved or
     derived, and not a key with a number format (those get fresh keys in the same format)."""
     types = {p.column: p.physical_type for p in profiles}
@@ -261,7 +274,7 @@ def _label_columns(table_id, frame, profiles, decisions, report) -> list[LabelCo
         labels = [v for v in dict.fromkeys(values.tolist()) if is_word_label(v)]
         if labels:
             out.append(LabelColumn(f"{table_id}.{d.column}", d.column, meanings.get(d.column, ""), labels,
-                                   d.risk.value, must_replace=d.relabel))
+                                   d.risk.value, must_replace=d.relabel, statement=statement))
     return out
 
 
@@ -280,6 +293,11 @@ def audit_privacy(doc: SourceDocument, data: CanonicalDataset, plan: PrivacyPlan
     violations: list[Violation] = []
     source_displays: dict[str, pd.DataFrame] = {}
     kept = {normalise_text(v) for v in plan.preserved_values} | set(STRUCTURAL_LABELS)
+    from src.core.grid import derived_positions
+    try:
+        derived = derived_positions(doc)
+    except Exception:                                  # no number grids: nothing is recomputed
+        derived = {}
     for table in doc.tables:
         synthetic = data.tables.get(table.table_id)
         if synthetic is None:
@@ -330,15 +348,20 @@ def audit_privacy(doc: SourceDocument, data: CanonicalDataset, plan: PrivacyPlan
         found = value_distance_violations(table.table_id, source, synthetic, key, numeric,
                                           th.min_value_distance)
         shown = data.display.get(table.table_id)
-        source_shown = _as_displayed(source, table_profiles or [])     # the source in display units
+        source_shown = _as_displayed(source, table_profiles or [], table)     # the source in display units
         source_displays[table.table_id] = source_shown
         if shown is not None:                         # rounding for print must not undo the distance
             found += [v.model_copy(update={"check": "value_distance_displayed",
                                            "message": v.message + " after rounding for display"})
                       for v in value_distance_violations(table.table_id, source_shown, shown, key, numeric,
                                                          th.min_value_distance)]
+        # E-51: cells the grid engine recomputes (totals, margins, growth) follow their inputs
+        grid_cells = {(row, list(source.columns)[col]) for row, col in derived.get(table.table_id, set())
+                      if col < len(source.columns)}
+        grid_rows = {row for row in range(len(source))
+                     if numeric and all((row, c) in grid_cells or pd.isna(source[c].iloc[row]) for c in numeric)}
         for v in found:
-            rows = [r for r in v.rows if r not in computed]
+            rows = [r for r in v.rows if r not in computed and (r, v.column) not in grid_cells]
             if rows:
                 violations.append(v.model_copy(update={"rows": rows}))
 
@@ -351,11 +374,15 @@ def audit_privacy(doc: SourceDocument, data: CanonicalDataset, plan: PrivacyPlan
         labels = [c for c, d in table_decisions.items() if c in source.columns and c in synthetic.columns
                   and not pd.api.types.is_numeric_dtype(source[c]) and c not in numeric]
         from src.privacy._dcr import dcr_violations, identical_match_share
-        violations += [v.model_copy(update={"rows": [r for r in v.rows if r not in computed]})
-                       for v in dcr_violations(table.table_id, source, synthetic, numeric, labels, th.dcr_min,
+        masked = source.copy()                         # recomputed cells are not compared (E-51)
+        for row, column in grid_cells:
+            if column in masked.columns and pd.api.types.is_numeric_dtype(masked[column]):
+                masked.iat[row, masked.columns.get_loc(column)] = np.nan
+        violations += [v.model_copy(update={"rows": [r for r in v.rows if r not in computed | grid_rows]})
+                       for v in dcr_violations(table.table_id, masked, synthetic, numeric, labels, th.dcr_min,
                                                th.min_value_distance)
-                       if [r for r in v.rows if r not in computed]]
-        if numeric and identical_match_share(source, synthetic, numeric + labels) > 0:
+                       if [r for r in v.rows if r not in computed | grid_rows]]
+        if numeric and identical_match_share(source, synthetic, numeric + labels, numeric) > 0:
             violations.append(Violation(check="identical_match", severity=Severity.ERROR,
                                         table_id=table.table_id, repairable=True,
                                         message="a generated row is an exact copy of a source row"))
@@ -367,6 +394,18 @@ def audit_privacy(doc: SourceDocument, data: CanonicalDataset, plan: PrivacyPlan
                                                            source_profiles=data.source_profiles,
                                                            key_columns=data.key_columns)))
     synthetic_facts = _headline(data.facts)
+    from src.core.grid import ratio_row_labels
+    try:
+        ratios = ratio_row_labels(doc)
+    except Exception:
+        ratios = {}
+
+    def is_ratio(key: str) -> bool:                  # 'table_003.row:EBITDA Margin (%).latest'
+        table_id, _, rest = key.partition(".row:")
+        label = rest.rsplit(".", 1)[0] if rest else ""
+        return " ".join(label.split()).lower() in ratios.get(table_id, set())
+    source_facts = {k: v for k, v in source_facts.items() if not is_ratio(k)}
+    synthetic_facts = {k: v for k, v in synthetic_facts.items() if not is_ratio(k)}
     violations += headline_violations(source_facts, synthetic_facts, th.min_headline_distance)
 
     return PrivacyReport(ok=not any(v.severity is Severity.ERROR for v in violations),

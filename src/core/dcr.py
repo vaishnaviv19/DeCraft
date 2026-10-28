@@ -87,8 +87,16 @@ def dcr_violations(table_id: str, src: pd.DataFrame, syn: pd.DataFrame, num: lis
                       message=f"{len(bad)} generated rows are near-duplicates of a source row (DCR < {dcr_min})")]
 
 
-def identical_match_share(src: pd.DataFrame, syn: pd.DataFrame, cols: list[str]) -> float:
+def identical_match_share(src: pd.DataFrame, syn: pd.DataFrame, cols: list[str],
+                          numeric: list[str] | None = None) -> float:
+    """Share of generated rows that copy a source row. With `numeric`, rows that hold no number (a
+    section heading such as 'Regulated Equity' with blank cells) are structure, not records."""
     if not cols or not len(syn):
         return 0.0
+    if numeric:
+        has = lambda f: f[numeric].apply(pd.to_numeric, errors="coerce").notna().any(axis=1)  # noqa: E731
+        src, syn = src[has(src)], syn[has(syn)]
+        if not len(syn):
+            return 0.0
     s = set(map(tuple, src[cols].astype(str).to_numpy()))
     return float(np.mean([tuple(r) in s for r in syn[cols].astype(str).to_numpy()]))

@@ -97,6 +97,10 @@ def check_pages(pdf_path: Path, templates: list[PageTemplate], style: StyleProfi
         gates["words_per_page"] = per_page
 
     allowed = _sizes(templates, style)
+    if source_pdf and Path(source_pdf).exists():     # E-55: masthead spans keep the source's own sizes
+        with pymupdf.open(str(source_pdf)) as source:
+            for source_page in source:
+                allowed |= {round(size, 1) for size in _span_sizes(source_page)}
     locked = True
     for index, page in enumerate(document):
         for size in _span_sizes(page):
@@ -155,8 +159,11 @@ def check_pages(pdf_path: Path, templates: list[PageTemplate], style: StyleProfi
     gates["layout_fits"] = layout
 
     charted = True
+    # E-53: a mirror table's chart is on its page or on a chart page added after the source pages
+    added = {block.table_id for page in templates if page.source_page
+             for block in page.blocks if block.kind == "chart"}
     for page in templates:
-        chart_tables = {block.table_id for block in page.blocks if block.kind == "chart"}
+        chart_tables = {block.table_id for block in page.blocks if block.kind == "chart"} | added
         for block in page.blocks:
             if block.kind != "table" or not block.table_id:
                 continue

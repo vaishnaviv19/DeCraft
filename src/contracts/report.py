@@ -59,6 +59,8 @@ class Block(Strict):
     section_id: str | None = None      # which section owns this block
     table_id: str | None = None        # for table/chart blocks
     figure_id: str | None = None       # for chart/photo blocks
+    bullet: str | None = None          # E-59: the list bullet the source printed before the text ('❑')
+    indent_pt: float = 0.0             # ... and the hanging indent from the bullet to the text
 
 
 class PageTemplate(Strict):
@@ -66,6 +68,9 @@ class PageTemplate(Strict):
     mode: Literal["mirror", "flow"]    # 'flow' when mirroring is unsafe (decision E-15)
     reason: str = ""
     blocks: list[Block]
+    # E-53: an added chart page has no source page of its own; its masthead, logo and footer are copied
+    # from this source page. None = the page IS source page `page`.
+    source_page: int | None = None
 
 
 # ---------------------------------------------------------------- source figures (Style/Chart Analyst)
@@ -204,14 +209,6 @@ class CriticIssue(Strict):
     value: float | str | None = None
 
 
-class ToneProfile(Strict):
-    """E-26: tone measured from the SOURCE text by Python, passed to writers (no fixed tone)."""
-    avg_sentence_words: float
-    person: Literal["first_plural", "third", "mixed"]
-    contractions: bool
-    bullet_share: float = Field(ge=0, le=1)   # share of text blocks written as bullet lists
-
-
 class CriticOut(Strict):
     score: int = Field(ge=0, le=10)    # 10 = indistinguishable in layout and style
     issues: list[CriticIssue] = []
@@ -226,11 +223,6 @@ class DiscriminatorOut(Strict):
 class ImageCheckOut(Strict):
     matches: bool
     missing: list[str] = []            # caption elements not visible in the image
-
-
-class StyleAdjustments(Strict):
-    """E-18: parameter -> target -> value. Only the allow-listed parameters can appear."""
-    values: dict[str, dict[str, float | str]] = {}
 
 
 class QAReport(Strict):

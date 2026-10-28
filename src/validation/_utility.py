@@ -10,24 +10,6 @@ from src.contracts import Severity, Violation
 OPPOSITE = {("up", "down"), ("down", "up"), ("positive", "negative"), ("negative", "positive")}
 
 
-def pattern_gate(pattern_id: str, source_direction: str, synthetic_direction: str,
-                 source_is_confirmed: bool) -> list[Violation]:
-    if source_is_confirmed and (source_direction, synthetic_direction) in OPPOSITE:
-        return [Violation(check="utility_direction", severity=Severity.ERROR, rule_id=pattern_id,
-                          message=f"direction flipped: source {source_direction}, "
-                                  f"synthetic {synthetic_direction}", repairable=True)]
-    return []
-
-
-def correlation_strength_warning(pattern_id: str, source_rho: float, synthetic_rho: float,
-                                 th) -> list[Violation]:
-    if abs(source_rho - synthetic_rho) > th.corr_tolerance_small_n:
-        return [Violation(check="utility_corr_strength", severity=Severity.WARNING, rule_id=pattern_id,
-                          message=f"correlation moved by {abs(source_rho - synthetic_rho):.2f}",
-                          repairable=False)]
-    return []
-
-
 def range_warnings(table_id: str, column: str, source: pd.Series, synthetic: pd.Series,
                    th) -> list[Violation]:
     lo, hi = source.min(), source.max()

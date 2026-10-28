@@ -1,8 +1,8 @@
 # tests/narrative/test_claims_tokens_fit.py
-from src.core.periods import Period, format_like, parse_period, shift_period
+from src.core.periods import format_like, parse_period, shift_period
 from src.narrative._claims import Claim, Entity, check_resolution, merge_claims
 from src.narrative._tokens import illegal_digits
-from src.rendering._fit import Box, fits, word_budget
+from src.rendering._fit import Box, fits
 
 BIBLE = {'E1': Entity('E1', 'product', 'Nimbus Platform', {'year': 'FY24'}),
          'E2': Entity('E2', 'person_role', 'Chief Executive Officer', {'name': 'Asha Raman'})}
@@ -58,9 +58,10 @@ def test_period_shift_keeps_label_style():
     assert format_like('Q3 2023', shift_period(parse_period('Q3 2023'), 1)) == 'Q3 2024'
 
 
-def test_text_fit_and_budget():
+
+
+def test_text_fit():
     box = Box(width_pt=100, height_pt=36, font_size=10, line_height=1.2)   # 3 lines
-    w = lambda s: 6.0 * len(s)                                             # fake 6 pt per char
+    w = lambda s: 6.0 * len(s)                                             # fake 6 pt per char  # noqa: E731
     assert fits('one two three four five six', box, w)[0]
     assert not fits(' '.join(['word'] * 40), box, w)[0]
-    assert word_budget(100) == (85, 100)                    # E-48: the source count is the maximum

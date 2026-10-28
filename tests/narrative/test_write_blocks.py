@@ -1,7 +1,6 @@
 # tests/narrative/test_write_blocks.py
 import json
 
-import pytest
 
 from src.config import load_config
 from src.contracts import Fact
@@ -9,7 +8,6 @@ from src.contracts.dataset import empty_dataset
 from src.contracts.report import (BibleEntity, Block, Outline, PageTemplate, SectionPlan,
                                   StoryBible)
 from src.llm import estimate_tokens
-from src.narrative._prompts import WRITER
 from src.narrative._writer import (WriterBlockOut, WriterOut, build_writer_payload, check_section,
                                    write_blocks)
 from tests.conftest import FakeLLM

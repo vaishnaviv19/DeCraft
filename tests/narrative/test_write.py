@@ -3,7 +3,6 @@ import json
 
 import numpy as np
 
-from src.config import load_config
 from src.contracts import SourceDocument, SourceTable
 from src.generation import generate
 from src.inference import infer

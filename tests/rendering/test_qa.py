@@ -1,5 +1,4 @@
 # tests/rendering/test_qa.py
-from pathlib import Path
 
 import pymupdf
 

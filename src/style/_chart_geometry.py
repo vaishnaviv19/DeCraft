@@ -274,3 +274,40 @@ def recover_chart(page, figure_id: str, bbox, min_conf: float = 0.9):
         return RecoveredChart(figure_id=figure_id, categories=cats, confidence=round(conf, 3),
                               series=[RecoveredSeries(name=name, values=values) for name, values in series])
     return None
+
+
+def synthesize_chart(page, figure_id: str, bbox, seed: int = 42):
+    """When a lone chart's data cannot be read (no geometry match, no vision model), a stand-in series
+    with the chart's OWN frame: its value-axis range from the tick numbers, its categories from the
+    labels under the plot or, when those are not text, a monthly axis between the dates printed on the
+    same page. The values are invented (a seeded random walk inside the axis range) - the decoy needs
+    no real values, and an empty chart box stood out (second sample, page 5). None without a value axis."""
+    import zlib
+    from datetime import date
+
+    from src.contracts.report import RecoveredChart, RecoveredSeries
+    from src.core.values import parse_date
+    p = primitives_from_page(page, bbox)
+    ticks = sorted(v for v in (_num(t) for t, bb, _ in p.texts) if v is not None)
+    if len(ticks) < 2 or ticks[-1] <= ticks[0]:
+        return None
+    plot = plot_area(p, bbox)
+    labels = [t for t, tb, _ in sorted(p.texts, key=lambda x: x[1][0])
+              if _num(t) is None and tb[1] >= plot[3] - 1 and len(t) <= 16]
+    if len(labels) < 2:
+        dates = sorted({d for w in page.get_text("words") if (d := parse_date(w[4])) is not None})
+        if len(dates) >= 2:
+            months, current = [], date(dates[0].year, dates[0].month, 1)
+            while current <= dates[-1] and len(months) < 36:
+                months.append(current.strftime("%b-%y"))
+                current = date(current.year + (current.month == 12), current.month % 12 + 1, 1)
+            labels = months[::max(1, len(months) // 12)] if len(months) > 12 else months
+    if len(labels) < 2:
+        labels = [""] * 12
+    rng = np.random.default_rng(zlib.crc32(figure_id.encode()) + seed)
+    low, high = ticks[0], ticks[-1]
+    walk = np.cumsum(rng.normal(0.4, 1.0, len(labels)))
+    walk = (walk - walk.min()) / max(np.ptp(walk), 1e-9)
+    values = [float(low + (0.2 + 0.6 * v) * (high - low)) for v in walk]
+    return RecoveredChart(figure_id=figure_id, categories=labels, confidence=0.0,
+                          series=[RecoveredSeries(name="Series 1", values=values)])

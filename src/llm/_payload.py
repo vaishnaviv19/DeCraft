@@ -31,22 +31,6 @@ def fit_payload(required: dict, optional: list[tuple[str, object]], max_tokens: 
     return compact(payload), dropped
 
 
-def batch_items(items: list[dict], max_tokens: int, overhead_tokens: int = 0) -> list[list[dict]]:
-    """Greedy batching (e.g. several tables per Annotator call) under a token cap. An item that alone exceeds
-    the cap goes in a batch of its own (the caller must trim it, e.g. fewer sample rows)."""
-    batches, cur, cur_tok = [], [], overhead_tokens
-    for it in items:
-        t = estimate_tokens(compact(it))
-        if cur and cur_tok + t > max_tokens:
-            batches.append(cur)
-            cur, cur_tok = [], overhead_tokens
-        cur.append(it)
-        cur_tok += t
-    if cur:
-        batches.append(cur)
-    return batches
-
-
 TILE_PX, TOKENS_PER_TILE, MAX_TILES = 560, 1650, 4
 
 

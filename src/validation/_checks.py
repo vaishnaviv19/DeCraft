@@ -7,7 +7,6 @@ import pandas as pd
 
 from src.contracts import (DecisionStatus, Enforcement, PatternKind, RuleKind, Severity, Violation)
 from src.contracts.dataset import CanonicalDataset
-from src.core.distance import value_distance_violations
 from src.core.expr import evaluate
 from src.core.frames import table_frame
 from src.core.aggregation import is_total_label
@@ -34,6 +33,28 @@ def source_frames(doc, report) -> dict[str, pd.DataFrame]:
         if profiles:
             frames[table.table_id] = table_frame(table, profiles)[0]
     return frames
+
+
+def mask_derived(frames: dict[str, pd.DataFrame], doc, report) -> dict[str, pd.DataFrame]:
+    """Source frames with every grid-derived cell (src.core.grid relations) set to NaN."""
+    from src.core.grid import derived_positions
+    try:
+        derived = derived_positions(doc)
+    except Exception:                       # no grids: nothing is derived
+        return frames
+    out = {}
+    for table_id, frame in frames.items():
+        cells = derived.get(table_id)
+        if not cells:
+            out[table_id] = frame
+            continue
+        masked = frame.copy()
+        columns = [p.column for p in _profiles(report, table_id)]
+        for row, col in cells:
+            if col < len(columns) and columns[col] in masked.columns and row < len(masked)                     and pd.api.types.is_numeric_dtype(masked[columns[col]]):
+                masked.iat[row, masked.columns.get_loc(columns[col])] = np.nan
+        out[table_id] = masked
+    return out
 
 
 def check_numbers(data: CanonicalDataset, frames: dict[str, pd.DataFrame] | None = None) -> list[Violation]:
@@ -229,7 +250,6 @@ def check_aggregates(data: CanonicalDataset, report) -> list[Violation]:
         summary = data.tables.get(rule.table_id)
         if detail is None or summary is None:
             continue
-        needed = (params["detail_col"], params["group_col"], params["label_col"], params["summary_col"])
         if params["detail_col"] not in detail.columns or params["group_col"] not in detail.columns:
             continue
         if params["label_col"] not in summary.columns or params["summary_col"] not in summary.columns:
@@ -388,6 +408,8 @@ def check_ranges(data: CanonicalDataset, report, frames: dict[str, pd.DataFrame]
             if source[column].min() >= 0:
                 bad = (_numeric(synthetic[column]) < 0).to_numpy()
                 bad = bad & ~np.isin(np.arange(len(bad)), list(row_outputs))
+                if len(bad) == len(source):         # E-51: a recomputed (masked) cell follows its inputs
+                    bad = bad & source[column].notna().to_numpy()
                 if bad.any():
                     out.append(Violation(
                         check="negative_value", severity=Severity.ERROR, table_id=table_id,

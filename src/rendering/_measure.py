@@ -107,7 +107,9 @@ def font_for(style: StyleProfile, text_style: TextStyle) -> FontSpec | None:
 def box_for(block: Block, style: StyleProfile) -> Box:
     x0, y0, x1, y1 = block.bbox
     text_style = text_style_for(style, block)
-    return Box(width_pt=max(1.0, x1 - x0), height_pt=max(1.0, y1 - y0),
+    # a bulleted block prints its words after the hanging indent (E-59, at least 8 pt as rendered)
+    indent = max(float(getattr(block, "indent_pt", 0.0) or 0.0), 8.0) if getattr(block, "bullet", None) else 0.0
+    return Box(width_pt=max(1.0, x1 - x0 - indent), height_pt=max(1.0, y1 - y0),
                font_size=text_style.size_pt, line_height=text_style.line_height)
 
 

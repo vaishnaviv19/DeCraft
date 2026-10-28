@@ -38,7 +38,3 @@ def fits(text: str, box: Box, width_fn) -> tuple[bool, int, int]:
     return need <= have, need, have
 
 
-def word_budget(source_words: int, tolerance: float = 0.15) -> tuple[int, int]:
-    """Per-box word range from the SOURCE box's word count (E-13): -15% up to the source count itself
-    (the maximum is a hard limit given to the writer; the source text fits its box)."""
-    return max(1, int(source_words * (1 - tolerance))), max(1, int(source_words))

@@ -1,0 +1,115 @@
+{
+  "source_pdf": "sample_input_2.pdf",
+  "conversion_status": "ConversionStatus.SUCCESS",
+  "table_count": 7,
+  "tables": [
+    {
+      "table_number": 1,
+      "rows": 15,
+      "columns": 8,
+      "csv_path": "table_001.csv"
+    },
+    {
+      "table_number": 2,
+      "rows": 2,
+      "columns": 8,
+      "csv_path": "table_002.csv"
+    },
+    {
+      "table_number": 3,
+      "rows": 16,
+      "columns": 5,
+      "csv_path": "table_003.csv"
+    },
+    {
+      "table_number": 4,
+      "rows": 22,
+      "columns": 5,
+      "csv_path": "table_004.csv"
+    },
+    {
+      "table_number": 5,
+      "rows": 5,
+      "columns": 4,
+      "csv_path": "table_005.csv"
+    },
+    {
+      "table_number": 6,
+      "rows": 2,
+      "columns": 4,
+      "csv_path": "table_006.csv"
+    },
+    {
+      "table_number": 7,
+      "rows": 10,
+      "columns": 3,
+      "csv_path": "table_007.csv"
+    }
+  ],
+  "detected_figure_count": 10,
+  "saved_figures": [
+    {
+      "figure_number": 1,
+      "page": 1,
+      "caption": "",
+      "image_path": "figure_001.png"
+    },
+    {
+      "figure_number": 2,
+      "page": 2,
+      "caption": "",
+      "image_path": "figure_002.png"
+    },
+    {
+      "figure_number": 3,
+      "page": 3,
+      "caption": "",
+      "image_path": "figure_003.png"
+    },
+    {
+      "figure_number": 4,
+      "page": 4,
+      "caption": "",
+      "image_path": "figure_004.png"
+    },
+    {
+      "figure_number": 5,
+      "page": 5,
+      "caption": "",
+      "image_path": "figure_005.png"
+    },
+    {
+      "figure_number": 6,
+      "page": 5,
+      "caption": "",
+      "image_path": "figure_006.png"
+    },
+    {
+      "figure_number": 7,
+      "page": 6,
+      "caption": "",
+      "image_path": "figure_007.png"
+    },
+    {
+      "figure_number": 8,
+      "page": 7,
+      "caption": "",
+      "image_path": "figure_008.png"
+    },
+    {
+      "figure_number": 9,
+      "page": 8,
+      "caption": "",
+      "image_path": "figure_009.png"
+    },
+    {
+      "figure_number": 10,
+      "page": 9,
+      "caption": "",
+      "image_path": "figure_010.png"
+    }
+  ],
+  "method": "docling",
+  "warnings": [],
+  "source_sha256": "ead6d5f63076f70ede516518f0696b9e13e45f021930cc9a600ea1e1df96bedf"
+}

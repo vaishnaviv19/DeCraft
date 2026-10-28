@@ -30,9 +30,12 @@ def validate(data: CanonicalDataset, report, cfg: Config,
     violations += _checks.check_aggregates(data, report)
     violations += _checks.check_patterns(data, report, cfg, frames)
     if frames is not None:
-        violations += _checks.check_source_distance(data, report, cfg, frames)
-        violations += _checks.check_dcr(data, report, cfg, frames)          # v3.3 F-02
-        violations += _checks.check_ranges(data, report, frames)
+        # E-51: cells the grid engine RECOMPUTES (totals, margins, growth) follow their inputs, like
+        # formula outputs: they are blanked in the source view of the distance / DCR / sign checks
+        roots = _checks.mask_derived(frames, source, report)
+        violations += _checks.check_source_distance(data, report, cfg, roots)
+        violations += _checks.check_dcr(data, report, cfg, roots)          # v3.3 F-02
+        violations += _checks.check_ranges(data, report, roots)
         violations += _checks.check_utility(data, report, cfg, frames)
     return ValidationReport(
         ok=not any(v.severity is Severity.ERROR for v in violations),

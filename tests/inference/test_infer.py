@@ -2,7 +2,6 @@
 import json
 from datetime import date
 
-from src.config import load_config
 from src.contracts import (Enforcement, ExtractionGrade, InferenceReport, RuleKind, RuleTier,
                            SourceDocument, SourceTable)
 from src.inference import infer

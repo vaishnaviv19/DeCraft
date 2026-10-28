@@ -17,6 +17,9 @@ from src.narrative import SHORTEN, illegal_digits, placeholder_keys
 from src.rendering._fit import Box, fits
 
 TRIES = 2
+_JOINERS = {"a", "an", "the", "and", "or", "but", "of", "to", "in", "on", "at", "for", "with", "by", "from",
+            "as", "is", "are", "was", "were", "be", "that", "which", "its", "their", "this", "these", "than",
+            "alongside", "against", "into", "across", "between", "per", "via"}
 _NAME = re.compile(r"\b[A-Z][\w&'’.-]+(?:\s+[A-Z][\w&'’.-]+)+\b")
 
 
@@ -35,9 +38,12 @@ def sentence_cut(text: str, box: Box, width_fn) -> str:
         if kept:
             break
         words = sentence.split()
-        while words and not fits(" ".join(words), box, width_fn)[0]:
+        while words and not fits(" ".join(words) + ".", box, width_fn)[0]:
             words.pop()
-        kept = " ".join(words)
+        # a trimmed sentence never ends on a joining word ('... discussed alongside the')
+        while words and words[-1].lower().strip(",;:") in _JOINERS:
+            words.pop()
+        kept = (" ".join(words).rstrip(",;:") + ".") if words else ""
         break
     return kept
 

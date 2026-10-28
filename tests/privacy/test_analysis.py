@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 
 from src.contracts import SensitivityClass
-from src.privacy._analysis import (LabelMap, detect_risk, exact_row_overlap, leaked_values,
+from src.privacy._analysis import (LabelMap, leaked_values,
                                    merge_risk, plan_table)
 
 
@@ -31,11 +31,6 @@ def test_llm_derived_label_does_not_add_risk():
     assert merge_risk(SensitivityClass.DERIVED, SensitivityClass.LOW_RISK) is SensitivityClass.LOW_RISK
 
 
-def test_unique_identifier_values_are_direct_identifiers():
-    df = pd.DataFrame({"Ref": [f"A-{100 + i}" for i in range(10)]})
-    assert detect_risk("Ref", df["Ref"])[0] is SensitivityClass.DIRECT_IDENTIFIER
-
-
 def test_label_map_is_consistent_and_exempts_the_entity():
     rng = np.random.default_rng(2)
     labels = LabelMap(lambda r: f"X{r.integers(1000)}", rng, exempt={"Acme Corp"})
@@ -58,7 +53,3 @@ def test_exempt_columns_are_preserved():
     assert not plan["Revenue"].exempt
 
 
-def test_exact_row_overlap_is_zero_for_fresh_data():
-    source = pd.DataFrame({"a": [1, 2], "b": ["x", "y"]})
-    synthetic = pd.DataFrame({"a": [3, 4], "b": ["p", "q"]})
-    assert exact_row_overlap(synthetic, source, ["a", "b"]) == 0

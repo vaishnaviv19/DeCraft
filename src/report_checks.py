@@ -51,13 +51,26 @@ def chart_style_checks(source_pdf, output_pdf, placed_templates, min_similarity:
     return {"scores": scores, "failures": failures}
 
 
-def structure_checks(output_pdf, placed_templates, style, cfg) -> dict:
-    """F-08 round trip + F-09 metrics: our own extractor re-reads the output PDF."""
+def structure_checks(output_pdf, placed_templates, style, cfg, source_pdf=None) -> dict:
+    """F-08 round trip + F-09 metrics: our own extractor re-reads the output PDF.
+
+    E-56 (replaces E-49's reference): the reference is the SAME extractor run on the SOURCE PDF, page by
+    page. The placed templates were built with docling's tables (cell grids, attached tables) that the
+    plain re-read never has, so a perfect copy of the source failed against them (p3: '0% of the text
+    in its boxes'). Added chart pages (E-53) have no source page and are not part of this comparison."""
     from src.rendering._structure import roundtrip_and_metrics
     from src.style import build_templates
     reread = build_templates(Path(output_pdf), None, style, cfg)
-    mirror = {t.page for t in placed_templates if t.mode == "mirror"}
-    return roundtrip_and_metrics(placed_templates, reread, mirror, cfg.qa.roundtrip_min_order_sim,
+    if source_pdf is not None and Path(source_pdf).exists():
+        reference = build_templates(Path(source_pdf), None, style, cfg)
+        pages = {t.page for t in reference}
+        reread = [t for t in reread if t.page in pages]
+        mirror = {t.page for t in placed_templates if t.mode == "mirror" and t.page in pages}
+    else:
+        reference = [t for t in placed_templates if not t.source_page]
+        mirror = {t.page for t in reference if t.mode == "mirror"}
+        reread = [t for t in reread if t.page in {t.page for t in reference}]
+    return roundtrip_and_metrics(reference, reread, mirror, cfg.qa.roundtrip_min_order_sim,
                                  cfg.qa.min_block_iou, cfg.qa.max_alignment_worse_pt, cfg.qa.max_overlap_worse)
 
 
@@ -87,7 +100,12 @@ def v33_output_checks(source_pdf, output_pdf, placed_templates, style, cfg, visi
     """Every v3.3 output check, with its gates. Each check that cannot run says why instead of passing."""
     out: dict = {"gates": {}, "failures": [], "manual_review": []}
     try:
-        structure = structure_checks(output_pdf, placed_templates, style, cfg)
+        # E-56: box-wise (same reader on source and output, per layout box); alignment / overlap are
+        # still measured on the re-read layout, for information
+        from src.rendering._structure import boxwise_checks
+        reread = structure_checks(output_pdf, placed_templates, style, cfg, source_pdf)
+        structure = boxwise_checks(source_pdf, output_pdf, placed_templates, cfg.qa.min_block_iou)
+        structure.update(alignment=reread["alignment"], overlap=reread["overlap"])
         out.update({k: structure[k] for k in ("roundtrip", "iou", "text_placement", "alignment", "overlap")})
         out["gates"]["roundtrip_structure"] = not structure["roundtrip"]
         out["gates"]["layout_metrics"] = not structure["layout_failures"]

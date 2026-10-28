@@ -10,7 +10,6 @@ from __future__ import annotations
 import numpy as np
 from scipy.stats import kendalltau, spearmanr, theilslopes
 
-from src.core.periods import Period
 
 
 def theil_sen(values) -> tuple[float, float]:
@@ -67,5 +66,3 @@ def residual_correlation(x, y, th) -> tuple[str, float | None, float | None, boo
     return "uncertain", float(rho), float(p), True
 
 
-def period_ordinal(period: Period) -> int:
-    return period.ordinal

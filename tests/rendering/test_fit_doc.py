@@ -2,7 +2,7 @@
 import json
 
 from src.config import load_config
-from src.rendering._fit import Box, fits
+from src.rendering._fit import Box
 from src.rendering._fit_doc import fit_blocks
 
 CFG = load_config(llm_enabled=False)

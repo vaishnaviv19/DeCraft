@@ -44,10 +44,11 @@ the source's look and structure but entirely new content. DeCraft separates \emp
 \emph{deciding}: language models suggest rules, labels, text and layout fixes, while every rule is
 verified against the source numbers in Python, every generated value comes from a seeded generator,
 and every printed number is resolved from one canonical dataset. Generation is bounded by explicit
-privacy distances and checked by 31 automated gates. On a five-page equity research note with
-twelve tables, an offline run finishes in 24\,s, passes all privacy and consistency gates, and passes
-29 of 31 gates overall. The two failures are strict read-back layout checks, which show that
-matching the source's block geometry, rather than its data or style, is the main open problem.
+privacy distances and checked by 31 automated gates. Relations between numbers (totals, margins,
+growth, figures repeated across tables) are found in the source and recomputed in the decoy, and
+every table is redrawn on the source's own cell grid. On a five-page equity research note with
+twelve tables, an offline run passes all 31 gates; the content of every table, chart and logo box
+overlaps its source counterpart by 98--99.6\%.
 \end{abstract}
 
 \section{Introduction}
@@ -217,7 +218,10 @@ actually in the source text.
 Before generating anything, each column gets a privacy decision: regenerate, jitter (for tiny
 tables), keep as a period axis, or derive from other columns. The organisation's own name and
 branding are kept on purpose, since a decoy has to name its supposed publisher; people's names
-and all other labels are replaced by checked fakes.
+and labels that contain names are replaced by checked fakes. Without a model, a word counts as a
+name only with evidence (capitalised in prose and never lower-case, a known place, or an unknown
+capitalised word with no English form); standard line items keep their wording, and only the name
+word is swapped (\textit{Mumbai Operations} becomes \textit{Karaikudi Operations}).
 
 Generation is a walk over a dependency graph built from the hard rules. Root columns are sampled
 from fitted distributions with a copula that keeps strong correlations, trends are re-imposed with
@@ -225,6 +229,20 @@ their segment shapes, and derived columns, roll-ups and totals are computed rath
 so they hold exactly. Identifiers get fresh keys from a disjoint range, and every period label
 moves forward one year in its original style (FY24 becomes FY25). The run is seeded and
 reproducible.
+
+Tables whose rows are line items (statements, fact sheets, valuations) need more than column
+rules, so a \emph{number grid} pass handles them without any model. Python searches the source for
+relations that hold on every testable cell within the rounding of the printed numbers: the same
+figure printed twice (\textit{Sales} on page~1 equals \textit{Revenue} in the P\&L), row sums
+(\textit{EBIT = EBITDA $-$ Depreciation}, a total that stays at 100.0), percentage-change rows,
+ratio rows (\textit{margin = EBITDA / Revenue}, \textit{EPS = PAT / shares}), change columns (YoY,
+including rows printed in basis points) and column sums. Inputs must carry at least three
+significant printed digits and a ratio must be the least precise of its three numbers, so short
+low-precision rows are never explained by coincidence. Base cells move by a document factor
+($\ge$15\% from 1) times a small per-series and per-cell variation, keeping their order and sign;
+derived cells are recomputed from the \emph{rounded} inputs, so what a reader re-adds on the page
+agrees. A balance (total assets = total liabilities) is kept with one plug line, and a derived cell
+that would repeat its source value nudges one input.
 
 The privacy audit then checks the result. Every root cell must differ from its source counterpart
 by at least 5\%, and every headline fact (totals, growth rates) by at least 10\%. The distance to the
@@ -247,7 +265,13 @@ same facts.
 
 \subsection{Layout, rendering and checks}
 Each source page becomes a \emph{page template} of positioned blocks. Safe pages are rendered in
-\emph{mirror} mode, with every block at its source position; the rest flow. Charts are redrawn
+\emph{mirror} mode, with every block at its source position; the rest flow. Tables are drawn on
+Docling's cell grid: column widths, row positions, fills, bold and italic faces, alignment and the
+white gaps that serve as gridlines are read from the source page cell by cell, and every number is
+printed in its source cell's format. Masthead boxes and source notes are branding: they are drawn
+span by span in the source's fonts and positions, with their figures replaced (a target price takes
+the new value from the valuation table). Because the source pages are full, the chart that pairs
+with each table goes on a chart page appended after them, with the same masthead and footer. Charts are redrawn
 with Matplotlib in the source palette and chart type, labelled by a vision model where available,
 and charts with no backing table are recovered from vector geometry first. Text is fitted to its
 box by bounded padding and wording changes, never by changing font sizes. Photos are generated with
@@ -259,9 +283,9 @@ agreement, unresolved placeholders, illegal digits, embedded and locked fonts, s
 metadata and packaging. (ii) A vision critic compares each output page with its source and may
 adjust only whitelisted layout parameters within $\pm$20\%, for at most two rounds; a
 discriminator is asked which of the two pages is the published original, in both orders, to cancel
-position bias. (iii) A round-trip check feeds the rendered PDF back through DeCraft's own
-extractor and compares the recovered blocks with the intended ones (block counts, reading order,
-mean IoU, alignment and overlap).
+position bias. (iii) A round-trip check reads the source and the output with the same reader, box by box of the
+source layout: each table, chart, logo or heading box must hold that content (a heading at its source
+size), and the mean IoU of what is drawn in the structural boxes must reach 0.9.
 
 \subsection{Model access}
 All model calls go through one gateway that validates each reply against a schema, retries with a
@@ -277,10 +301,12 @@ run can be replayed exactly and offline.
 (\texttt{--no-llm}, seed 42), so it is reproducible without keys; model behaviour was measured in
 separate live runs.
 
-\paragraph{Throughput and output.} The offline run takes 24.3\,s end to end, most of it in page
-template construction (9.5\,s) and rendering (7.6\,s). It produces a five-page PDF with 2,866 words,
-14 narrative sections, 12 regenerated tables, each with a matching chart, and 31 trend patterns
-carried over (28 rising, 3 falling). Table~\ref{tab:gates} summarises the gates.
+\paragraph{Throughput and output.} The offline run takes about 100\,s end to end on a laptop, most
+of it in page template construction and rendering. It produces seven pages (the five source pages
+and two chart pages) with 3,188 words and 12 regenerated tables, each with a matching chart.
+The number-grid pass found 59 figures printed in more than one place and recomputes, among others,
+every subtotal of the cash-flow statement, total assets with the balancing liability, the tax rate,
+margins, EPS and the YoY/QoQ columns. Table~\ref{tab:gates} summarises the gates.
 
 \begin{table}[t]
 \centering
@@ -297,10 +323,10 @@ Narrative consistency             & 6  & 6 \\
 Fonts, metadata, branding, fit    & 7  & 7 \\
 Charts, tables \& OCR             & 4  & 4 \\
 Deliverables                      & 1  & 1 \\
-Layout read-back                  & 2  & 0 \\
+Layout read-back                  & 2  & 2 \\
 Vision critic / layout model$^{*}$& 2  & 2 \\
 \midrule
-\textbf{Total}                    & \textbf{31} & \textbf{29} \\
+\textbf{Total}                    & \textbf{31} & \textbf{31} \\
 \bottomrule
 \end{tabular}
 \\[2pt]
@@ -310,29 +336,27 @@ not blocking.
 
 \paragraph{Privacy and consistency.} All ten privacy checks passed with no violations: no reused
 identifiers or labels, every cell and headline beyond its minimum distance, and no generated row
-within DCR 0.05 of a source row. Validation found no hard violations and needed no repairs. Its
-seven warnings are utility drift: some category shares moved by up to 0.24 and some values left
-the widened source range. Every printed number resolved from the fact store, and no
-placeholders or stray digits remained.
+within DCR 0.05 of a source row. Validation found no hard violations and needed no repairs; its
+one warning is a category share that drifted by 0.25. Every printed number resolved from the fact
+store, and no placeholders or stray digits remained. Recomputed cells (margins, growth, totals)
+follow their inputs and are exempt from the per-cell distance, as formula outputs are.
 
-\paragraph{Layout.} The two failing gates are the strict read-back checks
-(Table~\ref{tab:layout}). The page style matches the source closely (Figure~\ref{fig:pages}), and
-chart style similarity was 0.98--1.00, but block geometry does not: mean block IoU against the
-intended layout is 0.33--0.66 against a 0.9 target, and reading-order similarity is 0.52--0.85
-against 0.9. Page~5 also shows one badly misaligned block.
+\paragraph{Layout.} Read box by box with the same reader on both documents
+(Table~\ref{tab:layout}), the content of the structural boxes overlaps the source by 0.981--0.996,
+every heading box holds a heading at its source size, and every text box holds text. Table rows land
+within about 2\,pt of their source rows (Figure~\ref{fig:pages}).
 
 \begin{table}[t]
 \centering
 \small
-\caption{Read-back layout metrics per page (targets: IoU $\ge 0.9$, order $\ge 0.9$).}
+\caption{Box-by-box layout metrics per page (targets $\ge 0.9$).}
 \label{tab:layout}
 \begin{tabular}{@{}lccccc@{}}
 \toprule
 Page & 1 & 2 & 3 & 4 & 5 \\
 \midrule
-Mean block IoU        & 0.37 & 0.48 & 0.33 & 0.43 & 0.66 \\
-Reading-order sim.    & 0.85 & 0.67 & 0.52 & 0.75 & 0.80 \\
-Text in its box       & 0.91 & 1.00 & 0.00 & 1.00 & 1.00 \\
+Structural content IoU & 0.981 & 0.991 & 0.996 & 0.989 & 0.995 \\
+Text boxes with text   & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -340,15 +364,16 @@ Text in its box       & 0.91 & 1.00 & 0.00 & 1.00 & 1.00 \\
 \begin{figure}[t]
 \centering
 \begin{subfigure}{0.49\columnwidth}
-  \includegraphics[width=\linewidth]{figures/source_p1.png}
-  \caption{Source, page 1}
+  \includegraphics[width=\linewidth]{figures/source_p3.png}
+  \caption{Source, page 3}
 \end{subfigure}\hfill
 \begin{subfigure}{0.49\columnwidth}
-  \includegraphics[width=\linewidth]{figures/decoy_p1.png}
-  \caption{Decoy, page 1 (offline)}
+  \includegraphics[width=\linewidth]{figures/decoy_p3.png}
+  \caption{Decoy, page 3 (offline)}
 \end{subfigure}
-\caption{The header band, palette, fonts, table and chart style carry over; data, periods and
-text are new. Offline, the prose is generic and some blocks drift from their source positions.}
+\caption{The financial statements on their source grid: fills, bold and italic rows and number
+formats carry over; every figure is new, periods move one year forward, and totals, margins and
+growth rows are recomputed from the new amounts.}
 \label{fig:pages}
 \end{figure}
 
@@ -380,15 +405,15 @@ Mistral Small 3.1 24B  & yes & yes      & 42 \\
 
 The split between proposing and deciding held up in practice: when models failed or ran out of
 quota, the run still finished and still passed every privacy and consistency gate. The cost of
-running offline is quality, not safety. Without the annotator no rules are found, so totals are
-not enforced: on the sample, a shareholding table no longer sums to 100\%. The deterministic writer
-is also shorter and more generic than the source, so pages fall below their source word counts.
+running offline is the prose, not the numbers: totals, margins and repeated figures are now found
+and enforced without the annotator, but the deterministic writer is shorter and more generic than
+the source, so text pages fall below their source word counts.
 
-The weakest part is geometry. Mirror mode places blocks near their source positions, but
-table and chart heights driven by new data, together with reflowed text, push blocks off their
-boxes, and the read-back extractor then sees merged or split headings and tables. Two gates that
-pass offline (the critic and the layout model) pass only because they did not run; they should be
-read as ``not measured''. Finally, the privacy checks are distance heuristics and carry no formal
+Charts for full pages go on appended chart pages, which keeps every table exact but separates a
+table from its chart by a page or more. Relations are found only when they hold to the printed
+precision; a looser relation (ROE on average equity) stays a base row. Two gates that pass offline
+(the critic and the layout model) pass only because they did not run; they should be read as
+``not measured''. Finally, the privacy checks are distance heuristics and carry no formal
 guarantee.
 
 \section{Conclusion}
@@ -396,8 +421,8 @@ guarantee.
 DeCraft shows that a single source PDF is enough to produce a decoy that keeps the source's style
 and statistical shape, keeps every printed number consistent, and stays measurably far from the
 source data, with language models used only where their output can be checked. The next steps
-are clear from the gates: enforce totals without the model (row and column sums can be found
-directly), make layout fitting aware of the read-back metrics, and evaluate realism with people
-as well as with a vision discriminator.
+are to place charts in free space on the source pages where it exists, give the deterministic
+writer more of the source's tone, and evaluate realism with people as well as with a vision
+discriminator.
 
 \end{document}

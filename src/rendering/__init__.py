@@ -53,9 +53,10 @@ def write_pdf_metadata(pdf_path: Path, title: str, blueprint, author: str | None
     author, and the source's creator/producer. No synthetic marker - that lives only in the manifest."""
     import pymupdf
     with pymupdf.open(str(pdf_path)) as document:
-        meta = {"title": title, "author": author or "", "creator": "", "producer": "", "subject": "", "keywords": ""}
+        meta = {"title": title, "author": author or ""}
         meta.update({k: v for k, v in _source_metadata(blueprint).items() if v and k != "title"})
-        document.set_metadata(meta)
+        from src.rendering._pages import set_clean_metadata
+        set_clean_metadata(document, meta)                  # exactly these fields, no renderer name
         temp = Path(pdf_path).with_suffix(".tmp.pdf")
         document.save(str(temp))
     temp.replace(pdf_path)

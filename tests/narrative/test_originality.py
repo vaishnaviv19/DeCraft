@@ -1,7 +1,7 @@
 # tests/narrative/test_originality.py
 from pathlib import Path
-from src.narrative._originality import (check_label_map, is_generic_label, reused_names, source_proper_nouns,
-                                        tone_profile)
+from src.core.originality import (is_generic_label, reused_names, source_proper_nouns,
+                                     tone_profile)
 
 SRC = ("Acme Industries reported strong growth. The Falcon X200 launch in Pune was led by Priya Nair. "
        "In North America, the Horizon Program expanded.")
@@ -17,13 +17,6 @@ def test_generated_text_reusing_source_names_is_caught():
     names = source_proper_nouns(SRC, keep={'Acme Industries'})
     assert reused_names('Acme launched the Falcon X200 in Chennai.', names) == ['Falcon X200']
     assert reused_names(['Nimbus Platform', 'Project Meridian'], names) == []
-
-
-def test_company_specific_labels_must_be_replaced_generic_may_stay():
-    assert is_generic_label('North America') and is_generic_label('Revenue') and is_generic_label('FY24')
-    assert check_label_map([('Falcon Division', 'Falcon Division')])
-    assert check_label_map([('Europe', 'Europe'), ('Falcon Division', 'Orion Systems')]) == []
-    assert check_label_map([('A Unit', 'Orion'), ('B Unit', 'orion')])          # duplicate replacement
 
 
 def test_tone_profile_detects_person_and_length():

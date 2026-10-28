@@ -6,6 +6,8 @@ Orientation 'columns': one series per column, x = the label column. Orientation 
 one series per line item, x = the period columns in order."""
 from __future__ import annotations
 
+import re
+
 import json
 from pathlib import Path
 
@@ -77,7 +79,16 @@ def chart_labels(data: CanonicalDataset, chart_id: str) -> list[str]:
     display = _display(data, spec)
     if spec.label_column not in display.columns:
         raise KeyError(f"label column {spec.label_column!r} is not in the Display Table")
-    return [str(v) for v in display[spec.label_column]]
+    return [_short_date(v) for v in display[spec.label_column]]
+
+
+def _short_date(value) -> str:
+    """An ISO date on a chart axis reads like the source's axis ('May-22'); anything else as it is."""
+    import re as _re
+    text = str(value)
+    if _re.fullmatch(r"\d{4}-\d{2}-\d{2}(?: 00:00:00)?", text):
+        return pd.Timestamp(text).strftime("%b-%y")
+    return text
 
 
 def chart_caption(spec: ChartSpec) -> str:
@@ -163,20 +174,20 @@ def chart_colours(palette: list[str], count: int = 6) -> list[str]:
 
 def draw_svg(data: CanonicalDataset, chart_id: str, path: Path, colors: list[str] | None = None,
              font: str | None = None, font_pt: float = 10.0, width_pt: float = 302.0,
-             height_pt: float | None = None) -> Path:
-    return _draw_chart(data, chart_id, path, "svg", colors, font, font_pt, width_pt, height_pt)
+             height_pt: float | None = None, text_color: str | None = None) -> Path:
+    return _draw_chart(data, chart_id, path, "svg", colors, font, font_pt, width_pt, height_pt, text_color)
 
 
 def draw_png(data: CanonicalDataset, chart_id: str, path: Path, colors: list[str] | None = None,
              font: str | None = None, font_pt: float = 10.0, width_pt: float = 302.0,
-             height_pt: float | None = None) -> Path:
+             height_pt: float | None = None, text_color: str | None = None) -> Path:
     """A raster copy for the contact sheet; the SVG stays the rendered artefact."""
-    return _draw_chart(data, chart_id, path, "png", colors, font, font_pt, width_pt, height_pt)
+    return _draw_chart(data, chart_id, path, "png", colors, font, font_pt, width_pt, height_pt, text_color)
 
 
 def _draw_chart(data: CanonicalDataset, chart_id: str, path: Path, fmt: str,
                 colors: list[str] | None, font: str | None, font_pt: float, width_pt: float,
-                height_pt: float | None = None) -> Path:
+                height_pt: float | None = None, text_color: str | None = None) -> Path:
     """E-38 Font Lock: the chart is drawn at its displayed width (`width_pt`) and every text uses
     `font_pt` (the source body size), so nothing is scaled when the page shows it. Text stays text."""
     import matplotlib
@@ -186,11 +197,22 @@ def _draw_chart(data: CanonicalDataset, chart_id: str, path: Path, fmt: str,
     spec = registered(data, chart_id)
     series = chart_series(data, chart_id)
     labels = chart_labels(data, chart_id)
+    if spec.orientation != "rows":
+        # a section heading row ('Regulated Equity'), a note row without a label or a row the plotted
+        # columns leave blank is not a category: it printed as 'nan' and empty slots (2026-10-27)
+        keep = [i for i, label in enumerate(labels)
+                if str(label).strip() and str(label).strip().lower() not in {"nan", "none"}
+                and any(values[i] is not None for values in series.values())]
+        if keep and len(keep) < len(labels):
+            labels = [labels[i] for i in keep]
+            series = {name: [values[i] for i in keep] for name, values in series.items()}
     palette = list(spec.colors) or colors or None                 # F-06: the source chart's colours first
     sizes = {k: font_pt for k in ("font.size", "axes.titlesize", "axes.labelsize", "xtick.labelsize",
                                   "ytick.labelsize", "legend.fontsize")}
+    ink = {k: text_color for k in ("text.color", "xtick.labelcolor", "ytick.labelcolor",
+                                   "axes.labelcolor", "legend.labelcolor")} if text_color else {}
     with plt.rc_context({"font.family": [font, "DejaVu Sans"] if font else ["DejaVu Sans"],
-                         "svg.fonttype": "none", **sizes}):
+                         "svg.fonttype": "none", **sizes, **ink}):
         # M8.5.2: the figure is the chart block's box (pt / 72 = inches), so the page never scales it
         figure, axes = plt.subplots(figsize=(width_pt / 72.0, (height_pt or width_pt * 0.62) / 72.0))
         # crowded category axes (narrow box, many labels) turn their labels upright
@@ -242,6 +264,10 @@ def _draw_chart(data: CanonicalDataset, chart_id: str, path: Path, fmt: str,
 
         from matplotlib.ticker import MaxNLocator
         legend = spec.kind not in {"pie", "donut"} and len(series) > 1 and spec.has_legend
+        # a recovered chart whose series names could not be read ('Series 1') shows no legend: the
+        # source chart had none, and placeholder names read as generated
+        if all(re.fullmatch(r"Series \d+", str(name)) for name in series):
+            legend = False
         # a small box (a 40% split under a table, a source chart frame) gets a COMPACT chart: no title
         # (the heading above names it; a recovered chart's legend names its series), one legend row,
         # at most three value ticks. The font size never changes (E-29); the marks get the room.

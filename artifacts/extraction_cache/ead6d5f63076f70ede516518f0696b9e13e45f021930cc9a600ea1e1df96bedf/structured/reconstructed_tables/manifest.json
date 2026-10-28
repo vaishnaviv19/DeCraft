@@ -1,0 +1,95 @@
+[
+  {
+    "table_number": 1,
+    "page": 2,
+    "rows": 17,
+    "columns": 8,
+    "merged_cell_count": 1,
+    "overlap_count": 0,
+    "merged_cells": [
+      {
+        "row": 0,
+        "column": 0,
+        "row_span": 1,
+        "column_span": 8,
+        "text": "Consolidated"
+      }
+    ],
+    "overlaps": [],
+    "csv_path": "table_001.csv"
+  },
+  {
+    "table_number": 2,
+    "page": 2,
+    "rows": 4,
+    "columns": 8,
+    "merged_cell_count": 1,
+    "overlap_count": 0,
+    "merged_cells": [
+      {
+        "row": 0,
+        "column": 0,
+        "row_span": 1,
+        "column_span": 8,
+        "text": "Consolidated"
+      }
+    ],
+    "overlaps": [],
+    "csv_path": "table_002.csv"
+  },
+  {
+    "table_number": 3,
+    "page": 3,
+    "rows": 17,
+    "columns": 5,
+    "merged_cell_count": 0,
+    "overlap_count": 0,
+    "merged_cells": [],
+    "overlaps": [],
+    "csv_path": "table_003.csv"
+  },
+  {
+    "table_number": 4,
+    "page": 3,
+    "rows": 23,
+    "columns": 5,
+    "merged_cell_count": 0,
+    "overlap_count": 0,
+    "merged_cells": [],
+    "overlaps": [],
+    "csv_path": "table_004.csv"
+  },
+  {
+    "table_number": 5,
+    "page": 5,
+    "rows": 6,
+    "columns": 4,
+    "merged_cell_count": 0,
+    "overlap_count": 0,
+    "merged_cells": [],
+    "overlaps": [],
+    "csv_path": "table_005.csv"
+  },
+  {
+    "table_number": 6,
+    "page": 6,
+    "rows": 3,
+    "columns": 4,
+    "merged_cell_count": 0,
+    "overlap_count": 0,
+    "merged_cells": [],
+    "overlaps": [],
+    "csv_path": "table_006.csv"
+  },
+  {
+    "table_number": 7,
+    "page": 9,
+    "rows": 11,
+    "columns": 3,
+    "merged_cell_count": 0,
+    "overlap_count": 0,
+    "merged_cells": [],
+    "overlaps": [],
+    "csv_path": "table_007.csv"
+  }
+]

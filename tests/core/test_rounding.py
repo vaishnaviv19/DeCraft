@@ -1,7 +1,7 @@
 # tests/core/test_rounding.py
 import pandas as pd
 
-from src.core.rounding import build_display_df, detect_total_mode, display_round, largest_remainder
+from src.core.rounding import build_display_df, display_round, largest_remainder
 
 
 def test_display_round_is_half_up_not_bankers():
@@ -14,12 +14,6 @@ def test_display_round_is_half_up_not_bankers():
 def test_largest_remainder_keeps_the_total():
     got = largest_remainder([33.33, 33.33, 33.34], total=100.0, decimals=1)
     assert round(sum(got), 1) == 100.0 and got == [33.3, 33.3, 33.4]
-
-
-def test_total_mode_detection():
-    assert detect_total_mode([([1.0, 2.0], 3.0)], 1) == "sum_of_displayed"
-    assert detect_total_mode([([1.0, 2.0], 3.4)], 1) == "true_total"
-    assert detect_total_mode([], 1) == "true_total"
 
 
 def test_build_display_df_recomputes_totals_after_rounding():

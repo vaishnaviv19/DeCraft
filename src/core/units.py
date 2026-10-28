@@ -51,14 +51,6 @@ def resolve_scale(sources: list[str]) -> tuple[ScaleInfo, list[str]]:
     return best, warns
 
 
-def to_base(value: float, scale: ScaleInfo) -> float:
-    return value * scale.multiplier
-
-
-def from_base(value: float, scale: ScaleInfo) -> float:
-    return value / scale.multiplier
-
-
 # A scale stated in running text is trusted only when a currency marker introduces it ("Rs. cr",
 # "in $ millions"). Prose that happens to contain "m" is not a scale statement.
 CONTEXT_SCALE_RE = re.compile(
@@ -69,13 +61,6 @@ CONTEXT_SCALE_RE = re.compile(
 CURRENCY_CODE_RE = re.compile(r"\b(inr|usd|eur|gbp)\b|rs\.?|[$€£₹]", re.I)
 CURRENCY_CODES = {"$": "USD", "€": "EUR", "£": "GBP", "₹": "INR", "rs": "INR", "rs.": "INR",
                   "inr": "INR", "usd": "USD", "eur": "EUR", "gbp": "GBP"}
-
-
-def parse_context_scale(text: str) -> ScaleInfo:
-    m = CONTEXT_SCALE_RE.search(text or "")
-    if not m:
-        return ScaleInfo()
-    return ScaleInfo(WORD_MULT[m.group(1).lower()], m.group(0).strip())
 
 
 def currency_code(text: str) -> str | None:

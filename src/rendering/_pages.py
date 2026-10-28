@@ -59,14 +59,56 @@ def text_style(style: StyleProfile, block: Block) -> TextStyle:
                      line_height=1.2)
 
 
-def _font_family(font_id: str) -> str:
-    return f"dc-{font_id}"
+def _font_family(font_id: str, style: StyleProfile | None = None) -> str:
+    """The CSS family of a source font face: its own PostScript name ('Cambria-BoldItalic'). The PDF
+    writer names an embedded font '<family>-<style words>', so a face declared under that name with a
+    normal weight and style is embedded under exactly the source's name. Internal names ('dc-F2') were
+    embedded and showed in the file's font list (2026-10-27)."""
+    font = next((f for f in (style.fonts if style else []) if f.font_id == font_id), None)
+    if font is None:
+        return f"dc-{font_id}"
+    return font.source_name.split("+")[-1] or f"dc-{font_id}"
+
+
+_INSTALLED: dict = {}
+
+
+def installed_face(family: str, bold: bool, italic: bool) -> Path | None:
+    """The machine's complete file of a font face ('Book Antiqua' bold -> ANTQUAB.TTF), or None."""
+    key = (family, bold, italic)
+    if key not in _INSTALLED:
+        found = None
+        try:
+            from matplotlib import font_manager
+            path = Path(font_manager.findfont(font_manager.FontProperties(
+                family=family, weight="bold" if bold else "normal", style="italic" if italic else "normal"),
+                fallback_to_default=False))
+            name = font_manager.FontProperties(fname=str(path)).get_name()
+            if path.exists() and name.replace(" ", "").lower() == family.replace(" ", "").lower():
+                found = path
+        except Exception:                      # not installed: the subset is used
+            found = None
+        _INSTALLED[key] = found
+    return _INSTALLED[key]
+
+
+def font_css(style: StyleProfile, font_id: str) -> str:
+    """'font-family:"Cambria-Bold","Caladea";font-weight:400;font-style:normal' (safe inside style='').
+    An embedded face carries its own weight; a fallback gets it from CSS."""
+    font = next((f for f in style.fonts if f.font_id == font_id), None)
+    if font is None:
+        return 'font-family:"Caladea"'
+    if font.file:
+        return f'font-family:"{_font_family(font_id, style)}","{font.fallback}";font-weight:400;font-style:normal'
+    return (f'font-family:"{font.fallback}";font-weight:{700 if font.bold else 400};'
+            f'font-style:{"italic" if font.italic else "normal"}')
 
 
 def css_for(style: StyleProfile, artifacts_root: Path | None,
             adjustments: dict | None = None) -> str:
     adj = adjustments or {}
-    parts = ["@page { margin: 0 }", "html, body { margin: 0; padding: 0 }",
+    parts = [f"@page {{ margin: 0; size: {style.page_width_pt}pt {style.page_height_pt}pt }}",
+             "html, body { margin: 0; padding: 0 }",
              ".sheet { position: relative; overflow: hidden; page-break-after: always; "
              "break-inside: avoid; page-break-inside: avoid }",
              ".sheet:last-child { page-break-after: auto }",
@@ -90,16 +132,20 @@ def css_for(style: StyleProfile, artifacts_root: Path | None,
                 if item.exists():
                     path = item.resolve()
                     break
-        family = f'"{_font_family(font.font_id)}"' if path else f'"{font.fallback}"'
         if path:
-            parts.append(f"@font-face {{ font-family: {family}; src: url('{path.as_uri()}'); }}")
-        parts.append(f".font-{font.font_id} {{ font-family: {family}; }}")
+            # the installed full face first (the extracted file is a SUBSET: new words fell back to
+            # another font, which was embedded under its own name), the source's subset second
+            full = installed_face(font.family, font.bold, font.italic)
+            sources = ([f"url('{full.as_uri()}')"] if full else []) + [f"url('{path.as_uri()}')"]
+            parts.append(f"@font-face {{ font-family: \"{_font_family(font.font_id, style)}\"; "
+                         f"src: {', '.join(sources)}; font-weight: 400; font-style: normal; }}")
+        parts.append(f".font-{font.font_id} {{ {font_css(style, font.font_id)}; }}")
     for text in style.text_styles:
         parts.append(
-            f".text-{text.style_id} {{ font-family: '{_font_family(text.font_id)}', "
-            f"'{_fallback(style, text.font_id)}'; font-size: {text.size_pt}pt; "
+            f".text-{text.style_id} {{ {font_css(style, text.font_id)}; font-size: {text.size_pt}pt; "
             f"color: {text.color}; "
-            f"line-height: {adj.get('line_height', {}).get(text.style_id, text.line_height)}; "
+            # a measured spacing above 1.6 is the gap BETWEEN boxes, not a line height (2.56 clipped headings)
+            f"line-height: {min(1.6, max(1.0, adj.get('line_height', {}).get(text.style_id, text.line_height)))}; "
             f"text-align: {text.align};{justify_extras(text.align)} }}")      # F-10 hyphenation
     border = style.table_border_pt
     fill = style.table_header_fill or "transparent"
@@ -179,31 +225,51 @@ def table_looks(pdf_path, templates: list[PageTemplate]) -> dict[str, dict]:
     return looks
 
 
+def _cell_font(style: StyleProfile, span_font: str | None) -> tuple[str, bool]:
+    """CSS font family for a cell printed in source font `span_font` -> (css, face_is_styled). A face
+    that is itself bold/italic must not be emboldened again."""
+    if not span_font:
+        return "", False
+    name = span_font.split("+")[-1].lower()
+    for font in style.fonts:
+        if font.source_name.split("+")[-1].lower() == name:
+            return font_css(style, font.font_id), bool(font.bold or font.italic)
+    return "", False
+
+
 def _table_html(block: Block, tables: dict, style: StyleProfile, font_size: float,
                 look: dict | None = None) -> str:
+    from src.rendering._table_look import cell_text, grid_table_html, heading_text
+
     frame = tables.get(block.table_id or "")
     if frame is None:
         return "<div class='txt'><p></p></div>"
     look = look or {}
     text = text_style(style, block)
-    family = f"font-family:'{_font_family(text.font_id)}','{_fallback(style, text.font_id)}';"
+    family = font_css(style, text.font_id) + ";"
+    raw, numbers = look.get("raw"), look.get("number_style")
+    grid = look.get("grid")
+    if grid is not None:                        # E-54: the source grid, cell by cell
+        for cell in grid["cells"].values():
+            css, styled = _cell_font(style, cell.get("font"))
+            cell["font_family"] = css
+            if styled:
+                cell["bold"] = cell["italic"] = False
+        html = grid_table_html(frame, grid, family, font_size, raw, numbers, block.bbox, strip_websites)
+        if html is not None:
+            return html
     head_css = (f" style='background:{look['header_fill']};color:{look.get('header_color', '#000000')}'"
                 if look.get("header_fill") else "")
     label_css = f" style='background:{look['label_fill']}'" if look.get("label_fill") else ""
-    def cell(value) -> str:
-        """Blank for missing values (CSV 'nan') - the source shows nothing there."""
-        if value is None or (isinstance(value, float) and value != value) or str(value).strip().lower() in {"nan", "none"}:
-            return ""
-        return html_lib.escape(strip_websites(str(value)))
 
-    def heading(column) -> str:
-        """pandas names blank source headers 'Unnamed: 3'; the source shows nothing there."""
-        return "" if re.fullmatch(r"Unnamed: \d+", str(column)) else html_lib.escape(str(column))
+    def cell(value, row: int, col: int) -> str:
+        text = cell_text(value, raw, row, col, numbers)
+        return html_lib.escape(strip_websites(text) if re.search(r"[A-Za-z@]", text) else text)
 
-    head = "".join(f"<th{head_css}>{heading(column)}</th>" for column in frame.columns)
-    body = "".join("<tr>" + "".join(f"<td{label_css if i == 0 else ''}>{cell(value)}</td>"
+    head = "".join(f"<th{head_css}>{html_lib.escape(heading_text(column))}</th>" for column in frame.columns)
+    body = "".join("<tr>" + "".join(f"<td{label_css if i == 0 else ''}>{cell(value, r, i)}</td>"
                                     for i, value in enumerate(row)) + "</tr>"
-                   for row in frame.itertuples(index=False, name=None))
+                   for r, row in enumerate(frame.itertuples(index=False, name=None)))
     return (f"<table class='src' style='font-size:{font_size}pt;{family}'><thead><tr>{head}</tr></thead>"
             f"<tbody>{body}</tbody></table>")
 
@@ -227,6 +293,9 @@ def _image_html(block: Block, images: dict) -> str:
 
 def block_html(block: Block, style: StyleProfile, texts: dict, tables: dict, charts: dict,
                images: dict, number: int, looks: dict | None = None) -> str:
+    from src.rendering._masthead import SPANS_MARK
+    if str(texts.get(block.block_id) or "").startswith(SPANS_MARK):           # E-55 masthead
+        return _spans_html(block, style, texts[block.block_id][len(SPANS_MARK):])
     if block.kind == "table":
         size = text_style(style, block).size_pt if block.style_id else 8.0
         return _table_html(block, tables, style, size, (looks or {}).get(block.block_id))
@@ -236,6 +305,9 @@ def block_html(block: Block, style: StyleProfile, texts: dict, tables: dict, cha
         return _image_html(block, images)
     if block.kind == "page_number":
         return f"<span class='pageno'>{number}</span>"
+    from src.rendering._masthead import SPANS_MARK
+    if str(texts.get(block.block_id) or "").startswith(SPANS_MARK):     # E-55 band text (a dateline too)
+        return _spans_html(block, style, texts[block.block_id][len(SPANS_MARK):])
     if block.kind == "decoration":
         return ""
     if block.kind in {"header", "footer"}:
@@ -244,13 +316,44 @@ def block_html(block: Block, style: StyleProfile, texts: dict, tables: dict, cha
         # never the SOURCE wording (task 6, E-36): a box without new text stays empty. Live run
         # 2026-10-26: unwritten boxes printed the source paragraph and headings word for word
         text = texts.get(block.block_id) or ""
-    return f"<div class='txt text-{block.style_id or 'fallback'}'>{_paragraphs(text)}</div>"
+    one_line = ""
+    size = text_style(style, block).size_pt
+    if block.bbox[3] - block.bbox[1] < 1.7 * size:          # a one-line box: the line fits the box
+        one_line = f" style='line-height:{max(1.0, (block.bbox[3] - block.bbox[1]) / size):.2f}'"
+    if block.bullet and text:                     # E-59: the source's list bullet and hanging indent
+        indent = max(block.indent_pt, 8.0)
+        items = "".join(
+            f"<p style='padding-left:{indent:.1f}pt;text-indent:-{indent:.1f}pt'>"
+            f"<span style='display:inline-block;width:{indent:.1f}pt;text-indent:0;"
+            f"font-family:\"Segoe UI Symbol\",\"DejaVu Sans\",sans-serif'>{html_lib.escape(block.bullet)}</span>"
+            f"{html_lib.escape(part.strip())}</p>"
+            for part in re.split(r"\n\s*\n", strip_websites(text)) if part.strip())
+        return f"<div class='txt text-{block.style_id or 'fallback'}'{one_line}>{items}</div>"
+    return f"<div class='txt text-{block.style_id or 'fallback'}'{one_line}>{_paragraphs(text)}</div>"
+
+
+def _spans_html(block: Block, style: StyleProfile, payload: str) -> str:
+    """E-55: source spans placed where the source printed them, in their own font, size and colour."""
+    spans = json.loads(payload)
+    parts = []
+    for span in spans:
+        css, _ = _cell_font(style, span.get("font"))
+        if not css:
+            text = text_style(style, block)
+            css = font_css(style, text.font_id)
+        weight = "font-weight:bold;" if not _cell_font(style, span.get("font"))[0] and "bold" in span["font"].lower() else ""
+        left, top = span["bbox"][0] - block.bbox[0], span["bbox"][1] - block.bbox[1]
+        parts.append(f"<div style='position:absolute;left:{left:.2f}pt;top:{top:.2f}pt;white-space:pre;"
+                     f"font-size:{span['size']}pt;line-height:{span['bbox'][3] - span['bbox'][1]:.2f}pt;"
+                     f"color:{span['color']};{weight}{css}'>{html_lib.escape(strip_websites(span['text']) if re.search(r'[A-Za-z@]', span['text']) else span['text'])}</div>")
+    return "<div class='spans' style='position:relative;width:100%;height:100%;overflow:visible'>" + "".join(parts) + "</div>"
 
 
 def _block_css(block: Block, style: StyleProfile) -> str:
     x0, y0, x1, y1 = block.bbox
+    extra = ";overflow:visible" if block.kind == "table" else ""      # E-54: grid edges, not text box
     return (f"left:{x0:.2f}pt;top:{y0:.2f}pt;width:{max(1.0, x1 - x0):.2f}pt;"
-            f"height:{max(1.0, y1 - y0):.2f}pt")
+            f"height:{max(1.0, y1 - y0):.2f}pt{extra}")
 
 
 FURNITURE_KINDS = {"header", "footer", "logo", "page_number"}
@@ -315,11 +418,12 @@ def page_models(templates: list[PageTemplate], texts: dict, style: StyleProfile,
             ordered = result + [block for block in ordered
                                 if block.kind == "chart" and block.table_id not in moved]
         for block in ordered:
+            html = block_html(block, style, texts, tables, charts, images, page.page, looks)
             blocks.append({"id": block.block_id, "kind": block.kind,
                            "css": _block_css(block, style),
-                           "ink": _ink(block, style, (fills or {}).get(page.page, [])),
-                           "html": block_html(block, style, texts, tables, charts, images,
-                                              page.page, looks)})
+                           # E-55: source spans carry their exact colours
+                           "ink": "" if "class='spans'" in html else _ink(block, style, (fills or {}).get(page.page, [])),
+                           "html": html})
         if page.mode != "flow":
             pages.append({"number": page.page, "mode": page.mode,
                           "w": style.page_width_pt, "h": style.page_height_pt,
@@ -465,7 +569,8 @@ def render_document(pages: list[dict], style: StyleProfile, artifacts_root: Path
 
 
 def decorations(pdf_path, page_number: int, width: float, height: float,
-                avoid: list[Block], body: tuple[float, float] | None = None) -> str:
+                avoid: list[Block], body: tuple[float, float] | None = None,
+                furniture_only: bool = False) -> str:
     """Page furniture from the source drawings, as one SVG layer behind the blocks: header/footer bands,
     rules at least half the page wide and large plain panels. Never a chart's marks: a source chart drawn
     as vectors (lines, bars) would carry the REAL data into the output (task 6), so complex paths, small
@@ -480,18 +585,32 @@ def decorations(pdf_path, page_number: int, width: float, height: float,
         page_area = max(width * height, 1.0)
         # a box covering half the page or more is the page background, not a chart: keeping it
         # would hide every band inside it (live run 2026-10-26: page 1 lost its teal masthead)
-        boxes = [fitz.Rect(block.bbox) for block in avoid
+        # tables are drawn on their full source grid (E-54), a little wider than their text box: their
+        # cell fills there are the table's, not page furniture (they printed as slivers beside rows)
+        boxes = [fitz.Rect(block.bbox) + ((-8, -8, 8, 8) if block.kind == "table" else (0, 0, 0, 0))
+                 for block in avoid
                  if block.kind in {"table", "chart", "photo", "logo", "decoration"}
                  and fitz.Rect(block.bbox).get_area() < 0.5 * page_area]
+        band_bottom, _ = page_bands(pdf_path, page_number, width, height)
+        band_bottom = band_bottom if band_bottom <= 0.4 * height else 0.0
         parts: list[str] = []
         for drawing in page.get_drawings():
             rect = fitz.Rect(drawing["rect"])
             area = max(rect.width * rect.height, 1.0)
-            # chart marks lie INSIDE a chart/table box; a masthead band merely CONTAINS the logo box
-            if any((rect & box).get_area() >= 0.6 * area for box in boxes if rect.intersects(box)):
+            # chart marks lie INSIDE a chart/table box; a masthead band merely CONTAINS the logo box.
+            # A thin rule across a table (the teal lines under a heading / header row) is furniture
+            thin_rule = min(rect.width, rect.height) <= 2.5 and max(rect.width, rect.height) >= 0.3 * width
+            if not thin_rule and any((rect & box).get_area() >= 0.6 * area for box in boxes if rect.intersects(box)):
                 continue
-            if not _furniture(rect, drawing.get("items", []), width, height, page_area):
+            items = drawing.get("items", [])
+            # E-55: the masthead's small line-drawn icons (the arrows beside TARGET / RATING / EARNINGS)
+            icon = (band_bottom and rect.y1 <= band_bottom + 1 and max(rect.width, rect.height) <= 40
+                    and len(items) <= 12 and all(item[0] in {"l", "re", "qu"} for item in items))
+            if not icon and not _furniture(rect, items, width, height, page_area):
                 continue
+            if furniture_only and not (rect.y1 <= FURNITURE_BAND * height
+                                       or rect.y0 >= (1 - FURNITURE_BAND) * height):
+                continue                        # E-53: an added page keeps only the masthead / footer bands
             if body and rect.y0 >= body[0] - 1 and rect.y1 <= body[1] + 1:
                 continue                        # flow body reflows: a panel there would sit behind the wrong content
             fill = _colour(drawing.get("fill"))
@@ -561,6 +680,34 @@ def _colour(value) -> str:
     return str(value)
 
 
+INFO_KEYS = {"title": "Title", "author": "Author", "subject": "Subject", "keywords": "Keywords",
+             "creator": "Creator", "producer": "Producer", "creationDate": "CreationDate",
+             "modDate": "ModDate", "trapped": "Trapped"}
+
+
+def set_clean_metadata(document, meta: dict) -> None:
+    """Document Info with exactly the non-empty fields of `meta`. PyMuPDF keeps any key it is not
+    given (the renderer's own 'Producer: WeasyPrint' survived) and stores '' as a PDF null, which no
+    word processor writes: the Info dictionary is rewritten with only the wanted entries."""
+    document.set_metadata({k: v for k, v in meta.items() if v})
+    kind, value = document.xref_get_key(-1, "Info")
+    if kind != "xref":
+        return
+    entries = []
+    for key, name in INFO_KEYS.items():
+        text = meta.get(key)
+        if text:
+            entries.append(f"/{name} <FEFF{str(text).encode('utf-16-be').hex().upper()}>")
+    document.update_object(int(value.split()[0]), "<< " + " ".join(entries) + " >>")
+
+
+def shift_pdf_date(value: str, years: int = 1) -> str:
+    """A PDF date ('D:20230911180349+05'30'') moved forward like every other date of the report (E-16)."""
+    import re as _re
+    match = _re.match(r"(D:)(\d{4})(.*)", value or "")
+    return f"{match.group(1)}{int(match.group(2)) + years}{match.group(3)}" if match else ""
+
+
 def write_metadata_v32(pdf_path: Path, title: str, author: str = "", subject: str = "",
                        keywords: str = "", run_id: str = "", source_pdf=None) -> None:
     """Document Info and XMP like an ordinary published document (E-32, overriding D-07/M8.11.3): the
@@ -569,12 +716,14 @@ def write_metadata_v32(pdf_path: Path, title: str, author: str = "", subject: st
     `subject`, `keywords` and `run_id` are accepted for compatibility and deliberately not written."""
     import pymupdf
 
-    creator = producer = ""
+    creator = producer = created = modified = ""
     if source_pdf and Path(source_pdf).exists():
         try:
             with pymupdf.open(str(source_pdf)) as source:
                 creator = (source.metadata or {}).get("creator", "") or ""
                 producer = (source.metadata or {}).get("producer", "") or ""
+                created = shift_pdf_date((source.metadata or {}).get("creationDate", "") or "")
+                modified = shift_pdf_date((source.metadata or {}).get("modDate", "") or "")
         except Exception:                      # unreadable source metadata: leave them empty
             pass
     xmp = (f"<?xpacket begin='' id='W5M0MpCehiHzreSzNTczkc9d'?>"
@@ -585,8 +734,11 @@ def write_metadata_v32(pdf_path: Path, title: str, author: str = "", subject: st
            f"<dc:creator><rdf:Seq><rdf:li>{html_lib.escape(author)}</rdf:li></rdf:Seq></dc:creator>"
            "</rdf:Description></rdf:RDF></x:xmpmeta><?xpacket end='w'?>")
     with pymupdf.open(str(pdf_path)) as document:
-        document.set_metadata({"title": title, "author": author, "subject": "", "keywords": "",
-                               "creator": creator, "producer": producer})
+        # only the fields a real export has: an empty subject/keywords is stored as a PDF null, which no
+        # word processor writes and which broke reading the file back (2026-10-27)
+        meta = {"title": title, "author": author, "creator": creator, "producer": producer,
+                "creationDate": created, "modDate": modified}
+        set_clean_metadata(document, meta)
         document.set_xml_metadata(xmp)
         temp = Path(pdf_path).with_suffix(".meta.pdf")
         document.save(str(temp))
@@ -596,22 +748,40 @@ def write_metadata_v32(pdf_path: Path, title: str, author: str = "", subject: st
 def render_pages(templates: list[PageTemplate], texts: dict, style: StyleProfile, tables: dict,
                  charts: dict, images: dict, out_dir: Path, artifacts_root: Path | None,
                  pdf_path, meta: dict | None = None, decorate: bool = True,
-                 adjustments: dict | None = None) -> dict:
+                 adjustments: dict | None = None, table_cells: dict | None = None,
+                 formats: dict | None = None) -> dict:
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     decoration_layers, bands, fills = {}, {}, {}
     if decorate and pdf_path:
+        by_number = {page.page: page for page in templates}
         for page in templates:              # flow pages keep their bands too (masthead, footer)
             body = None
+            source = page.source_page or page.page
             if page.mode == "flow":
-                bands[page.page] = body = page_bands(pdf_path, page.page, style.page_width_pt,
+                bands[page.page] = body = page_bands(pdf_path, source, style.page_width_pt,
                                                      style.page_height_pt)
             # every page: text on a coloured band gets a readable ink (mirror pages too, E-48)
-            fills[page.page] = band_fills(pdf_path, page.page, style.page_width_pt,
+            fills[page.page] = band_fills(pdf_path, source, style.page_width_pt,
                                           style.page_height_pt)
-            decoration_layers[page.page] = decorations(pdf_path, page.page, style.page_width_pt,
-                                                       style.page_height_pt, page.blocks, body)
+            if page.source_page:            # E-53 chart page: only the source page's furniture bands
+                avoid = by_number[source].blocks if source in by_number else page.blocks
+                decoration_layers[page.page] = decorations(pdf_path, source, style.page_width_pt,
+                                                           style.page_height_pt, avoid, None,
+                                                           furniture_only=True)
+            else:
+                decoration_layers[page.page] = decorations(pdf_path, page.page, style.page_width_pt,
+                                                           style.page_height_pt, page.blocks, body)
     looks = table_looks(pdf_path, templates) if pdf_path else {}
+    # E-54: the source grid of each table (docling cells) and its numbers' source formats
+    from src.rendering._table_look import grid_looks
+    for block_id, grid in grid_looks(pdf_path, templates, table_cells or {}).items():
+        looks.setdefault(block_id, {})["grid"] = grid
+    for page in templates:
+        for block in page.blocks:
+            if block.kind == "table" and block.table_id in (formats or {}):
+                looks.setdefault(block.block_id, {}).update(
+                    raw=formats[block.table_id]["raw"], number_style=formats[block.table_id]["style"])
     pages = page_models(templates, texts, style, tables, charts, images, decoration_layers, bands,
                         fills, looks)
     document = render_document(pages, style, artifacts_root,

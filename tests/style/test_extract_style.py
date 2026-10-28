@@ -2,7 +2,6 @@
 from pathlib import Path
 
 import pymupdf
-import pytest
 
 from src.config import load_config
 from src.style import extract_style

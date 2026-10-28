@@ -87,7 +87,8 @@ def compute_gates(values: dict, run_dir: Path, cfg, source_pdf: Path | None = No
         with pymupdf.open(pdf) as document:
             page1 = document[0].get_text() if document.page_count else ""
             meta = json.dumps(document.metadata or {}) + (document.get_xml_metadata() or "")
-    gates["entity_and_branding"] = bool(page1) and (not entity or entity.lower() in page1.lower()) and \
+    squash = lambda text: " ".join(str(text).lower().split())              # noqa: E731 (spacing differs)
+    gates["entity_and_branding"] = bool(page1) and (not entity or squash(entity) in squash(page1)) and \
         bool(images.get("logos"))
     gates["metadata_clean"] = bool(meta) and not any(m in meta.lower() for m in MARKERS)
     notes["metadata_clean"] = "E-32 replaces v3.2 metadata_synthetic: no synthetic marker in the PDF"
@@ -127,8 +128,12 @@ def compute_gates(values: dict, run_dir: Path, cfg, source_pdf: Path | None = No
     lone = [item for item in figures.get("items", []) if item.get("kind") == "chart"]
     recovered = {item.get("figure_id") for item in figures.get("recovered_items", [])}
     flagged = [item.get("figure_id") for item in lone if item.get("figure_id") not in recovered]
+    # E-60: a stand-in series (confidence 0) is not a recovery: it is listed, not graded
+    invented = [r.get("figure_id") for r in figures.get("recovered_items", []) if not r.get("confidence")]
     gates["vector_recovery_exact"] = all(r.get("confidence", 0) >= cfg.style.chart_recovery_min_conf
-                                         for r in figures.get("recovered_items", []))
+                                         for r in figures.get("recovered_items", []) if r.get("confidence"))
+    if invented:
+        notes["vector_recovery_invented"] = f"charts drawn with an invented series (data not readable): {invented}"
     if flagged:
         notes["vector_recovery_exact"] = f"charts not recovered (flagged): {flagged}"
     gates["roundtrip_structure"] = bool(qa_gates.get("roundtrip_structure", False))
@@ -140,6 +145,13 @@ def compute_gates(values: dict, run_dir: Path, cfg, source_pdf: Path | None = No
     repeats = write.get("repeats") or {}
     gates["no_cross_section_repeats"] = int(repeats.get("flagged", 0) or 0) == 0
     skipped = []
+    if not cfg.report.chart_pages and "every_table_has_chart" in gates:
+        # E-58: with no added chart pages a table whose source page has no chart is printed without
+        # one (task 7 is then not met on the page); its chart is still built and checked against it
+        gates.pop("every_table_has_chart")
+        notes["every_table_has_chart"] = "skipped (chart pages turned off, E-58): charts are built and " \
+                                         "checked against their tables but not printed"
+        skipped.append("every_table_has_chart")
     if not cfg.llm_enabled:                      # M9.2: listed as 'skipped (llm disabled)', never failed
         for name in LLM_GATES:
             if name in gates and not gates[name]:

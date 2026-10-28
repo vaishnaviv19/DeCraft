@@ -2,7 +2,7 @@
 import pymupdf
 
 from src.style._chart_geometry import (chart_style, cross_check_with_labels, primitives_from_page,
-                                       recover_chart, recover_lines, recover_vertical_bars, style_similarity)
+                                       recover_chart, recover_vertical_bars, style_similarity)
 
 VALUES = [120.0, 85.0, 150.0, 60.0]
 CATS = ["North", "South", "East", "West"]

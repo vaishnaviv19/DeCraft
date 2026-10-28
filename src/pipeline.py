@@ -32,9 +32,9 @@ from typing import Any, Callable
 
 from src.blueprint.build_blueprint import build_blueprint
 from src.config import Config
-from src.contracts import (InferenceReport, PrivacyPlan, RunManifest, RunResult, SCHEMA_VERSION)
+from src.contracts import (InferenceReport, PrivacyPlan, RunManifest, RunResult)
 from src.contracts.dataset import CanonicalDataset
-from src.errors import CacheMiss, LLMBudgetExceeded, LLMBudgetExceeded as _Budget, StageTimeout
+from src.errors import CacheMiss, LLMBudgetExceeded, StageTimeout
 from src.extraction import extract_structured
 from src.generation import generate, register_charts
 from src.inference import infer
@@ -42,7 +42,6 @@ from src.llm import LLMGateway
 from src.planner.build_plan import build_document_plan
 from src.privacy import audit_privacy, plan_privacy
 from src.report_stages import build_report_stages
-from src.validation import validate
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -483,7 +482,6 @@ def run(pdf_path: Path | str, cfg: Config, gateway: LLMGateway | None = None,
             if name in values and name in summary["reused"]:
                 _compat_outputs(run, name, values[name])
 
-        report = values.get("infer") or {}
         data_ok = bool((values.get("generate") or {}).get("validation_ok"))
         privacy_ok = bool((values.get("privacy_audit") or {}).get("ok"))
         qa_value = values.get("qa") or {}

@@ -82,7 +82,6 @@ def perturb_text_numbers(values: list, rng: np.random.Generator, low: float = 0.
     return out
 
 
-
 # ---------------------------------------------------------------- v3.3 F-01: tiny tables by cell
 def _shares(values: np.ndarray) -> np.ndarray | None:
     total = np.nansum(np.abs(values))
@@ -131,12 +130,3 @@ def jitter_cells_by_cell(values: list[float | None], rng: np.random.Generator, l
     return out
 
 
-def jitter_table(df, root_numeric: list[str], th, rng: np.random.Generator):
-    """A tiny table with every root numeric column jittered by cell (F-01); derived columns are left
-    for the generation plan to recompute."""
-    out = df.copy()
-    for column in root_numeric:
-        values = [None if v != v else float(v) for v in df[column].astype(float)]
-        out[column] = jitter_cells_by_cell(values, rng, th.jitter_low, th.jitter_high,
-                                           th.min_value_distance, th.min_headline_distance)
-    return out

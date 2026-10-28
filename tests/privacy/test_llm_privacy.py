@@ -19,7 +19,7 @@ from src.inference import infer
 from src.privacy import Relabeler, audit_privacy, plan_privacy
 from src.privacy._agents import MethodAdvice, apply_advice, expand_pattern, find_entity
 from src.privacy._labels import LabelColumn, fabricate_labels
-from src.privacy._analysis import LabelMap, decide_risk, detect_evidence, detect_risk
+from src.privacy._analysis import LabelMap, decide_risk, detect_evidence
 from tests.conftest import FakeLLM
 
 S = SensitivityClass
@@ -81,24 +81,6 @@ def llm_run(cfg, gateway_for, replies, doc=None):
 
 def by_column(plan):
     return {d.column: d for d in plan.decisions}
-
-
-# ---------------------------------------------------------------- who decides the class
-@pytest.mark.parametrize("header", ["Shipping", "Capacity", "Electricity cost", "Accounts payable",
-                                    "Opinion score", "Spending"])
-def test_keyword_fallback_matches_whole_words_only(header):
-    assert detect_risk(header, pd.Series(["x", "y"]))[0] is S.LOW_RISK
-
-
-@pytest.mark.parametrize("header,cls", [("Customer Name", S.DIRECT_IDENTIFIER),
-                                        ("PinCode", S.QUASI_IDENTIFIER), ("Annual salary", S.SENSITIVE)])
-def test_keyword_fallback_still_finds_real_header_words(header, cls):
-    assert detect_risk(header, pd.Series(["x", "y"]))[0] is cls
-
-
-def test_dates_written_as_text_are_not_phone_numbers():
-    assert detect_risk("Period", pd.Series(["2024-03-31", "2024-06-30", "31/12/2024"]))[0] is S.LOW_RISK
-    assert detect_evidence("Contact", pd.Series(["+91 98765 43210", "+44 20 7946 0958"]))[2] == "hard"
 
 
 def test_trusted_llm_reasoning_replaces_a_keyword_guess():
@@ -357,3 +339,7 @@ def test_llm_method_advice_reaches_the_plan(cfg, gateway_for):
     d = by_column(plan)["Expression"]
     assert (d.method, d.method_source, d.criticality) == ("regenerate", "llm", 9)
     assert "diagnosis" in d.rationale
+
+
+def test_phone_numbers_are_hard_evidence():
+    assert detect_evidence("Contact", pd.Series(["+91 98765 43210", "+44 20 7946 0958"]))[2] == "hard"

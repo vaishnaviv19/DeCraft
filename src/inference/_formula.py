@@ -226,9 +226,3 @@ def check_formula(df: pd.DataFrame, spec: FormulaSpec, decimals: dict[str, int] 
     return FormulaCheck(float(ok.mean()), n, int(ok.sum()), int((~defined).sum()), n_unreadable, n_missing)
 
 
-def verify_formula(df: pd.DataFrame, spec: FormulaSpec, decimals: dict[str, int] | None = None,
-                   rel_tol: float = 0.005, min_rows: int = 5):
-    """-> (Match Rate | None, rows tested, invalid rows). None when fewer than min_rows are testable.
-    See FormulaCheck for the counting rules."""
-    r = check_formula(df, spec, decimals, rel_tol, min_rows)
-    return r.match_rate, r.n_rows, r.n_invalid

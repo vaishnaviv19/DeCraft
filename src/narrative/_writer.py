@@ -3,7 +3,6 @@
 """Section Writer (M8.3): one versioned LLM call per section, returning a placeholder template.
 
 
-
 The model receives a catalogue of fact KEYS with what each one means and, for words and labels, the
 
 word itself, and for changes only their direction ("rose" / "fell") - never a number. Its draft is
@@ -15,15 +14,12 @@ figure rose when it fell (or the opposite); the caller then uses the determinist
 from __future__ import annotations
 
 
-
 import json
 
 import re
 
 
-
 from pydantic import BaseModel, ConfigDict
-
 
 
 from src.config import Config
@@ -32,7 +28,6 @@ from src.llm import estimate_tokens
 from src.llm import LLMGateway, PromptSpec
 
 from src.narrative._placeholders import placeholder_keys, stray_numbers
-
 
 
 SECTION_PROMPT = PromptSpec(
@@ -60,7 +55,6 @@ Rules:
 - Follow the requested word count approximately.''')
 
 
-
 MAX_DRAFT_CHARS, MAX_KEYS = 6000, 120
 
 UP_WORDS = re.compile(r"\b(increas\w*|rose|rise[sn]?|rising|grew|grow(s|ing)?|higher|improv\w*|gain\w*|"
@@ -75,9 +69,6 @@ SENTENCE = re.compile(r"[^.!?]+[.!?]?")
 PLACEHOLDER_RE = re.compile(r"\{\{[^}]*\}\}")
 
 
-
-
-
 class SectionDraft(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
@@ -85,17 +76,11 @@ class SectionDraft(BaseModel):
     text: str
 
 
-
-
-
 def _subject(key: str) -> str:
 
     rest = key.split(".", 1)[1] if "." in key else key
 
     return rest.rsplit(".", 1)[0].replace("row:", "")
-
-
-
 
 
 def describe_fact(key: str, fact) -> str:
@@ -115,9 +100,6 @@ def describe_fact(key: str, fact) -> str:
             "last_period": "last period shown", "first_label": "first item listed",
 
             "last_label": "last item listed"}.get(suffix, what)
-
-
-
 
 
 def movement(key: str, facts: dict) -> str | None:
@@ -141,9 +123,6 @@ def movement(key: str, facts: dict) -> str | None:
     return None
 
 
-
-
-
 def catalogue(facts: dict, keys: list[str]) -> list[dict]:
 
     out = []
@@ -165,9 +144,6 @@ def catalogue(facts: dict, keys: list[str]) -> list[dict]:
         out.append(entry)
 
     return out
-
-
-
 
 
 def contradicts(template: str, facts: dict) -> bool:
@@ -204,9 +180,6 @@ def build_prompt(section: dict, fact_keys: list[str], facts: dict | None = None,
         payload["errors"] = errors[:10]          # the previous draft's problems, to fix in this one
 
     return json.dumps(payload)
-
-
-
 
 
 def section_first(section: dict, fact_keys: list[str]) -> list[str]:
@@ -516,16 +489,6 @@ SHORT_FILLER = {
 }
 
 
-def _short_filler(kind: str, budget: float, block_id: str) -> str:
-    pool = SHORT_FILLER.get(kind, SHORT_FILLER["text"])
-    fit = [phrase for phrase in pool if len(phrase.split()) <= budget * 1.15]
-    if not fit:
-        return pool[-1]
-    start = sum(ord(character) for character in block_id) % len(fit)
-    return fit[start]
-
-
-
 def _split_for_blocks(section, text: str, blocks: dict) -> dict[str, str]:
     """Spread deterministic text over the section's body boxes (text, caption) by their source word
     budgets, whole sentences only and without overshooting a box by more than 15% (E-13). Before, a
@@ -548,7 +511,14 @@ def _split_for_blocks(section, text: str, blocks: dict) -> dict[str, str]:
             if chunk and words + size > budget * 1.15 and not last:
                 break
             if not chunk and size > budget * 1.15 and not last:
-                break                                   # too small for any sentence: stays empty
+                # a short box (a one-line bullet) takes a later sentence that fits; it stayed empty
+                # and printed a bare bullet (second sample, page 4)
+                spare = next((j for j in range(index + 1, len(sentences))
+                              if len(sentences[j].split()) <= budget * 1.15), None)
+                if spare is not None:
+                    chunk.append(sentences.pop(spare))
+                    words += len(chunk[-1].split())
+                break
             chunk.append(sentences[index])
             words += size
             index += 1

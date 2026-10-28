@@ -116,6 +116,9 @@ class Providers(BaseModel):
 class ReportSettings(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
     period_shift_years: int = 1
+    # E-58: charts for mirrored tables on pages added after the source pages (E-53). Off by owner
+    # decision 2026-10-27: the decoy has exactly the source's pages; charts are still built and checked
+    chart_pages: bool = False
     word_tolerance: float = Field(0.15, ge=0, lt=1)
     min_total_words: int = Field(1000, ge=1)
     row_tolerance: float = Field(0.20, ge=0, lt=1)

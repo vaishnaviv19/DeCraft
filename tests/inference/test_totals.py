@@ -1,8 +1,14 @@
 # tests/inference/test_totals.py
 import pandas as pd
 
-from src.inference._formula import parse_formula, verify_formula
+from src.inference._formula import check_formula, parse_formula
 from src.inference._totals import additive_columns, detect_total_columns, total_row_links
+
+
+def verify_formula(df, spec, decimals=None, rel_tol=0.005, min_rows=5):
+    """(Match Rate | None, rows tested, invalid rows) from the pipeline's check_formula."""
+    r = check_formula(df, spec, decimals, rel_tol, min_rows)
+    return r.match_rate, r.n_rows, r.n_invalid
 
 
 def test_total_column_is_found_and_verifies_without_the_llm():

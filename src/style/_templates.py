@@ -323,6 +323,42 @@ def attach_tables(blocks: list[Block], doc: SourceDocument | None, page_no: int,
         used_tables.add(table.table_id)
 
 
+# list bullets: plain characters and the private-use code points of Wingdings / Symbol bullets
+BULLET_CHARS = "•▪■□❑◦‣–-*➢✓●○◆" + "".join(chr(c) for c in range(0xF000, 0xF100))
+SYMBOL_BULLETS = {0xF071: "\u2751", 0xF06C: "\u25CF", 0xF06E: "\u25A0", 0xF0A7: "\u25AA",
+                  0xF0B7: "\u2022", 0xF0D8: "\u27A2", 0xF076: "\u2756", 0xF0FC: "\u2713",
+                  0xF0A8: "\u25A1", 0xF0E0: "\u27A2"}
+
+
+def list_bullet(block) -> tuple[str | None, float]:
+    """(the bullet the source printed before a block's text, hanging indent in pt) or (None, 0)."""
+    lines = block.get("lines") or []
+    spans = [s for s in (lines[0].get("spans") if lines else []) if s.get("text", "").strip()]
+    if len(spans) == 1 and len(lines) > 1 and abs(lines[1]["bbox"][1] - lines[0]["bbox"][1]) < 3.0:
+        # the glyph is a line of its own beside the text (Wingdings '' at x=4, text at x=22)
+        spans += [s for s in lines[1].get("spans", []) if s.get("text", "").strip()]
+    if len(spans) < 2:
+        return None, 0.0
+    first = spans[0]
+    glyph = first["text"].strip()
+    symbol_font = any(k in str(first.get("font", "")).lower() for k in ("wingding", "symbol", "dingbat"))
+    if len(glyph) != 1 or not (symbol_font or glyph in "•▪■□❑◦‣➢✓●○◆"):
+        return None, 0.0
+    shown = SYMBOL_BULLETS.get(ord(glyph), "\u2022") if 0xF000 <= ord(glyph) < 0xF100 else glyph
+    return shown, max(0.0, float(spans[1]["bbox"][0] - first["bbox"][0]))
+
+
+def bold_share(block) -> float:
+    total = bold = 0
+    for line in block.get("lines", []):
+        for span in line.get("spans", []):
+            n = len(span.get("text", "").strip())
+            total += n
+            if int(span.get("flags", 0)) & 16 or "bold" in str(span.get("font", "")).lower():
+                bold += n
+    return bold / total if total else 0.0
+
+
 def can_be_heading(block, text: str) -> bool:
     """Live run 2026-10-26: bold table rows ('Revenue 32,703 42,816 ...') opened 44 sections on 5 pages.
     A heading is mostly words and is not laid out as table cells."""
@@ -335,10 +371,15 @@ def _norm(text: str) -> str:
 
 def _style_for(span_family: str, bold: bool, italic: bool, size: float, color: str,
                style: StyleProfile) -> TextStyle:
+    # the span's own font face first: matching on size and colour only gave Book Antiqua text the first
+    # Cambria style of that size, so the decoy printed it in the wrong font (2026-10-27)
+    name = span_family.split("+")[-1].lower()
+    font_ids = {f.font_id for f in style.fonts if f.source_name.split("+")[-1].lower() == name}
     best, best_key = None, None
     for candidate in style.text_styles:
         candidate_size = candidate.size_pt
-        key = (abs(candidate_size - size), 0 if candidate.color == color.upper() else 1)
+        key = (abs(candidate_size - size) > 0.6, 0 if candidate.font_id in font_ids or not font_ids else 1,
+               abs(candidate_size - size), 0 if candidate.color == color.upper() else 1)
         if best_key is None or key < best_key:
             best, best_key = candidate, key
     assert best is not None
@@ -443,8 +484,125 @@ def _overlaps(a, b, minimum: float = 0.1) -> bool:
     return inter / max(union, 1e-9) > minimum
 
 
+def _line_look(line: dict) -> tuple[float, int]:
+    """(size, colour) of a line's longest span."""
+    spans = [s for s in line.get("spans", []) if s.get("text", "").strip()]
+    if not spans:
+        return (0.0, -1)
+    main = max(spans, key=lambda s: len(s["text"].strip()))
+    return (round(main["size"], 1), main.get("color", 0))
+
+
+def split_by_style(raw_blocks: list[dict]) -> list[dict]:
+    """A PDF text block is split where its lines change size (>= 2 pt; colour alone does not split: a
+    table's teal header row is still the table): a chart's source note
+    in 7 pt italic and the next section's 10 pt teal heading came out as ONE text box, so that heading
+    was lost (page 4, 'Investment Rating Criteria')."""
+    out = []
+    for block in raw_blocks:
+        if block.get("type") != 0:
+            out.append(block)
+            continue
+        # blank lines carry no text but stretch the block's box (empty 10 pt lines between a table's
+        # last row and the panel under it): boxes are measured on the visible lines only, so every
+        # text box starts and ends where its text does
+        lines = [line for line in block.get("lines", [])
+                 if "".join(span.get("text", "") for span in line.get("spans", [])).strip()]
+        if not lines:
+            continue
+        rows = {round((line["bbox"][1] + line["bbox"][3]) / 4) for line in lines}   # baselines, 2 pt bins
+        groups, current, last = [], [], None
+        for line in lines:
+            look = _line_look(line)
+            gap = line["bbox"][1] - max(item["bbox"][3] for item in current) if current else 0.0
+            # a new size, or a gap of more than a line ('Not rated/Neutral' then, 25 pt lower, the
+            # 'Definition:' panel) starts a new box
+            # a line beside the group, not under it (two captions on one baseline, 'rating history'
+            # at x=71 and 'rating details' at x=462): its own box, or both became one wide heading
+            gx0 = min(item["bbox"][0] for item in current) if current else 0.0
+            gx1 = max(item["bbox"][2] for item in current) if current else 0.0
+            # only in a block of at most two text rows: a table's rows are side-by-side lines too, and
+            # the table finder needs them in one block (the disclosure table on page 9 was lost)
+            phrase = lambda item: len("".join(s.get("text", "") for s in item.get("spans", [])).split()) >= 3  # noqa: E731
+            beside = bool(current) and len(rows) <= 2 and phrase(line) and phrase(current[-1]) \
+                and (line["bbox"][0] > gx1 + 20.0 or line["bbox"][2] < gx0 - 20.0)
+            if last is not None and current and (abs(look[0] - last[0]) >= 2.0 or gap > max(6.0, 1.2 * look[0])
+                                                 or beside):
+                groups.append(current)
+                current = []
+            current.append(line)
+            last = look
+        if current:
+            groups.append(current)
+        for group in groups:
+            x0 = min(line["bbox"][0] for line in group)
+            y0 = min(line["bbox"][1] for line in group)
+            x1 = max(line["bbox"][2] for line in group)
+            y1 = max(line["bbox"][3] for line in group)
+            out.append({**block, "lines": group, "bbox": (x0, y0, x1, y1)})
+    return out
+
+
+def grow_to_cells(tables: list[Block], table_cells: dict) -> None:
+    """A table block covers ALL of its docling cells: the box from the merged text rows missed the header
+    rows and the first row of some tables (a disclosure table's header; the 'Consolidated' group header
+    above a margins table), and those pieces became headings and text boxes printed over the table."""
+    for table in tables:
+        cells = table_cells.get(table.table_id) or []
+        boxes = [c["bbox"] for c in cells if c.get("bbox")]
+        if not boxes:
+            continue
+        x0 = min(b["l"] for b in boxes)
+        y0 = min(b["t"] for b in boxes)
+        x1 = max(b["r"] for b in boxes)
+        y1 = max(b["b"] for b in boxes)
+        # docling's boxes are text boxes: only grow, and only where they overlap the found region
+        if x1 < table.bbox[0] or x0 > table.bbox[2] or y1 < table.bbox[1] - 60 or y0 > table.bbox[3] + 60:
+            continue
+        table.bbox = (min(table.bbox[0], x0), min(table.bbox[1], y0), max(table.bbox[2], x1), max(table.bbox[3], y1))
+
+
+def reclaim_last_rows(blocks: list[Block], tables: list[Block], doc: SourceDocument | None,
+                      style: StyleProfile) -> None:
+    """A table's last row printed as a lone label ('Not rated/Neutral') is not row-like, so it was
+    merged into the text box under the table; the writer's text then covered that row. The table takes
+    its rows back: the box below starts after them."""
+    if doc is None:
+        return
+    for table in tables:
+        source = next((t for t in doc.tables if t.table_id == table.table_id), None)
+        if source is None:
+            continue
+        labels = [str(row[0]).strip() for row in source.raw_cells if row and str(row[0]).strip()]
+        for block in blocks:
+            if block.kind not in {"text", "caption", "heading"} or not block.text or block is table:
+                continue
+            if not (0 <= block.bbox[1] - table.bbox[3] <= 20 and block.bbox[0] < table.bbox[2]
+                    and table.bbox[0] < block.bbox[2]):
+                continue
+            text = block.text.strip()
+            if text in labels:                       # the row on its own: it is the table's
+                table.bbox = (table.bbox[0], table.bbox[1], table.bbox[2], max(table.bbox[3], block.bbox[3]))
+                block.kind, block.text, block.source_words = "decoration", None, 0
+                continue
+            taken = 0
+            for label in labels[::-1]:
+                if text.startswith(label):
+                    text = text[len(label):].strip()
+                    taken += 1
+                    break
+            if not taken:
+                continue
+            size = next((s.size_pt for s in style.text_styles if s.style_id == block.style_id), 9.0)
+            step = size * 1.35 * taken
+            table.bbox = (table.bbox[0], table.bbox[1], table.bbox[2], block.bbox[1] + step)
+            block.bbox = (block.bbox[0], block.bbox[1] + step, block.bbox[2], block.bbox[3])
+            block.text = text
+            block.source_words = len(text.split())
+
+
 def build_templates(pdf_path: Path, doc: SourceDocument, style: StyleProfile,
-                    cfg: Config) -> list[PageTemplate]:
+                    cfg: Config, table_cells: dict | None = None) -> list[PageTemplate]:
     """One Page Template per source page: classified Blocks, mirror/flow mode and sections."""
     body = style.text_styles[0]
     body_size = body.size_pt
@@ -467,7 +625,7 @@ def build_templates(pdf_path: Path, doc: SourceDocument, style: StyleProfile,
                             if b.kind in {"table", "photo", "chart"}]
 
             blocks: list[Block] = []
-            for block in page.get_text("dict").get("blocks", []):
+            for block in split_by_style(page.get_text("dict").get("blocks", [])):
                 if block.get("type") != 0:
                     continue
                 text_style, chars, bold, text = _block_style(block, style)
@@ -480,13 +638,15 @@ def build_templates(pdf_path: Path, doc: SourceDocument, style: StyleProfile,
 
                 if any(_inside(bbox, f.bbox) for f in figure_boxes):
                     continue                                  # text inside a table/photo belongs to it
+                bullet, indent = list_bullet(block)
+                one_bold_line = bold_share(block) >= 0.8 and len(block.get("lines", [])) == 1 and words <= 25
                 if PAGE_NUMBER_RE.match(text) and (bbox[1] <= 0.08 * height or bbox[3] >= 0.92 * height):
                     kind = "page_number"
                 elif compact and (compact == header or (header and compact in header)):
                     kind = "header"
                 elif compact and (compact == footer or (footer and compact in footer)):
                     kind = "footer"
-                elif (text_style.size_pt >= 1.2 * body_size or (
+                elif not bullet and (text_style.size_pt >= 1.2 * body_size or one_bold_line or (
                         bold and text_style.size_pt >= body_size and words <= 12)) and can_be_heading(block, text):
                     kind = "heading"
                 elif numeric_share(text) > 0.3 or row_like(block):
@@ -501,8 +661,13 @@ def build_templates(pdf_path: Path, doc: SourceDocument, style: StyleProfile,
                     kind = "caption"
                 else:
                     kind = "text"
+                if bullet:                                # the writer's words, not the glyph
+                    text = text.lstrip("".join(BULLET_CHARS)).strip()
+                    words = len(text.split())
                 blocks.append(Block(block_id="", kind=kind, bbox=bbox, text=text,
-                                    style_id=text_style.style_id, source_words=words))
+                                    style_id=text_style.style_id, source_words=words,
+                                    bullet=bullet if kind in {"text", "caption"} else None,
+                                    indent_pt=indent if kind in {"text", "caption"} and bullet else 0.0))
 
             blocks = merge_table_rows(blocks, body_size, float(page.rect.width))
             blocks.extend(drawings)
@@ -515,6 +680,15 @@ def build_templates(pdf_path: Path, doc: SourceDocument, style: StyleProfile,
             blocks = [b for b in blocks if not (b.kind == "table" and not b.table_id and any(
                 _inside(b.bbox, c.bbox) for c in vector_charts))]
             link_charts(blocks, doc, page_no)
+            # a table's own section rows ('Profitab. & Return', 'Valuation') are cells of the table, not
+            # headings of the page: the writer printed spare headings over them (live run 2026-10-27)
+            tables_here = [b for b in blocks if b.kind == "table" and b.table_id]
+            grow_to_cells(tables_here, table_cells or {})
+            charts_on_page = [b for b in blocks if b.kind == "chart"]      # a legend is the chart's own text
+            blocks = [b for b in blocks if not (b.kind in {"heading", "text", "caption"}
+                                                and any(_inside(b.bbox, t.bbox, 0.0)
+                                                        for t in tables_here + charts_on_page))]
+            reclaim_last_rows(blocks, tables_here, doc, style)
             blocks.sort(key=lambda b: (round(b.bbox[1], 1), round(b.bbox[0], 1)))
 
             # Section ownership: a heading opens a section; front matter is S0. A heading that follows

@@ -4,11 +4,9 @@ from pathlib import Path
 
 import numpy as np
 import pymupdf
-import pytest
 
 from src.config import load_config
 from src.contracts import SourceDocument, SourceTable
-from src.contracts.dataset import empty_dataset
 from src.contracts.report import SectionPlan
 from src.generation import generate
 from src.inference import infer

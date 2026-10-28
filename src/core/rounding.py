@@ -25,14 +25,6 @@ def largest_remainder(values: list[float], total: float = 100.0, decimals: int =
     return [f / scale for f in floors]
 
 
-def detect_total_mode(groups: list[tuple[list[float], float]], d: int) -> str:
-    """groups: (displayed components, displayed total) pairs read from the source table."""
-    if not groups:
-        return "true_total"
-    ok = sum(abs(sum(c) - t) < 0.5 * 10 ** -d for c, t in groups)
-    return "sum_of_displayed" if ok / len(groups) >= 0.8 else "true_total"
-
-
 def build_display_df(full: pd.DataFrame, decimals: dict[str, int],
                      links: dict[int, list[int]], mode: str,
                      scales: dict[str, float] | None = None) -> pd.DataFrame:

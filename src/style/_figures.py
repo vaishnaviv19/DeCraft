@@ -16,7 +16,6 @@ import pymupdf
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from src.config import Config
-from src.contracts import SourceTable
 from src.contracts.report import FigureInfo, PageTemplate, RecoveredChart, RecoveredSeries
 from src.llm import LLMGateway
 from src.style._prompts import CHART_DATA, FIGURES
@@ -155,11 +154,13 @@ def analyse_figures(pdf_path: Path, templates: list[PageTemplate], cfg: Config,
                 if chart is not None:
                     recovered.append(chart)
                     continue
-                if gateway is None or not gateway.enabled:
-                    log.warning("chart %s: no geometry recovery and no vision model; flagged for QA",
-                                block.block_id)
-                    continue
-                chart = _recover_chart(page, block.block_id, block.bbox, gateway)
+                chart = _recover_chart(page, block.block_id, block.bbox, gateway)                     if gateway is not None and gateway.enabled else None
+                if chart is None and block.kind == "chart":
+                    # nothing readable: a stand-in series in the chart's own frame (E-60), never an empty box
+                    from src.style._chart_geometry import synthesize_chart
+                    chart = synthesize_chart(page, block.block_id, block.bbox, cfg.seed)
+                    if chart is not None:
+                        log.warning("chart %s: data not readable; drawn with an invented series", block.block_id)
                 if chart is None:
                     log.warning("chart %s could not be recovered; flagged for QA", block.block_id)
                 else:

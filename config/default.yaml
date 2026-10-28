@@ -72,6 +72,7 @@ providers:
 # v3.1: report settings
 report:
   period_shift_years: 1
+  chart_pages: false          # E-58: no extra chart pages; the decoy keeps the source's pages
   word_tolerance: 0.15
   min_total_words: 1000
   row_tolerance: 0.20

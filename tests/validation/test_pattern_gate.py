@@ -1,7 +1,6 @@
 # tests/validation/test_patterns.py
 import pandas as pd
 
-from src.config import load_config
 from src.contracts import (ColumnRef, Direction, PatternKind, PatternSpec, Severity, SourceDocument,
                            SourceTable, ValidationReport)
 from src.contracts.dataset import CanonicalDataset

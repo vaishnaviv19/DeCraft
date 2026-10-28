@@ -76,20 +76,64 @@ def text_number_chart(chart_id: str, table_id: str, display: pd.DataFrame, label
     (series_columns, _), rows = max(groups.items(), key=lambda item: (len(item[1]), len(item[0][0])))
     if len(rows) < 2:
         return None
+    series_columns, rows = _one_run(display, label, list(series_columns), rows)
+    if len(rows) < 2:
+        return None
     rows = rows[:5]
     # the sub-header row nearest above the first series row names the columns ('Shareholding % |
     # Q3FY24 | Q4FY24 | Q1FY25'); its cells become the axis labels instead of 'Unnamed: 1'
-    x_labels: list[str] = []
-    first = next(i for i in range(len(display)) if str(display[label].iloc[i]).strip() == rows[0])
-    for i in range(first - 1, -1, -1):
-        cells = [str(display[c].iloc[i]).strip() for c in series_columns]
-        if all(cell and cell.lower() != "nan" and parse_number(cell) is None for cell in cells):
-            x_labels = cells
-            break
+    x_labels = _sub_header(display, label, list(series_columns), rows[0])
     title = f"{', '.join(rows[:-1])} and {rows[-1]}"
     return ChartSpec(chart_id=chart_id, table_id=table_id, label_column=label,
                      series_columns=list(series_columns), orientation="rows", series_rows=rows,
                      kind="bar", title=title, x_labels=x_labels)
+
+
+def _sub_header(display: pd.DataFrame, label: str, columns: list[str], first_row: str) -> list[str]:
+    from src.core.values import parse_number
+    first = next((i for i in range(len(display)) if str(display[label].iloc[i]).strip() == first_row), 0)
+    for i in range(first - 1, -1, -1):
+        cells = [str(display[c].iloc[i]).strip() for c in columns]
+        if all(cell and cell.lower() != "nan" and parse_number(cell) is None for cell in cells):
+            return cells
+    return []
+
+
+def _one_run(display: pd.DataFrame, label: str, columns: list[str], rows: list[str]):
+    """A table with column groups ('Old estimates | New estimates | Change %', each FY25E FY26E) is
+    one axis per group: the axis is the LAST group of the largest values (the new figures, not the %
+    change), and the rows are the largest amounts of a similar size (Revenue, EBITDA, Adj. PAT - not
+    beside the margin or the EPS). Before, all six columns were one axis."""
+    from src.core.values import parse_number
+    headers = _sub_header(display, label, columns, rows[0])
+    if headers and len(set(headers)) < len(headers):
+        runs, current = [], []
+        for column, head in zip(columns, headers):
+            if head in [headers[columns.index(c)] for c in current]:
+                runs.append(current)
+                current = []
+            current.append(column)
+        runs.append(current)
+        where = {str(display[label].iloc[i]).strip(): i for i in range(len(display))}
+
+        def size(run):
+            values = [abs(v) for r in rows for c in run
+                      if (v := parse_number(display[c].iloc[where[r]])) is not None]
+            return float(pd.Series(values).median()) if values else 0.0
+        biggest = max(size(run) for run in runs)
+        columns = [run for run in runs if size(run) >= 0.5 * biggest][-1]
+    where = {str(display[label].iloc[i]).strip(): i for i in range(len(display))}
+    amounts = []
+    for r in rows:
+        values = [parse_number(display[c].iloc[where[r]]) for c in columns]
+        values = [abs(v) for v in values if v is not None]
+        if values and "%" not in r:
+            amounts.append((max(values), r))
+    if len(amounts) >= 2 and max(v for v, _ in amounts) > 1000 * max(min(v for v, _ in amounts), 1e-9):
+        top = max(v for v, _ in amounts)               # amounts beside per-share figures: amounts only
+        rows = [r for v, r in sorted(amounts, reverse=True) if v >= top / 20][:3]
+        rows = sorted(rows, key=lambda r: where[r])
+    return columns, rows
 
 
 def _column_chart(chart_id: str, table_id: str, display: pd.DataFrame, label: str, profiles: dict,
@@ -99,7 +143,7 @@ def _column_chart(chart_id: str, table_id: str, display: pd.DataFrame, label: st
     if not numbers:
         return None
     first = y_hint if y_hint in numbers else next((c for c in numbers if summable(profiles.get(c), c)), numbers[0])
-    series = [first] + [c for c in numbers if c != first][:1]
+    series = _similar_scale(display, [first] + [c for c in numbers if c != first])[:2]
     values = pd.to_numeric(display[first], errors="coerce").dropna()
     kind = "bar"
     if wanted_kind == "pie" and len(display) <= MAX_PIE_SLICES and (values >= 0).all() and summable(profiles.get(first), first):
@@ -107,6 +151,22 @@ def _column_chart(chart_id: str, table_id: str, display: pd.DataFrame, label: st
     title = f"{' and '.join(series)} by {label}"
     return ChartSpec(chart_id=chart_id, table_id=table_id, label_column=label, series_columns=series,
                      kind=kind, title=title)
+
+
+def _scale(display: pd.DataFrame, column) -> float:
+    from src.core.values import parse_number
+    values = [abs(v) for v in (parse_number(x) if isinstance(x, str) else x for x in display[column])
+              if v is not None and v == v]
+    return float(pd.Series(values).median()) if values else 0.0
+
+
+def _similar_scale(display: pd.DataFrame, columns: list, ratio: float = 20.0) -> list:
+    """The first column and the others of a comparable size: 'Multiple' (~3) beside 'Value (Rs. cr.)'
+    (~20,000) drew as an invisible flat line."""
+    if not columns:
+        return []
+    base = _scale(display, columns[0]) or 1.0
+    return [columns[0]] + [c for c in columns[1:] if 1 / ratio <= (_scale(display, c) or 0) / base <= ratio]
 
 
 def register_all_charts(data, document_plan: dict | None = None) -> dict[str, ChartSpec]:
@@ -131,9 +191,12 @@ def register_all_charts(data, document_plan: dict | None = None) -> dict[str, Ch
             if spec is not None:
                 charts[spec.chart_id] = spec
             continue
-        series = numbers[:3]
+        series = _similar_scale(display, numbers)[:3]
         unit = next((p.unit for p in profiles if p.column == series[0] and p.unit), None)
         kind = choose_chart_kind(data, table_id, None)
+        dated = next((p.column for p in profiles if p.physical_type == "date" and p.column in display.columns), None)
+        if dated is not None:          # a dated history (target price by date) is a line over time
+            label, kind = dated, "line"
         charts[f"chart_{table_id}"] = ChartSpec(
             chart_id=f"chart_{table_id}", table_id=table_id, label_column=label,
             series_columns=series, kind=kind, orientation="columns",

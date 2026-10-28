@@ -1,8 +1,7 @@
 # tests/rendering/test_v33_output_checks.py -- F-08 round trip, F-09 realism metrics, F-10 css, F-11 repeats
-from types import SimpleNamespace as NS
 
 from src.narrative._repeats import cross_section_repeats
-from src.rendering._css import detect_language, text_css
+from src.rendering._css import detect_language
 from src.rendering._structure import (alignment_score, compare, discriminator_verdict, mean_block_iou,
                                       overlap_score, signature)
 
@@ -39,12 +38,6 @@ def test_layout_metrics():
 def test_discriminator_needs_both_orders():
     assert discriminator_verdict("A", "B") == "distinguishable"
     assert discriminator_verdict("A", "A") == "indistinguishable"
-
-
-def test_justified_text_gets_hyphenation_font_size_untouched():
-    css = text_css(NS(size_pt=9.5, line_height=1.3, color="#222222", align="justify"), "en")
-    assert "hyphens:auto" in css and "font-size:9.5pt" in css
-    assert "hyphens" not in text_css(NS(size_pt=9.5, line_height=1.3, color="#222", align="left"), "en")
 
 
 def test_language_defaults_to_english():

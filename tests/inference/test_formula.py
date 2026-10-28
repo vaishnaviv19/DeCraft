@@ -3,7 +3,13 @@ import pandas as pd
 import pytest
 
 from src.errors import FormulaSyntaxError
-from src.inference._formula import evaluate, parse_formula, verify_formula
+from src.inference._formula import check_formula, evaluate, parse_formula
+
+
+def verify_formula(df, spec, decimals=None, rel_tol=0.005, min_rows=5):
+    """(Match Rate | None, rows tested, invalid rows) from the pipeline's check_formula."""
+    r = check_formula(df, spec, decimals, rel_tol, min_rows)
+    return r.match_rate, r.n_rows, r.n_invalid
 
 COLS = ["Revenue", "Units", "Unit Price", "Cost", "Profit", "Margin %", "DOB", "Age"]
 

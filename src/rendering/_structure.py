@@ -170,3 +170,102 @@ def roundtrip_and_metrics(source_templates, output_templates, mirror_pages: set[
                 failures.append(f"p{src.page}: mean block IoU {value:.2f} < {min_iou}")
     return {"roundtrip": errors, "iou": iou, "text_placement": placement, "alignment": align,
             "overlap": overlap, "layout_failures": failures}
+
+
+# ---------------------------------------------------------------- E-56: box-wise round trip
+def _content(page, box, kind: str):
+    """What a PDF page draws inside a layout box, read the same way on source and output:
+    (content bbox | None, words, dominant text size | None)."""
+    import fitz
+    pad = 4 if kind in ("table", "chart", "photo", "logo") else 1     # a heading's neighbour is not its text
+    area = fitz.Rect(box) + (-pad, -pad, pad, pad)
+    rects, words, sizes = [], 0, {}
+    for block in page.get_text("dict")["blocks"]:
+        if block.get("type") != 0:
+            continue
+        for line in block["lines"]:
+            for span in line["spans"]:
+                r = fitz.Rect(span["bbox"])
+                if span["text"].strip() and area.contains(fitz.Point((r.x0 + r.x1) / 2, (r.y0 + r.y1) / 2)):
+                    rects.append(r)
+                    words += len(span["text"].split())
+                    size = round(span["size"], 1)
+                    sizes[size] = sizes.get(size, 0) + len(span["text"])
+    if kind in ("table", "chart", "photo", "logo"):
+        for drawing in page.get_drawings():
+            r = fitz.Rect(drawing["rect"])
+            if r.width * r.height > 0 and area.contains(r):
+                rects.append(r)
+        for info in page.get_image_info():
+            r = fitz.Rect(info["bbox"])
+            if area.intersects(r) and (r & area).get_area() >= 0.5 * max(r.get_area(), 1e-9):
+                rects.append(r & area)
+    if not rects:
+        return None, 0, None
+    union = rects[0]
+    for r in rects[1:]:
+        union |= r
+    size = max(sizes, key=sizes.get) if sizes else None
+    return (union.x0, union.y0, union.x1, union.y1), words, size
+
+
+def boxwise_checks(source_pdf, output_pdf, templates, min_iou: float = 0.9, skip_photos: bool = True) -> dict:
+    """Every source page's layout box is read on the source and on the output with the same reader:
+    * round trip: a box that holds a table, chart, logo or heading in the source holds that content in the
+      output too (charts/tables: drawings or text; headings: text at the source's size, +/-0.5 pt);
+    * layout IoU: per page, the mean IoU of the content extents of the structural boxes (table, chart,
+      logo), i.e. whether what is drawn sits where the source drew it;
+    * text placement: the share of source text boxes that hold text in the output.
+    Added chart pages (E-53) have no source page; a photo slot without a generated image is left empty
+    on purpose (E-43) and is not counted."""
+    import fitz
+    errors, failures, iou, placement = [], [], {}, {}
+    with fitz.open(str(source_pdf)) as source, fitz.open(str(output_pdf)) as output:
+        for template in templates:
+            if template.source_page or template.page > min(source.page_count, output.page_count):
+                continue
+            s_page, o_page = source[template.page - 1], output[template.page - 1]
+            scores, text_boxes, text_ok = [], 0, 0
+            for block in template.blocks:
+                if block.kind == "photo" and skip_photos:
+                    continue
+                if block.kind not in ("table", "chart", "logo", "heading", "text"):
+                    continue
+                if block.kind in ("heading", "text") and block.text:
+                    from src.rendering._pages import strip_websites
+                    if not strip_websites(block.text).strip():
+                        continue                      # only a web / e-mail address: removed on purpose (E-45)
+                s_box, s_words, s_size = _content(s_page, block.bbox, block.kind)
+                o_box, o_words, o_size = _content(o_page, block.bbox, block.kind)
+                if s_box is None:
+                    continue
+                if block.kind in ("table", "chart", "logo"):
+                    if o_box is None:
+                        errors.append(f"p{template.page}: {block.kind} {block.block_id} is empty in the output")
+                        scores.append(0.0)
+                    else:
+                        scores.append(_iou(s_box, o_box))
+                elif block.kind == "heading":
+                    if o_box is None or o_words == 0:
+                        errors.append(f"p{template.page}: heading {block.block_id} is empty in the output")
+                    elif s_size and o_size and abs(s_size - o_size) > 0.5:
+                        errors.append(f"p{template.page}: heading {block.block_id} printed at {o_size}pt "
+                                      f"instead of {s_size}pt")
+                else:
+                    text_boxes += 1
+                    text_ok += o_box is not None and o_words > 0
+                # same place: new text starts where the source text started and stays in its box
+                if block.kind in ("heading", "text") and o_box is not None:
+                    dx, dy, over = o_box[0] - s_box[0], o_box[1] - s_box[1], o_box[3] - block.bbox[3]
+                    if abs(dx) > 3 or abs(dy) > 3 or over > 2:
+                        errors.append(f"p{template.page}: {block.kind} {block.block_id} starts {dx:+.1f},"
+                                      f"{dy:+.1f} pt from the source text and ends {over:+.1f} pt past its box")
+            value = float(np.mean(scores)) if scores else 1.0
+            iou[f"p{template.page}"] = round(value, 3)
+            if value < min_iou:
+                failures.append(f"p{template.page}: mean structural content IoU {value:.2f} < {min_iou}")
+            share = text_ok / text_boxes if text_boxes else 1.0
+            placement[f"p{template.page}"] = round(share, 3)
+            if share < min_iou:
+                failures.append(f"p{template.page}: {share:.0%} of the source text boxes hold text (< {min_iou:.0%})")
+    return {"roundtrip": errors, "iou": iou, "text_placement": placement, "layout_failures": failures}

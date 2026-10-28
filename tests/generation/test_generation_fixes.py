@@ -5,7 +5,6 @@ import json
 
 import numpy as np
 import pandas as pd
-import pytest
 
 from src.config import load_config
 from src.contracts import (Cardinality, ColumnRef, DecisionStatus, Relationship, RuleTier, SourceDocument,

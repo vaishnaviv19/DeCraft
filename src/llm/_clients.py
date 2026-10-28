@@ -2,9 +2,7 @@
 """Real model clients for LLMGateway. The gateway adds caching, retries, schema checks and budgets;
 a client only sends one prompt and returns the raw text.
 
-OllamaClient is the HTTP code of the old `src/agents/llm_client.py`, moved here so the new pipeline
-can use the same local model (the old agents now call this class too). Settings come from the same
-environment variables: OLLAMA_HOST (default http://localhost:11434) and DECRAFT_LLM_MODEL
+OllamaClient talks to a local Ollama server. Settings come from the environment variables: OLLAMA_HOST (default http://localhost:11434) and DECRAFT_LLM_MODEL
 (default llama3.1).
 """
 from __future__ import annotations

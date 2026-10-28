@@ -5,7 +5,6 @@ import logging
 from pathlib import Path
 
 import pymupdf
-import pytest
 from PIL import Image
 
 from src.config import load_config

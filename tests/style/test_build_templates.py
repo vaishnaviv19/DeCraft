@@ -2,7 +2,6 @@
 from pathlib import Path
 
 import pymupdf
-import pytest
 
 from src.config import load_config
 from src.core.rows import statement_label_column  # noqa: F401  (kept for symmetry with the style module)

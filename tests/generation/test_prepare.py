@@ -10,7 +10,6 @@ from src.generation import generate, prepare_for_report
 from src.generation._prepare import _growth_band, _share_band
 from src.inference import infer
 from src.privacy import plan_privacy
-from src.style import build_templates, extract_style
 
 CFG = load_config(llm_enabled=False)
 
@@ -141,7 +140,9 @@ def test_a_source_label_nobody_decided_goes_through_the_same_fabricator(tmp_path
                                   doc=doc, privacy_plan=plan)
     labels = list(prepared.tables["t_pl"]["Particulars"])
     assert labels[0] == "Depreciation" and labels[2] == "Revenue"
-    assert labels[1] == "- Particulars A"                      # LLM off: the spec fallback, prefix kept
+    # LLM off (E-52): only the name word is swapped for a believable one; prefix and wording stay
+    assert labels[1].startswith("- ") and labels[1].endswith(" UMPP")
+    assert "mundra" not in labels[1].lower() and labels[1] != "- Mundra UMPP"
 
 
 def test_prepared_display_tables_and_facts_are_in_source_units(tmp_path):

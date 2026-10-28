@@ -2,8 +2,7 @@
 import pytest
 
 from src.contracts import Fact
-from src.narrative._placeholders import (StrayNumber, UnknownPlaceholder, contains_placeholder,
-                                         placeholder_keys, resolve, stray_numbers)
+from src.narrative._placeholders import (StrayNumber, UnknownPlaceholder, placeholder_keys, resolve, stray_numbers)
 
 FACTS = {
     "rev": Fact(key="rev", value=1234.0, kind="number", source="t.rev:sum"),
@@ -34,6 +33,7 @@ def test_a_digit_outside_a_placeholder_is_rejected():
         resolve("Revenue was {{ rev|:0 }} in 2024", FACTS)
 
 
-def test_placeholder_helpers():
+
+
+def test_placeholder_keys():
     assert placeholder_keys("{{ a|:0 }} and {{ b }}") == ["a", "b"]
-    assert contains_placeholder("{{ a }}") and not contains_placeholder("plain")

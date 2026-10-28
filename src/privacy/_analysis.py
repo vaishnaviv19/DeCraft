@@ -87,12 +87,6 @@ def detect_evidence(column: str, values: pd.Series) -> tuple[SensitivityClass, s
     return SensitivityClass.LOW_RISK, "no rule matched", "none"
 
 
-def detect_risk(column: str, values: pd.Series) -> tuple[SensitivityClass, str]:
-    """Rule detector: what the values and the Column Header say, with no model involved."""
-    cls, why, _ = detect_evidence(column, values)
-    return cls, why
-
-
 def merge_risk(llm_label: SensitivityClass | None, rule_label: SensitivityClass) -> SensitivityClass:
     """Stricter-of Rule. 'derived' is a method, not a risk, so an LLM 'derived' adds no risk."""
     llm = SensitivityClass.LOW_RISK if llm_label in (None, SensitivityClass.DERIVED) else llm_label
@@ -178,15 +172,6 @@ def plan_table(table_id: str, df: pd.DataFrame, labels: dict[str, SensitivityCla
                          " (accepted for business metrics)" if policy.method == "trend_preserving" and not exempt
                          else "")))
     return decisions
-
-
-def exact_row_overlap(synthetic: pd.DataFrame, source: pd.DataFrame, cols: list[str]) -> int:
-    return len(synthetic[cols].astype(str).merge(source[cols].astype(str).drop_duplicates(), on=cols))
-
-
-def rare_combinations(df: pd.DataFrame, quasi_cols: list[str], k: int = 3) -> pd.Series:
-    sizes = df.groupby(quasi_cols).size()
-    return sizes[sizes < k]
 
 
 def jitter(value: float, rel: float, rng: np.random.Generator) -> float:

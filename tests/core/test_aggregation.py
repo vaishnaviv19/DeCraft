@@ -1,7 +1,7 @@
 # tests/core/test_aggregation.py
 import pandas as pd
 
-from src.core.aggregation import apply_aggregate_rule, detect_aggregate_rules, detect_scalar_aggregate
+from src.core.aggregation import apply_aggregate_rule, detect_aggregate_rules
 
 
 def test_summary_total_is_detected_as_an_aggregate_of_the_detail():
@@ -23,8 +23,3 @@ def test_unrelated_tables_produce_no_rule():
     assert detect_aggregate_rules({"a": a, "b": b}) == []
 
 
-def test_scalar_aggregate_finds_a_headline_number():
-    detail = pd.DataFrame({"Revenue": [10.0, 20.0, 30.0]})
-    assert detect_scalar_aggregate(detail, "Revenue", 60.0) == "sum"
-    assert detect_scalar_aggregate(detail, "Revenue", 20.0) == "mean"
-    assert detect_scalar_aggregate(detail, "Revenue", 7.0) is None

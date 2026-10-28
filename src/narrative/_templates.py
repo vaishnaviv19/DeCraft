@@ -105,5 +105,3 @@ def section_template(section: dict, facts: dict, index: int = 0) -> str:
     return "\n\n".join(paragraphs)
 
 
-def section_text(section: dict, facts: dict, resolve) -> str:
-    return resolve(section_template(section, facts), facts)

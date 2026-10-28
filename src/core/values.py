@@ -52,6 +52,29 @@ def parse_date(value) -> date | None:
 NUMBER_IN_TEXT = re.compile(r"[-+]?\d[\d,]*(?:\.\d+)?")
 
 
+INDIAN_RE = re.compile(r"\d,\d\d,\d{3}")
+
+
+def is_indian_grouping(text: str) -> bool:
+    """'4,28,157' / '10,95,031': lakh-crore grouping (2 digits per group after the last 3)."""
+    return bool(INDIAN_RE.search(str(text)))
+
+
+def group_digits(number: str, indian: bool = False) -> str:
+    """'428157.5' -> '428,157.5', or '4,28,157.5' in Indian (lakh-crore) grouping."""
+    whole, dot, frac = number.partition(".")
+    if not indian or len(whole) <= 3:
+        return f"{int(whole):,}" + (dot + frac if dot else "")
+    head, last = whole[:-3], whole[-3:]
+    groups = []
+    while len(head) > 2:
+        groups.insert(0, head[-2:])
+        head = head[:-2]
+    if head:
+        groups.insert(0, head)
+    return ",".join(groups + [last]) + (dot + frac if dot else "")
+
+
 def format_number_like(template: str, value: float) -> str:
     """`value` written the way `template` writes its number: same prefix and suffix ('Rs. ', '%', 'x'),
     thousands separators, decimals and bracket negatives. 'Rs. 86,856' + 91234.4 -> 'Rs. 91,234'."""
@@ -63,7 +86,10 @@ def format_number_like(template: str, value: float) -> str:
         return text
     digits = m.group(0).lstrip("+-")
     decimals = len(digits.split(".")[1]) if "." in digits else 0
-    body = f"{abs(value):,.{decimals}f}" if "," in digits else f"{abs(value):.{decimals}f}"
+    if "," in digits:
+        body = group_digits(f"{abs(value):.{decimals}f}", indian=is_indian_grouping(digits))
+    else:
+        body = f"{abs(value):.{decimals}f}"
     if value < 0 and bracket:
         return "(" + inner[:m.start()] + body + inner[m.end():] + ")"
     sign = "-" if value < 0 else ("+" if m.group(0).startswith("+") else "")

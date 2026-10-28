@@ -18,14 +18,6 @@ class RowMeta:
     is_total: bool
 
 
-def indent_levels(x0s: list[float], tol: float = 3.0) -> list[int]:
-    uniq: list[float] = []
-    for v in sorted(set(round(x, 1) for x in x0s)):
-        if not uniq or v - uniq[-1] > tol:
-            uniq.append(v)
-    return [min(range(len(uniq)), key=lambda i: abs(uniq[i] - x)) for x in x0s]
-
-
 def link_totals(rows: list[RowMeta]) -> dict[int, list[int]]:
     """total row index -> indexes of the rows it sums (uncovered rows at its level or deeper)."""
     uncovered: list[int] = []

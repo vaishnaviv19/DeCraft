@@ -1,5 +1,4 @@
 # tests/rendering/test_critic.py
-from pathlib import Path
 
 from src.config import load_config
 from src.rendering._critic import CriticRaw, clean_issues, param_specs, run_critic

@@ -109,9 +109,3 @@ def apply_aggregate_rule(rule: AggregateRule, detail: pd.DataFrame, summary: pd.
     return out
 
 
-def detect_scalar_aggregate(detail: pd.DataFrame, col: str, value: float, rel_tol: float = 0.005):
-    """A single headline number (for example group revenue) that equals the sum or mean of a detail column."""
-    for agg in ("sum", "mean"):
-        if abs(getattr(detail[col], agg)() - value) <= rel_tol * max(abs(value), 1e-9):
-            return agg
-    return None

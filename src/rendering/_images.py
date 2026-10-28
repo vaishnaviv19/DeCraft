@@ -50,7 +50,7 @@ def photo_slots(templates: list[PageTemplate], figures: dict[str, dict],
 
 
 def logo_slots(templates: list[PageTemplate]) -> list[tuple[int, Block]]:
-    return [(page.page, block) for page in templates for block in page.blocks
+    return [(page.source_page or page.page, block) for page in templates for block in page.blocks
             if block.kind == "logo"]
 
 

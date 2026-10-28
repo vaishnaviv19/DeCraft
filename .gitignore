@@ -27,3 +27,12 @@ outputs/
 
 vendor/
 
+
+# Studio uploads and runs (may contain sensitive source documents), local dev runs
+artifacts_ui/
+artifacts_dev*/
+
+# Tool caches and reports
+.coverage
+.pytest_cache/
+.ruff_cache/

@@ -27,7 +27,7 @@ from dataclasses import dataclass, field
 import numpy as np
 
 from src.contracts.report import LabelsOut
-from src.core.originality import is_generic_label, names_in, reused_names
+from src.core.originality import is_generic_label, known_places, label_names, names_in, reused_names
 from src.core.values import NUMBER_IN_TEXT
 from src.llm import LLMGateway, PromptSpec
 from src.privacy._agents import _safe, expand_pattern
@@ -67,6 +67,7 @@ class LabelColumn:
     labels: list[str]                  # distinct, non-blank source labels in first-seen order
     kind: str = ""                     # sensitivity class (style hint only)
     must_replace: bool = False         # identifying columns (people, IDs): no label may be kept
+    statement: bool = False            # line items of a statement (E-52: standard wording unless a name)
 
 
 @dataclass
@@ -162,6 +163,60 @@ def _fallback(column: str, src: str, checker: _Checker, counter: dict) -> str:
             return candidate
 
 
+class _NameSwapper:
+    """E-52: a name inside a label is swapped for a place name of the organisation's country (Faker's
+    city lists), keeping the rest of the label: '- Mumbai Operations' -> '- Nashik Operations'. Every
+    replacement is unique and never a word of the source."""
+
+    def __init__(self, checker: "_Checker", rng, locale: str | None, lower: set[str], names: set[str]):
+        self.checker, self.rng = checker, rng
+        pool: list[str] = []
+        try:
+            import importlib
+            order = ["en_IN", "en_US", "en_GB"]
+            if locale and "india" not in locale.lower():
+                order = ["en_US", "en_GB", "en_IN"]
+            provider = importlib.import_module(f"faker.providers.address.{order[0]}").Provider
+            pool = [c for c in getattr(provider, "cities", ()) if re.fullmatch(r"[A-Z][a-z]{3,9}", c)]
+        except Exception:
+            pool = []
+        source = {w.lower() for w in checker.forbidden} | lower | names | {a.lower() for a in checker.avoid}
+        self.names = {n.lower() for n in names}
+        self.pool = sorted(c for c in pool if c.lower() not in source)
+        self.rng.shuffle(self.pool)
+        self.taken: dict[str, str] = {}
+
+    def _next(self) -> str | None:
+        used = {v.lower() for v in self.taken.values()}
+        while self.pool:
+            city = self.pool.pop()
+            if city.lower() not in used:
+                return city
+        return None
+
+    def swap(self, label: str, hits: list[str]) -> str | None:
+        places = known_places()
+        # a place or a name the prose uses is swapped; with neither, every unknown word is ('Jojobera')
+        strong = [h for h in hits if h.lower() in places or h.lower() in self.names] or hits
+        new = label
+        for word in strong:
+            if word not in self.taken:
+                city = self._next()
+                if city is None:
+                    return None
+                self.taken[word] = city
+            new = re.sub(r"\b" + re.escape(word) + r"\b", self.taken[word], new)
+        for _ in range(5):
+            if self.checker.new_label(label, new) is None:
+                return new
+            city = self._next()
+            if city is None:
+                return None
+            new = re.sub(r"\b" + re.escape(self.taken[strong[0]]) + r"\b", city, new)
+            self.taken[strong[0]] = city
+        return None
+
+
 def _payload(batch: list[tuple[str, str]], columns: dict[str, LabelColumn], locale, avoid, pat, errors,
              protected_n: set[str] = frozenset()) -> str:
     cols = sorted({node for node, _ in batch} | {c.node for c in pat})
@@ -180,7 +235,8 @@ def _payload(batch: list[tuple[str, str]], columns: dict[str, LabelColumn], loca
 
 def fabricate_labels(columns: list[LabelColumn], gateway: LLMGateway | None, forbidden: set[str],
                      avoid: set[str], names: set[str], protected: list[str] = (), locale: str | None = None,
-                     rng: np.random.Generator | None = None) -> Fabrication:
+                     rng: np.random.Generator | None = None, lower: set[str] | None = None,
+                     organisation: str | None = None) -> Fabrication:
     """-> one decision per (column, label). `forbidden` holds normalised source values."""
     rng = rng or np.random.default_rng(0)
     checker = _Checker(forbidden, avoid, names, list(protected))
@@ -249,6 +305,23 @@ def fabricate_labels(columns: list[LabelColumn], gateway: LLMGateway | None, for
                 result.warnings.append(f"label_fabricator: {node}: {label!r} not fabricated by the model "
                                        "(fallback label)")
 
+    if lower is not None:                             # E-52: model off (or no usable answer)
+        swapper = _NameSwapper(checker, rng, locale, lower, names)
+        for key, (node, label) in owner.items():
+            if key in decided:
+                continue
+            column = by_node[node]
+            if column.must_replace:
+                continue                               # people / IDs: every word is replaced (fallback)
+            hits = label_names(label, lower, names, organisation, column.statement)
+            if not hits:
+                decided[key] = label                   # standard wording of the field
+            else:
+                new = swapper.swap(label, hits)
+                if new is not None:
+                    checker.used.add(normalise_text(new))
+                    decided[key] = new
+
     counter: dict[str, int] = {}
     for c in columns:
         if c in pattern_cols:
@@ -273,5 +346,5 @@ def fabricate_labels(columns: list[LabelColumn], gateway: LLMGateway | None, for
         result.maps[c.node] = mapping
         result.kept[c.node] = kept
     if gateway is None and any(result.fallback.values()):
-        result.warnings.append("label_fabricator: LLM off - names in labels replaced by '<column> A' fallbacks")
+        result.warnings.append("label_fabricator: LLM off - some labels replaced by '<column> A' fallbacks")
     return result
